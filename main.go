@@ -34,6 +34,7 @@ var (
     right bool = false
     stopped bool = true
     count int = 0
+    lastCount int = 0
 )
 
 type Game struct {}
@@ -46,30 +47,37 @@ func (g *Game) Update() error {
         left = false
         right = false
         count++
-    } else if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
+    }
+    if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
         stopped = false
         left = true
         up = false
         down = false
         right = false
         count++
-    } else if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
+    }
+    if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
         stopped = false
         right = true
         left = false
         up = false
         down = false
         count++
-    } else if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
+    }
+    if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
         stopped = false
         down = true
         up = false
         left = false
         right = false
         count++
-    } else {
+    }
+    if count == lastCount {
         stopped = true
         count = 0
+        lastCount = 0
+    } else {
+        lastCount = count
     }
     return nil
 }
