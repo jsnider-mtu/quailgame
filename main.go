@@ -87,6 +87,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
     if ebiten.IsFullscreen() {
         w, h = ebiten.ScreenSizeInFullscreen()
     }
+    bgm := ebiten.GeoM{}
+    bgm.Translate(-float64(w / 2), -float64(h / 2))
+    screen.DrawImage(levelImage, &ebiten.DrawImageOptions{GeoM: bgm})
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
     gm.Translate(float64((w / 2) - 24), float64((h / 2) - 24))
