@@ -35,7 +35,38 @@ var (
     stopped bool = true
     count int = 0
     lastCount int = 0
+    lw, lh int
+    l *Level
+    p *Player
 )
+
+type Level struct {
+    Max [2]float64
+    Pos [2]float64
+}
+
+type Player struct {
+    pos [2]float64
+}
+
+func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
+    // 0, 0 is top left corner of levelImage
+    if vert {
+        if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
+            p.pos[1] += dist
+            l.Pos[1] -= dist
+            return true
+        }
+        return false
+    } else {
+        if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
+            p.pos[0] += dist
+            l.Pos[0] -= dist
+            return true
+        }
+        return false
+    }
+}
 
 type Game struct {}
 
@@ -46,6 +77,7 @@ func (g *Game) Update() error {
         down = false
         left = false
         right = false
+        p.TryUpdatePos(l, true, -float64(24))
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
@@ -54,6 +86,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         right = false
+        p.TryUpdatePos(l, false, -float64(24))
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
@@ -62,6 +95,7 @@ func (g *Game) Update() error {
         left = false
         up = false
         down = false
+        p.TryUpdatePos(l, false, float64(24))
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
@@ -70,6 +104,7 @@ func (g *Game) Update() error {
         up = false
         left = false
         right = false
+        p.TryUpdatePos(l, true, float64(24))
         count++
     }
     if count == lastCount {
@@ -88,7 +123,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         w, h = ebiten.ScreenSizeInFullscreen()
     }
     bgm := ebiten.GeoM{}
-    bgm.Translate(-float64(w / 2), -float64(h / 2))
+    bgm.Translate(l.Pos[0], l.Pos[1])
     screen.DrawImage(levelImage, &ebiten.DrawImageOptions{GeoM: bgm})
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
@@ -185,6 +220,12 @@ func init() {
         log.Fatal(err)
     }
     levelImage = ebiten.NewImageFromImage(levelimage)
+
+    lw, lh := levelImage.Size()
+    l = &Level{Max: [2]float64{float64(lw - 768), float64(lh - 576)}, Pos: [2]float64{float64(0), float64(0)}}
+
+    p = &Player{pos: l.Pos}
+    //p = &Player{pos: [2]float64{float64(0), float64(0)}}
 }
 
 func main() {
