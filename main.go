@@ -4,6 +4,7 @@ import (
     "bytes"
 //    "fmt"
     "image"
+    "image/color"
     _ "image/png"
     "log"
 //    "os"
@@ -43,6 +44,7 @@ var (
 type Level struct {
     Max [2]float64
     Pos [2]float64
+    Boxes [][4]float64
 }
 
 type Player struct {
@@ -50,23 +52,93 @@ type Player struct {
 }
 
 func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
-    // 0, 0 is top left corner of levelImage
     if vert {
-        if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
-            p.pos[1] += dist
-            l.Pos[1] -= dist
-            return true
+        // up
+        if dist < 0 {
+            if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
+                for _, a := range l.Boxes {
+                    if p.pos[0] + 48 > a[0] && p.pos[1] + dist > a[1] && p.pos[0] < a[2] && p.pos[1] + dist < a[3] {
+                        return false
+                    }
+                }
+                p.pos[1] += dist
+                l.Pos[1] -= dist
+                return true
+            }
+            return false
+        } else {
+            // down
+            if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
+                for _, a := range l.Boxes {
+                    if p.pos[0] + 48 > a[0] && p.pos[1] + 48 + dist > a[1] && p.pos[0] < a[2] && p.pos[1] + 48 + dist < a[3] {
+                        return false
+                    }
+                }
+                p.pos[1] += dist
+                l.Pos[1] -= dist
+                return true
+            }
+            return false
         }
-        return false
     } else {
-        if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
-            p.pos[0] += dist
-            l.Pos[0] -= dist
-            return true
+        // left
+        if dist < 0 {
+            if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
+                for _, b := range l.Boxes {
+                    if p.pos[0] + dist > b[0] && p.pos[1] > b[1] && p.pos[0] + dist < b[2] && p.pos[1] < b[3] {
+                        return false
+                    }
+                }
+                p.pos[0] += dist
+                l.Pos[0] -= dist
+                return true
+            }
+            return false
+        } else {
+            // right
+            if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
+                for _, b := range l.Boxes {
+                    if p.pos[0] + 48 + dist > b[0] && p.pos[1] > b[1] && p.pos[0] + 48 + dist < b[2] && p.pos[1] < b[3] {
+                        return false
+                    }
+                }
+                p.pos[0] += dist
+                l.Pos[0] -= dist
+                return true
+            }
+            return false
         }
-        return false
     }
 }
+
+//func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
+//    // 0, 0 is top left corner of levelImage
+//    if vert {
+//        if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
+//            for _, a := range l.Boxes {
+//                if p.pos[0] >= a[0] && p.pos[1] + dist >= a[1] && p.pos[0] < a[2] && p.pos[1] + dist <= a[3] {
+//                    return false
+//                }
+//            }
+//            p.pos[1] += dist
+//            l.Pos[1] -= dist
+//            return true
+//        }
+//        return false
+//    } else {
+//        if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
+//            for _, b := range l.Boxes {
+//                if p.pos[0] + dist >= b[0] && p.pos[1] > b[1] && p.pos[0] + dist <= b[2] && p.pos[1] < b[3] {
+//                    return false
+//                }
+//            }
+//            p.pos[0] += dist
+//            l.Pos[0] -= dist
+//            return true
+//        }
+//        return false
+//    }
+//}
 
 type Game struct {}
 
@@ -77,7 +149,7 @@ func (g *Game) Update() error {
         down = false
         left = false
         right = false
-        p.TryUpdatePos(l, true, -float64(24))
+        p.TryUpdatePos(l, true, -float64(48))
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
@@ -86,7 +158,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         right = false
-        p.TryUpdatePos(l, false, -float64(24))
+        p.TryUpdatePos(l, false, -float64(48))
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
@@ -95,7 +167,7 @@ func (g *Game) Update() error {
         left = false
         up = false
         down = false
-        p.TryUpdatePos(l, false, float64(24))
+        p.TryUpdatePos(l, false, float64(48))
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
@@ -104,7 +176,7 @@ func (g *Game) Update() error {
         up = false
         left = false
         right = false
-        p.TryUpdatePos(l, true, float64(24))
+        p.TryUpdatePos(l, true, float64(48))
         count++
     }
     if count == lastCount {
@@ -122,12 +194,21 @@ func (g *Game) Draw(screen *ebiten.Image) {
     if ebiten.IsFullscreen() {
         w, h = ebiten.ScreenSizeInFullscreen()
     }
-    bgm := ebiten.GeoM{}
-    bgm.Translate(l.Pos[0], l.Pos[1])
-    screen.DrawImage(levelImage, &ebiten.DrawImageOptions{GeoM: bgm})
+    for _, box := range l.Boxes {
+        bgm := ebiten.GeoM{}
+        bgm.Translate(float64(w / 2) + box[0], float64(h / 2) + box[1])
+        bi := ebiten.NewImage(int(box[2] - box[0]), int(box[3] - box[1]))
+        bi.Fill(color.Black)
+        levelImage.DrawImage(bi, &ebiten.DrawImageOptions{
+            GeoM: bgm})
+    }
+    lgm := ebiten.GeoM{}
+    lgm.Translate(l.Pos[0], l.Pos[1])
+    screen.DrawImage(levelImage, &ebiten.DrawImageOptions{GeoM: lgm})
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
-    gm.Translate(float64((w / 2) - 24), float64((h / 2) - 24))
+    gm.Translate(float64(w / 2), float64(h / 2))
+    //gm.Translate(float64((w / 2) - 24), float64((h / 2) - 24))
     switch {
     case up:
         if stopped {
@@ -222,7 +303,8 @@ func init() {
     levelImage = ebiten.NewImageFromImage(levelimage)
 
     lw, lh := levelImage.Size()
-    l = &Level{Max: [2]float64{float64(lw - 768), float64(lh - 576)}, Pos: [2]float64{float64(0), float64(0)}}
+    //l = &Level{Max: [2]float64{float64(lw - 768), float64(lh - 576)}, Pos: [2]float64{0, 0}, Boxes: [][4]float64{{0, 0, 48, 48}}}
+    l = &Level{Max: [2]float64{float64(lw - 768), float64(lh - 576)}, Pos: [2]float64{0, 0}, Boxes: [][4]float64{{576, 336, 672, 432}}}
 
     p = &Player{pos: l.Pos}
     //p = &Player{pos: [2]float64{float64(0), float64(0)}}
