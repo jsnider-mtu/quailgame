@@ -197,7 +197,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 10) % 4
+            i := (count / 5) % 4
             sx, sy := pcUpOffsetX + (i * 64), pcUpOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
@@ -215,7 +215,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 10) % 4
+            i := (count / 5) % 4
             sx, sy := pcLeftOffsetX + (i * 64), pcLeftOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
@@ -233,7 +233,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 10) % 4
+            i := (count / 5) % 4
             sx, sy := pcRightOffsetX + (i * 64), pcRightOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
@@ -251,7 +251,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 10) % 4
+            i := (count / 5) % 4
             sx, sy := pcDownOffsetX + (i * 64), pcDownOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
