@@ -42,16 +42,16 @@ var (
 )
 
 type Level struct {
-    Max [2]float64
-    Pos [2]float64
-    Boxes [][4]float64
+    Max [2]int
+    Pos [2]int
+    Boxes [][4]int
 }
 
 type Player struct {
-    pos [2]float64
+    pos [2]int
 }
 
-func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
+func (p *Player) TryUpdatePos(l *Level, vert bool, dist int) bool {
     if vert {
         // up
         if dist < 0 {
@@ -121,7 +121,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
-            p.TryUpdatePos(l, true, -float64(48))
+            p.TryUpdatePos(l, true, -48)
         }
         count++
     }
@@ -132,7 +132,7 @@ func (g *Game) Update() error {
         down = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
-            p.TryUpdatePos(l, false, -float64(48))
+            p.TryUpdatePos(l, false, -48)
         }
         count++
     }
@@ -143,7 +143,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
-            p.TryUpdatePos(l, false, float64(48))
+            p.TryUpdatePos(l, false, 48)
         }
         count++
     }
@@ -154,7 +154,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
-            p.TryUpdatePos(l, true, float64(48))
+            p.TryUpdatePos(l, true, 48)
         }
         count++
     }
@@ -175,14 +175,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     for _, box := range l.Boxes {
         bgm := ebiten.GeoM{}
-        bgm.Translate(float64(w / 2) + box[0], float64(h / 2) + box[1])
-        bi := ebiten.NewImage(int(box[2] - box[0]), int(box[3] - box[1]))
+        bgm.Translate(float64((w / 2) + box[0]), float64((h / 2) + box[1]))
+        bi := ebiten.NewImage(box[2] - box[0], box[3] - box[1])
         bi.Fill(color.Black)
         levelImage.DrawImage(bi, &ebiten.DrawImageOptions{
             GeoM: bgm})
     }
     lgm := ebiten.GeoM{}
-    lgm.Translate(l.Pos[0], l.Pos[1])
+    lgm.Translate(float64(l.Pos[0]), float64(l.Pos[1]))
     screen.DrawImage(levelImage, &ebiten.DrawImageOptions{GeoM: lgm})
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
@@ -282,7 +282,7 @@ func init() {
 
     lw, lh := levelImage.Size()
     //l = &Level{Max: [2]float64{float64(lw - 768), float64(lh - 576)}, Pos: [2]float64{0, 0}, Boxes: [][4]float64{{0, 0, 48, 48}}}
-    l = &Level{Max: [2]float64{float64(lw - 768), float64(lh - 576)}, Pos: [2]float64{0, 0}, Boxes: [][4]float64{{576, 336, 672, 432}}}
+    l = &Level{Max: [2]int{lw - 768, lh - 576}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}}
 
     p = &Player{pos: l.Pos}
     //p = &Player{pos: [2]float64{float64(0), float64(0)}}
