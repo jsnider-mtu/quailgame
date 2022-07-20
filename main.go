@@ -281,11 +281,9 @@ func init() {
     levelImage = ebiten.NewImageFromImage(levelimage)
 
     lw, lh := levelImage.Size()
-    //l = &Level{Max: [2]float64{float64(lw - 768), float64(lh - 576)}, Pos: [2]float64{0, 0}, Boxes: [][4]float64{{0, 0, 48, 48}}}
     l = &Level{Max: [2]int{lw - 768, lh - 576}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}}
 
     p = &Player{pos: l.Pos}
-    //p = &Player{pos: [2]float64{float64(0), float64(0)}}
 }
 
 func main() {
