@@ -85,7 +85,7 @@ func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
         if dist < 0 {
             if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
                 for _, b := range l.Boxes {
-                    if p.pos[0] + dist > b[0] && p.pos[1] > b[1] && p.pos[0] + dist < b[2] && p.pos[1] < b[3] {
+                    if p.pos[0] + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + dist < b[2] && p.pos[1] < b[3] {
                         return false
                     }
                 }
@@ -98,7 +98,7 @@ func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
             // right
             if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
                 for _, b := range l.Boxes {
-                    if p.pos[0] + 48 + dist > b[0] && p.pos[1] > b[1] && p.pos[0] + 48 + dist < b[2] && p.pos[1] < b[3] {
+                    if p.pos[0] + 48 + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + 48 + dist < b[2] && p.pos[1] < b[3] {
                         return false
                     }
                 }
@@ -111,35 +111,6 @@ func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
     }
 }
 
-//func (p *Player) TryUpdatePos(l *Level, vert bool, dist float64) bool {
-//    // 0, 0 is top left corner of levelImage
-//    if vert {
-//        if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
-//            for _, a := range l.Boxes {
-//                if p.pos[0] >= a[0] && p.pos[1] + dist >= a[1] && p.pos[0] < a[2] && p.pos[1] + dist <= a[3] {
-//                    return false
-//                }
-//            }
-//            p.pos[1] += dist
-//            l.Pos[1] -= dist
-//            return true
-//        }
-//        return false
-//    } else {
-//        if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
-//            for _, b := range l.Boxes {
-//                if p.pos[0] + dist >= b[0] && p.pos[1] > b[1] && p.pos[0] + dist <= b[2] && p.pos[1] < b[3] {
-//                    return false
-//                }
-//            }
-//            p.pos[0] += dist
-//            l.Pos[0] -= dist
-//            return true
-//        }
-//        return false
-//    }
-//}
-
 type Game struct {}
 
 func (g *Game) Update() error {
@@ -149,7 +120,9 @@ func (g *Game) Update() error {
         down = false
         left = false
         right = false
-        p.TryUpdatePos(l, true, -float64(48))
+        if inpututil.KeyPressDuration(ebiten.KeyW) % 5 == 0 {
+            p.TryUpdatePos(l, true, -float64(48))
+        }
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
@@ -158,7 +131,9 @@ func (g *Game) Update() error {
         up = false
         down = false
         right = false
-        p.TryUpdatePos(l, false, -float64(48))
+        if inpututil.KeyPressDuration(ebiten.KeyA) % 5 == 0 {
+            p.TryUpdatePos(l, false, -float64(48))
+        }
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
@@ -167,7 +142,9 @@ func (g *Game) Update() error {
         left = false
         up = false
         down = false
-        p.TryUpdatePos(l, false, float64(48))
+        if inpututil.KeyPressDuration(ebiten.KeyD) % 5 == 0 {
+            p.TryUpdatePos(l, false, float64(48))
+        }
         count++
     }
     if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
@@ -176,7 +153,9 @@ func (g *Game) Update() error {
         up = false
         left = false
         right = false
-        p.TryUpdatePos(l, true, float64(48))
+        if inpututil.KeyPressDuration(ebiten.KeyS) % 5 == 0 {
+            p.TryUpdatePos(l, true, float64(48))
+        }
         count++
     }
     if count == lastCount {
@@ -208,7 +187,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
     gm.Translate(float64(w / 2), float64(h / 2))
-    //gm.Translate(float64((w / 2) - 24), float64((h / 2) - 24))
     switch {
     case up:
         if stopped {
@@ -219,7 +197,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 5) % 4
+            i := (count / 10) % 4
             sx, sy := pcUpOffsetX + (i * 64), pcUpOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
@@ -237,7 +215,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 5) % 4
+            i := (count / 10) % 4
             sx, sy := pcLeftOffsetX + (i * 64), pcLeftOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
@@ -255,7 +233,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 5) % 4
+            i := (count / 10) % 4
             sx, sy := pcRightOffsetX + (i * 64), pcRightOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
@@ -273,7 +251,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 5) % 4
+            i := (count / 10) % 4
             sx, sy := pcDownOffsetX + (i * 64), pcDownOffsetY
             screen.DrawImage(
                 pcImage.SubImage(
