@@ -120,7 +120,7 @@ func (g *Game) Update() error {
         down = false
         left = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyW) % 5 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyW) % 3 == 0 {
             p.TryUpdatePos(l, true, -float64(48))
         }
         count++
@@ -131,7 +131,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyA) % 5 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyA) % 3 == 0 {
             p.TryUpdatePos(l, false, -float64(48))
         }
         count++
@@ -142,7 +142,7 @@ func (g *Game) Update() error {
         left = false
         up = false
         down = false
-        if inpututil.KeyPressDuration(ebiten.KeyD) % 5 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyD) % 3 == 0 {
             p.TryUpdatePos(l, false, float64(48))
         }
         count++
@@ -153,7 +153,7 @@ func (g *Game) Update() error {
         up = false
         left = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyS) % 5 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyS) % 3 == 0 {
             p.TryUpdatePos(l, true, float64(48))
         }
         count++
