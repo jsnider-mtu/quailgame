@@ -57,7 +57,7 @@ func (p *Player) TryUpdatePos(l *Level, vert bool, dist int) bool {
         if dist < 0 {
             if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
                 for _, a := range l.Boxes {
-                    if p.pos[0] + 48 > a[0] && p.pos[1] + dist > a[1] && p.pos[0] < a[2] && p.pos[1] + dist < a[3] {
+                    if p.pos[0] + 48 > a[0] && p.pos[1] + dist > a[1] && p.pos[0] < a[2] && p.pos[1] + dist < a[3] - 24 {
                         return false
                     }
                 }
@@ -85,7 +85,7 @@ func (p *Player) TryUpdatePos(l *Level, vert bool, dist int) bool {
         if dist < 0 {
             if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
                 for _, b := range l.Boxes {
-                    if p.pos[0] + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + dist < b[2] && p.pos[1] < b[3] {
+                    if p.pos[0] + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + dist < b[2] && p.pos[1] < b[3] - 24 {
                         return false
                     }
                 }
@@ -98,7 +98,7 @@ func (p *Player) TryUpdatePos(l *Level, vert bool, dist int) bool {
             // right
             if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
                 for _, b := range l.Boxes {
-                    if p.pos[0] + 48 + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + 48 + dist < b[2] && p.pos[1] < b[3] {
+                    if p.pos[0] + 48 + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + 48 + dist < b[2] && p.pos[1] < b[3] - 24 {
                         return false
                     }
                 }
@@ -120,8 +120,8 @@ func (g *Game) Update() error {
         down = false
         left = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
-            p.TryUpdatePos(l, true, -48)
+        if inpututil.KeyPressDuration(ebiten.KeyW) % 2 == 0 {
+            p.TryUpdatePos(l, true, -24)
         }
         count++
     }
@@ -131,8 +131,8 @@ func (g *Game) Update() error {
         up = false
         down = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
-            p.TryUpdatePos(l, false, -48)
+        if inpututil.KeyPressDuration(ebiten.KeyA) % 2 == 0 {
+            p.TryUpdatePos(l, false, -24)
         }
         count++
     }
@@ -142,8 +142,8 @@ func (g *Game) Update() error {
         left = false
         up = false
         down = false
-        if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
-            p.TryUpdatePos(l, false, 48)
+        if inpututil.KeyPressDuration(ebiten.KeyD) % 2 == 0 {
+            p.TryUpdatePos(l, false, 24)
         }
         count++
     }
@@ -153,8 +153,8 @@ func (g *Game) Update() error {
         up = false
         left = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
-            p.TryUpdatePos(l, true, 48)
+        if inpututil.KeyPressDuration(ebiten.KeyS) % 2 == 0 {
+            p.TryUpdatePos(l, true, 24)
         }
         count++
     }
