@@ -9,7 +9,9 @@ import (
     "log"
 //    "os"
 
-    "github.com/jsnider-mtu/projectx/assets"
+    "github.com/jsnider-mtu/projectx/pcimages"
+    "github.com/jsnider-mtu/projectx/levels"
+    "github.com/jsnider-mtu/projectx/npcs"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -37,78 +39,30 @@ var (
     count int = 0
     lastCount int = 0
     lw, lh int
-    l *Level
-    p *Player
+    l *levels.Level
 )
 
-type Level struct {
-    Max [2]int
-    Pos [2]int
-    Boxes [][4]int
-}
+const (
+    P = &Player{}
+)
 
 type Player struct {
-    pos [2]int
+    Pos [2]int
 }
 
-func (p *Player) TryUpdatePos(l *Level, vert bool, dist int) bool {
-    if vert {
-        // up
-        if dist < 0 {
-            if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
-                for _, a := range l.Boxes {
-                    if p.pos[0] + 48 > a[0] && p.pos[1] + dist > a[1] && p.pos[0] < a[2] && p.pos[1] + dist < a[3] - 24 {
-                        return false
-                    }
-                }
-                p.pos[1] += dist
-                l.Pos[1] -= dist
-                return true
+func (p *Player) StartLoc(l *levels.Level, pos [2]int) {
+    // log.Fatal if pos is out of bounds or in a box
+    if pos[0] >= 0 && pos[1] >= 0 && pos[0] <= l.Max[0] - 48 && pos[1] <= l.Max[1] - 48 {
+        // check if in a box
+        for _, a := range l.Boxes {
+            if pos[0] >= a[0] && pos[1] >= a[1] && pos[0] < a[2] && pos[1] < a[3] - 24 {
+                log.Fatal("StartLoc was in a box")
             }
-            return false
-        } else {
-            // down
-            if p.pos[1] + dist > 0 && p.pos[1] + dist < l.Max[1] {
-                for _, a := range l.Boxes {
-                    if p.pos[0] + 48 > a[0] && p.pos[1] + 48 + dist > a[1] && p.pos[0] < a[2] && p.pos[1] + 48 + dist < a[3] {
-                        return false
-                    }
-                }
-                p.pos[1] += dist
-                l.Pos[1] -= dist
-                return true
-            }
-            return false
         }
     } else {
-        // left
-        if dist < 0 {
-            if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
-                for _, b := range l.Boxes {
-                    if p.pos[0] + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + dist < b[2] && p.pos[1] < b[3] - 24 {
-                        return false
-                    }
-                }
-                p.pos[0] += dist
-                l.Pos[0] -= dist
-                return true
-            }
-            return false
-        } else {
-            // right
-            if p.pos[0] + dist > 0 && p.pos[0] + dist < l.Max[0] {
-                for _, b := range l.Boxes {
-                    if p.pos[0] + 48 + dist > b[0] && p.pos[1] + 48 > b[1] && p.pos[0] + 48 + dist < b[2] && p.pos[1] < b[3] - 24 {
-                        return false
-                    }
-                }
-                p.pos[0] += dist
-                l.Pos[0] -= dist
-                return true
-            }
-            return false
-        }
+        log.Fatal("StartLoc is out of bounds")
     }
+    p.Pos = pos
 }
 
 type Game struct {}
@@ -121,7 +75,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyW) % 2 == 0 {
-            p.TryUpdatePos(l, true, -24)
+            _ = TryUpdatePos(true, p.Pos, l, true, -24)
         }
         count++
     }
@@ -132,7 +86,7 @@ func (g *Game) Update() error {
         down = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyA) % 2 == 0 {
-            p.TryUpdatePos(l, false, -24)
+            _ = TryUpdatePos(true, p.Pos, l, false, -24)
         }
         count++
     }
@@ -143,7 +97,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         if inpututil.KeyPressDuration(ebiten.KeyD) % 2 == 0 {
-            p.TryUpdatePos(l, false, 24)
+            _ = TryUpdatePos(true, p.Pos, l, false, 24)
         }
         count++
     }
@@ -154,7 +108,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyS) % 2 == 0 {
-            p.TryUpdatePos(l, true, 24)
+            _ = TryUpdatePos(true, p.Pos, l, true, 24)
         }
         count++
     }
@@ -178,12 +132,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
         bgm.Translate(float64((w / 2) + box[0]), float64((h / 2) + box[1]))
         bi := ebiten.NewImage(box[2] - box[0], box[3] - box[1])
         bi.Fill(color.Black)
-        levelImage.DrawImage(bi, &ebiten.DrawImageOptions{
+        l.Image.DrawImage(bi, &ebiten.DrawImageOptions{
             GeoM: bgm})
+    }
+    for _, door := range l.Doors {
+        dgm := ebiten.GeoM{}
+        dgm.Translate(float64((w / 2) + door.Coords[0]), float64((h / 2) + door.Coords[1]))
+        l.Image.DrawImage(door.Image, &ebiten.DrawImageOptions{
+            GeoM: dgm})
     }
     lgm := ebiten.GeoM{}
     lgm.Translate(float64(l.Pos[0]), float64(l.Pos[1]))
-    screen.DrawImage(levelImage, &ebiten.DrawImageOptions{GeoM: lgm})
+    screen.DrawImage(l.Image, &ebiten.DrawImageOptions{GeoM: lgm})
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
     gm.Translate(float64(w / 2), float64(h / 2))
@@ -268,7 +228,7 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
 }
 
 func init() {
-    pcimage, _, err := image.Decode(bytes.NewReader(assets.PC_png))
+    pcimage, _, err := image.Decode(bytes.NewReader(pcimages.PC_png))
     if err != nil {
         log.Fatal(err)
     }
@@ -281,9 +241,14 @@ func init() {
     levelImage = ebiten.NewImageFromImage(levelimage)
 
     lw, lh := levelImage.Size()
-    l = &Level{Max: [2]int{lw - 768, lh - 576}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}}
+    lvldoors := []*levels.Door{&levels.Door{Coords: [4]int{96, 96, 192, 144}, Direction: "up", Image: ebiten.NewImage(192-96, 144-96)}}
+    for _, ld := range lvldoors {
+        ld.Image.Fill(color.Black)
+    }
+    l = &levels.Level{Max: [2]int{lw - 768, lh - 576}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}, Doors: lvldoors, Image: levelImage}
+    P.StartLoc(l, l.Pos)
 
-    p = &Player{pos: l.Pos}
+    //p = &Player{pos: l.Pos}
 }
 
 func main() {
