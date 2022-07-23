@@ -9,9 +9,11 @@ import (
     "log"
 //    "os"
 
-    "github.com/jsnider-mtu/projectx/pcimages"
+    "github.com/jsnider-mtu/projectx/player"
+    "github.com/jsnider-mtu/projectx/player/pcimages"
     "github.com/jsnider-mtu/projectx/levels"
-    "github.com/jsnider-mtu/projectx/npcs"
+//    "github.com/jsnider-mtu/projectx/npcs"
+    "github.com/jsnider-mtu/projectx/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -40,30 +42,8 @@ var (
     lastCount int = 0
     lw, lh int
     l *levels.Level
+    p *player.Player
 )
-
-const (
-    P = &Player{}
-)
-
-type Player struct {
-    Pos [2]int
-}
-
-func (p *Player) StartLoc(l *levels.Level, pos [2]int) {
-    // log.Fatal if pos is out of bounds or in a box
-    if pos[0] >= 0 && pos[1] >= 0 && pos[0] <= l.Max[0] - 48 && pos[1] <= l.Max[1] - 48 {
-        // check if in a box
-        for _, a := range l.Boxes {
-            if pos[0] >= a[0] && pos[1] >= a[1] && pos[0] < a[2] && pos[1] < a[3] - 24 {
-                log.Fatal("StartLoc was in a box")
-            }
-        }
-    } else {
-        log.Fatal("StartLoc is out of bounds")
-    }
-    p.Pos = pos
-}
 
 type Game struct {}
 
@@ -75,7 +55,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyW) % 2 == 0 {
-            _ = TryUpdatePos(true, p.Pos, l, true, -24)
+            utils.TryUpdatePos(true, p, l, true, -24)
         }
         count++
     }
@@ -86,7 +66,7 @@ func (g *Game) Update() error {
         down = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyA) % 2 == 0 {
-            _ = TryUpdatePos(true, p.Pos, l, false, -24)
+            utils.TryUpdatePos(true, p, l, false, -24)
         }
         count++
     }
@@ -97,7 +77,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         if inpututil.KeyPressDuration(ebiten.KeyD) % 2 == 0 {
-            _ = TryUpdatePos(true, p.Pos, l, false, 24)
+            utils.TryUpdatePos(true, p, l, false, 24)
         }
         count++
     }
@@ -108,7 +88,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyS) % 2 == 0 {
-            _ = TryUpdatePos(true, p.Pos, l, true, 24)
+            utils.TryUpdatePos(true, p, l, true, 24)
         }
         count++
     }
@@ -151,7 +131,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     case up:
         if stopped {
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         pcUpOffsetX, pcUpOffsetY, pcUpOffsetX + 64, pcUpOffsetY + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -160,7 +140,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             i := (count / 5) % 4
             sx, sy := pcUpOffsetX + (i * 64), pcUpOffsetY
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -169,7 +149,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     case left:
         if stopped {
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         pcLeftOffsetX, pcLeftOffsetY, pcLeftOffsetX + 64, pcLeftOffsetY + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -178,7 +158,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             i := (count / 5) % 4
             sx, sy := pcLeftOffsetX + (i * 64), pcLeftOffsetY
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -187,7 +167,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     case right:
         if stopped {
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         pcRightOffsetX, pcRightOffsetY, pcRightOffsetX + 64, pcRightOffsetY + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -196,7 +176,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             i := (count / 5) % 4
             sx, sy := pcRightOffsetX + (i * 64), pcRightOffsetY
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -205,7 +185,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     case down:
         if stopped {
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         pcDownOffsetX, pcDownOffsetY, pcDownOffsetX + 64, pcDownOffsetY + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -214,7 +194,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             i := (count / 5) % 4
             sx, sy := pcDownOffsetX + (i * 64), pcDownOffsetY
             screen.DrawImage(
-                pcImage.SubImage(
+                p.Image.SubImage(
                     image.Rect(
                         sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                         &ebiten.DrawImageOptions{
@@ -246,9 +226,8 @@ func init() {
         ld.Image.Fill(color.Black)
     }
     l = &levels.Level{Max: [2]int{lw - 768, lh - 576}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}, Doors: lvldoors, Image: levelImage}
-    P.StartLoc(l, l.Pos)
-
-    //p = &Player{pos: l.Pos}
+//    player.P.StartLoc(l, l.Pos)
+    p = &player.Player{Pos: l.Pos, Image: pcImage}
 }
 
 func main() {
