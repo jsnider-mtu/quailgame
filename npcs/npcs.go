@@ -2,6 +2,7 @@ package npcs
 
 import (
     "github.com/hajimehoshi/ebiten/v2"
+    "github.com/jsnider-mtu/projectx/player"
     "github.com/jsnider-mtu/projectx/levels"
     "github.com/jsnider-mtu/projectx/utils"
 )
@@ -9,9 +10,10 @@ import (
 type NPC struct {
     Name string
     Msgs []string
-    Img *ebiten.Image
+//    Img *ebiten.Image
     Speed int // Speed of 0 means no movement
-    Pos [2]int
+//    Pos [2]int
+    PC *player.Player
 }
 
 func (npc *NPC) Move(l *levels.Level, direction string) {
