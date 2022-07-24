@@ -108,9 +108,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     for _, box := range l.Boxes {
         bgm := ebiten.GeoM{}
-        bgm.Translate(float64((w / 2) + box[0]), float64((h / 2) + box[1]))
+        bgm.Translate(float64(box[0]), float64(box[1]))
         bi := ebiten.NewImage(box[2] - box[0], box[3] - box[1])
-        bi.Fill(color.Black)
+        bi.Fill(color.White)
         l.Image.DrawImage(bi, &ebiten.DrawImageOptions{
             GeoM: bgm})
     }
