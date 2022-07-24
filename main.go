@@ -12,12 +12,13 @@ import (
     "github.com/jsnider-mtu/projectx/player"
     "github.com/jsnider-mtu/projectx/player/pcimages"
     "github.com/jsnider-mtu/projectx/levels"
+    "github.com/jsnider-mtu/projectx/levels/lvlone"
 //    "github.com/jsnider-mtu/projectx/npcs"
     "github.com/jsnider-mtu/projectx/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
-    "github.com/hajimehoshi/ebiten/v2/examples/resources/images/platformer"
+//    "github.com/hajimehoshi/ebiten/v2/examples/resources/images/platformer"
 )
 
 var (
@@ -214,18 +215,19 @@ func init() {
     }
     pcImage = ebiten.NewImageFromImage(pcimage)
 
-    levelimage, _, err := image.Decode(bytes.NewReader(platformer.Background_png))
-    if err != nil {
-        log.Fatal(err)
-    }
-    levelImage = ebiten.NewImageFromImage(levelimage)
+//    levelimage, _, err := image.Decode(bytes.NewReader(platformer.Background_png))
+//    if err != nil {
+//        log.Fatal(err)
+//    }
+//    levelImage = ebiten.NewImageFromImage(levelimage)
 
-    lw, lh := levelImage.Size()
-    lvldoors := []*levels.Door{&levels.Door{Coords: [4]int{96, 96, 192, 144}, Direction: "up", Image: ebiten.NewImage(192-96, 144-96)}}
-    for _, ld := range lvldoors {
-        ld.Image.Fill(color.Black)
-    }
-    l = &levels.Level{Max: [2]int{lw - 768, lh - 576}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}, Doors: lvldoors, Image: levelImage}
+//    lw, lh := levelImage.Size()
+//    lvldoors := []*levels.Door{&levels.Door{Coords: [4]int{96, 96, 192, 144}, Direction: "up", Image: ebiten.NewImage(192-96, 144-96)}}
+//    for _, ld := range lvldoors {
+//        ld.Image.Fill(color.Black)
+//    }
+    l = lvlone.Setup()
+//    l = &levels.Level{Max: [2]int{lw - 768, lh - 576}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}, Doors: lvldoors, Image: levelImage}
 //    player.P.StartLoc(l, l.Pos)
     p = &player.Player{Pos: l.Pos, Image: pcImage}
 }
