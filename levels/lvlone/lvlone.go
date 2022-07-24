@@ -12,12 +12,6 @@ import (
     "github.com/jsnider-mtu/projectx/levels/lvlimages"
 )
 
-//var (
-//    L *levels.Level
-//    lvlImg *ebiten.Image
-//    lvldoors []*levels.Door
-//)
-
 func Setup() *levels.Level {
     lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.One_JPEG))
     if err != nil {
@@ -30,7 +24,5 @@ func Setup() *levels.Level {
         ld.Image.Fill(color.Black)
     }
     
-    //L = &levels.Level{Max: [2]int{1152, 504}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}, Doors: lvldoors, Image: lvlImg}
-    return &levels.Level{Max: [2]int{1152, 504}, Pos: [2]int{0, 0}, Boxes: [][4]int{{576, 336, 672, 432}}, Doors: lvldoors, Image: lvlImg}
-    //return L
+    return &levels.Level{Max: [2]int{1152, 504}, Pos: [2]int{384, 288}, Boxes: [][4]int{{-384, -288, 1154-384, 172-288}}, Doors: lvldoors, Image: lvlImg}
 }

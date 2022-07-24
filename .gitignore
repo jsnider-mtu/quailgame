@@ -1,5 +1,5 @@
-*/*.png
-*/*.jpeg
+*.png
+*.jpeg
 *~
 *.swp
 *.swo
