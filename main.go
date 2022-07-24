@@ -42,6 +42,7 @@ var (
     lastCount int = 0
     l *levels.Level
     p *player.Player
+    zero [2]int
 )
 
 type Game struct {}
@@ -121,7 +122,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             GeoM: dgm})
     }
     lgm := ebiten.GeoM{}
-    lgm.Translate(float64(l.Pos[0]), float64(l.Pos[1]))
+    lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
     screen.DrawImage(l.Image, &ebiten.DrawImageOptions{GeoM: lgm})
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
@@ -214,7 +215,7 @@ func init() {
     pcImage = ebiten.NewImageFromImage(pcimage)
 
     l = lvlone.Setup()
-    p = &player.Player{Pos: l.Pos, Image: pcImage}
+    p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
 }
 
 func main() {

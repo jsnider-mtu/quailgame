@@ -24,6 +24,5 @@ func Setup() *levels.Level {
         ld.Image.Fill(color.Black)
     }
     
-    return &levels.Level{Max: [2]int{1536, 792}, Pos: [2]int{384, 288-172}, Boxes: [][4]int{{0, 0, 48, 48}}, Doors: lvldoors, Image: lvlImg}
-    //return &levels.Level{Max: [2]int{1536, 792}, Pos: [2]int{384, 288-172}, Boxes: [][4]int{{0, 0, 1154, 172}}, Doors: lvldoors, Image: lvlImg}
+    return &levels.Level{Max: [2]int{1536, 792}, Pos: [2]int{0, -172}, Boxes: [][4]int{{0, 0, 48, 48}}, Doors: lvldoors, Image: lvlImg}
 }
