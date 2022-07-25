@@ -15,6 +15,11 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                         return false
                     }
                 }
+                for _, b := range l.NPCs {
+                    if p.Pos[0] + 48 > b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] && p.Pos[0] < b.PC.Pos[0] + 48 && p.Pos[1] + dist <= b.PC.Pos[1] + 24 {
+                        return false
+                    }
+                }
                 p.Pos[1] += dist
                 if pc {
                     l.Pos[1] -= dist
@@ -30,6 +35,11 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                         return false
                     }
                 }
+                for _, b := range l.NPCs {
+                    if p.Pos[0] + 48 > b.PC.Pos[0] && p.Pos[1] + 48 + dist > b.PC.Pos[1] && p.Pos[0] < b.PC.Pos[0] + 48 && p.Pos[1] + 48 + dist < b.PC.Pos[1] + 48 {
+                        return false
+                    }
+                }
                 p.Pos[1] += dist
                 if pc {
                     l.Pos[1] -= dist
@@ -42,8 +52,13 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
         // left
         if dist < 0 {
             if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.Max[0] {
-                for _, b := range l.Boxes {
-                    if p.Pos[0] + dist > b[0] && p.Pos[1] + 48 > b[1] && p.Pos[0] + dist < b[2] && p.Pos[1] < b[3] - 24 {
+                for _, a := range l.Boxes {
+                    if p.Pos[0] + dist > a[0] && p.Pos[1] + 48 > a[1] && p.Pos[0] + dist < a[2] && p.Pos[1] < a[3] - 24 {
+                        return false
+                    }
+                }
+                for _, b := range l.NPCs {
+                    if p.Pos[0] + dist > b.PC.Pos[0] && p.Pos[1] + 48 > b.PC.Pos[1] && p.Pos[0] + dist < b.PC.Pos[0] + 48 && p.Pos[1] < b.PC.Pos[1] + 48 {
                         return false
                     }
                 }
@@ -57,8 +72,13 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
         } else {
             // right
             if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.Max[0] {
-                for _, b := range l.Boxes {
-                    if p.Pos[0] + 48 + dist > b[0] && p.Pos[1] + 48 > b[1] && p.Pos[0] + 48 + dist < b[2] && p.Pos[1] < b[3] - 24 {
+                for _, a := range l.Boxes {
+                    if p.Pos[0] + 48 + dist > a[0] && p.Pos[1] + 48 > a[1] && p.Pos[0] + 48 + dist < a[2] && p.Pos[1] < a[3] - 24 {
+                        return false
+                    }
+                }
+                for _, b := range l.NPCs {
+                    if p.Pos[0] + 48 + dist > b.PC.Pos[0] && p.Pos[1] + 48 > b.PC.Pos[1] && p.Pos[0] + dist < b.PC.Pos[0] + 48 && p.Pos[1] < b.PC.Pos[1] + 48 {
                         return false
                     }
                 }
