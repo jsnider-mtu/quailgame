@@ -1,13 +1,15 @@
 package levels
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
-//    "github.com/jsnider-mtu/projectx/levels/lvlimages"
-)
+    "bytes"
+    "image"
+    "image/color"
+    _ "image/jpeg"
+    "log"
 
-//var (
-//    first *Level = &Level{Max: [2]int{
-//)
+    "github.com/hajimehoshi/ebiten/v2"
+    "github.com/jsnider-mtu/projectx/levels/lvlimages"
+)
 
 type Level struct {
     Max [2]int
@@ -18,7 +20,37 @@ type Level struct {
 }
 
 type Door struct {
-    Coords [4]int
-    Direction string // "up", "down", "left", "right"
+    Coords [2]int
+    NewLvl int
     Image *ebiten.Image
+}
+
+func LvlOne() *Level {
+    lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.One_JPEG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    lvlImg := ebiten.NewImageFromImage(lvlimg)
+
+    lvldoors := []*Door{&Door{Coords: [2]int{96, 96}, NewLvl: 2, Image: ebiten.NewImage(48, 48)}}
+    for _, ld := range lvldoors {
+        ld.Image.Fill(color.Black)
+    }
+
+    return &Level{Max: [2]int{720, 528}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{0, 0, 48, 48}}, Doors: lvldoors, Image: lvlImg}
+}
+
+func LvlTwo() *Level {
+    lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.One_JPEG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    lvlImg := ebiten.NewImageFromImage(lvlimg)
+
+    lvldoors := []*Door{&Door{Coords: [2]int{192, 192}, NewLvl: 1, Image: ebiten.NewImage(48, 48)}}
+    for _, ld := range lvldoors {
+        ld.Image.Fill(color.Black)
+    }
+
+    return &Level{Max: [2]int{720, 528}, Pos: [2]int{-96, -144}, Boxes: [][4]int{{0, 0, 48, 48}}, Doors: lvldoors, Image: lvlImg}
 }

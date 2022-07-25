@@ -12,13 +12,11 @@ import (
     "github.com/jsnider-mtu/projectx/player"
     "github.com/jsnider-mtu/projectx/player/pcimages"
     "github.com/jsnider-mtu/projectx/levels"
-    "github.com/jsnider-mtu/projectx/levels/lvlone"
 //    "github.com/jsnider-mtu/projectx/npcs"
     "github.com/jsnider-mtu/projectx/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
-//    "github.com/hajimehoshi/ebiten/v2/examples/resources/images/platformer"
 )
 
 var (
@@ -42,7 +40,6 @@ var (
     lastCount int = 0
     l *levels.Level
     p *player.Player
-    zero [2]int
 )
 
 type Game struct {}
@@ -55,7 +52,15 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyW) % 2 == 0 {
-            utils.TryUpdatePos(true, p, l, true, -24)
+            if utils.TryUpdatePos(true, p, l, true, -24) {
+                for _, a := range l.Doors {
+                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                        l = loadlvl(a.NewLvl)
+                        p.Pos[0] = -l.Pos[0]
+                        p.Pos[1] = -l.Pos[1]
+                    }
+                }
+            }
         }
         count++
     }
@@ -66,7 +71,15 @@ func (g *Game) Update() error {
         down = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyA) % 2 == 0 {
-            utils.TryUpdatePos(true, p, l, false, -24)
+            if utils.TryUpdatePos(true, p, l, false, -24) {
+                for _, a := range l.Doors {
+                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                        l = loadlvl(a.NewLvl)
+                        p.Pos[0] = -l.Pos[0]
+                        p.Pos[1] = -l.Pos[1]
+                    }
+                }
+            }
         }
         count++
     }
@@ -77,7 +90,15 @@ func (g *Game) Update() error {
         up = false
         down = false
         if inpututil.KeyPressDuration(ebiten.KeyD) % 2 == 0 {
-            utils.TryUpdatePos(true, p, l, false, 24)
+            if utils.TryUpdatePos(true, p, l, false, 24) {
+                for _, a := range l.Doors {
+                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                        l = loadlvl(a.NewLvl)
+                        p.Pos[0] = -l.Pos[0]
+                        p.Pos[1] = -l.Pos[1]
+                    }
+                }
+            }
         }
         count++
     }
@@ -88,7 +109,15 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyS) % 2 == 0 {
-            utils.TryUpdatePos(true, p, l, true, 24)
+            if utils.TryUpdatePos(true, p, l, true, 24) {
+                for _, a := range l.Doors {
+                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                        l = loadlvl(a.NewLvl)
+                        p.Pos[0] = -l.Pos[0]
+                        p.Pos[1] = -l.Pos[1]
+                    }
+                }
+            }
         }
         count++
     }
@@ -117,7 +146,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     for _, door := range l.Doors {
         dgm := ebiten.GeoM{}
-        dgm.Translate(float64((w / 2) + door.Coords[0]), float64((h / 2) + door.Coords[1]))
+        dgm.Translate(float64(door.Coords[0]), float64(door.Coords[1]))
         l.Image.DrawImage(door.Image, &ebiten.DrawImageOptions{
             GeoM: dgm})
     }
@@ -207,6 +236,16 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
     return outsideWidth, outsideHeight
 }
 
+func loadlvl(lvl int) *levels.Level {
+    switch lvl {
+    case 1:
+        return levels.LvlOne()
+    case 2:
+        return levels.LvlTwo()
+    }
+    return levels.LvlOne()
+}
+
 func init() {
     pcimage, _, err := image.Decode(bytes.NewReader(pcimages.PC_png))
     if err != nil {
@@ -214,7 +253,7 @@ func init() {
     }
     pcImage = ebiten.NewImageFromImage(pcimage)
 
-    l = lvlone.Setup()
+    l = levels.LvlOne()
     p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
 }
 
