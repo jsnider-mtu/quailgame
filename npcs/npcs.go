@@ -12,6 +12,7 @@ type NPC struct {
     Msgs []string
 //    Img *ebiten.Image
     Speed int // Speed of 0 means no movement
+    Direction string
 //    Pos [2]int
     PC *player.Player
 }
