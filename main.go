@@ -53,7 +53,7 @@ func (g *Game) Update() error {
         down = false
         left = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyW) % 3 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
             if utils.TryUpdatePos(true, p, l, true, -24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
@@ -72,7 +72,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyA) % 3 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
             if utils.TryUpdatePos(true, p, l, false, -24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
@@ -91,7 +91,7 @@ func (g *Game) Update() error {
         left = false
         up = false
         down = false
-        if inpututil.KeyPressDuration(ebiten.KeyD) % 3 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
             if utils.TryUpdatePos(true, p, l, false, 24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
@@ -110,7 +110,7 @@ func (g *Game) Update() error {
         up = false
         left = false
         right = false
-        if inpututil.KeyPressDuration(ebiten.KeyS) % 3 == 0 {
+        if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
             if utils.TryUpdatePos(true, p, l, true, 24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
