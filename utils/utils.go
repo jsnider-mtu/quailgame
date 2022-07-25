@@ -16,7 +16,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                     }
                 }
                 for _, b := range l.NPCs {
-                    if p.Pos[0] + 48 > b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] && p.Pos[0] < b.PC.Pos[0] + 48 && p.Pos[1] + dist <= b.PC.Pos[1] + 24 {
+                    if p.Pos[0] + 24 > b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] - 24 && p.Pos[0] < b.PC.Pos[0] + 24 && p.Pos[1] - 24 + dist < b.PC.Pos[1] {
                         return false
                     }
                 }
@@ -36,7 +36,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                     }
                 }
                 for _, b := range l.NPCs {
-                    if p.Pos[0] + 48 > b.PC.Pos[0] && p.Pos[1] + 48 + dist > b.PC.Pos[1] && p.Pos[0] < b.PC.Pos[0] + 48 && p.Pos[1] + 48 + dist < b.PC.Pos[1] + 48 {
+                    if p.Pos[0] + 24 > b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] - 24 && p.Pos[0] < b.PC.Pos[0] + 24 && p.Pos[1] + 24 + dist < b.PC.Pos[1] + 48 {
                         return false
                     }
                 }
@@ -58,7 +58,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                     }
                 }
                 for _, b := range l.NPCs {
-                    if p.Pos[0] + dist > b.PC.Pos[0] && p.Pos[1] + 48 > b.PC.Pos[1] && p.Pos[0] + dist < b.PC.Pos[0] + 48 && p.Pos[1] < b.PC.Pos[1] + 48 {
+                    if p.Pos[0] + dist > b.PC.Pos[0] - 24 && p.Pos[1] > b.PC.Pos[1] - 24 && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] < b.PC.Pos[1] + 24 {
                         return false
                     }
                 }
@@ -78,7 +78,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                     }
                 }
                 for _, b := range l.NPCs {
-                    if p.Pos[0] + 48 + dist > b.PC.Pos[0] && p.Pos[1] + 48 > b.PC.Pos[1] && p.Pos[0] + dist < b.PC.Pos[0] + 48 && p.Pos[1] < b.PC.Pos[1] + 48 {
+                    if p.Pos[0] + dist > b.PC.Pos[0] - 24 && p.Pos[1] > b.PC.Pos[1] - 24 && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] < b.PC.Pos[1] + 24 {
                         return false
                     }
                 }
