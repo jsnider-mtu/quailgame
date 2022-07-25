@@ -37,7 +37,7 @@ func LvlOne() *Level {
         ld.Image.Fill(color.Black)
     }
 
-    return &Level{Max: [2]int{720, 528}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{0, 0, 48, 48}}, Doors: lvldoors, Image: lvlImg}
+    return &Level{Max: [2]int{720, 528}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{48, 48, 96, 96}}, Doors: lvldoors, Image: lvlImg}
 }
 
 func LvlTwo() *Level {
