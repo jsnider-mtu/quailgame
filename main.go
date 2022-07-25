@@ -2,7 +2,7 @@ package main
 
 import (
     "bytes"
-//    "fmt"
+    "fmt"
     "image"
     "image/color"
     _ "image/png"
@@ -47,6 +47,38 @@ var (
 type Game struct {}
 
 func (g *Game) Update() error {
+    if inpututil.KeyPressDuration(ebiten.KeyF) > 0 {
+        switch {
+        case up:
+            for _, npc := range l.NPCs {
+                if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
+                    // open dialog
+                    fmt.Println("Dialog up")
+                }
+            }
+        case down:
+            for _, npc := range l.NPCs {
+                if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
+                    // open dialog
+                    fmt.Println("Dialog down")
+                }
+            }
+        case left:
+            for _, npc := range l.NPCs {
+                if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
+                    // open dialog
+                    fmt.Println("Dialog left")
+                }
+            }
+        case right:
+            for _, npc := range l.NPCs {
+                if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
+                    // open dialog
+                    fmt.Println("Dialog right")
+                }
+            }
+        }
+    }
     if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
         stopped = false
         up = true
