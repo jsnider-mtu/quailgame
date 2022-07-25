@@ -54,7 +54,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyW) % 3 == 0 {
-            if utils.TryUpdatePos(true, p, l, true, -24) {
+            if utils.TryUpdatePos(true, p, l, true, -24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
                         l = loadlvl(a.NewLvl)
@@ -73,7 +73,7 @@ func (g *Game) Update() error {
         down = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyA) % 3 == 0 {
-            if utils.TryUpdatePos(true, p, l, false, -24) {
+            if utils.TryUpdatePos(true, p, l, false, -24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
                         l = loadlvl(a.NewLvl)
@@ -92,7 +92,7 @@ func (g *Game) Update() error {
         up = false
         down = false
         if inpututil.KeyPressDuration(ebiten.KeyD) % 3 == 0 {
-            if utils.TryUpdatePos(true, p, l, false, 24) {
+            if utils.TryUpdatePos(true, p, l, false, 24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
                         l = loadlvl(a.NewLvl)
@@ -111,7 +111,7 @@ func (g *Game) Update() error {
         left = false
         right = false
         if inpututil.KeyPressDuration(ebiten.KeyS) % 3 == 0 {
-            if utils.TryUpdatePos(true, p, l, true, 24) {
+            if utils.TryUpdatePos(true, p, l, true, 24, p) {
                 for _, a := range l.Doors {
                     if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
                         l = loadlvl(a.NewLvl)
@@ -166,19 +166,19 @@ func (g *Game) Draw(screen *ebiten.Image) {
         if npcCount % npc.Speed == 0 {
             switch rand.Intn(4) {
             case 0:
-                if utils.TryUpdatePos(false, npc.PC, l, true, 24) {
+                if utils.TryUpdatePos(false, npc.PC, l, true, 24, p) {
                     npc.Direction = "down"
                 }
             case 1:
-                if utils.TryUpdatePos(false, npc.PC, l, true, -24) {
+                if utils.TryUpdatePos(false, npc.PC, l, true, -24, p) {
                     npc.Direction = "up"
                 }
             case 2:
-                if utils.TryUpdatePos(false, npc.PC, l, false, 24) {
+                if utils.TryUpdatePos(false, npc.PC, l, false, 24, p) {
                     npc.Direction = "right"
                 }
             case 3:
-                if utils.TryUpdatePos(false, npc.PC, l, false, -24) {
+                if utils.TryUpdatePos(false, npc.PC, l, false, -24, p) {
                     npc.Direction = "left"
                 }
             }

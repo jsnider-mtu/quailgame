@@ -5,7 +5,7 @@ import (
     "github.com/jsnider-mtu/projectx/player"
 )
 
-func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist int) bool {
+func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist int, mc *player.Player) bool {
     if vert {
         // up
         if dist < 0 {
@@ -17,6 +17,11 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                 }
                 for _, b := range l.NPCs {
                     if p.Pos[0] + 24 > b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] - 24 && p.Pos[0] < b.PC.Pos[0] + 24 && p.Pos[1] - 24 + dist < b.PC.Pos[1] {
+                        return false
+                    }
+                }
+                if !pc {
+                    if p.Pos[0] + 24 > mc.Pos[0] && p.Pos[1] + dist > mc.Pos[1] - 24 && p.Pos[0] < mc.Pos[0] + 24 && p.Pos[1] - 24 + dist < mc.Pos[1] {
                         return false
                     }
                 }
@@ -37,6 +42,11 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                 }
                 for _, b := range l.NPCs {
                     if p.Pos[0] + 24 > b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] - 24 && p.Pos[0] < b.PC.Pos[0] + 24 && p.Pos[1] + 24 + dist < b.PC.Pos[1] + 48 {
+                        return false
+                    }
+                }
+                if !pc {
+                    if p.Pos[0] + 24 > mc.Pos[0] && p.Pos[1] + dist > mc.Pos[1] - 24 && p.Pos[0] < mc.Pos[0] + 24 && p.Pos[1] + 24 + dist < mc.Pos[1] + 48 {
                         return false
                     }
                 }
@@ -62,6 +72,11 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                         return false
                     }
                 }
+                if !pc {
+                    if p.Pos[0] + dist > mc.Pos[0] - 24 && p.Pos[1] > mc.Pos[1] - 24 && p.Pos[0] + dist < mc.Pos[0] + 24 && p.Pos[1] < mc.Pos[1] + 24 {
+                        return false
+                    }
+                }
                 p.Pos[0] += dist
                 if pc {
                     l.Pos[0] -= dist
@@ -79,6 +94,11 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                 }
                 for _, b := range l.NPCs {
                     if p.Pos[0] + dist > b.PC.Pos[0] - 24 && p.Pos[1] > b.PC.Pos[1] - 24 && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] < b.PC.Pos[1] + 24 {
+                        return false
+                    }
+                }
+                if !pc {
+                    if p.Pos[0] + dist > mc.Pos[0] - 24 && p.Pos[1] > mc.Pos[1] - 24 && p.Pos[0] + dist < mc.Pos[0] + 24 && p.Pos[1] < mc.Pos[1] + 24 {
                         return false
                     }
                 }
