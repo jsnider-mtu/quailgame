@@ -1,10 +1,10 @@
 package npcs
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+//    "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/projectx/player"
-    "github.com/jsnider-mtu/projectx/levels"
-    "github.com/jsnider-mtu/projectx/utils"
+//    "github.com/jsnider-mtu/projectx/levels"
+//    "github.com/jsnider-mtu/projectx/utils"
 )
 
 type NPC struct {
@@ -16,19 +16,19 @@ type NPC struct {
     PC *player.Player
 }
 
-func (npc *NPC) Move(l *levels.Level, direction string) {
-    var newpos [2]int
-    switch direction {
-    case "up":
-        newpos = utils.TryUpdatePos(false, npc.Pos, l, true, -24)
-    case "down":
-        newpos = utils.TryUpdatePos(false, npc.Pos, l, true, 24)
-    case "left":
-        newpos = utils.TryUpdatePos(false, npc.Pos, l, false, -24)
-    case "right":
-        newpos = utils.TryUpdatePos(false, npc.Pos, l, false, 24)
-    default:
-        newpos = npc.Pos
-    }
-    npc.Pos = newpos
-}
+//func (npc *NPC) Move(l *levels.Level, direction string) {
+//    var newpos [2]int
+//    switch direction {
+//    case "up":
+//        newpos = utils.TryUpdatePos(false, npc.Pos, l, true, -24)
+//    case "down":
+//        newpos = utils.TryUpdatePos(false, npc.Pos, l, true, 24)
+//    case "left":
+//        newpos = utils.TryUpdatePos(false, npc.Pos, l, false, -24)
+//    case "right":
+//        newpos = utils.TryUpdatePos(false, npc.Pos, l, false, 24)
+//    default:
+//        newpos = npc.Pos
+//    }
+//    npc.Pos = newpos
+//}
