@@ -58,6 +58,8 @@ var (
     newlvl int
     f int = 0
     fadeImage *ebiten.Image
+    dab int = 0
+    dialogCount int = 0
 )
 
 type Game struct {}
@@ -358,6 +360,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if dialogopen {
+        if dialogCount == 1000 {
+            dialogCount = 0
+        }
+        dialogCount++
         dialoggm := ebiten.GeoM{}
         dialoggm.Translate(float64(128), float64(504))
         dialogimg := ebiten.NewImage(512, 72)
@@ -383,6 +389,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
                     dagm := ebiten.GeoM{}
                     dagm.Scale(0.25, 0.25)
                     dagm.Translate(float64(586), float64(522))
+                    if dialogCount % 13 == 0 {
+                        dab++
+                    }
+                    if dab == 3 || dab == 5 {
+                        dagm.Translate(float64(0), float64(-4))
+                    } else if dab == 8 {
+                        dab = 0
+                    }
                     screen.DrawImage(
                         downArrowImage, &ebiten.DrawImageOptions{
                             GeoM: dagm})
