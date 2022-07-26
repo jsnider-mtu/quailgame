@@ -9,6 +9,7 @@ import (
     "log"
     "math/rand"
 //    "os"
+//    "time"
 
     "golang.org/x/image/font"
     "golang.org/x/image/font/gofont/gomonobold"
@@ -56,6 +57,10 @@ var (
     fon *truetype.Font
     fo font.Face
     s int = 0
+    lvlchange bool = false
+    newlvl int
+    f int = 0
+    fadeImage *ebiten.Image
 )
 
 type Game struct {}
@@ -130,9 +135,8 @@ func (g *Game) Update() error {
                 if utils.TryUpdatePos(true, p, l, true, -24, p) {
                     for _, a := range l.Doors {
                         if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            l = loadlvl(a.NewLvl)
-                            p.Pos[0] = -l.Pos[0]
-                            p.Pos[1] = -l.Pos[1]
+                            newlvl = a.NewLvl
+                            lvlchange = true
                         }
                     }
                 }
@@ -149,9 +153,8 @@ func (g *Game) Update() error {
                 if utils.TryUpdatePos(true, p, l, false, -24, p) {
                     for _, a := range l.Doors {
                         if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            l = loadlvl(a.NewLvl)
-                            p.Pos[0] = -l.Pos[0]
-                            p.Pos[1] = -l.Pos[1]
+                            newlvl = a.NewLvl
+                            lvlchange = true
                         }
                     }
                 }
@@ -168,9 +171,8 @@ func (g *Game) Update() error {
                 if utils.TryUpdatePos(true, p, l, false, 24, p) {
                     for _, a := range l.Doors {
                         if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            l = loadlvl(a.NewLvl)
-                            p.Pos[0] = -l.Pos[0]
-                            p.Pos[1] = -l.Pos[1]
+                            newlvl = a.NewLvl
+                            lvlchange = true
                         }
                     }
                 }
@@ -187,9 +189,8 @@ func (g *Game) Update() error {
                 if utils.TryUpdatePos(true, p, l, true, 24, p) {
                     for _, a := range l.Doors {
                         if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            l = loadlvl(a.NewLvl)
-                            p.Pos[0] = -l.Pos[0]
-                            p.Pos[1] = -l.Pos[1]
+                            newlvl = a.NewLvl
+                            lvlchange = true
                         }
                     }
                 }
@@ -400,6 +401,32 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
     }
+    if lvlchange {
+        if npcCount % 15 == 0 {
+            f++
+        }
+        if f == 0 {
+            screen.DrawImage(fadeImage, &ebiten.DrawImageOptions{})
+        } else if f == 1 {
+            op := &ebiten.DrawImageOptions{}
+            op.ColorM.Scale(1.0, 1.0, 1.0, 2.0)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 2 {
+            op := &ebiten.DrawImageOptions{}
+            op.ColorM.Scale(1.0, 1.0, 1.0, 3.0)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 3 {
+            op := &ebiten.DrawImageOptions{}
+            op.ColorM.Scale(1.0, 1.0, 1.0, 4.0)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 4 {
+            f = 0
+            lvlchange = false
+            l = loadlvl(newlvl)
+            p.Pos[0] = -l.Pos[0]
+            p.Pos[1] = -l.Pos[1]
+        }
+    }
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
@@ -434,6 +461,17 @@ func init() {
         log.Fatal(err)
     }
     pcImage = ebiten.NewImageFromImage(pcimage)
+
+    pixels := []uint8{}
+    for a := 0; a < 442368; a++ {
+        pixels = append(pixels, 0x40)
+    }
+
+    fadeImage = ebiten.NewImageFromImage(&image.Alpha{
+        Pix: pixels,
+        Stride: 768,
+        Rect: image.Rect(0, 0, 768, 576),
+    })
 
     l = levels.LvlOne()
     p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
