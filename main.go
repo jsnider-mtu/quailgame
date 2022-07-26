@@ -211,7 +211,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
     for _, door := range l.Doors {
         dgm := ebiten.GeoM{}
         dgm.Translate(float64(door.Coords[0]), float64(door.Coords[1]))
-        l.Image.DrawImage(door.Image, &ebiten.DrawImageOptions{
+        di := ebiten.NewImage(48, 48)
+        di.Fill(color.Black)
+        l.Image.DrawImage(di, &ebiten.DrawImageOptions{
             GeoM: dgm})
     }
     lgm := ebiten.GeoM{}

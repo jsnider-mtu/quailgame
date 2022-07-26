@@ -3,7 +3,6 @@ package levels
 import (
     "bytes"
     "image"
-    "image/color"
     _ "image/jpeg"
     "log"
 
@@ -26,7 +25,6 @@ type Level struct {
 type Door struct {
     Coords [2]int
     NewLvl int
-    Image *ebiten.Image
 }
 
 func LvlOne() *Level {
@@ -41,10 +39,7 @@ func LvlOne() *Level {
     }
     pcImage := ebiten.NewImageFromImage(pcimage)
 
-    lvldoors := []*Door{&Door{Coords: [2]int{96, 96}, NewLvl: 2, Image: ebiten.NewImage(48, 48)}}
-    for _, ld := range lvldoors {
-        ld.Image.Fill(color.Black)
-    }
+    lvldoors := []*Door{&Door{Coords: [2]int{96, 96}, NewLvl: 2}}
 
     NPCs := []*npcs.NPC{&npcs.NPC{Name: "FirstNPC", Msgs: [][]string{{"Hello there,", "ObiWan Kenobi."}, {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, MsgCount: 0, Speed: 200, Direction: "down", PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
 
@@ -58,10 +53,7 @@ func LvlTwo() *Level {
     }
     lvlImg := ebiten.NewImageFromImage(lvlimg)
 
-    lvldoors := []*Door{&Door{Coords: [2]int{192, 192}, NewLvl: 1, Image: ebiten.NewImage(48, 48)}}
-    for _, ld := range lvldoors {
-        ld.Image.Fill(color.Black)
-    }
+    lvldoors := []*Door{&Door{Coords: [2]int{192, 192}, NewLvl: 1}}
 
     return &Level{Max: [2]int{720, 528}, Pos: [2]int{-96, -144}, Boxes: [][4]int{{0, 0, 48, 48}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
 }
