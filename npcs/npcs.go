@@ -9,27 +9,17 @@ import (
 
 type NPC struct {
     Name string
-    Msgs []string
-//    Img *ebiten.Image
+    Msgs [][]string
+    MsgCount int
     Speed int // Speed of 0 means no movement
     Direction string
-//    Pos [2]int
     PC *player.Player
 }
 
-//func (npc *NPC) Move(l *levels.Level, direction string) {
-//    var newpos [2]int
-//    switch direction {
-//    case "up":
-//        newpos = utils.TryUpdatePos(false, npc.Pos, l, true, -24)
-//    case "down":
-//        newpos = utils.TryUpdatePos(false, npc.Pos, l, true, 24)
-//    case "left":
-//        newpos = utils.TryUpdatePos(false, npc.Pos, l, false, -24)
-//    case "right":
-//        newpos = utils.TryUpdatePos(false, npc.Pos, l, false, 24)
-//    default:
-//        newpos = npc.Pos
-//    }
-//    npc.Pos = newpos
-//}
+func (npc *NPC) Dialog() []string {
+    if npc.MsgCount == len(npc.Msgs) {
+        npc.MsgCount = 0
+    }
+    npc.MsgCount++
+    return npc.Msgs[npc.MsgCount - 1]
+}

@@ -10,6 +10,11 @@ import (
     "math/rand"
 //    "os"
 
+    "golang.org/x/image/font"
+    "golang.org/x/image/font/gofont/gomonobold"
+
+    "github.com/golang/freetype/truetype"
+
     "github.com/jsnider-mtu/projectx/player"
     "github.com/jsnider-mtu/projectx/player/pcimages"
     "github.com/jsnider-mtu/projectx/levels"
@@ -18,9 +23,11 @@ import (
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
+    "github.com/hajimehoshi/ebiten/v2/text"
 )
 
 var (
+    err error
     start bool = false
     pause bool = false
     pcImage *ebiten.Image
@@ -40,127 +47,160 @@ var (
     count int = 0
     lastCount int = 0
     npcCount int = 0
+    dialogopen bool = false
+    dialogstrs []string
     l *levels.Level
     p *player.Player
+    fon *truetype.Font
+    fo font.Face
+    s int = 0
 )
 
 type Game struct {}
 
 func (g *Game) Update() error {
-    if inpututil.KeyPressDuration(ebiten.KeyF) > 0 {
+    if inpututil.IsKeyJustPressed(ebiten.KeyF) {
+        if dialogopen {
+            // Run through all lines of dialog
+            s += 2
+            if s >= len(dialogstrs) {
+                fmt.Println("Closing dialog")
+                dialogopen = false
+                s = 0
+            }
+            return nil
+        }
         switch {
         case up:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
                     // open dialog
-                    fmt.Println("Dialog up")
+                    if !dialogopen {
+                        dialogstrs = npc.Dialog()
+                        fmt.Println(dialogstrs)
+                        dialogopen = true
+                    }
                 }
             }
         case down:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
                     // open dialog
-                    fmt.Println("Dialog down")
+                    if !dialogopen {
+                        dialogstrs = npc.Dialog()
+                        fmt.Println(dialogstrs)
+                        dialogopen = true
+                    }
                 }
             }
         case left:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
                     // open dialog
-                    fmt.Println("Dialog left")
+                    if !dialogopen {
+                        dialogstrs = npc.Dialog()
+                        fmt.Println(dialogstrs)
+                        dialogopen = true
+                    }
                 }
             }
         case right:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
                     // open dialog
-                    fmt.Println("Dialog right")
-                }
-            }
-        }
-    }
-    if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
-        stopped = false
-        up = true
-        down = false
-        left = false
-        right = false
-        if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
-            if utils.TryUpdatePos(true, p, l, true, -24, p) {
-                for _, a := range l.Doors {
-                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                        l = loadlvl(a.NewLvl)
-                        p.Pos[0] = -l.Pos[0]
-                        p.Pos[1] = -l.Pos[1]
+                    if !dialogopen {
+                        dialogstrs = npc.Dialog()
+                        fmt.Println(dialogstrs)
+                        dialogopen = true
                     }
                 }
             }
         }
-        count++
     }
-    if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
-        stopped = false
-        left = true
-        up = false
-        down = false
-        right = false
-        if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
-            if utils.TryUpdatePos(true, p, l, false, -24, p) {
-                for _, a := range l.Doors {
-                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                        l = loadlvl(a.NewLvl)
-                        p.Pos[0] = -l.Pos[0]
-                        p.Pos[1] = -l.Pos[1]
+    if !dialogopen {
+        if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
+            stopped = false
+            up = true
+            down = false
+            left = false
+            right = false
+            if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
+                if utils.TryUpdatePos(true, p, l, true, -24, p) {
+                    for _, a := range l.Doors {
+                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                            l = loadlvl(a.NewLvl)
+                            p.Pos[0] = -l.Pos[0]
+                            p.Pos[1] = -l.Pos[1]
+                        }
                     }
                 }
             }
+            count++
         }
-        count++
-    }
-    if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
-        stopped = false
-        right = true
-        left = false
-        up = false
-        down = false
-        if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
-            if utils.TryUpdatePos(true, p, l, false, 24, p) {
-                for _, a := range l.Doors {
-                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                        l = loadlvl(a.NewLvl)
-                        p.Pos[0] = -l.Pos[0]
-                        p.Pos[1] = -l.Pos[1]
+        if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
+            stopped = false
+            left = true
+            up = false
+            down = false
+            right = false
+            if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
+                if utils.TryUpdatePos(true, p, l, false, -24, p) {
+                    for _, a := range l.Doors {
+                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                            l = loadlvl(a.NewLvl)
+                            p.Pos[0] = -l.Pos[0]
+                            p.Pos[1] = -l.Pos[1]
+                        }
                     }
                 }
             }
+            count++
         }
-        count++
-    }
-    if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
-        stopped = false
-        down = true
-        up = false
-        left = false
-        right = false
-        if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
-            if utils.TryUpdatePos(true, p, l, true, 24, p) {
-                for _, a := range l.Doors {
-                    if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                        l = loadlvl(a.NewLvl)
-                        p.Pos[0] = -l.Pos[0]
-                        p.Pos[1] = -l.Pos[1]
+        if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
+            stopped = false
+            right = true
+            left = false
+            up = false
+            down = false
+            if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
+                if utils.TryUpdatePos(true, p, l, false, 24, p) {
+                    for _, a := range l.Doors {
+                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                            l = loadlvl(a.NewLvl)
+                            p.Pos[0] = -l.Pos[0]
+                            p.Pos[1] = -l.Pos[1]
+                        }
                     }
                 }
             }
+            count++
         }
-        count++
-    }
-    if count == lastCount {
-        stopped = true
-        count = 0
-        lastCount = 0
-    } else {
-        lastCount = count
+        if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
+            stopped = false
+            down = true
+            up = false
+            left = false
+            right = false
+            if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
+                if utils.TryUpdatePos(true, p, l, true, 24, p) {
+                    for _, a := range l.Doors {
+                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                            l = loadlvl(a.NewLvl)
+                            p.Pos[0] = -l.Pos[0]
+                            p.Pos[1] = -l.Pos[1]
+                        }
+                    }
+                }
+            }
+            count++
+        }
+        if count == lastCount {
+            stopped = true
+            count = 0
+            lastCount = 0
+        } else {
+            lastCount = count
+        }
     }
     return nil
 }
@@ -190,7 +230,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
     if npcCount == 1000 {
         npcCount = 0
     }
-    npcCount++
+    if !dialogopen {
+        npcCount++
+    }
     for _, npc := range l.NPCs {
         ngm := ebiten.GeoM{}
         ngm.Scale(0.75, 0.75) // 48x48
@@ -323,6 +365,31 @@ func (g *Game) Draw(screen *ebiten.Image) {
                             GeoM: gm})
         }
     }
+    if dialogopen {
+        // Draw rectangle image, then draw text
+        dialoggm := ebiten.GeoM{}
+        dialoggm.Translate(float64(128), float64(448))
+        dialogimg := ebiten.NewImage(512, 128)
+        dialogimg.Fill(color.Black)
+        screen.DrawImage(
+            dialogimg, &ebiten.DrawImageOptions{
+                GeoM: dialoggm})
+        dialoggm2 := ebiten.GeoM{}
+        dialoggm2.Translate(float64(132), float64(452))
+        dialogimg2 := ebiten.NewImage(504, 120)
+        dialogimg2.Fill(color.White)
+        screen.DrawImage(
+            dialogimg2, &ebiten.DrawImageOptions{
+                GeoM: dialoggm2})
+        r := text.BoundString(fo, dialogstrs[0])
+        hei := r.Max.Y - r.Min.Y
+        if s < len(dialogstrs) {
+            text.Draw(screen, dialogstrs[s], fo, 140, 460 + hei, color.Black)
+            if s + 1 < len(dialogstrs) {
+                text.Draw(screen, dialogstrs[s + 1], fo, 140, 468 + (hei * 2), color.Black)
+            }
+        }
+    }
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
@@ -340,6 +407,12 @@ func loadlvl(lvl int) *levels.Level {
 }
 
 func init() {
+    fon, err = truetype.Parse(gomonobold.TTF)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fo = truetype.NewFace(fon, &truetype.Options{Size: 20})
+
     pcimage, _, err := image.Decode(bytes.NewReader(pcimages.PC_png))
     if err != nil {
         log.Fatal(err)

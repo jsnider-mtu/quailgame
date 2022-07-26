@@ -46,7 +46,7 @@ func LvlOne() *Level {
         ld.Image.Fill(color.Black)
     }
 
-    NPCs := []*npcs.NPC{&npcs.NPC{Name: "FirstNPC", Msgs: []string{"Hi there!", "Seen my dog?"}, Speed: 200, Direction: "down", PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
+    NPCs := []*npcs.NPC{&npcs.NPC{Name: "FirstNPC", Msgs: [][]string{{"Hello there,", "ObiWan Kenobi."}, {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, MsgCount: 0, Speed: 200, Direction: "down", PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
 
     return &Level{Max: [2]int{720, 528}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg}
 }
