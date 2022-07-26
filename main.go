@@ -15,6 +15,7 @@ import (
 
     "github.com/golang/freetype/truetype"
 
+    "github.com/jsnider-mtu/projectx/assets"
     "github.com/jsnider-mtu/projectx/player"
     "github.com/jsnider-mtu/projectx/player/pcimages"
     "github.com/jsnider-mtu/projectx/levels"
@@ -30,6 +31,7 @@ var (
     err error
     start bool = false
     pause bool = false
+    downArrowImage *ebiten.Image
     pcImage *ebiten.Image
     pcDownOffsetX int = 0
     pcDownOffsetY int = 0
@@ -366,7 +368,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if dialogopen {
-        // Draw rectangle image, then draw text
         dialoggm := ebiten.GeoM{}
         dialoggm.Translate(float64(128), float64(504))
         dialogimg := ebiten.NewImage(512, 72)
@@ -387,6 +388,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, dialogstrs[s], fo, 140, 516 + hei, color.Black)
             if s + 1 < len(dialogstrs) {
                 text.Draw(screen, dialogstrs[s + 1], fo, 140, 524 + (hei * 2), color.Black)
+                if s + 2 < len(dialogstrs) {
+                    // Draw down arrow; possibly animate it
+                    dagm := ebiten.GeoM{}
+                    dagm.Scale(0.25, 0.25)
+                    dagm.Translate(float64(586), float64(522))
+                    screen.DrawImage(
+                        downArrowImage, &ebiten.DrawImageOptions{
+                            GeoM: dagm})
+                }
             }
         }
     }
@@ -412,6 +422,12 @@ func init() {
         log.Fatal(err)
     }
     fo = truetype.NewFace(fon, &truetype.Options{Size: 20})
+
+    downarrowimage, _, err := image.Decode(bytes.NewReader(assets.DownArrow_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    downArrowImage = ebiten.NewImageFromImage(downarrowimage)
 
     pcimage, _, err := image.Decode(bytes.NewReader(pcimages.PC_png))
     if err != nil {
