@@ -8,8 +8,6 @@ import (
     _ "image/png"
     "log"
     "math/rand"
-//    "os"
-//    "time"
 
     "golang.org/x/image/font"
     "golang.org/x/image/font/gofont/gomonobold"
@@ -20,7 +18,6 @@ import (
     "github.com/jsnider-mtu/projectx/player"
     "github.com/jsnider-mtu/projectx/player/pcimages"
     "github.com/jsnider-mtu/projectx/levels"
-//    "github.com/jsnider-mtu/projectx/npcs"
     "github.com/jsnider-mtu/projectx/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
