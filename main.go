@@ -368,15 +368,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
     if dialogopen {
         // Draw rectangle image, then draw text
         dialoggm := ebiten.GeoM{}
-        dialoggm.Translate(float64(128), float64(448))
-        dialogimg := ebiten.NewImage(512, 128)
+        dialoggm.Translate(float64(128), float64(504))
+        dialogimg := ebiten.NewImage(512, 72)
         dialogimg.Fill(color.Black)
         screen.DrawImage(
             dialogimg, &ebiten.DrawImageOptions{
                 GeoM: dialoggm})
         dialoggm2 := ebiten.GeoM{}
-        dialoggm2.Translate(float64(132), float64(452))
-        dialogimg2 := ebiten.NewImage(504, 120)
+        dialoggm2.Translate(float64(132), float64(508))
+        dialogimg2 := ebiten.NewImage(504, 64)
         dialogimg2.Fill(color.White)
         screen.DrawImage(
             dialogimg2, &ebiten.DrawImageOptions{
@@ -384,9 +384,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
         r := text.BoundString(fo, dialogstrs[0])
         hei := r.Max.Y - r.Min.Y
         if s < len(dialogstrs) {
-            text.Draw(screen, dialogstrs[s], fo, 140, 460 + hei, color.Black)
+            text.Draw(screen, dialogstrs[s], fo, 140, 516 + hei, color.Black)
             if s + 1 < len(dialogstrs) {
-                text.Draw(screen, dialogstrs[s + 1], fo, 140, 468 + (hei * 2), color.Black)
+                text.Draw(screen, dialogstrs[s + 1], fo, 140, 524 + (hei * 2), color.Black)
             }
         }
     }
