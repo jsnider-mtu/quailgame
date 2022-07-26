@@ -68,10 +68,8 @@ type Game struct {}
 func (g *Game) Update() error {
     if inpututil.IsKeyJustPressed(ebiten.KeyF) {
         if dialogopen {
-            // Run through all lines of dialog
             s += 2
             if s >= len(dialogstrs) {
-                fmt.Println("Closing dialog")
                 dialogopen = false
                 s = 0
             }
@@ -81,10 +79,8 @@ func (g *Game) Update() error {
         case up:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
-                    // open dialog
                     if !dialogopen {
                         dialogstrs = npc.Dialog()
-                        fmt.Println(dialogstrs)
                         dialogopen = true
                     }
                 }
@@ -92,10 +88,8 @@ func (g *Game) Update() error {
         case down:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
-                    // open dialog
                     if !dialogopen {
                         dialogstrs = npc.Dialog()
-                        fmt.Println(dialogstrs)
                         dialogopen = true
                     }
                 }
@@ -103,10 +97,8 @@ func (g *Game) Update() error {
         case left:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
-                    // open dialog
                     if !dialogopen {
                         dialogstrs = npc.Dialog()
-                        fmt.Println(dialogstrs)
                         dialogopen = true
                     }
                 }
@@ -114,17 +106,15 @@ func (g *Game) Update() error {
         case right:
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
-                    // open dialog
                     if !dialogopen {
                         dialogstrs = npc.Dialog()
-                        fmt.Println(dialogstrs)
                         dialogopen = true
                     }
                 }
             }
         }
     }
-    if !dialogopen {
+    if !dialogopen && !lvlchange {
         if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
             stopped = false
             up = true
