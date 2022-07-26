@@ -2,7 +2,7 @@ package main
 
 import (
     "bytes"
-    "fmt"
+//    "fmt"
     "image"
     "image/color"
     _ "image/png"
@@ -392,7 +392,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if lvlchange {
-        if npcCount % 15 == 0 {
+        if npcCount % 13 == 0 {
             f++
         }
         if f == 0 {
