@@ -41,11 +41,17 @@ func LvlOne(entrance int) *Level {
     }
     pcImage := ebiten.NewImageFromImage(pcimage)
 
-    lvldoors := []*Door{&Door{Coords: [2]int{0, 0}, NewLvl: [2]int{2, 1}}}
+    lvldoors := []*Door{&Door{
+        Coords: [2]int{0, 0}, NewLvl: [2]int{2, 1}}}
 
     offset := rand.Intn(60) + 60
 
-    NPCs := []*npcs.NPC{&npcs.NPC{Name: "Ben Dover", Msgs: [][]string{{"Hello there,", "ObiWan Kenobi."}, {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, MsgCount: 0, Speed: 240, Offset: offset, Direction: "down", Stopped: true, PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
+    NPCs := []*npcs.NPC{&npcs.NPC{
+        Name: "Ben Dover", Msgs: [][]string{
+            {"Hello there,", "ObiWan Kenobi."},
+            {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
+        MsgCount: 0, Speed: 240, Offset: offset, Direction: "down", Stopped: true, PC: &player.Player{
+            Pos: [2]int{192, 192}, Image: pcImage}}}
 
     var pos [2]int
 
@@ -56,7 +62,9 @@ func LvlOne(entrance int) *Level {
         pos = [2]int{-336, -528}
     }
 
-    return &Level{Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{{48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg}
+    return &Level{
+        Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
+            {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg}
 }
 
 func LvlTwo(entrance int) *Level {
@@ -66,7 +74,10 @@ func LvlTwo(entrance int) *Level {
     }
     lvlImg := ebiten.NewImageFromImage(lvlimg)
 
-    lvldoors := []*Door{&Door{Coords: [2]int{48, 96}, NewLvl: [2]int{1, 1}}, &Door{Coords: [2]int{144, 0}, NewLvl: [2]int{1, 1}}, &Door{Coords: [2]int{240, 96}, NewLvl: [2]int{1, 1}}}
+    lvldoors := []*Door{&Door{
+        Coords: [2]int{48, 96}, NewLvl: [2]int{1, 1}}, &Door{
+        Coords: [2]int{144, 0}, NewLvl: [2]int{1, 1}}, &Door{
+        Coords: [2]int{240, 96}, NewLvl: [2]int{1, 1}}}
 
     var pos [2]int
 
@@ -77,5 +88,13 @@ func LvlTwo(entrance int) *Level {
         pos = [2]int{-96, -192}
     }
 
-    return &Level{Max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{{0, 0, 144, 96}, {0, 96, 48, 240}, {96, 96, 144, 192}, {192, 0, 336, 96}, {192, 96, 240, 144}, {288, 96, 336, 240}, {192, 192, 288, 240}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
+    return &Level{
+        Max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{
+            {0, 0, 144, 96},
+            {0, 96, 48, 240},
+            {96, 96, 144, 192},
+            {192, 0, 336, 96},
+            {192, 96, 240, 144},
+            {288, 96, 336, 240},
+            {192, 192, 288, 240}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
 }
