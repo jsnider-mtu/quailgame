@@ -6,6 +6,7 @@ import (
     _ "image/jpeg"
     _ "image/png"
     "log"
+    "math/rand"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/projectx/levels/lvlimages"
@@ -42,7 +43,9 @@ func LvlOne(entrance int) *Level {
 
     lvldoors := []*Door{&Door{Coords: [2]int{0, 0}, NewLvl: [2]int{2, 1}}}
 
-    NPCs := []*npcs.NPC{&npcs.NPC{Name: "FirstNPC", Msgs: [][]string{{"Hello there,", "ObiWan Kenobi."}, {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, MsgCount: 0, Speed: 200, Direction: "down", PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
+    offset := rand.Intn(60) + 60
+
+    NPCs := []*npcs.NPC{&npcs.NPC{Name: "FirstNPC", Msgs: [][]string{{"Hello there,", "ObiWan Kenobi."}, {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, MsgCount: 0, Speed: 120, Offset: offset, Direction: "down", Stopped: true, PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
 
     var pos [2]int
 

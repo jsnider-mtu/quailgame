@@ -11,8 +11,10 @@ type NPC struct {
     Name string
     Msgs [][]string
     MsgCount int
-    Speed int // Speed of 0 means no movement
+    Speed int
+    Offset int
     Direction string
+    Stopped bool
     PC *player.Player
 }
 

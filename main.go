@@ -65,6 +65,12 @@ var (
 type Game struct {}
 
 func (g *Game) Update() error {
+    if npcCount == 6000 {
+        npcCount = 0
+    }
+    if !dialogopen {
+        npcCount++
+    }
     if inpututil.IsKeyJustPressed(ebiten.KeyF) {
         if dialogopen {
             s += 2
@@ -114,6 +120,27 @@ func (g *Game) Update() error {
         }
     }
     if !dialogopen && !lvlchange {
+        for _, npc := range l.NPCs {
+            if (npcCount + npc.Offset) % npc.Speed == 0 {
+                npc.Stopped = false
+                switch rand.Intn(4) {
+                case 0:
+                    npc.Direction = "down"
+                    utils.TryUpdatePos(false, npc.PC, l, true, 24, p)
+                case 1:
+                    npc.Direction = "up"
+                    utils.TryUpdatePos(false, npc.PC, l, true, -24, p)
+                case 2:
+                    npc.Direction = "right"
+                    utils.TryUpdatePos(false, npc.PC, l, false, 24, p)
+                case 3:
+                    npc.Direction = "left"
+                    utils.TryUpdatePos(false, npc.PC, l, false, -24, p)
+                }
+            } else if !npc.Stopped && (npcCount + npc.Offset - 4) % npc.Speed == 0 {
+                npc.Stopped = true
+            }
+        }
         if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
             stopped = false
             up = true
@@ -205,65 +232,79 @@ func (g *Game) Draw(screen *ebiten.Image) {
     lgm := ebiten.GeoM{}
     lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
     screen.DrawImage(l.Image, &ebiten.DrawImageOptions{GeoM: lgm})
-    if npcCount == 1000 {
-        npcCount = 0
-    }
-    if !dialogopen {
-        npcCount++
-    }
     for _, npc := range l.NPCs {
         ngm := ebiten.GeoM{}
         ngm.Scale(0.75, 0.75) // 48x48
         ngm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
-        if npcCount % npc.Speed == 0 {
-            switch rand.Intn(4) {
-            case 0:
-                if utils.TryUpdatePos(false, npc.PC, l, true, 24, p) {
-                    npc.Direction = "down"
-                }
-            case 1:
-                if utils.TryUpdatePos(false, npc.PC, l, true, -24, p) {
-                    npc.Direction = "up"
-                }
-            case 2:
-                if utils.TryUpdatePos(false, npc.PC, l, false, 24, p) {
-                    npc.Direction = "right"
-                }
-            case 3:
-                if utils.TryUpdatePos(false, npc.PC, l, false, -24, p) {
-                    npc.Direction = "left"
-                }
-            }
-        }
         switch npc.Direction {
         case "down":
-            screen.DrawImage(
-                npc.PC.Image.SubImage(
-                    image.Rect(
-                        pcDownOffsetX, pcDownOffsetY, pcDownOffsetX + 64, pcDownOffsetY + 64)).(*ebiten.Image),
-                        &ebiten.DrawImageOptions{
-                            GeoM: ngm})
+            if !npc.Stopped {
+                sx, sy := pcDownOffsetX + 64, pcDownOffsetY
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            } else {
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            pcDownOffsetX, pcDownOffsetY, pcDownOffsetX + 64, pcDownOffsetY + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            }
         case "up":
-            screen.DrawImage(
-                npc.PC.Image.SubImage(
-                    image.Rect(
-                        pcUpOffsetX, pcUpOffsetY, pcUpOffsetX + 64, pcUpOffsetY + 64)).(*ebiten.Image),
-                        &ebiten.DrawImageOptions{
-                            GeoM: ngm})
+            if !npc.Stopped {
+                sx, sy := pcUpOffsetX + 64, pcUpOffsetY
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            } else {
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            pcUpOffsetX, pcUpOffsetY, pcUpOffsetX + 64, pcUpOffsetY + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            }
         case "right":
-            screen.DrawImage(
-                npc.PC.Image.SubImage(
-                    image.Rect(
-                        pcRightOffsetX, pcRightOffsetY, pcRightOffsetX + 64, pcRightOffsetY + 64)).(*ebiten.Image),
-                        &ebiten.DrawImageOptions{
-                            GeoM: ngm})
+            if !npc.Stopped {
+                sx, sy := pcRightOffsetX + 64, pcRightOffsetY
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            } else {
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            pcRightOffsetX, pcRightOffsetY, pcRightOffsetX + 64, pcRightOffsetY + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            }
         case "left":
-            screen.DrawImage(
-                npc.PC.Image.SubImage(
-                    image.Rect(
-                        pcLeftOffsetX, pcLeftOffsetY, pcLeftOffsetX + 64, pcLeftOffsetY + 64)).(*ebiten.Image),
-                        &ebiten.DrawImageOptions{
-                            GeoM: ngm})
+            if !npc.Stopped {
+                sx, sy := pcLeftOffsetX + 64, pcLeftOffsetY
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            } else {
+                screen.DrawImage(
+                    npc.PC.Image.SubImage(
+                        image.Rect(
+                            pcLeftOffsetX, pcLeftOffsetY, pcLeftOffsetX + 64, pcLeftOffsetY + 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{
+                                GeoM: ngm})
+            }
         }
     }
     gm := ebiten.GeoM{}
