@@ -202,22 +202,22 @@ func (g *Game) Draw(screen *ebiten.Image) {
     if ebiten.IsFullscreen() {
         w, h = ebiten.ScreenSizeInFullscreen()
     }
-    for _, box := range l.Boxes {
-        bgm := ebiten.GeoM{}
-        bgm.Translate(float64(box[0]), float64(box[1]))
-        bi := ebiten.NewImage(box[2] - box[0], box[3] - box[1])
-        bi.Fill(color.White)
-        l.Image.DrawImage(bi, &ebiten.DrawImageOptions{
-            GeoM: bgm})
-    }
-    for _, door := range l.Doors {
-        dgm := ebiten.GeoM{}
-        dgm.Translate(float64(door.Coords[0]), float64(door.Coords[1]))
-        di := ebiten.NewImage(48, 48)
-        di.Fill(color.Black)
-        l.Image.DrawImage(di, &ebiten.DrawImageOptions{
-            GeoM: dgm})
-    }
+    //for _, box := range l.Boxes {
+    //    bgm := ebiten.GeoM{}
+    //    bgm.Translate(float64(box[0]), float64(box[1]))
+    //    bi := ebiten.NewImage(box[2] - box[0], box[3] - box[1])
+    //    bi.Fill(color.White)
+    //    l.Image.DrawImage(bi, &ebiten.DrawImageOptions{
+    //        GeoM: bgm})
+    //}
+    //for _, door := range l.Doors {
+    //    dgm := ebiten.GeoM{}
+    //    dgm.Translate(float64(door.Coords[0]), float64(door.Coords[1]))
+    //    di := ebiten.NewImage(48, 48)
+    //    di.Fill(color.Black)
+    //    l.Image.DrawImage(di, &ebiten.DrawImageOptions{
+    //        GeoM: dgm})
+    //}
     lgm := ebiten.GeoM{}
     lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
     screen.DrawImage(l.Image, &ebiten.DrawImageOptions{GeoM: lgm})
