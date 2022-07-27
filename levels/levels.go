@@ -57,5 +57,4 @@ func LvlTwo() *Level {
     lvldoors := []*Door{&Door{Coords: [2]int{48, 96}, NewLvl: 1}}
 
     return &Level{Max: [2]int{120, 216}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{0, 0, 144, 96}, {0, 96, 48, 240}, {96, 96, 144, 192}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
-    //return &Level{Max: [2]int{144, 240}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{0, 0, 144, 96}, {0, 96, 48, 240}, {96, 96, 144, 192}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
 }
