@@ -45,7 +45,7 @@ func LvlOne(entrance int) *Level {
 
     offset := rand.Intn(60) + 60
 
-    NPCs := []*npcs.NPC{&npcs.NPC{Name: "FirstNPC", Msgs: [][]string{{"Hello there,", "ObiWan Kenobi."}, {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, MsgCount: 0, Speed: 120, Offset: offset, Direction: "down", Stopped: true, PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
+    NPCs := []*npcs.NPC{&npcs.NPC{Name: "Ben Dover", Msgs: [][]string{{"Hello there,", "ObiWan Kenobi."}, {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, MsgCount: 0, Speed: 120, Offset: offset, Direction: "down", Stopped: true, PC: &player.Player{Pos: [2]int{192, 192}, Image: pcImage}}}
 
     var pos [2]int
 

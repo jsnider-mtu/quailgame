@@ -49,6 +49,7 @@ var (
     npcCount int = 0
     dialogopen bool = false
     dialogstrs []string
+    npcname string
     l *levels.Level
     p *player.Player
     fon *truetype.Font
@@ -85,6 +86,7 @@ func (g *Game) Update() error {
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
                     if !dialogopen {
+                        npcname = npc.Name
                         dialogstrs = npc.Dialog()
                         dialogopen = true
                     }
@@ -94,6 +96,7 @@ func (g *Game) Update() error {
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
                     if !dialogopen {
+                        npcname = npc.Name
                         dialogstrs = npc.Dialog()
                         dialogopen = true
                     }
@@ -103,6 +106,7 @@ func (g *Game) Update() error {
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
                     if !dialogopen {
+                        npcname = npc.Name
                         dialogstrs = npc.Dialog()
                         dialogopen = true
                     }
@@ -112,6 +116,7 @@ func (g *Game) Update() error {
             for _, npc := range l.NPCs {
                 if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
                     if !dialogopen {
+                        npcname = npc.Name
                         dialogstrs = npc.Dialog()
                         dialogopen = true
                     }
@@ -390,15 +395,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
         dialogCount++
         dialoggm := ebiten.GeoM{}
-        dialoggm.Translate(float64(128), float64(504))
-        dialogimg := ebiten.NewImage(512, 72)
+        dialoggm.Translate(float64(128), float64(468))
+        dialogimg := ebiten.NewImage(512, 108)
         dialogimg.Fill(color.Black)
         screen.DrawImage(
             dialogimg, &ebiten.DrawImageOptions{
                 GeoM: dialoggm})
         dialoggm2 := ebiten.GeoM{}
-        dialoggm2.Translate(float64(132), float64(508))
-        dialogimg2 := ebiten.NewImage(504, 64)
+        dialoggm2.Translate(float64(132), float64(472))
+        dialogimg2 := ebiten.NewImage(504, 100)
         dialogimg2.Fill(color.White)
         screen.DrawImage(
             dialogimg2, &ebiten.DrawImageOptions{
@@ -406,6 +411,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         r := text.BoundString(fo, dialogstrs[0])
         hei := r.Max.Y - r.Min.Y
         if s < len(dialogstrs) {
+            text.Draw(screen, npcname, fo, 140, 500, color.RGBA{200, 36, 121, 255})
             text.Draw(screen, dialogstrs[s], fo, 140, 516 + hei, color.Black)
             if s + 1 < len(dialogstrs) {
                 text.Draw(screen, dialogstrs[s + 1], fo, 140, 524 + (hei * 2), color.Black)
