@@ -55,7 +55,7 @@ var (
     fo font.Face
     s int = 0
     lvlchange bool = false
-    newlvl int
+    newlvl [2]int
     f int = 0
     fadeImage *ebiten.Image
     dab int = 0
@@ -419,14 +419,14 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
     return outsideWidth, outsideHeight
 }
 
-func loadlvl(lvl int) *levels.Level {
-    switch lvl {
+func loadlvl(lvl [2]int) *levels.Level {
+    switch lvl[0] {
     case 1:
-        return levels.LvlOne()
+        return levels.LvlOne(lvl[1])
     case 2:
-        return levels.LvlTwo()
+        return levels.LvlTwo(lvl[1])
     }
-    return levels.LvlOne()
+    return levels.LvlOne(lvl[1])
 }
 
 func init() {
@@ -459,7 +459,7 @@ func init() {
         Rect: image.Rect(0, 0, 768, 576),
     })
 
-    l = levels.LvlOne()
+    l = levels.LvlOne(0)
     p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
 }
 
