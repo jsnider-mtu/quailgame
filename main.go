@@ -27,8 +27,8 @@ import (
 
 var (
     err error
-    start bool = false
-    pause bool = false
+    start bool = false // not yet implemented
+    pause bool = false // not yet implemented
     downArrowImage *ebiten.Image
     pcImage *ebiten.Image
     pcDownOffsetX int = 0

@@ -54,7 +54,7 @@ func LvlTwo() *Level {
     }
     lvlImg := ebiten.NewImageFromImage(lvlimg)
 
-    lvldoors := []*Door{&Door{Coords: [2]int{48, 96}, NewLvl: 1}}
+    lvldoors := []*Door{&Door{Coords: [2]int{48, 96}, NewLvl: 1}, &Door{Coords: [2]int{144, 0}, NewLvl: 1}, &Door{Coords: [2]int{240, 96}, NewLvl: 1}}
 
-    return &Level{Max: [2]int{120, 216}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{0, 0, 144, 96}, {0, 96, 48, 240}, {96, 96, 144, 192}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
+    return &Level{Max: [2]int{312, 216}, Pos: [2]int{-48, -144}, Boxes: [][4]int{{0, 0, 144, 96}, {0, 96, 48, 240}, {96, 96, 144, 192}, {192, 0, 336, 96}, {192, 96, 240, 144}, {288, 96, 336, 240}, {192, 192, 288, 240}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
 }
