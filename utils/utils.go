@@ -10,7 +10,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
         if p.Pos[1] + dist > l.Pos[1] && p.Pos[1] + dist < l.Max[1] {
             if dist < 0 {
                 if !pc {
-                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist >= mc.Pos[1] && p.Pos[1] + dist < mc.Pos[1] + 48 {
+                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
                         return false
                     }
                 }
@@ -35,7 +35,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                 }
             } else {
                 if !pc {
-                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist > mc.Pos[1] - 48 && p.Pos[1] + dist < mc.Pos[1] + 48 {
+                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
                         return false
                     }
                 }
@@ -70,7 +70,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
         if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.Max[0] {
             if dist < 0 {
                 if !pc {
-                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] >= mc.Pos[1] - 24 && p.Pos[1] <= mc.Pos[1] + 24 {
+                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
                         return false
                     }
                 }
@@ -95,7 +95,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                 }
             } else {
                 if !pc {
-                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] >= mc.Pos[1] - 24 && p.Pos[1] <= mc.Pos[1] + 24 {
+                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
                         return false
                     }
                 }
