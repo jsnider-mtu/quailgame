@@ -82,6 +82,7 @@ var (
     dialogCount int = 0
     overwritewarning bool = false
     overwritesel int = 0
+    y int = 0
 )
 
 type Game struct {}
@@ -694,6 +695,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
     mcdrawn := false
     if !startanimdone {
         // animation (image scrolling up)
+        if npcCount % 5 == 0 {
+            y++
+            if y == 65 {
+                y = 0
+                startanimdone = true
+            }
+            animgm := ebiten.GeoM{}
+            animgm.Translate(float64(0), float64(h - (9 * y)))
+            screen.DrawImage(
+                startImage, &ebiten.DrawImageOptions{
+                    GeoM: animgm})
+        }
     } else if start {
         screen.DrawImage(startImage, &ebiten.DrawImageOptions{})
         if selload {
