@@ -74,227 +74,238 @@ var (
 type Game struct {}
 
 func (g *Game) Update() error {
-    if save {
-        homeDir, err := os.UserHomeDir()
-        if err != nil {
-            log.Fatal(err)
-        }
-        db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
-        if err != nil {
-            log.Fatal(err)
-        }
-        defer db.Close()
-        createStmt := `
-        create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null);
-        `
-        _, err = db.Exec(createStmt)
-        if err != nil {
-            log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
-        }
-        saveStmt := `
-        insert or replace into saves(name, level, x, y) values(?, ?, ?, ?);
-        `
-        _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1])
-        if err != nil {
-            log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
-        }
-        db.Close()
-        save = false
+    if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+        pause = !pause
     }
-    if load {
-        homeDir, err := os.UserHomeDir()
-        if err != nil {
-            log.Fatal(err)
+    if pause {
+        if inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            save = true
+            pause = false
         }
-        db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
-        if err != nil {
-            log.Fatal(err)
+        if inpututil.IsKeyJustPressed(ebiten.KeyL) {
+            load = true
+            pause = false
         }
-        defer db.Close()
-        rows, err := db.Query("select * from saves where name = ?", name)
-        if err != nil {
-            log.Fatal(err)
+        if inpututil.IsKeyJustPressed(ebiten.KeyQ) {
+            os.Exit(0)
         }
-        defer rows.Close()
-        var savename string
-        var levelname string
-        var x, y int
-        for rows.Next() {
-            err = rows.Scan(&savename, &levelname, &x, &y)
-        }
-        err = rows.Err()
-        if err != nil {
-            log.Fatal(err)
-        }
-        l = levels.LoadLvl(levelname, x, y)
-        p.Pos[0] = -l.Pos[0]
-        p.Pos[1] = -l.Pos[1]
-        load = false
-    }
-    if npcCount == 6000 {
-        npcCount = 0
-    }
-    if !dialogopen {
-        npcCount++
-    }
-    if inpututil.IsKeyJustPressed(ebiten.KeyT) {
-        save = true
-    }
-    if inpututil.IsKeyJustPressed(ebiten.KeyL) {
-        load = true
-    }
-    if inpututil.IsKeyJustPressed(ebiten.KeyF) {
-        if dialogopen {
-            s += 2
-            if s >= len(dialogstrs) {
-                dialogopen = false
-                s = 0
+    } else {
+        if save {
+            homeDir, err := os.UserHomeDir()
+            if err != nil {
+                log.Fatal(err)
             }
-            return nil
+            db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+            if err != nil {
+                log.Fatal(err)
+            }
+            defer db.Close()
+            createStmt := `
+            create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null);
+            `
+            _, err = db.Exec(createStmt)
+            if err != nil {
+                log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
+            }
+            saveStmt := `
+            insert or replace into saves(name, level, x, y) values(?, ?, ?, ?);
+            `
+            _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1])
+            if err != nil {
+                log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
+            }
+            db.Close()
+            save = false
         }
-        switch {
-        case up:
-            for _, npc := range l.NPCs {
-                if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
-                    if !dialogopen {
-                        npcname = npc.Name
-                        dialogstrs = npc.Dialog()
-                        dialogopen = true
+        if load {
+            homeDir, err := os.UserHomeDir()
+            if err != nil {
+                log.Fatal(err)
+            }
+            db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+            if err != nil {
+                log.Fatal(err)
+            }
+            defer db.Close()
+            rows, err := db.Query("select * from saves where name = ?", name)
+            if err != nil {
+                log.Fatal(err)
+            }
+            defer rows.Close()
+            var savename string
+            var levelname string
+            var x, y int
+            for rows.Next() {
+                err = rows.Scan(&savename, &levelname, &x, &y)
+            }
+            err = rows.Err()
+            if err != nil {
+                log.Fatal(err)
+            }
+            l = levels.LoadLvl(levelname, x, y)
+            p.Pos[0] = -l.Pos[0]
+            p.Pos[1] = -l.Pos[1]
+            load = false
+        }
+        if npcCount == 6000 {
+            npcCount = 0
+        }
+        if !dialogopen {
+            npcCount++
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyF) {
+            if dialogopen {
+                s += 2
+                if s >= len(dialogstrs) {
+                    dialogopen = false
+                    s = 0
+                }
+                return nil
+            }
+            switch {
+            case up:
+                for _, npc := range l.NPCs {
+                    if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
+                        if !dialogopen {
+                            npcname = npc.Name
+                            dialogstrs = npc.Dialog()
+                            dialogopen = true
+                        }
                     }
                 }
-            }
-        case down:
-            for _, npc := range l.NPCs {
-                if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
-                    if !dialogopen {
-                        npcname = npc.Name
-                        dialogstrs = npc.Dialog()
-                        dialogopen = true
+            case down:
+                for _, npc := range l.NPCs {
+                    if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
+                        if !dialogopen {
+                            npcname = npc.Name
+                            dialogstrs = npc.Dialog()
+                            dialogopen = true
+                        }
                     }
                 }
-            }
-        case left:
-            for _, npc := range l.NPCs {
-                if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
-                    if !dialogopen {
-                        npcname = npc.Name
-                        dialogstrs = npc.Dialog()
-                        dialogopen = true
+            case left:
+                for _, npc := range l.NPCs {
+                    if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
+                        if !dialogopen {
+                            npcname = npc.Name
+                            dialogstrs = npc.Dialog()
+                            dialogopen = true
+                        }
                     }
                 }
-            }
-        case right:
-            for _, npc := range l.NPCs {
-                if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
-                    if !dialogopen {
-                        npcname = npc.Name
-                        dialogstrs = npc.Dialog()
-                        dialogopen = true
-                    }
-                }
-            }
-        }
-    }
-    if !dialogopen && !lvlchange {
-        for _, npc := range l.NPCs {
-            if (npcCount + npc.Offset) % npc.Speed == 0 {
-                npc.Stopped = false
-                switch rand.Intn(4) {
-                case 0:
-                    npc.Direction = "down"
-                    utils.TryUpdatePos(false, npc.PC, l, true, 24, p)
-                case 1:
-                    npc.Direction = "up"
-                    utils.TryUpdatePos(false, npc.PC, l, true, -24, p)
-                case 2:
-                    npc.Direction = "right"
-                    utils.TryUpdatePos(false, npc.PC, l, false, 24, p)
-                case 3:
-                    npc.Direction = "left"
-                    utils.TryUpdatePos(false, npc.PC, l, false, -24, p)
-                }
-            } else if !npc.Stopped && (npcCount + npc.Offset - 4) % npc.Speed == 0 {
-                npc.Stopped = true
-            }
-        }
-        if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
-            stopped = false
-            up = true
-            down = false
-            left = false
-            right = false
-            if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
-                if utils.TryUpdatePos(true, p, l, true, -24, p) {
-                    for _, a := range l.Doors {
-                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            newlvl = a.NewLvl
-                            lvlchange = true
+            case right:
+                for _, npc := range l.NPCs {
+                    if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
+                        if !dialogopen {
+                            npcname = npc.Name
+                            dialogstrs = npc.Dialog()
+                            dialogopen = true
                         }
                     }
                 }
             }
-            count++
         }
-        if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
-            stopped = false
-            left = true
-            up = false
-            down = false
-            right = false
-            if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
-                if utils.TryUpdatePos(true, p, l, false, -24, p) {
-                    for _, a := range l.Doors {
-                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            newlvl = a.NewLvl
-                            lvlchange = true
+        if !dialogopen && !lvlchange {
+            for _, npc := range l.NPCs {
+                if (npcCount + npc.Offset) % npc.Speed == 0 {
+                    npc.Stopped = false
+                    switch rand.Intn(4) {
+                    case 0:
+                        npc.Direction = "down"
+                        utils.TryUpdatePos(false, npc.PC, l, true, 24, p)
+                    case 1:
+                        npc.Direction = "up"
+                        utils.TryUpdatePos(false, npc.PC, l, true, -24, p)
+                    case 2:
+                        npc.Direction = "right"
+                        utils.TryUpdatePos(false, npc.PC, l, false, 24, p)
+                    case 3:
+                        npc.Direction = "left"
+                        utils.TryUpdatePos(false, npc.PC, l, false, -24, p)
+                    }
+                } else if !npc.Stopped && (npcCount + npc.Offset - 4) % npc.Speed == 0 {
+                    npc.Stopped = true
+                }
+            }
+            if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
+                stopped = false
+                up = true
+                down = false
+                left = false
+                right = false
+                if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
+                    if utils.TryUpdatePos(true, p, l, true, -24, p) {
+                        for _, a := range l.Doors {
+                            if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                newlvl = a.NewLvl
+                                lvlchange = true
+                            }
                         }
                     }
                 }
+                count++
             }
-            count++
-        }
-        if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
-            stopped = false
-            right = true
-            left = false
-            up = false
-            down = false
-            if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
-                if utils.TryUpdatePos(true, p, l, false, 24, p) {
-                    for _, a := range l.Doors {
-                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            newlvl = a.NewLvl
-                            lvlchange = true
+            if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
+                stopped = false
+                left = true
+                up = false
+                down = false
+                right = false
+                if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
+                    if utils.TryUpdatePos(true, p, l, false, -24, p) {
+                        for _, a := range l.Doors {
+                            if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                newlvl = a.NewLvl
+                                lvlchange = true
+                            }
                         }
                     }
                 }
+                count++
             }
-            count++
-        }
-        if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
-            stopped = false
-            down = true
-            up = false
-            left = false
-            right = false
-            if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
-                if utils.TryUpdatePos(true, p, l, true, 24, p) {
-                    for _, a := range l.Doors {
-                        if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
-                            newlvl = a.NewLvl
-                            lvlchange = true
+            if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
+                stopped = false
+                right = true
+                left = false
+                up = false
+                down = false
+                if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
+                    if utils.TryUpdatePos(true, p, l, false, 24, p) {
+                        for _, a := range l.Doors {
+                            if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                newlvl = a.NewLvl
+                                lvlchange = true
+                            }
                         }
                     }
                 }
+                count++
             }
-            count++
-        }
-        if count == lastCount {
-            stopped = true
-            count = 0
-            lastCount = 0
-        } else {
-            lastCount = count
+            if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
+                stopped = false
+                down = true
+                up = false
+                left = false
+                right = false
+                if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
+                    if utils.TryUpdatePos(true, p, l, true, 24, p) {
+                        for _, a := range l.Doors {
+                            if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                newlvl = a.NewLvl
+                                lvlchange = true
+                            }
+                        }
+                    }
+                }
+                count++
+            }
+            if count == lastCount {
+                stopped = true
+                count = 0
+                lastCount = 0
+            } else {
+                lastCount = count
+            }
         }
     }
     return nil
@@ -435,6 +446,28 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 }
             }
         }
+    }
+    if pause {
+        r := text.BoundString(fo, "Save game - S")
+        hei := r.Max.Y - r.Min.Y
+        wid := r.Max.X - r.Min.X
+        pausegm := ebiten.GeoM{}
+        pausegm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (3 * hei / 2) - 16))
+        pauseimg := ebiten.NewImage(wid + 20, (hei * 3) + 32)
+        pauseimg.Fill(color.Black)
+        screen.DrawImage(
+            pauseimg, &ebiten.DrawImageOptions{
+                GeoM: pausegm})
+        pausegm2 := ebiten.GeoM{}
+        pausegm2.Translate(float64((w / 2) - (wid / 2) - 4), float64((h / 2) - (3 * hei / 2) - 12))
+        pauseimg2 := ebiten.NewImage(wid + 12, (hei * 3) + 24)
+        pauseimg2.Fill(color.White)
+        screen.DrawImage(
+            pauseimg2, &ebiten.DrawImageOptions{
+                GeoM: pausegm2})
+        text.Draw(screen, "Save game - S", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 8, color.Black)
+        text.Draw(screen, "Load game - L", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 8, color.Black)
+        text.Draw(screen, "Quit game - Q", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 8, color.Black)
     }
     if lvlchange {
         if npcCount % 13 == 0 {
