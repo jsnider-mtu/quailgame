@@ -33,6 +33,7 @@ var (
     err error
     start bool = false // not yet implemented
     pause bool = false // not yet implemented
+    pausesel int = 0
     save bool = false
     load bool = false
     cont bool = false
@@ -78,16 +79,27 @@ func (g *Game) Update() error {
         pause = !pause
     }
     if pause {
-        if inpututil.IsKeyJustPressed(ebiten.KeyS) {
-            save = true
-            pause = false
+        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+            if pausesel > 0 {
+                pausesel--
+            }
         }
-        if inpututil.IsKeyJustPressed(ebiten.KeyL) {
-            load = true
-            pause = false
+        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            if pausesel < 2 {
+                pausesel++
+            }
         }
-        if inpututil.IsKeyJustPressed(ebiten.KeyQ) {
-            os.Exit(0)
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            switch pausesel {
+            case 0:
+                save = true
+                pause = false
+            case 1:
+                load = true
+                pause = false
+            case 2:
+                os.Exit(0)
+            }
         }
     } else {
         if save {
@@ -448,26 +460,37 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if pause {
-        r := text.BoundString(fo, "Save game - S")
+        r := text.BoundString(fo, "> Save game")
         hei := r.Max.Y - r.Min.Y
         wid := r.Max.X - r.Min.X
         pausegm := ebiten.GeoM{}
         pausegm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (3 * hei / 2) - 16))
-        pauseimg := ebiten.NewImage(wid + 20, (hei * 3) + 32)
+        pauseimg := ebiten.NewImage(wid + 20, (hei * 3) + 48)
         pauseimg.Fill(color.Black)
         screen.DrawImage(
             pauseimg, &ebiten.DrawImageOptions{
                 GeoM: pausegm})
         pausegm2 := ebiten.GeoM{}
         pausegm2.Translate(float64((w / 2) - (wid / 2) - 4), float64((h / 2) - (3 * hei / 2) - 12))
-        pauseimg2 := ebiten.NewImage(wid + 12, (hei * 3) + 24)
+        pauseimg2 := ebiten.NewImage(wid + 12, (hei * 3) + 40)
         pauseimg2.Fill(color.White)
         screen.DrawImage(
             pauseimg2, &ebiten.DrawImageOptions{
                 GeoM: pausegm2})
-        text.Draw(screen, "Save game - S", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 8, color.Black)
-        text.Draw(screen, "Load game - L", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 8, color.Black)
-        text.Draw(screen, "Quit game - Q", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 8, color.Black)
+        switch pausesel {
+        case 0:
+            text.Draw(screen, "> Save game", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
+            text.Draw(screen, "  Load game", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+        case 1:
+            text.Draw(screen, "  Save game", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
+            text.Draw(screen, "> Load game", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+        case 2:
+            text.Draw(screen, "  Save game", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
+            text.Draw(screen, "  Load game", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "> Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+        }
     }
     if lvlchange {
         if npcCount % 13 == 0 {
