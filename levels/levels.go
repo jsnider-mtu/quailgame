@@ -34,13 +34,11 @@ func LoadLvl(name string, x, y int) *Level {
     switch name {
     case "One":
         l := LvlOne(0)
-        l.Pos[0] = x
-        l.Pos[1] = y
+        l.Pos = [2]int{x, y}
         return l
     case "Two":
         l := LvlTwo(0)
-        l.Pos[0] = x
-        l.Pos[1] = y
+        l.Pos = [2]int{x, y}
         return l
     }
     return LvlOne(0)
