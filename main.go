@@ -237,7 +237,12 @@ func (g *Game) Draw(screen *ebiten.Image) {
     lgm := ebiten.GeoM{}
     lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
     screen.DrawImage(l.Image, &ebiten.DrawImageOptions{GeoM: lgm})
+    mcdrawn := false
     for _, npc := range l.NPCs {
+        if npc.PC.Pos[0] == p.Pos[0] && npc.PC.Pos[1] == p.Pos[1] + 24 {
+            drawmc(screen, w, h)
+            mcdrawn = true
+        }
         ngm := ebiten.GeoM{}
         ngm.Scale(0.75, 0.75) // 48x48
         ngm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
@@ -312,6 +317,164 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
     }
+    if !mcdrawn {
+        drawmc(screen, w, h)
+    }
+//    gm := ebiten.GeoM{}
+//    gm.Scale(0.75, 0.75) // 48x48
+//    gm.Translate(float64(w / 2), float64(h / 2))
+//    switch {
+//    case up:
+//        if stopped {
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        pcUpOffsetX, pcUpOffsetY, pcUpOffsetX + 64, pcUpOffsetY + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        } else {
+//            i := (count / 5) % 4
+//            sx, sy := pcUpOffsetX + (i * 64), pcUpOffsetY
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        }
+//    case left:
+//        if stopped {
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        pcLeftOffsetX, pcLeftOffsetY, pcLeftOffsetX + 64, pcLeftOffsetY + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        } else {
+//            i := (count / 5) % 4
+//            sx, sy := pcLeftOffsetX + (i * 64), pcLeftOffsetY
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        }
+//    case right:
+//        if stopped {
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        pcRightOffsetX, pcRightOffsetY, pcRightOffsetX + 64, pcRightOffsetY + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        } else {
+//            i := (count / 5) % 4
+//            sx, sy := pcRightOffsetX + (i * 64), pcRightOffsetY
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        }
+//    case down:
+//        if stopped {
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        pcDownOffsetX, pcDownOffsetY, pcDownOffsetX + 64, pcDownOffsetY + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        } else {
+//            i := (count / 5) % 4
+//            sx, sy := pcDownOffsetX + (i * 64), pcDownOffsetY
+//            screen.DrawImage(
+//                p.Image.SubImage(
+//                    image.Rect(
+//                        sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
+//                        &ebiten.DrawImageOptions{
+//                            GeoM: gm})
+//        }
+//    }
+    if dialogopen {
+        if dialogCount == 1000 {
+            dialogCount = 0
+        }
+        dialogCount++
+        dialoggm := ebiten.GeoM{}
+        dialoggm.Translate(float64(128), float64(468))
+        dialogimg := ebiten.NewImage(512, 108)
+        dialogimg.Fill(color.Black)
+        screen.DrawImage(
+            dialogimg, &ebiten.DrawImageOptions{
+                GeoM: dialoggm})
+        dialoggm2 := ebiten.GeoM{}
+        dialoggm2.Translate(float64(132), float64(472))
+        dialogimg2 := ebiten.NewImage(504, 100)
+        dialogimg2.Fill(color.White)
+        screen.DrawImage(
+            dialogimg2, &ebiten.DrawImageOptions{
+                GeoM: dialoggm2})
+        r := text.BoundString(fo, dialogstrs[0])
+        hei := r.Max.Y - r.Min.Y
+        if s < len(dialogstrs) {
+            text.Draw(screen, npcname, fo, 140, 500, color.RGBA{200, 36, 121, 255})
+            text.Draw(screen, dialogstrs[s], fo, 140, 516 + hei, color.Black)
+            if s + 1 < len(dialogstrs) {
+                text.Draw(screen, dialogstrs[s + 1], fo, 140, 524 + (hei * 2), color.Black)
+                if s + 2 < len(dialogstrs) {
+                    dagm := ebiten.GeoM{}
+                    dagm.Scale(0.25, 0.25)
+                    dagm.Translate(float64(586), float64(522))
+                    if dialogCount % 13 == 0 {
+                        dab++
+                    }
+                    if dab == 3 || dab == 5 {
+                        dagm.Translate(float64(0), float64(-4))
+                    } else if dab == 8 {
+                        dab = 0
+                    }
+                    screen.DrawImage(
+                        downArrowImage, &ebiten.DrawImageOptions{
+                            GeoM: dagm})
+                }
+            }
+        }
+    }
+    if lvlchange {
+        if npcCount % 13 == 0 {
+            f++
+        }
+        if f == 0 {
+            screen.DrawImage(fadeImage, &ebiten.DrawImageOptions{})
+        } else if f == 1 {
+            op := &ebiten.DrawImageOptions{}
+            op.ColorM.Scale(1.0, 1.0, 1.0, 2.0)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 2 {
+            op := &ebiten.DrawImageOptions{}
+            op.ColorM.Scale(1.0, 1.0, 1.0, 3.0)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 3 {
+            op := &ebiten.DrawImageOptions{}
+            op.ColorM.Scale(1.0, 1.0, 1.0, 4.0)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 4 {
+            f = 0
+            lvlchange = false
+            l = loadlvl(newlvl)
+            p.Pos[0] = -l.Pos[0]
+            p.Pos[1] = -l.Pos[1]
+        }
+    }
+}
+
+func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
+    return outsideWidth, outsideHeight
+}
+
+func drawmc(screen *ebiten.Image, w, h int) {
     gm := ebiten.GeoM{}
     gm.Scale(0.75, 0.75) // 48x48
     gm.Translate(float64(w / 2), float64(h / 2))
@@ -389,81 +552,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
                             GeoM: gm})
         }
     }
-    if dialogopen {
-        if dialogCount == 1000 {
-            dialogCount = 0
-        }
-        dialogCount++
-        dialoggm := ebiten.GeoM{}
-        dialoggm.Translate(float64(128), float64(468))
-        dialogimg := ebiten.NewImage(512, 108)
-        dialogimg.Fill(color.Black)
-        screen.DrawImage(
-            dialogimg, &ebiten.DrawImageOptions{
-                GeoM: dialoggm})
-        dialoggm2 := ebiten.GeoM{}
-        dialoggm2.Translate(float64(132), float64(472))
-        dialogimg2 := ebiten.NewImage(504, 100)
-        dialogimg2.Fill(color.White)
-        screen.DrawImage(
-            dialogimg2, &ebiten.DrawImageOptions{
-                GeoM: dialoggm2})
-        r := text.BoundString(fo, dialogstrs[0])
-        hei := r.Max.Y - r.Min.Y
-        if s < len(dialogstrs) {
-            text.Draw(screen, npcname, fo, 140, 500, color.RGBA{200, 36, 121, 255})
-            text.Draw(screen, dialogstrs[s], fo, 140, 516 + hei, color.Black)
-            if s + 1 < len(dialogstrs) {
-                text.Draw(screen, dialogstrs[s + 1], fo, 140, 524 + (hei * 2), color.Black)
-                if s + 2 < len(dialogstrs) {
-                    dagm := ebiten.GeoM{}
-                    dagm.Scale(0.25, 0.25)
-                    dagm.Translate(float64(586), float64(522))
-                    if dialogCount % 13 == 0 {
-                        dab++
-                    }
-                    if dab == 3 || dab == 5 {
-                        dagm.Translate(float64(0), float64(-4))
-                    } else if dab == 8 {
-                        dab = 0
-                    }
-                    screen.DrawImage(
-                        downArrowImage, &ebiten.DrawImageOptions{
-                            GeoM: dagm})
-                }
-            }
-        }
-    }
-    if lvlchange {
-        if npcCount % 13 == 0 {
-            f++
-        }
-        if f == 0 {
-            screen.DrawImage(fadeImage, &ebiten.DrawImageOptions{})
-        } else if f == 1 {
-            op := &ebiten.DrawImageOptions{}
-            op.ColorM.Scale(1.0, 1.0, 1.0, 2.0)
-            screen.DrawImage(fadeImage, op)
-        } else if f == 2 {
-            op := &ebiten.DrawImageOptions{}
-            op.ColorM.Scale(1.0, 1.0, 1.0, 3.0)
-            screen.DrawImage(fadeImage, op)
-        } else if f == 3 {
-            op := &ebiten.DrawImageOptions{}
-            op.ColorM.Scale(1.0, 1.0, 1.0, 4.0)
-            screen.DrawImage(fadeImage, op)
-        } else if f == 4 {
-            f = 0
-            lvlchange = false
-            l = loadlvl(newlvl)
-            p.Pos[0] = -l.Pos[0]
-            p.Pos[1] = -l.Pos[1]
-        }
-    }
-}
-
-func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
-    return outsideWidth, outsideHeight
 }
 
 func loadlvl(lvl [2]int) *levels.Level {
