@@ -80,6 +80,8 @@ var (
     fadeImage *ebiten.Image
     dab int = 0
     dialogCount int = 0
+    overwritewarning bool = false
+    overwritesel int = 0
 )
 
 type Game struct {}
@@ -141,6 +143,27 @@ func (g *Game) Update() error {
                     load = true
                     selload = false
                     start = false
+                }
+            } else if overwritewarning {
+                if inpututil.IsKeyJustPressed(ebiten.KeyA) || inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+                    overwritesel = 0
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyD) || inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+                    overwritesel = 1
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+                    overwritewarning = false
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+                    if overwritesel == 0 {
+                        sb.Reset()
+                        firstsave = false
+                        start = false
+                        save = true
+                        overwritewarning = false
+                    } else {
+                        overwritewarning = false
+                    }
                 }
             } else if firstsave {
                 if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
@@ -345,6 +368,32 @@ func (g *Game) Update() error {
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
                     if len(sb.String()) > 0 {
                         name = sb.String()
+                        homeDir, err := os.UserHomeDir()
+                        if err != nil {
+                            log.Fatal(err)
+                        }
+                        db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+                        if err != nil {
+                            log.Fatal(err)
+                        }
+                        defer db.Close()
+                        rows, err := db.Query("select name from saves")
+                        if err != nil {
+                            log.Fatal(err)
+                        }
+                        defer rows.Close()
+                        var savename string
+                        for rows.Next() {
+                            err = rows.Scan(&savename)
+                            if name == savename {
+                                overwritewarning = true
+                                return nil
+                            }
+                        }
+                        err = rows.Err()
+                        if err != nil {
+                            log.Fatal(err)
+                        }
                         sb.Reset()
                         firstsave = false
                         start = false
@@ -666,6 +715,26 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         text.Draw(screen, fmt.Sprintf("  %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
                     }
                 }
+            }
+        } else if overwritewarning {
+            // Draw warning
+            warning := "           WARNING!!!\n\nYou will overwrite a previous save\n\n           Continue??\n"
+            selection := "      > Yes <         > No <"
+            r := text.BoundString(fo, warning + selection)
+            hei := r.Max.Y - r.Min.Y
+            wid := r.Max.X - r.Min.X
+            warninggm := ebiten.GeoM{}
+            warninggm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (hei / 2) - 24))
+            warningimg := ebiten.NewImage(wid + 16, (2 * hei) + 16)
+            warningimg.Fill(color.Black)
+            screen.DrawImage(
+                warningimg, &ebiten.DrawImageOptions{
+                    GeoM: warninggm})
+            text.Draw(screen, warning, fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2), color.White)
+            if overwritesel == 0 {
+                text.Draw(screen, "      > Yes <           No  ", fo, (w / 2) - (wid / 2), (h / 2) + hei, color.White)
+            } else {
+                text.Draw(screen, "        Yes           > No <", fo, (w / 2) - (wid / 2), (h / 2) + hei, color.White)
             }
         } else if firstsave {
             r := text.BoundString(fo, "aaaaaaaaaaaaaaaaaaaaaaaa")
