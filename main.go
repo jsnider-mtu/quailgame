@@ -132,6 +132,9 @@ func (g *Game) Update() error {
                         loadsel++
                     }
                 }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+                    selload = false
+                }
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
                     name = loads[loadsel][0]
                     p = &player.Player{Pos: [2]int{0, 0}, Image: pcImage}
@@ -140,6 +143,9 @@ func (g *Game) Update() error {
                     start = false
                 }
             } else if firstsave {
+                if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+                    firstsave = false
+                }
                 if len(sb.String()) < 24 {
                     switch {
                     case inpututil.IsKeyJustPressed(ebiten.KeyA) || inpututil.KeyPressDuration(ebiten.KeyA) > 20:
@@ -359,11 +365,17 @@ func (g *Game) Update() error {
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
                     switch startsel {
                     case 0:
-                        l = levels.LvlOne(0)
-                        p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
+                        if l == nil {
+                            l = levels.LvlOne(0)
+                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
+                        }
                         firstsave = true
                     case 1:
-                        findloads = true
+                        if len(loads) == 0 {
+                            findloads = true
+                        } else {
+                            findloads = false
+                        }
                         selload = true
                     case 2:
                         os.Exit(0)
