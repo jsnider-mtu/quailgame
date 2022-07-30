@@ -648,14 +648,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
     } else if start {
         screen.DrawImage(startImage, &ebiten.DrawImageOptions{})
         if selload {
+            r := text.BoundString(fo, fmt.Sprint("> aaaaaaaaaaaaaaaaaaaaaaaa -- Level: aaaaaaaaaaaa"))
+            hei := r.Max.Y - r.Min.Y
+            wid := r.Max.X - r.Min.X
             for ind, lo := range loads {
-                r := text.BoundString(fo, fmt.Sprintf("> %s -- Level: %s", lo[0], lo[1]))
-                hei := r.Max.Y - r.Min.Y
-                wid := r.Max.X - r.Min.X
+                savesuffix := 24 - len(lo[0])
                 if loadsel == ind {
-                    text.Draw(screen, fmt.Sprintf("> %s -- Level: %s", lo[0], lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
+                    text.Draw(screen, fmt.Sprintf("> %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
                 } else {
-                    text.Draw(screen, fmt.Sprintf("  %s -- Level: %s", lo[0], lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
+                    text.Draw(screen, fmt.Sprintf("  %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
                 }
             }
         } else if firstsave {
