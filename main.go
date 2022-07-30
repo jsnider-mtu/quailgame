@@ -39,7 +39,7 @@ var (
     selload bool = false
     loads [][2]string
     loadsel int = 0
-    findloads bool = false
+    findloads bool = true
     pause bool = false
     pausesel int = 0
     save bool = false
@@ -83,6 +83,7 @@ var (
     overwritewarning bool = false
     overwritesel int = 0
     y int = 0
+    loadsfound bool = false
 )
 
 type Game struct {}
@@ -90,41 +91,45 @@ type Game struct {}
 func (g *Game) Update() error {
     if start {
         if startanimdone {
-            if selload {
-                if findloads {
-                    homeDir, err := os.UserHomeDir()
-                    if err != nil {
-                        log.Fatal(err)
-                    }
-                    db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
-                    if err != nil {
-                        log.Fatal(err)
-                    }
-                    defer db.Close()
-                    createStmt := `
-                    create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null);
-                    `
-                    _, err = db.Exec(createStmt)
-                    if err != nil {
-                        log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
-                    }
-                    rows, err := db.Query("select name, level from saves")
-                    if err != nil {
-                        log.Fatal(err)
-                    }
-                    defer rows.Close()
-                    for rows.Next() {
-                        var savename string
-                        var levelname string
-                        err = rows.Scan(&savename, &levelname)
-                        loads = append(loads, [2]string{savename, levelname})
-                    }
-                    err = rows.Err()
-                    if err != nil {
-                        log.Fatal(err)
-                    }
-                    findloads = false
+            if findloads {
+                homeDir, err := os.UserHomeDir()
+                if err != nil {
+                    log.Fatal(err)
                 }
+                db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+                if err != nil {
+                    log.Fatal(err)
+                }
+                defer db.Close()
+                createStmt := `
+                create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null);
+                `
+                _, err = db.Exec(createStmt)
+                if err != nil {
+                    log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
+                }
+                rows, err := db.Query("select name, level from saves")
+                if err != nil {
+                    log.Fatal(err)
+                }
+                defer rows.Close()
+                for rows.Next() {
+                    var savename string
+                    var levelname string
+                    err = rows.Scan(&savename, &levelname)
+                    loads = append(loads, [2]string{savename, levelname})
+                }
+                err = rows.Err()
+                if err != nil {
+                    log.Fatal(err)
+                }
+                findloads = false
+                loadsfound = true
+                if len(loads) == 0 {
+                    selload = false
+                }
+            }
+            if selload {
                 if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
                     if loadsel > 0 {
                         loadsel--
@@ -402,14 +407,26 @@ func (g *Game) Update() error {
                     }
                 }
             } else {
+                if !loadsfound {
+                    findloads = true
+                    return nil
+                }
                 if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
                     if startsel > 0 {
-                        startsel--
+                        if len(loads) > 0 {
+                            startsel--
+                        } else {
+                            startsel -= 2
+                        }
                     }
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
                     if startsel < 2 {
-                        startsel++
+                        if len(loads) > 0 {
+                            startsel++
+                        } else {
+                            startsel += 2
+                        }
                     }
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
@@ -421,12 +438,11 @@ func (g *Game) Update() error {
                         }
                         firstsave = true
                     case 1:
-                        if len(loads) == 0 {
-                            findloads = true
-                        } else {
-                            findloads = false
+                        if loadsfound {
+                            if len(loads) != 0 {
+                                selload = true
+                            }
                         }
-                        selload = true
                     case 2:
                         os.Exit(0)
                     }
@@ -697,15 +713,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
         // animation (image scrolling up)
         if npcCount % 5 == 0 {
             y++
-            if y == 65 {
-                y = 0
-                startanimdone = true
-            }
             animgm := ebiten.GeoM{}
             animgm.Translate(float64(0), float64(h - (9 * y)))
             screen.DrawImage(
                 startImage, &ebiten.DrawImageOptions{
                     GeoM: animgm})
+            if y == 65 {
+                y = 0
+                startanimdone = true
+            }
         }
     } else if start {
         screen.DrawImage(startImage, &ebiten.DrawImageOptions{})
