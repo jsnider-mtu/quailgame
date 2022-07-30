@@ -16,6 +16,7 @@ import (
 )
 
 type Level struct {
+    Name string
     Max [2]int
     Pos [2]int
     Boxes [][4]int
@@ -27,6 +28,22 @@ type Level struct {
 type Door struct {
     Coords [2]int
     NewLvl [2]int
+}
+
+func LoadLvl(name string, x, y int) *Level {
+    switch name {
+    case "One":
+        l := LvlOne(0)
+        l.Pos[0] = x
+        l.Pos[1] = y
+        return l
+    case "Two":
+        l := LvlTwo(0)
+        l.Pos[0] = x
+        l.Pos[1] = y
+        return l
+    }
+    return LvlOne(0)
 }
 
 func LvlOne(entrance int) *Level {
@@ -63,7 +80,7 @@ func LvlOne(entrance int) *Level {
     }
 
     return &Level{
-        Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
+        Name: "One", Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
             {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg}
 }
 
@@ -89,7 +106,7 @@ func LvlTwo(entrance int) *Level {
     }
 
     return &Level{
-        Max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{
+        Name: "Two", Max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{
             {0, 0, 144, 96},
             {0, 96, 48, 240},
             {96, 96, 144, 192},

@@ -2,12 +2,14 @@ package main
 
 import (
     "bytes"
-//    "fmt"
+    "database/sql"
+    "fmt"
     "image"
     "image/color"
     _ "image/png"
     "log"
     "math/rand"
+    "os"
 
     "golang.org/x/image/font"
     "golang.org/x/image/font/gofont/gomonobold"
@@ -23,12 +25,18 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
     "github.com/hajimehoshi/ebiten/v2/text"
+
+    _ "github.com/mattn/go-sqlite3"
 )
 
 var (
     err error
     start bool = false // not yet implemented
     pause bool = false // not yet implemented
+    save bool = false
+    load bool = false
+    cont bool = false
+    name string = "tempname"
     downArrowImage *ebiten.Image
     pcImage *ebiten.Image
     pcDownOffsetX int = 0
@@ -66,11 +74,74 @@ var (
 type Game struct {}
 
 func (g *Game) Update() error {
+    if save {
+        homeDir, err := os.UserHomeDir()
+        if err != nil {
+            log.Fatal(err)
+        }
+        db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+        if err != nil {
+            log.Fatal(err)
+        }
+        defer db.Close()
+        createStmt := `
+        create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null);
+        `
+        _, err = db.Exec(createStmt)
+        if err != nil {
+            log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
+        }
+        saveStmt := `
+        insert or replace into saves(name, level, x, y) values(?, ?, ?, ?);
+        `
+        _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1])
+        if err != nil {
+            log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
+        }
+        db.Close()
+        save = false
+    }
+    if load {
+        homeDir, err := os.UserHomeDir()
+        if err != nil {
+            log.Fatal(err)
+        }
+        db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+        if err != nil {
+            log.Fatal(err)
+        }
+        defer db.Close()
+        rows, err := db.Query("select * from saves where name = ?", name)
+        if err != nil {
+            log.Fatal(err)
+        }
+        defer rows.Close()
+        var savename string
+        var levelname string
+        var x, y int
+        for rows.Next() {
+            err = rows.Scan(&savename, &levelname, &x, &y)
+        }
+        err = rows.Err()
+        if err != nil {
+            log.Fatal(err)
+        }
+        l = levels.LoadLvl(levelname, x, y)
+        p.Pos[0] = -l.Pos[0]
+        p.Pos[1] = -l.Pos[1]
+        load = false
+    }
     if npcCount == 6000 {
         npcCount = 0
     }
     if !dialogopen {
         npcCount++
+    }
+    if inpututil.IsKeyJustPressed(ebiten.KeyT) {
+        save = true
+    }
+    if inpututil.IsKeyJustPressed(ebiten.KeyL) {
+        load = true
     }
     if inpututil.IsKeyJustPressed(ebiten.KeyF) {
         if dialogopen {
@@ -517,8 +588,14 @@ func init() {
         Rect: image.Rect(0, 0, 768, 576),
     })
 
-    l = levels.LvlOne(0)
-    p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
+    if cont {
+        p = &player.Player{Pos: [2]int{0, 0}, Image: pcImage}
+        load = true
+    } else {
+        l = levels.LvlOne(0)
+        p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
+        save = true
+    }
 }
 
 func main() {
