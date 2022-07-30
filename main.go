@@ -128,7 +128,7 @@ func (g *Game) Update() error {
                     }
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
-                    if loadsel < len(loads) {
+                    if loadsel < len(loads) - 1 {
                         loadsel++
                     }
                 }
@@ -653,10 +653,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
             wid := r.Max.X - r.Min.X
             for ind, lo := range loads {
                 savesuffix := 24 - len(lo[0])
-                if loadsel == ind {
-                    text.Draw(screen, fmt.Sprintf("> %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
+                if loadsel > 15 {
+                    if loadsel == ind {
+                        text.Draw(screen, fmt.Sprintf("> %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind - (ind - 16))), color.White)
+                    } else {
+                        text.Draw(screen, fmt.Sprintf("  %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (16 - (loadsel - ind))), color.White)
+                    }
                 } else {
-                    text.Draw(screen, fmt.Sprintf("  %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
+                    if loadsel == ind {
+                        text.Draw(screen, fmt.Sprintf("> %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
+                    } else {
+                        text.Draw(screen, fmt.Sprintf("  %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind + 1)), color.White)
+                    }
                 }
             }
         } else if firstsave {
