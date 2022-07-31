@@ -130,6 +130,9 @@ func (g *Game) Update() error {
                 }
             }
             if selload {
+                if len(loads) == 0 {
+                    selload = false
+                }
                 if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
                     if loadsel > 0 {
                         loadsel--
@@ -139,6 +142,25 @@ func (g *Game) Update() error {
                     if loadsel < len(loads) - 1 {
                         loadsel++
                     }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                    homeDir, err := os.UserHomeDir()
+                    if err != nil {
+                        log.Fatal(err)
+                    }
+                    db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+                    if err != nil {
+                        log.Fatal(err)
+                    }
+                    defer db.Close()
+                    _, err = db.Exec("delete from saves where name = ?", loads[loadsel][0])
+                    if err != nil {
+                        log.Fatal(err)
+                    }
+                    loads = [][2]string{}
+                    loadsfound = false
+                    findloads = true
+                    return nil
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
                     selload = false
@@ -479,6 +501,9 @@ func (g *Game) Update() error {
                     pause = false
                 case 2:
                     start = true
+                    loads = [][2]string{}
+                    loadsfound = false
+                    findloads = true
                     pause = false
                 case 3:
                     os.Exit(0)
@@ -713,7 +738,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     mcdrawn := false
     if !startanimdone {
-        // animation (image scrolling up)
         if npcCount % 5 == 0 {
             y++
             animgm := ebiten.GeoM{}
@@ -734,6 +758,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
             wid := r.Max.X - r.Min.X
             for ind, lo := range loads {
                 savesuffix := 24 - len(lo[0])
+                if loadsel == len(loads) {
+                    loadsel--
+                }
                 if loadsel > 15 {
                     if loadsel == ind {
                         text.Draw(screen, fmt.Sprintf("> %s -- Level: %s", lo[0] + strings.Repeat(" ", savesuffix), lo[1]), fo, (w / 2) - (wid / 2), (hei * 2 * (ind - (ind - 16))), color.White)
@@ -749,7 +776,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 }
             }
         } else if overwritewarning {
-            // Draw warning
             warning := "           WARNING!!!\n\nYou will overwrite a previous save\n\n           Continue??\n"
             selection := "      > Yes <         > No <"
             r := text.BoundString(fo, warning + selection)
@@ -794,6 +820,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 text.Draw(screen, "  Continue  ", fo, (w / 2) - (wid / 2), (h / 2) + (hei * 6), color.White)
                 text.Draw(screen, "  Quit Game  ", fo, (w / 2) - (wid / 2) - (wid / 24), (h / 2) + (hei * 8), color.White)
             case 1:
+                if len(loads) == 0 {
+                    startsel = 0
+                }
                 text.Draw(screen, "  New Game  ", fo, (w / 2) - (wid / 2), (h / 2) + (hei * 4), color.White)
                 text.Draw(screen, "> Continue <", fo, (w / 2) - (wid / 2), (h / 2) + (hei * 6), color.White)
                 text.Draw(screen, "  Quit Game  ", fo, (w / 2) - (wid / 2) - (wid / 24), (h / 2) + (hei * 8), color.White)
@@ -1133,15 +1162,6 @@ func init() {
         Stride: 768,
         Rect: image.Rect(0, 0, 768, 576),
     })
-
-//    if cont {
-//        p = &player.Player{Pos: [2]int{0, 0}, Image: pcImage}
-//        load = true
-//    } else {
-//        l = levels.LvlOne(0)
-//        p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
-//        save = true
-//    }
 }
 
 func main() {
