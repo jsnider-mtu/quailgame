@@ -4,7 +4,7 @@ import (
 //    "log"
 
     "github.com/hajimehoshi/ebiten/v2"
-//    "github.com/jsnider-mtu/projectx/levels"
+//    "github.com/jsnider-mtu/quailgame/levels"
 )
 
 //var (

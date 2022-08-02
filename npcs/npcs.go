@@ -2,9 +2,9 @@ package npcs
 
 import (
 //    "github.com/hajimehoshi/ebiten/v2"
-    "github.com/jsnider-mtu/projectx/player"
-//    "github.com/jsnider-mtu/projectx/levels"
-//    "github.com/jsnider-mtu/projectx/utils"
+    "github.com/jsnider-mtu/quailgame/player"
+//    "github.com/jsnider-mtu/quailgame/levels"
+//    "github.com/jsnider-mtu/quailgame/utils"
 )
 
 type NPC struct {

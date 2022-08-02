@@ -1,4 +1,4 @@
-module github.com/jsnider-mtu/projectx
+module github.com/jsnider-mtu/quailgame
 
 go 1.18
 

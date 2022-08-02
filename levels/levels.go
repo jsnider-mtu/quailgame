@@ -9,10 +9,10 @@ import (
     "math/rand"
 
     "github.com/hajimehoshi/ebiten/v2"
-    "github.com/jsnider-mtu/projectx/levels/lvlimages"
-    "github.com/jsnider-mtu/projectx/npcs"
-    "github.com/jsnider-mtu/projectx/player"
-    "github.com/jsnider-mtu/projectx/player/pcimages"
+    "github.com/jsnider-mtu/quailgame/levels/lvlimages"
+    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/jsnider-mtu/quailgame/player"
+    "github.com/jsnider-mtu/quailgame/player/pcimages"
 )
 
 type Level struct {

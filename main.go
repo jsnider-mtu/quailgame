@@ -17,11 +17,11 @@ import (
 
     "github.com/golang/freetype/truetype"
 
-    "github.com/jsnider-mtu/projectx/assets"
-    "github.com/jsnider-mtu/projectx/player"
-    "github.com/jsnider-mtu/projectx/player/pcimages"
-    "github.com/jsnider-mtu/projectx/levels"
-    "github.com/jsnider-mtu/projectx/utils"
+    "github.com/jsnider-mtu/quailgame/assets"
+    "github.com/jsnider-mtu/quailgame/player"
+    "github.com/jsnider-mtu/quailgame/player/pcimages"
+    "github.com/jsnider-mtu/quailgame/levels"
+    "github.com/jsnider-mtu/quailgame/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"

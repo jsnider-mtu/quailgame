@@ -1,8 +1,8 @@
 package utils
 
 import (
-    "github.com/jsnider-mtu/projectx/levels"
-    "github.com/jsnider-mtu/projectx/player"
+    "github.com/jsnider-mtu/quailgame/levels"
+    "github.com/jsnider-mtu/quailgame/player"
 )
 
 func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist int, mc *player.Player) bool {
