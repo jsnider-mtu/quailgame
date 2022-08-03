@@ -483,9 +483,6 @@ func (g *Game) Update() error {
         }
         return nil
     } else {
-        if inpututil.IsKeyJustPressed(ebiten.KeyP) {
-            cutscene = true
-        }
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause
         }
