@@ -7,7 +7,7 @@ import (
     "golang.org/x/image/font"
 
     "github.com/hajimehoshi/ebiten/v2"
-//    "github.com/hajimehoshi/ebiten/v2/inpututil"
+    "github.com/hajimehoshi/ebiten/v2/inpututil"
     "github.com/hajimehoshi/ebiten/v2/text"
 )
 
@@ -18,7 +18,7 @@ var (
 func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
     switch cs {
     case 0:
-        textstr := "The Quail Kingdom...\n"+
+        textstr := "The Quail Kingdom...\n\n"+
                    "A safe respite for many. A place of deep history,\n"+
                    "a place of ancient warfare, but now a place of calm\n"+
                    "peace. Your travels have brought you to the capital\n"+
@@ -28,6 +28,9 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
                    "is ale and hedonism."
         if count % 5 == 0 {
             f++
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            f = len(textstr)
         }
         if f < len(textstr) {
             text.Draw(screen, textstr[:f], *fo, 64, 64, color.White)
