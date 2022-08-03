@@ -18,14 +18,21 @@ var (
 func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
     switch cs {
     case 0:
-        textstr := "test string to check out animations\nline no 2, more random text"
-        if count % 8 == 0 {
+        textstr := "The Quail Kingdom...\n"+
+                   "A safe respite for many. A place of deep history,\n"+
+                   "a place of ancient warfare, but now a place of calm\n"+
+                   "peace. Your travels have brought you to the capital\n"+
+                   "city on the eve of the Festival of the Watermelon.\n"+
+                   "While exploring you find an old man searching for\n"+
+                   "a book. Although you wish him well your priority now\n"+
+                   "is ale and hedonism."
+        if count % 5 == 0 {
             f++
         }
         if f < len(textstr) {
             text.Draw(screen, textstr[:f], *fo, 64, 64, color.White)
             return false
-        } else if f > len(textstr) + 10 {
+        } else if f > len(textstr) + 20 {
             text.Draw(screen, textstr, *fo, 64, 64, color.White)
             f = 0
             return true
