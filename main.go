@@ -18,6 +18,7 @@ import (
     "github.com/golang/freetype/truetype"
 
     "github.com/jsnider-mtu/quailgame/assets"
+    "github.com/jsnider-mtu/quailgame/cutscenes"
     "github.com/jsnider-mtu/quailgame/player"
     "github.com/jsnider-mtu/quailgame/player/pcimages"
     "github.com/jsnider-mtu/quailgame/levels"
@@ -84,6 +85,9 @@ var (
     overwritesel int = 0
     y int = 0
     loadsfound bool = false
+    cutscene bool = false
+    csCount int = 0
+    curCS int = 0
 )
 
 type Game struct {}
@@ -426,6 +430,8 @@ func (g *Game) Update() error {
                         firstsave = false
                         start = false
                         save = true
+                        curCS = 0
+                        cutscene = true
                     }
                 }
             } else {
@@ -565,6 +571,11 @@ func (g *Game) Update() error {
                 l = levels.LoadLvl(levelname, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
                 load = false
+            }
+            if cutscene {
+                csCount++
+            } else if csCount > 0 {
+                csCount = 0
             }
             if npcCount == 6000 {
                 npcCount = 0
@@ -832,6 +843,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 text.Draw(screen, "> Quit Game <", fo, (w / 2) - (wid / 2) - (wid / 24), (h / 2) + (hei * 8), color.White)
             }
         }
+    } else if cutscene {
+        done := cutscenes.CutScene(screen, curCS, csCount, &fo)
+        if done {
+            cutscene = false
+        }
     } else if l != nil {
         lgm := ebiten.GeoM{}
         lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
@@ -916,7 +932,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
     }
-    if !mcdrawn && !start {
+    if !mcdrawn && !start && !cutscene {
         drawmc(screen, w, h)
     }
     if dialogopen {
@@ -1006,7 +1022,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if lvlchange {
-        if npcCount % 13 == 0 {
+        if npcCount % 9 == 0 {
             f++
         }
         if f == 0 {
@@ -1024,11 +1040,19 @@ func (g *Game) Draw(screen *ebiten.Image) {
             op.ColorM.Scale(1.0, 1.0, 1.0, 4.0)
             screen.DrawImage(fadeImage, op)
         } else if f == 4 {
+            op := &ebiten.DrawImageOptions{}
+            op.ColorM.Scale(1.0, 1.0, 1.0, 5.0)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 5 {
             f = 0
             lvlchange = false
             l = loadlvl(newlvl)
             p.Pos[0] = -l.Pos[0]
             p.Pos[1] = -l.Pos[1]
+            if l.Cutscene > 0 {
+                curCS = l.Cutscene
+                cutscene = true
+            }
         }
     }
 }
@@ -1154,7 +1178,7 @@ func init() {
 
     pixels := []uint8{}
     for a := 0; a < 442368; a++ {
-        pixels = append(pixels, 0x40)
+        pixels = append(pixels, 0x33)
     }
 
     fadeImage = ebiten.NewImageFromImage(&image.Alpha{
