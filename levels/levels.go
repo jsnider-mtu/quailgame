@@ -17,6 +17,7 @@ import (
 
 type Level struct {
     Name string
+    Cutscene int
     Max [2]int
     Pos [2]int
     Boxes [][4]int
@@ -78,7 +79,7 @@ func LvlOne(entrance int) *Level {
     }
 
     return &Level{
-        Name: "One", Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
+        Name: "One", Cutscene: -1, Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
             {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg}
 }
 
@@ -104,7 +105,7 @@ func LvlTwo(entrance int) *Level {
     }
 
     return &Level{
-        Name: "Two", Max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{
+        Name: "Two", Cutscene: 1, Max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{
             {0, 0, 144, 96},
             {0, 96, 48, 240},
             {96, 96, 144, 192},

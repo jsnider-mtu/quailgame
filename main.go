@@ -430,6 +430,8 @@ func (g *Game) Update() error {
                         firstsave = false
                         start = false
                         save = true
+                        curCS = 0
+                        cutscene = true
                     }
                 }
             } else {
@@ -1050,6 +1052,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
             l = loadlvl(newlvl)
             p.Pos[0] = -l.Pos[0]
             p.Pos[1] = -l.Pos[1]
+            if l.Cutscene > 0 {
+                curCS = l.Cutscene
+                cutscene = true
+            }
         }
     }
 }

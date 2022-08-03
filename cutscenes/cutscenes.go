@@ -12,7 +12,7 @@ import (
 )
 
 var (
-    f int = 0
+    cscount int = 0
 )
 
 func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
@@ -27,17 +27,37 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
                    "a book. Although you wish him well your priority now\n"+
                    "is ale and hedonism."
         if count % 5 == 0 {
-            f++
+            cscount++
         }
-        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-            f = len(textstr)
+        if cscount > 0 && inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+            cscount = len(textstr)
         }
-        if f < len(textstr) {
-            text.Draw(screen, textstr[:f], *fo, 64, 64, color.White)
+        if cscount < len(textstr) {
+            text.Draw(screen, textstr[:cscount], *fo, 64, 64, color.White)
             return false
-        } else if f > len(textstr) + 20 {
+        } else if cscount > len(textstr) + 20 {
             text.Draw(screen, textstr, *fo, 64, 64, color.White)
-            f = 0
+            cscount = 0
+            return true
+        } else {
+            text.Draw(screen, textstr, *fo, 64, 64, color.White)
+            return false
+        }
+    case 1:
+        textstr := "The Quail Kingdom...\n\n"+
+                   "Second cutscene."
+        if count % 5 == 0 {
+            cscount++
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+            cscount = len(textstr)
+        }
+        if cscount < len(textstr) {
+            text.Draw(screen, textstr[:cscount], *fo, 64, 64, color.White)
+            return false
+        } else if cscount > len(textstr) + 20 {
+            text.Draw(screen, textstr, *fo, 64, 64, color.White)
+            cscount = 0
             return true
         } else {
             text.Draw(screen, textstr, *fo, 64, 64, color.White)
