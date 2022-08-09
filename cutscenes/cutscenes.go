@@ -1,21 +1,29 @@
 package cutscenes
 
 import (
-//    "fmt"
+    "bytes"
+    "fmt"
+    "log"
+    "image"
     "image/color"
+    _ "image/png"
 
     "golang.org/x/image/font"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
     "github.com/hajimehoshi/ebiten/v2/text"
+
+    "github.com/jsnider-mtu/quailgame/assets"
 )
 
 var (
     cscount int = 0
+    pic2Image *ebiten.Image
 )
 
 var textstrs = make([]string, 0)
+var picsarr = make([]*ebiten.Image, 0)
 
 func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
     switch cs {
@@ -44,6 +52,16 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
                         "-- a new sovereign -- King Quail."
             textstrs = append(textstrs, textstr, textstr2, textstr3)
         }
+        if len(picsarr) == 0 {
+            pic0Image := ebiten.NewImage(1, 1)
+            pic1Image := ebiten.NewImage(1, 1)
+            pic2image, _, err := image.Decode(bytes.NewReader(assets.KingQuail_PNG))
+            if err != nil {
+                log.Fatal(err)
+            }
+            pic2Image = ebiten.NewImageFromImage(pic2image)
+            picsarr = append(picsarr, pic0Image, pic1Image, pic2Image)
+        }
         if count % 3 == 0 {
             cscount++
         }
@@ -51,11 +69,15 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         //    cscount = len(textstr)
         //}
         if cscount < len(textstrs[0]) {
+            screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: ebiten.GeoM{}})
             text.Draw(screen, textstrs[0][:cscount], *fo, 64, 64, color.White)
             return false
         } else if cscount > len(textstrs[0]) + 50 {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
             cscount = 0
+            if len(picsarr) > 1 {
+                picsarr = picsarr[1:]
+            }
             if len(textstrs) > 1 {
                 textstrs = textstrs[1:]
                 return false
