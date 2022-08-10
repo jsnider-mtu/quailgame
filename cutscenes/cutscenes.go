@@ -26,6 +26,20 @@ var textstrs = make([]string, 0)
 var picsarr = make([]*ebiten.Image, 0)
 
 func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
+    if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+        cscount = 0
+        if len(textstrs) > 1 {
+            textstrs = textstrs[1:]
+            if len(picsarr) > 1 {
+                picsarr = picsarr[1:]
+            }
+            return false
+        } else {
+            textstrs = make([]string, 0)
+            picsarr = make([]*ebiten.Image, 0)
+            return true
+        }
+    }
     switch cs {
     case 0:
         if len(textstrs) == 0 {
