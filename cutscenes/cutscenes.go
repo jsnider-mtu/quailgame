@@ -2,7 +2,7 @@ package cutscenes
 
 import (
     "bytes"
-    "fmt"
+//    "fmt"
     "log"
     "image"
     "image/color"
@@ -68,12 +68,22 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         //if cscount > 0 && inpututil.IsKeyJustPressed(ebiten.KeySpace) {
         //    cscount = len(textstr)
         //}
+        i := float64(cscount) / float64(len(textstrs[0]) + 50)
         if cscount < len(textstrs[0]) {
-            screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: ebiten.GeoM{}})
             text.Draw(screen, textstrs[0][:cscount], *fo, 64, 64, color.White)
+            pgm := ebiten.GeoM{}
+            pgm.Translate(float64(468), float64(276))
+            pcm := ebiten.ColorM{}
+            pcm.Scale(1.0, 1.0, 1.0, i)
+            screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
             return false
         } else if cscount > len(textstrs[0]) + 50 {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
+            pgm := ebiten.GeoM{}
+            pgm.Translate(float64(468), float64(276))
+            pcm := ebiten.ColorM{}
+            pcm.Scale(1.0, 1.0, 1.0, i)
+            screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
             cscount = 0
             if len(picsarr) > 1 {
                 picsarr = picsarr[1:]
@@ -83,10 +93,16 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
                 return false
             } else {
                 textstrs = make([]string, 0)
+                picsarr = make([]*ebiten.Image, 0)
                 return true
             }
         } else {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
+            pgm := ebiten.GeoM{}
+            pgm.Translate(float64(468), float64(276))
+            pcm := ebiten.ColorM{}
+            pcm.Scale(1.0, 1.0, 1.0, i)
+            screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
             return false
         }
     case 1:
