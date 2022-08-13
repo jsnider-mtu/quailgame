@@ -84,6 +84,7 @@ var (
     overwritewarning bool = false
     overwritesel int = 0
     y int = 0
+    //a int = 0
     loadsfound bool = false
     cutscene bool = false
     csCount int = 0
@@ -749,17 +750,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     mcdrawn := false
     if !startanimdone {
-        if npcCount % 5 == 0 {
-            y++
-            animgm := ebiten.GeoM{}
-            animgm.Translate(float64(0), float64(h - (9 * y)))
-            screen.DrawImage(
-                startImage, &ebiten.DrawImageOptions{
-                    GeoM: animgm})
-            if y == 65 {
-                y = 0
-                startanimdone = true
-            }
+        y++
+        animgm := ebiten.GeoM{}
+        animgm.Translate(float64(0), float64(h - (9 * y)))
+        screen.DrawImage(
+            startImage, &ebiten.DrawImageOptions{
+                GeoM: animgm})
+        if y == 65 {
+            y = 0
+            startanimdone = true
         }
     } else if start {
         screen.DrawImage(startImage, &ebiten.DrawImageOptions{})
