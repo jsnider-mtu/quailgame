@@ -5,3 +5,4 @@ todo
 *~
 *.swp
 *.swo
+shaders/lighting.go

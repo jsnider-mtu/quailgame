@@ -15,6 +15,7 @@ import (
     "github.com/hajimehoshi/ebiten/v2/text"
 
     "github.com/jsnider-mtu/quailgame/assets"
+    "github.com/jsnider-mtu/quailgame/shaders"
 )
 
 var (
@@ -67,8 +68,8 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
             textstrs = append(textstrs, textstr, textstr2, textstr3)
         }
         if len(picsarr) == 0 {
-            pic0Image := ebiten.NewImage(1, 1)
-            pic1Image := ebiten.NewImage(1, 1)
+            pic0Image := ebiten.NewImage(300, 300)
+            pic1Image := ebiten.NewImage(300, 300)
             pic2image, _, err := image.Decode(bytes.NewReader(assets.KingQuail_PNG))
             if err != nil {
                 log.Fatal(err)
@@ -82,22 +83,53 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         //if cscount > 0 && inpututil.IsKeyJustPressed(ebiten.KeySpace) {
         //    cscount = len(textstr)
         //}
+        cx, cy := ebiten.CursorPosition()
+        whiteImage := ebiten.NewImage(300, 300)
+        //blackImage := ebiten.NewImage(300, 300)
+        //blackImage.Fill(color.Black)
+        whiteImage.Fill(color.White)
+        s, err := ebiten.NewShader([]byte(shaders.Lighting_go))
+        if err != nil {
+            log.Fatal(err)
+        }
+        sgm := ebiten.GeoM{}
+        sgm.Translate(float64(234), float64(276))
+        sop := &ebiten.DrawRectShaderOptions{GeoM: sgm}
+        if count > 220 {
+            sop.Uniforms = map[string]interface{}{
+                "Time": float32(count - 220) / 60,
+                "Cursor": []float32{float32(cx), float32(cy)},
+                "ScreenSize": []float32{float32(768), float32(576)},
+            }
+        } else {
+            sop.Uniforms = map[string]interface{}{
+                "Time": float32(0),
+                "Cursor": []float32{float32(cx), float32(cy)},
+                "ScreenSize": []float32{float32(768), float32(576)},
+            }
+        }
+        sop.Images[0] = picsarr[0]
+        sop.Images[1] = whiteImage
+        sop.Images[2] = whiteImage
+        sop.Images[3] = whiteImage
         i := float64(cscount) / float64(len(textstrs[0]) + 50)
         if cscount < len(textstrs[0]) {
             text.Draw(screen, textstrs[0][:cscount], *fo, 64, 64, color.White)
             pgm := ebiten.GeoM{}
-            pgm.Translate(float64(468), float64(276))
+            pgm.Translate(float64(234), float64(276))
             pcm := ebiten.ColorM{}
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
+            screen.DrawRectShader(300, 300, s, sop)
             return false
         } else if cscount > len(textstrs[0]) + 50 {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
             pgm := ebiten.GeoM{}
-            pgm.Translate(float64(468), float64(276))
+            pgm.Translate(float64(234), float64(276))
             pcm := ebiten.ColorM{}
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
+            screen.DrawRectShader(300, 300, s, sop)
             cscount = 0
             if len(picsarr) > 1 {
                 picsarr = picsarr[1:]
@@ -113,10 +145,11 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         } else {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
             pgm := ebiten.GeoM{}
-            pgm.Translate(float64(468), float64(276))
+            pgm.Translate(float64(234), float64(276))
             pcm := ebiten.ColorM{}
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
+            screen.DrawRectShader(300, 300, s, sop)
             return false
         }
     case 1:
