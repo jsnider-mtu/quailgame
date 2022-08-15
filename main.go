@@ -89,6 +89,7 @@ var (
     cutscene bool = false
     csCount int = 0
     curCS int = 0
+    fadeScreen *ebiten.Image
 )
 
 type Game struct {}
@@ -761,7 +762,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             startanimdone = true
         }
     } else if start {
-        screen.DrawImage(startImage, &ebiten.DrawImageOptions{})
+        screen.DrawImage(startImage, nil)
         if selload {
             r := text.BoundString(fo, fmt.Sprint("> aaaaaaaaaaaaaaaaaaaaaaaa -- Level: aaaaaaaaaaaa"))
             hei := r.Max.Y - r.Min.Y
@@ -1029,28 +1030,29 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if lvlchange {
-        if npcCount % 9 == 0 {
+        op := &ebiten.DrawImageOptions{}
+        fadeScreen = ebiten.NewImage(768, 576)
+        fadeScreen.Fill(color.Black)
+        if npcCount % 10 == 0 {
             f++
         }
         if f == 0 {
-            screen.DrawImage(fadeImage, &ebiten.DrawImageOptions{})
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.0)
+            screen.DrawImage(fadeImage, op)
         } else if f == 1 {
-            op := &ebiten.DrawImageOptions{}
-            op.ColorM.Scale(1.0, 1.0, 1.0, 2.0)
-            screen.DrawImage(fadeImage, op)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.2)
+            screen.DrawImage(fadeScreen, op)
         } else if f == 2 {
-            op := &ebiten.DrawImageOptions{}
-            op.ColorM.Scale(1.0, 1.0, 1.0, 3.0)
-            screen.DrawImage(fadeImage, op)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.4)
+            screen.DrawImage(fadeScreen, op)
         } else if f == 3 {
-            op := &ebiten.DrawImageOptions{}
-            op.ColorM.Scale(1.0, 1.0, 1.0, 4.0)
-            screen.DrawImage(fadeImage, op)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.6)
+            screen.DrawImage(fadeScreen, op)
         } else if f == 4 {
-            op := &ebiten.DrawImageOptions{}
-            op.ColorM.Scale(1.0, 1.0, 1.0, 5.0)
-            screen.DrawImage(fadeImage, op)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.8)
+            screen.DrawImage(fadeScreen, op)
         } else if f == 5 {
+            screen.DrawImage(fadeScreen, nil)
             f = 0
             lvlchange = false
             l = loadlvl(newlvl)
