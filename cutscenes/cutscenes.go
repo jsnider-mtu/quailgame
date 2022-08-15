@@ -98,7 +98,7 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         sop.Uniforms = map[string]interface{}{
             "Time": float32(count) / 60,
             "Cursor": []float32{float32(cx), float32(cy)},
-            "ScreenSize": []float32{float32(300), float32(300)},
+            "ScreenSize": []float32{float32(768), float32(576)},
         }
         sop.Images[0] = picsarr[0]
         sop.Images[1] = whiteImage
