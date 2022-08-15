@@ -84,14 +84,16 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         //    cscount = len(textstr)
         //}
         cx, cy := ebiten.CursorPosition()
-        blackImage := ebiten.NewImage(300, 300)
-        blackImage.Fill(color.Black)
+        whiteImage := ebiten.NewImage(300, 300)
+        //blackImage := ebiten.NewImage(300, 300)
+        //blackImage.Fill(color.Black)
+        whiteImage.Fill(color.White)
         s, err := ebiten.NewShader([]byte(shaders.Lighting_go))
         if err != nil {
             log.Fatal(err)
         }
         sgm := ebiten.GeoM{}
-        sgm.Translate(float64(468), float64(276))
+        sgm.Translate(float64(234), float64(276))
         sop := &ebiten.DrawRectShaderOptions{GeoM: sgm}
         sop.Uniforms = map[string]interface{}{
             "Time": float32(count) / 60,
@@ -99,14 +101,14 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
             "ScreenSize": []float32{float32(300), float32(300)},
         }
         sop.Images[0] = picsarr[0]
-        sop.Images[1] = picsarr[0]
-        sop.Images[2] = blackImage
-        sop.Images[3] = blackImage
+        sop.Images[1] = whiteImage
+        sop.Images[2] = whiteImage
+        sop.Images[3] = whiteImage
         i := float64(cscount) / float64(len(textstrs[0]) + 50)
         if cscount < len(textstrs[0]) {
             text.Draw(screen, textstrs[0][:cscount], *fo, 64, 64, color.White)
             pgm := ebiten.GeoM{}
-            pgm.Translate(float64(468), float64(276))
+            pgm.Translate(float64(234), float64(276))
             pcm := ebiten.ColorM{}
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
@@ -115,7 +117,7 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         } else if cscount > len(textstrs[0]) + 50 {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
             pgm := ebiten.GeoM{}
-            pgm.Translate(float64(468), float64(276))
+            pgm.Translate(float64(234), float64(276))
             pcm := ebiten.ColorM{}
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
@@ -135,7 +137,7 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         } else {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
             pgm := ebiten.GeoM{}
-            pgm.Translate(float64(468), float64(276))
+            pgm.Translate(float64(234), float64(276))
             pcm := ebiten.ColorM{}
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
