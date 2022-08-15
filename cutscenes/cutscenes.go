@@ -95,10 +95,18 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         sgm := ebiten.GeoM{}
         sgm.Translate(float64(234), float64(276))
         sop := &ebiten.DrawRectShaderOptions{GeoM: sgm}
-        sop.Uniforms = map[string]interface{}{
-            "Time": float32(count) / 60,
-            "Cursor": []float32{float32(cx), float32(cy)},
-            "ScreenSize": []float32{float32(768), float32(576)},
+        if count > 220 {
+            sop.Uniforms = map[string]interface{}{
+                "Time": float32(count - 220) / 60,
+                "Cursor": []float32{float32(cx), float32(cy)},
+                "ScreenSize": []float32{float32(768), float32(576)},
+            }
+        } else {
+            sop.Uniforms = map[string]interface{}{
+                "Time": float32(0),
+                "Cursor": []float32{float32(cx), float32(cy)},
+                "ScreenSize": []float32{float32(768), float32(576)},
+            }
         }
         sop.Images[0] = picsarr[0]
         sop.Images[1] = whiteImage
