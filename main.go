@@ -778,9 +778,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
         animop.GeoM.Translate(float64((w / 2) - 40), float64(0))
         animop.ColorM.Scale(1.0, 1.0, 1.0, 0.60)
         z++
-        if z >= 15 && z < 30 {
-            a := (z / 3) % 5
-            fmt.Println(fmt.Sprintf("a = %d", a))
+        if z >= 20 && z < 40 {
+            a := (z / 4) % 5
+            if a == 0 || a == 4 {
+                animop.ColorM.Scale(1.0, 1.0, 1.0, 0.50)
+            }
             screen.DrawImage(
                 lightningImage.SubImage(
                     image.Rect(
