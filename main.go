@@ -685,8 +685,7 @@ func (g *Game) Update() error {
                         }
                     }
                     count++
-                }
-                if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
+                } else if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
                     stopped = false
                     left = true
                     up = false
@@ -703,8 +702,7 @@ func (g *Game) Update() error {
                         }
                     }
                     count++
-                }
-                if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
+                } else if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
                     stopped = false
                     right = true
                     left = false
@@ -721,8 +719,7 @@ func (g *Game) Update() error {
                         }
                     }
                     count++
-                }
-                if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
+                } else if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
                     stopped = false
                     down = true
                     up = false
