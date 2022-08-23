@@ -91,6 +91,7 @@ var (
     cutscene bool = false
     csCount int = 0
     curCS int = 0
+    csDone []int
     fadeScreen *ebiten.Image
 )
 
@@ -908,12 +909,21 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
     } else if cutscene {
-        done, rstCount := cutscenes.CutScene(screen, curCS, csCount, &fo)
-        if rstCount {
-            csCount = 0
+        for _, csval := range csDone {
+            if csval == curCS {
+                cutscene = false
+                break
+            }
         }
-        if done {
-            cutscene = false
+        if cutscene {
+            done, rstCount := cutscenes.CutScene(screen, curCS, csCount, &fo)
+            if rstCount {
+                csCount = 0
+            }
+            if done {
+                csDone = append(csDone, curCS)
+                cutscene = false
+            }
         }
     } else if l != nil {
         lgm := ebiten.GeoM{}
