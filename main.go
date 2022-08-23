@@ -765,6 +765,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 startImage, &ebiten.DrawImageOptions{
                     GeoM: animgm})
         } else {
+            screen.DrawImage(startImage, nil)
             y = 0
             startanimdone = true
         }
