@@ -66,7 +66,6 @@ var (
     right bool = false
     stopped bool = true
     count int = 0
-    lastCount int = 0
     npcCount int = 0
     dialogopen bool = false
     dialogstrs []string
@@ -705,6 +704,7 @@ func (g *Game) Update() error {
                             }
                         }
                     }
+                    count++
                 case 1:
                     stopped = false
                     left = true
@@ -721,6 +721,7 @@ func (g *Game) Update() error {
                             }
                         }
                     }
+                    count++
                 case 2:
                     stopped = false
                     right = true
@@ -737,6 +738,7 @@ func (g *Game) Update() error {
                             }
                         }
                     }
+                    count++
                 case 3:
                     stopped = false
                     down = true
@@ -753,8 +755,10 @@ func (g *Game) Update() error {
                             }
                         }
                     }
+                    count++
                 case 4:
                     stopped = true
+                    count = 0
                 }
             }
         }
@@ -1123,7 +1127,7 @@ func drawmc(screen *ebiten.Image, w, h int) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 15) % 4
+            i := (count / 10) % 4
             sx, sy := pcUpOffsetX + (i * 64), pcUpOffsetY
             screen.DrawImage(
                 p.Image.SubImage(
@@ -1141,7 +1145,7 @@ func drawmc(screen *ebiten.Image, w, h int) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 15) % 4
+            i := (count / 10) % 4
             sx, sy := pcLeftOffsetX + (i * 64), pcLeftOffsetY
             screen.DrawImage(
                 p.Image.SubImage(
@@ -1159,7 +1163,7 @@ func drawmc(screen *ebiten.Image, w, h int) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 15) % 4
+            i := (count / 10) % 4
             sx, sy := pcRightOffsetX + (i * 64), pcRightOffsetY
             screen.DrawImage(
                 p.Image.SubImage(
@@ -1177,7 +1181,7 @@ func drawmc(screen *ebiten.Image, w, h int) {
                         &ebiten.DrawImageOptions{
                             GeoM: gm})
         } else {
-            i := (count / 15) % 4
+            i := (count / 10) % 4
             sx, sy := pcDownOffsetX + (i * 64), pcDownOffsetY
             screen.DrawImage(
                 p.Image.SubImage(
