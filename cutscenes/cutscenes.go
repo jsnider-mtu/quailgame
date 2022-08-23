@@ -21,6 +21,7 @@ import (
 var (
     cscount int = 0
     pic0Image *ebiten.Image
+    pic1Image *ebiten.Image
     pic2Image *ebiten.Image
 )
 
@@ -35,7 +36,7 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
             if len(picsarr) > 1 {
                 picsarr = picsarr[1:]
             }
-            return false, false
+            return false, true
         } else {
             textstrs = make([]string, 0)
             picsarr = make([]*ebiten.Image, 0)
@@ -74,7 +75,11 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
                 log.Fatal(err)
             }
             pic0Image = ebiten.NewImageFromImage(pic0image)
-            pic1Image := ebiten.NewImage(300, 300)
+            pic1image, _, err := image.Decode(bytes.NewReader(assets.OpenBook_PNG))
+            if err != nil {
+                log.Fatal(err)
+            }
+            pic1Image = ebiten.NewImageFromImage(pic1image)
             pic2image, _, err := image.Decode(bytes.NewReader(assets.KingQuail_PNG))
             if err != nil {
                 log.Fatal(err)
