@@ -51,6 +51,7 @@ var (
     downArrowImage *ebiten.Image
     pcImage *ebiten.Image
     startImage *ebiten.Image
+    lightningImage *ebiten.Image
     pcDownOffsetX int = 0
     pcDownOffsetY int = 0
     pcLeftOffsetX int = 0
@@ -84,7 +85,8 @@ var (
     overwritewarning bool = false
     overwritesel int = 0
     y int = 0
-    //a int = 0
+    z int = 0
+    a int = 0
     loadsfound bool = false
     cutscene bool = false
     csCount int = 0
@@ -429,6 +431,13 @@ func (g *Game) Update() error {
                             log.Fatal(err)
                         }
                         sb.Reset()
+                        l = loadlvl([2]int{1, 0})
+                        p.Pos[0] = -l.Pos[0]
+                        p.Pos[1] = -l.Pos[1]
+                        down = true
+                        up = false
+                        left = false
+                        right = false
                         firstsave = false
                         start = false
                         save = true
@@ -752,17 +761,35 @@ func (g *Game) Draw(screen *ebiten.Image) {
     mcdrawn := false
     if !startanimdone {
         y++
-        animgm := ebiten.GeoM{}
-        animgm.Translate(float64(0), float64(h - (9 * y)))
-        screen.DrawImage(
-            startImage, &ebiten.DrawImageOptions{
-                GeoM: animgm})
-        if y == 65 {
+        if y <= 65 {
+            animgm := ebiten.GeoM{}
+            animgm.Translate(float64(0), float64(h - (9 * y)))
+            screen.DrawImage(
+                startImage, &ebiten.DrawImageOptions{
+                    GeoM: animgm})
+        } else {
             y = 0
             startanimdone = true
         }
     } else if start {
         screen.DrawImage(startImage, nil)
+        animop := &ebiten.DrawImageOptions{}
+        animop.GeoM.Scale(4.0, 3.0)
+        animop.GeoM.Translate(float64((w / 2) - 40), float64(0))
+        animop.ColorM.Scale(1.0, 1.0, 1.0, 0.60)
+        z++
+        if z >= 15 && z < 30 {
+            a := (z / 3) % 5
+            fmt.Println(fmt.Sprintf("a = %d", a))
+            screen.DrawImage(
+                lightningImage.SubImage(
+                    image.Rect(
+                        (a % 5) * 80, 0, ((a % 5) + 1) * 80, 96)).(*ebiten.Image),
+                        animop)
+        } else if z == 300 {
+                z = 0
+                a = 0
+        }
         if selload {
             r := text.BoundString(fo, fmt.Sprint("> aaaaaaaaaaaaaaaaaaaaaaaa -- Level: aaaaaaaaaaaa"))
             hei := r.Max.Y - r.Min.Y
@@ -1195,6 +1222,12 @@ func init() {
         Stride: 768,
         Rect: image.Rect(0, 0, 768, 576),
     })
+
+    lightningimage, _, err := image.Decode(bytes.NewReader(assets.Lightning_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    lightningImage = ebiten.NewImageFromImage(lightningimage)
 }
 
 func main() {

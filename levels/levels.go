@@ -74,7 +74,7 @@ func LvlOne(entrance int) *Level {
     case 0:
         pos = [2]int{-48, -144}
     case 1:
-        pos = [2]int{-336, -528}
+        pos = [2]int{-336, -504}
     }
 
     return &Level{
