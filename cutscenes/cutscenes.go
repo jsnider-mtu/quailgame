@@ -90,13 +90,8 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
         if count % 3 == 0 {
             cscount++
         }
-        //if cscount > 0 && inpututil.IsKeyJustPressed(ebiten.KeySpace) {
-        //    cscount = len(textstr)
-        //}
         cx, cy := ebiten.CursorPosition()
         whiteImage := ebiten.NewImage(300, 300)
-        //blackImage := ebiten.NewImage(300, 300)
-        //blackImage.Fill(color.Black)
         whiteImage.Fill(color.White)
         s, err := ebiten.NewShader([]byte(shaders.Lighting_go))
         if err != nil {
