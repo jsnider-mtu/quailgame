@@ -52,6 +52,7 @@ var (
     pcImage *ebiten.Image
     startImage *ebiten.Image
     lightningImage *ebiten.Image
+    rainImage *ebiten.Image
     pcDownOffsetX int = 0
     pcDownOffsetY int = 0
     pcLeftOffsetX int = 0
@@ -806,6 +807,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 z = 0
                 a = 0
         }
+        for b := 0; b < 9; b++ {
+            for c := 0; c < 12; c++ {
+                raingm := ebiten.GeoM{}
+                raingm.Reset()
+                raingm.Translate(float64(c * 64), float64(b * 64))
+                screen.DrawImage(
+                    rainImage.SubImage(
+                        image.Rect(
+                            (z % 16) * 64, 0, ((z % 16) + 1) * 64, 64)).(*ebiten.Image),
+                            &ebiten.DrawImageOptions{GeoM: raingm})
+            }
+        }
         if selload {
             r := text.BoundString(fo, fmt.Sprint("> aaaaaaaaaaaaaaaaaaaaaaaa -- Level: aaaaaaaaaaaa"))
             hei := r.Max.Y - r.Min.Y
@@ -1247,6 +1260,12 @@ func init() {
         log.Fatal(err)
     }
     lightningImage = ebiten.NewImageFromImage(lightningimage)
+
+    rainimage, _, err := image.Decode(bytes.NewReader(assets.Rain_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    rainImage = ebiten.NewImageFromImage(rainimage)
 }
 
 func main() {
