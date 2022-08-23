@@ -788,7 +788,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     } else if start {
         screen.DrawImage(startImage, nil)
         animop := &ebiten.DrawImageOptions{}
-        animop.GeoM.Scale(4.0, 3.0)
+        animop.GeoM.Scale(4.0, 4.0)
         animop.GeoM.Translate(float64((w / 2) - 40), float64(0))
         animop.ColorM.Scale(1.0, 1.0, 1.0, 0.60)
         z++
