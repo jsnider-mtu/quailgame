@@ -1261,7 +1261,8 @@ func init() {
     }
     lightningImage = ebiten.NewImageFromImage(lightningimage)
 
-    rainimage, _, err := image.Decode(bytes.NewReader(assets.Rain_PNG))
+    //rainimage, _, err := image.Decode(bytes.NewReader(assets.Rain_PNG))
+    rainimage, _, err := image.Decode(bytes.NewReader(assets.RainHeavy_PNG))
     if err != nil {
         log.Fatal(err)
     }
