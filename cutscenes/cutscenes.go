@@ -27,7 +27,7 @@ var (
 var textstrs = make([]string, 0)
 var picsarr = make([]*ebiten.Image, 0)
 
-func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
+func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
     if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
         cscount = 0
         if len(textstrs) > 1 {
@@ -35,11 +35,11 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
             if len(picsarr) > 1 {
                 picsarr = picsarr[1:]
             }
-            return false
+            return false, false
         } else {
             textstrs = make([]string, 0)
             picsarr = make([]*ebiten.Image, 0)
-            return true
+            return true, false
         }
     }
     switch cs {
@@ -126,7 +126,7 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
             screen.DrawRectShader(300, 300, s, sop)
-            return false
+            return false, false
         } else if cscount > len(textstrs[0]) + 50 {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
             pgm := ebiten.GeoM{}
@@ -141,11 +141,11 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
             }
             if len(textstrs) > 1 {
                 textstrs = textstrs[1:]
-                return false
+                return false, true
             } else {
                 textstrs = make([]string, 0)
                 picsarr = make([]*ebiten.Image, 0)
-                return true
+                return true, false
             }
         } else {
             text.Draw(screen, textstrs[0], *fo, 64, 64, color.White)
@@ -155,7 +155,7 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
             screen.DrawRectShader(300, 300, s, sop)
-            return false
+            return false, false
         }
     case 1:
         textstr := "The Quail Kingdom...\n\n"+
@@ -168,16 +168,16 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) bool {
         }
         if cscount < len(textstr) {
             text.Draw(screen, textstr[:cscount], *fo, 64, 64, color.White)
-            return false
+            return false, false
         } else if cscount > len(textstr) + 20 {
             text.Draw(screen, textstr, *fo, 64, 64, color.White)
             cscount = 0
-            return true
+            return true, false
         } else {
             text.Draw(screen, textstr, *fo, 64, 64, color.White)
-            return false
+            return false, false
         }
     default:
-        return true
+        return true, false
     }
 }

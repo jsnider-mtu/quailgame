@@ -895,7 +895,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
     } else if cutscene {
-        done := cutscenes.CutScene(screen, curCS, csCount, &fo)
+        done, rstCount := cutscenes.CutScene(screen, curCS, csCount, &fo)
+        if rstCount {
+            csCount = 0
+        }
         if done {
             cutscene = false
         }
