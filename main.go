@@ -668,13 +668,34 @@ func (g *Game) Update() error {
                         npc.Stopped = true
                     }
                 }
-                if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
+                dirarr := [4]int{inpututil.KeyPressDuration(ebiten.KeyW), inpututil.KeyPressDuration(ebiten.KeyA),
+                                 inpututil.KeyPressDuration(ebiten.KeyD), inpututil.KeyPressDuration(ebiten.KeyS)}
+                var smallestnum int = 0
+                var smallestind int = 4
+                for smind, smnum := range dirarr {
+                    if smnum > 0 {
+                        smallestnum = smnum
+                        smallestind = smind
+                        break
+                    }
+                }
+                if smallestnum > 0 {
+                    for sind, snum := range dirarr {
+                        if snum > 0 {
+                            if snum < smallestnum {
+                                smallestind = sind
+                            }
+                        }
+                    }
+                }
+                switch smallestind {
+                case 0:
                     stopped = false
                     up = true
                     down = false
                     left = false
                     right = false
-                    if inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 0 {
+                    if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, true, -24, p) {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
@@ -684,14 +705,13 @@ func (g *Game) Update() error {
                             }
                         }
                     }
-                    count++
-                } else if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
+                case 1:
                     stopped = false
                     left = true
                     up = false
                     down = false
                     right = false
-                    if inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 0 {
+                    if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, false, -24, p) {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
@@ -701,14 +721,13 @@ func (g *Game) Update() error {
                             }
                         }
                     }
-                    count++
-                } else if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
+                case 2:
                     stopped = false
                     right = true
                     left = false
                     up = false
                     down = false
-                    if inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 0 {
+                    if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, false, 24, p) {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
@@ -718,14 +737,13 @@ func (g *Game) Update() error {
                             }
                         }
                     }
-                    count++
-                } else if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
+                case 3:
                     stopped = false
                     down = true
                     up = false
                     left = false
                     right = false
-                    if inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 0 {
+                    if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, true, 24, p) {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
@@ -735,14 +753,8 @@ func (g *Game) Update() error {
                             }
                         }
                     }
-                    count++
-                }
-                if count == lastCount {
+                case 4:
                     stopped = true
-                    count = 0
-                    lastCount = 0
-                } else {
-                    lastCount = count
                 }
             }
         }
