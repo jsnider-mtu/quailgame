@@ -10,6 +10,7 @@ import (
     "log"
     "math/rand"
     "os"
+    "strconv"
     "strings"
 
     "golang.org/x/image/font"
@@ -111,7 +112,7 @@ func (g *Game) Update() error {
                 }
                 defer db.Close()
                 createStmt := `
-                create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null);
+                create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null, csdone text);
                 `
                 _, err = db.Exec(createStmt)
                 if err != nil {
@@ -539,16 +540,24 @@ func (g *Game) Update() error {
                 }
                 defer db.Close()
                 createStmt := `
-                create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null);
+                create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null, csdone text);
                 `
                 _, err = db.Exec(createStmt)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
                 }
                 saveStmt := `
-                insert or replace into saves(name, level, x, y) values(?, ?, ?, ?);
+                insert or replace into saves(name, level, x, y, csdone) values(?, ?, ?, ?, ?);
                 `
-                _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1])
+                var csdonestr string
+                for csdoneind, csdoneval := range csDone {
+                    if csdoneind == len(csDone) - 1 {
+                        csdonestr += strconv.Itoa(csdoneval)
+                    } else {
+                        csdonestr += strconv.Itoa(csdoneval) + ","
+                    }
+                }
+                _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1], csdonestr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -573,12 +582,22 @@ func (g *Game) Update() error {
                 var savename string
                 var levelname string
                 var x, y int
+                var csdonestr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr)
                 }
                 err = rows.Err()
                 if err != nil {
                     log.Fatal(err)
+                }
+                csdonestrarr := strings.Split(csdonestr, ",")
+                csDone = []int{}
+                for _, numstr := range csdonestrarr {
+                    numint, err := strconv.Atoi(numstr)
+                    if err != nil {
+                        log.Fatal(err)
+                    }
+                    csDone = append(csDone, numint)
                 }
                 l = levels.LoadLvl(levelname, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
