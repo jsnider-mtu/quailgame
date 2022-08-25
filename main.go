@@ -537,16 +537,16 @@ func (g *Game) Update() error {
                     log.Fatal(err)
                 }
                 defer db.Close()
-                createStmt := `
-                create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null, csdone text);
-                `
-                _, err = db.Exec(createStmt)
-                if err != nil {
-                    log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
+                qMarks := "?" + strings.Repeat(", ?", len(savesTableSchema) - 1)
+                saveStmt := "insert or replace into saves("
+                for cind, col := range savesTableSchema {
+                    colArr := strings.Split(col, ",")
+                    if cind == len(savesTableSchema) - 1 {
+                        saveStmt += colArr[0] + ") values(" + qMarks + ");"
+                    } else {
+                        saveStmt += colArr[0] + ", "
+                    }
                 }
-                saveStmt := `
-                insert or replace into saves(name, level, x, y, csdone) values(?, ?, ?, ?, ?);
-                `
                 var csdonestr string
                 for csdoneind, csdoneval := range csDone {
                     if csdoneind == len(csDone) - 1 {
