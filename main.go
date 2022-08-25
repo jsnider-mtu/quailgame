@@ -1294,7 +1294,7 @@ func init() {
     }
     rainImage = ebiten.NewImageFromImage(rainimage)
 
-    savesTableSchema = []string{"name,TEXT,1,1", "level,TEXT,1,0", "x,INT,1,0", "y,INT,1,0", "csdone,TEXT,0,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,One,0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)
@@ -1311,7 +1311,15 @@ func init() {
         if colArr[2] == "1" {
             createStmt += " not null"
         }
-        if colArr[3] == "1" {
+        if colArr[3] != "null" {
+            switch colArr[1] {
+            case "INT":
+                createStmt += " default " + colArr[3]
+            default:
+                createStmt += " default \"" + colArr[3] + "\""
+            }
+        }
+        if colArr[4] == "1" {
             createStmt += " primary key"
         }
         if cind == len(savesTableSchema) - 1 {
