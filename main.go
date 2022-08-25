@@ -10,6 +10,7 @@ import (
     "log"
     "math/rand"
     "os"
+    "reflect"
     "strconv"
     "strings"
 
@@ -1303,9 +1304,22 @@ func init() {
         log.Fatal(err)
     }
     defer db.Close()
-    createStmt := `
-    create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null, csdone text);
-    `
+    var createStmt string = "create table if not exists saves ("
+    for cind, col := range savesTableSchema {
+        colArr := strings.Split(col, ",")
+        createStmt += colArr[0] + " " + colArr[1]
+        if colArr[2] == "1" {
+            createStmt += " not null"
+        }
+        if colArr[3] == "1" {
+            createStmt += " primary key"
+        }
+        if cind == len(savesTableSchema) - 1 {
+            createStmt += ");"
+        } else {
+            createStmt += ", "
+        }
+    }
     _, err = db.Exec(createStmt)
     if err != nil {
         log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
@@ -1373,34 +1387,41 @@ func init() {
             log.Fatal(err)
         }
         defer copyRows.Close()
-        colsStrArr := strings.Split(colsStr, ", ")
         var insertStmts = make([]string, 0)
+        var copyRowsPtrs = make([]interface{}, copyColsCount)
+        var copyRowsArr = make([]interface{}, copyColsCount)
+        for i, _ := range copyRowsPtrs {
+            copyRowsPtrs[i] = &copyRowsArr[i]
+        }
+        var nullStr string = strings.Repeat(", null", len(savesTableSchema) - copyColsCount)
         for copyRows.Next() {
-            var copyRowsName string
-            var copyRowsLevel string
-            var copyRowsX int
-            var copyRowsY int
-            var copyRowsCsdone string
-            switch len(colsStrArr) {
-            case 4:
-                err = copyRows.Scan(&copyRowsName, &copyRowsLevel, &copyRowsX, &copyRowsY)
-                insertStmt := "insert into saves (name, level, x, y) values(\"" + copyRowsName + "\", \"" + copyRowsLevel + "\", " + fmt.Sprint(copyRowsX) + ", " + fmt.Sprint(copyRowsY) + ");"
-                insertStmts = append(insertStmts, insertStmt)
-                //_, err = db.Exec(insertStmt)
-                if err != nil {
-                    log.Fatal(fmt.Sprintf("%q: %s\n", err, insertStmt))
+            err = copyRows.Scan(copyRowsPtrs...)
+            insertStmt := "insert into saves ("
+            for cind, col := range savesTableSchema {
+                colArr := strings.Split(col, ",")
+                if cind == len(savesTableSchema) - 1 {
+                    insertStmt += colArr[0] + ") values("
+                } else {
+                    insertStmt += colArr[0] + ", "
                 }
-            case 5:
-                err = copyRows.Scan(&copyRowsName, &copyRowsLevel, &copyRowsX, &copyRowsY, &copyRowsCsdone)
-                insertStmt := "insert into saves (name, level, x, y, csdone) values(" + copyRowsName + ", " + copyRowsLevel + ", " + fmt.Sprint(copyRowsX) + ", " + fmt.Sprint(copyRowsY) + ", " + copyRowsCsdone + ");"
-                insertStmts = append(insertStmts, insertStmt)
-                //_, err = db.Exec(insertStmt)
-                if err != nil {
-                    log.Fatal(fmt.Sprintf("%q: %s\n", err, insertStmt))
-                }
-            default:
-                fmt.Println("default")
             }
+            for whatever, whateverPtr := range copyRowsArr {
+                switch reflect.TypeOf(whateverPtr).String() {
+                case "string":
+                    if whatever == len(copyRowsArr) - 1 {
+                        insertStmt += "\"" + fmt.Sprint(whateverPtr) + "\"" + nullStr + ");"
+                    } else {
+                        insertStmt += "\"" + fmt.Sprint(whateverPtr) + "\", "
+                    }
+                case "int64":
+                    if whatever == len(copyRowsArr) - 1 {
+                        insertStmt += fmt.Sprint(whateverPtr) + nullStr + ");"
+                    } else {
+                        insertStmt += fmt.Sprint(whateverPtr) + ", "
+                    }
+                }
+            }
+            insertStmts = append(insertStmts, insertStmt)
         }
         for _, insStmt := range insertStmts {
             _, err = db.Exec(insStmt)
