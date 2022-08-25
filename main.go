@@ -94,6 +94,10 @@ var (
     curCS int = 0
     csDone []int
     fadeScreen *ebiten.Image
+    savesTableSchema []string
+    schemaRowsCount int = 0
+    copyColsCount int = 0
+    colsStr string
 )
 
 type Game struct {}
@@ -111,13 +115,6 @@ func (g *Game) Update() error {
                     log.Fatal(err)
                 }
                 defer db.Close()
-                createStmt := `
-                create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null, csdone text);
-                `
-                _, err = db.Exec(createStmt)
-                if err != nil {
-                    log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
-                }
                 rows, err := db.Query("select name, level from saves")
                 if err != nil {
                     log.Fatal(err)
@@ -1295,6 +1292,151 @@ func init() {
         log.Fatal(err)
     }
     rainImage = ebiten.NewImageFromImage(rainimage)
+
+    savesTableSchema = []string{"name,TEXT,1,1", "level,TEXT,1,0", "x,INT,1,0", "y,INT,1,0", "csdone,TEXT,0,0"}
+    homeDir, err := os.UserHomeDir()
+    if err != nil {
+        log.Fatal(err)
+    }
+    db, err := sql.Open("sqlite3", homeDir + "/quailsaves.db")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+    createStmt := `
+    create table if not exists saves (name text not null primary key, level text not null, x int not null, y int not null, csdone text);
+    `
+    _, err = db.Exec(createStmt)
+    if err != nil {
+        log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
+    }
+    schemaRows, err := db.Query("PRAGMA table_info(saves)")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer schemaRows.Close()
+    fixSchema := false
+    for schemaRows.Next() {
+        schemaRowsCount++
+        var schemaRowsIndex int
+        var schemaRowsName string
+        var schemaRowsType string
+        var schemaRowsNotNull int
+        var schemaRowsFiller interface{}
+        var schemaRowsPk int
+        err = schemaRows.Scan(&schemaRowsIndex, &schemaRowsName, &schemaRowsType, &schemaRowsNotNull, &schemaRowsFiller, &schemaRowsPk)
+        if savesTableSchema[schemaRowsIndex] != schemaRowsName + "," + schemaRowsType + "," + strconv.Itoa(schemaRowsNotNull) + "," + strconv.Itoa(schemaRowsPk) {
+            fixSchema = true
+        }
+    }
+    err = schemaRows.Err()
+    if err != nil {
+        log.Fatal(err)
+    }
+    if fixSchema {
+        copyStmt := `
+        create table copied as select * from saves;
+        `
+        _, err = db.Exec(copyStmt)
+        if err != nil {
+            log.Fatal(fmt.Sprintf("%q: %s\n", err, copyStmt))
+        }
+        dropStmt := `
+        drop table saves;
+        `
+        _, err = db.Exec(dropStmt)
+        if err != nil {
+            log.Fatal(fmt.Sprintf("%q: %s\n", err, dropStmt))
+        }
+        _, err = db.Exec(createStmt)
+        if err != nil {
+            log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
+        }
+        copyCols, err := db.Query("PRAGMA table_info(copied)")
+        if err != nil {
+            log.Fatal(err)
+        }
+        defer copyCols.Close()
+        for copyCols.Next() {
+            copyColsCount++
+        }
+        for copyColsIndex := 0; copyColsIndex < copyColsCount; copyColsIndex++ {
+            colsarr := strings.Split(savesTableSchema[copyColsIndex], ",")
+            if copyColsIndex == copyColsCount - 1 {
+                colsStr += colsarr[0]
+            } else {
+                colsStr += colsarr[0] + ", "
+            }
+        }
+        copyRows, err := db.Query("select " + colsStr + " from copied")
+        if err != nil {
+            log.Fatal(err)
+        }
+        defer copyRows.Close()
+        colsStrArr := strings.Split(colsStr, ", ")
+        var insertStmts = make([]string, 0)
+        for copyRows.Next() {
+            var copyRowsName string
+            var copyRowsLevel string
+            var copyRowsX int
+            var copyRowsY int
+            var copyRowsCsdone string
+            switch len(colsStrArr) {
+            case 4:
+                err = copyRows.Scan(&copyRowsName, &copyRowsLevel, &copyRowsX, &copyRowsY)
+                insertStmt := "insert into saves (name, level, x, y) values(\"" + copyRowsName + "\", \"" + copyRowsLevel + "\", " + fmt.Sprint(copyRowsX) + ", " + fmt.Sprint(copyRowsY) + ");"
+                insertStmts = append(insertStmts, insertStmt)
+                //_, err = db.Exec(insertStmt)
+                if err != nil {
+                    log.Fatal(fmt.Sprintf("%q: %s\n", err, insertStmt))
+                }
+            case 5:
+                err = copyRows.Scan(&copyRowsName, &copyRowsLevel, &copyRowsX, &copyRowsY, &copyRowsCsdone)
+                insertStmt := "insert into saves (name, level, x, y, csdone) values(" + copyRowsName + ", " + copyRowsLevel + ", " + fmt.Sprint(copyRowsX) + ", " + fmt.Sprint(copyRowsY) + ", " + copyRowsCsdone + ");"
+                insertStmts = append(insertStmts, insertStmt)
+                //_, err = db.Exec(insertStmt)
+                if err != nil {
+                    log.Fatal(fmt.Sprintf("%q: %s\n", err, insertStmt))
+                }
+            default:
+                fmt.Println("default")
+            }
+        }
+        for _, insStmt := range insertStmts {
+            _, err = db.Exec(insStmt)
+            if err != nil {
+                log.Fatal(fmt.Sprintf("%q: %s\n", err, insStmt))
+            }
+        }
+        err = copyRows.Err()
+        if err != nil {
+            log.Fatal(err)
+        }
+        copyDropStmt := `
+        drop table copied;
+        `
+        _, err = db.Exec(copyDropStmt)
+        if err != nil {
+            log.Fatal(fmt.Sprintf("%q: %s\n", err, copyDropStmt))
+        }
+    }
+    if schemaRowsCount < len(savesTableSchema) && !fixSchema {
+        for colMisIndex := len(savesTableSchema) - schemaRowsCount; colMisIndex > 0; colMisIndex-- {
+            var colopts string
+            colarr := strings.Split(savesTableSchema[len(savesTableSchema) - colMisIndex], ",")
+            if colarr[2] == "1" {
+                colopts += " not null"
+            }
+            if colarr[3] == "1" {
+                colopts += " primary key"
+            }
+            alterStmt := "alter table saves add column " + colarr[0] + " " + colarr[1] + colopts + ";"
+            _, err = db.Exec(alterStmt)
+            if err != nil {
+                log.Fatal(err)
+            }
+        }
+    }
 }
 
 func main() {
