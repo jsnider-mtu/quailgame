@@ -629,6 +629,7 @@ func (g *Game) Update() error {
                     for _, npc := range l.NPCs {
                         if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
                             if !dialogopen {
+                                npc.Direction = "down"
                                 npcname = npc.Name
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
@@ -639,6 +640,7 @@ func (g *Game) Update() error {
                     for _, npc := range l.NPCs {
                         if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
                             if !dialogopen {
+                                npc.Direction = "up"
                                 npcname = npc.Name
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
@@ -649,6 +651,7 @@ func (g *Game) Update() error {
                     for _, npc := range l.NPCs {
                         if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
                             if !dialogopen {
+                                npc.Direction = "right"
                                 npcname = npc.Name
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
@@ -659,6 +662,7 @@ func (g *Game) Update() error {
                     for _, npc := range l.NPCs {
                         if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
                             if !dialogopen {
+                                npc.Direction = "left"
                                 npcname = npc.Name
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
