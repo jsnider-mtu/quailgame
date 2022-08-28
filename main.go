@@ -591,6 +591,9 @@ func (g *Game) Update() error {
                 csdonestrarr := strings.Split(csdonestr, ",")
                 csDone = []int{}
                 for _, numstr := range csdonestrarr {
+                    if numstr == "" {
+                        break
+                    }
                     numint, err := strconv.Atoi(numstr)
                     if err != nil {
                         log.Fatal(err)
