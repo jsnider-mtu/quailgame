@@ -1,10 +1,13 @@
 todo
 *.zip
 *.png
+*.jpg
 *.jpeg
+*.gif
 *~
 *.swp
 *.swo
 shaders/lighting.go
 *.xcf
 Makefile
+assets/last-guardian-sprites/readme.txt
