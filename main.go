@@ -1080,14 +1080,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
         wid := r.Max.X - r.Min.X
         pausegm := ebiten.GeoM{}
         pausegm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (3 * hei / 2) - 16))
-        pauseimg := ebiten.NewImage(wid + 28, (hei * 4) + 64)
+        pauseimg := ebiten.NewImage(wid + 28, (hei * 5) + 64)
         pauseimg.Fill(color.Black)
         screen.DrawImage(
             pauseimg, &ebiten.DrawImageOptions{
                 GeoM: pausegm})
         pausegm2 := ebiten.GeoM{}
         pausegm2.Translate(float64((w / 2) - (wid / 2) - 4), float64((h / 2) - (3 * hei / 2) - 12))
-        pauseimg2 := ebiten.NewImage(wid + 20, (hei * 4) + 56)
+        pauseimg2 := ebiten.NewImage(wid + 20, (hei * 5) + 56)
         pauseimg2.Fill(color.White)
         screen.DrawImage(
             pauseimg2, &ebiten.DrawImageOptions{
@@ -1095,24 +1095,28 @@ func (g *Game) Draw(screen *ebiten.Image) {
         switch pausesel {
         case 0:
             text.Draw(screen, "> Save game", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
-            text.Draw(screen, "  Load game", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
-            text.Draw(screen, "  Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
-            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "  Load last", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  save", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+            text.Draw(screen, "  Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (5 * hei / 2) + 48, color.Black)
         case 1:
             text.Draw(screen, "  Save game", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
-            text.Draw(screen, "> Load game", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
-            text.Draw(screen, "  Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
-            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "> Load last", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  save", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+            text.Draw(screen, "  Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (5 * hei / 2) + 48, color.Black)
         case 2:
             text.Draw(screen, "  Save game", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
-            text.Draw(screen, "  Load game", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
-            text.Draw(screen, "> Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
-            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "  Load last", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  save", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+            text.Draw(screen, "> Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "  Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (5 * hei / 2) + 48, color.Black)
         case 3:
             text.Draw(screen, "  Save game", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
-            text.Draw(screen, "  Load game", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
-            text.Draw(screen, "  Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
-            text.Draw(screen, "> Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "  Load last", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  save", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+            text.Draw(screen, "  Main menu", fo, (w / 2) - (wid / 2), (h / 2) + (3 * hei / 2) + 40, color.Black)
+            text.Draw(screen, "> Quit game", fo, (w / 2) - (wid / 2), (h / 2) + (5 * hei / 2) + 48, color.Black)
         }
     }
     if lvlchange {
