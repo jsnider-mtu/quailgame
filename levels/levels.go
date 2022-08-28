@@ -13,7 +13,7 @@ import (
     "github.com/jsnider-mtu/quailgame/npcs"
     "github.com/jsnider-mtu/quailgame/npcs/npcimages"
     "github.com/jsnider-mtu/quailgame/player"
-    "github.com/jsnider-mtu/quailgame/player/pcimages"
+    //"github.com/jsnider-mtu/quailgame/player/pcimages"
 )
 
 type Level struct {
@@ -52,11 +52,11 @@ func LvlOne(entrance int) *Level {
         log.Fatal(err)
     }
     lvlImg := ebiten.NewImageFromImage(lvlimg)
-    pcimage, _, err := image.Decode(bytes.NewReader(pcimages.PC_png))
+    npcgirlimage, _, err := image.Decode(bytes.NewReader(npcimages.NPCGirl_PNG))
     if err != nil {
         log.Fatal(err)
     }
-    pcImage := ebiten.NewImageFromImage(pcimage)
+    npcGirlImage := ebiten.NewImageFromImage(npcgirlimage)
     wizardimage, _, err := image.Decode(bytes.NewReader(npcimages.Wizard_PNG))
     if err != nil {
         log.Fatal(err)
@@ -68,11 +68,11 @@ func LvlOne(entrance int) *Level {
         &Door{Coords: [2]int{336, 504}, NewLvl: [2]int{2, 2}}}
 
     NPCs := []*npcs.NPC{&npcs.NPC{
-        Name: "Ben Dover", Msgs: [][]string{
+        Name: "Jane Doe", Msgs: [][]string{
             {"Hello there,", "ObiWan Kenobi."},
             {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
         MsgCount: 0, Speed: 240, Offset: rand.Intn(60) + 60, Direction: "down", Stopped: true, PC: &player.Player{
-            Pos: [2]int{192, 192}, Image: pcImage}},
+            Pos: [2]int{192, 192}, Image: npcGirlImage}},
         &npcs.NPC{Name: "Wizard", Msgs: [][]string{
             {"I'm a wizard, Harry!"},
             {"The great and terrible Lord Adrian", "has invaded the peaceful Quail Kingdom,",
