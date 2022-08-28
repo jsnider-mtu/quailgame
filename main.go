@@ -638,7 +638,7 @@ func (g *Game) Update() error {
                     }
                 case down:
                     for _, npc := range l.NPCs {
-                        if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 48 == p.Pos[1] {
+                        if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 24 == p.Pos[1] {
                             if !dialogopen {
                                 npc.Direction = "up"
                                 npcname = npc.Name
