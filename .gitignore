@@ -7,3 +7,4 @@ todo
 *.swo
 shaders/lighting.go
 *.xcf
+Makefile
