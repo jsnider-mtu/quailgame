@@ -669,7 +669,7 @@ func (g *Game) Update() error {
             }
             if !dialogopen && !lvlchange && !start {
                 for _, npc := range l.NPCs {
-                    if (npcCount + npc.Offset) % npc.Speed == 0 {
+                    if npc.Speed > 0 && (npcCount + npc.Offset) % npc.Speed == 0 {
                         npc.Stopped = false
                         switch rand.Intn(4) {
                         case 0:
