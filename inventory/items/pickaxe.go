@@ -1,7 +1,7 @@
 package items
 
 import (
-    "github.com/jsnider-mtu/quailgame/inventory"
+    "fmt"
 )
 
 type Pickaxe struct {
@@ -9,5 +9,9 @@ type Pickaxe struct {
     Durability int
 }
 
-func (p *Pickaxe) Use() {
+func (p Pickaxe) Use() {
+}
+
+func (p Pickaxe) Save() string {
+    return "Pickaxe," + p.Material + "," + fmt.Sprint(p.Durability)
 }

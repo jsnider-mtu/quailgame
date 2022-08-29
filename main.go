@@ -21,6 +21,8 @@ import (
 
     "github.com/jsnider-mtu/quailgame/assets"
     "github.com/jsnider-mtu/quailgame/cutscenes"
+    "github.com/jsnider-mtu/quailgame/inventory"
+    "github.com/jsnider-mtu/quailgame/inventory/items"
     "github.com/jsnider-mtu/quailgame/levels"
     "github.com/jsnider-mtu/quailgame/player"
     "github.com/jsnider-mtu/quailgame/player/pcimages"
@@ -176,7 +178,7 @@ func (g *Game) Update() error {
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
                     name = loads[loadsel][0]
-                    p = &player.Player{Pos: [2]int{0, 0}, Image: pcImage}
+                    p = &player.Player{Pos: [2]int{0, 0}, Inv: &inventory.Inv{}, Image: pcImage}
                     load = true
                     selload = false
                     start = false
@@ -474,7 +476,7 @@ func (g *Game) Update() error {
                     case 0:
                         if l == nil {
                             l = levels.LvlOne(0)
-                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Image: pcImage}
+                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage}
                         }
                         firstsave = true
                     case 1:
@@ -556,7 +558,15 @@ func (g *Game) Update() error {
                         csdonestr += strconv.Itoa(csdoneval) + ","
                     }
                 }
-                _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1], csdonestr)
+                var invstr string
+                for itemind, item := range p.Inv.Items {
+                    if itemind == len(p.Inv.Items) - 1 {
+                        invstr += item.Save()
+                    } else {
+                        invstr += item.Save() + ";"
+                    }
+                }
+                _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1], csdonestr, invstr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -582,8 +592,9 @@ func (g *Game) Update() error {
                 var levelname string
                 var x, y int
                 var csdonestr string
+                var invstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr)
                 }
                 err = rows.Err()
                 if err != nil {
@@ -600,6 +611,14 @@ func (g *Game) Update() error {
                         log.Fatal(err)
                     }
                     csDone = append(csDone, numint)
+                }
+                invstrarr := strings.Split(invstr, ";")
+                for _, item := range invstrarr {
+                    if item == "" {
+                        break
+                    }
+                    itemprops := strings.Split(item, ",")
+                    p.Inv.Items = append(p.Inv.Items, items.LoadItem(itemprops[0], itemprops[1], itemprops[2]))
                 }
                 l = levels.LoadLvl(levelname, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
@@ -1313,7 +1332,7 @@ func init() {
     }
     rainImage = ebiten.NewImageFromImage(rainimage)
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,One,0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)
@@ -1331,12 +1350,7 @@ func init() {
             createStmt += " not null"
         }
         if colArr[3] != "null" {
-            switch colArr[1] {
-            case "INT":
-                createStmt += " default " + colArr[3]
-            default:
-                createStmt += " default \"" + colArr[3] + "\""
-            }
+            createStmt += " default " + colArr[3]
         }
         if colArr[4] == "1" {
             createStmt += " primary key"
@@ -1363,10 +1377,13 @@ func init() {
         var schemaRowsName string
         var schemaRowsType string
         var schemaRowsNotNull int
-        var schemaRowsFiller interface{}
+        var schemaRowsDefault interface{}
         var schemaRowsPk int
-        err = schemaRows.Scan(&schemaRowsIndex, &schemaRowsName, &schemaRowsType, &schemaRowsNotNull, &schemaRowsFiller, &schemaRowsPk)
-        if savesTableSchema[schemaRowsIndex] != schemaRowsName + "," + schemaRowsType + "," + strconv.Itoa(schemaRowsNotNull) + "," + strconv.Itoa(schemaRowsPk) {
+        err = schemaRows.Scan(&schemaRowsIndex, &schemaRowsName, &schemaRowsType, &schemaRowsNotNull, &schemaRowsDefault, &schemaRowsPk)
+        if schemaRowsDefault == nil {
+            schemaRowsDefault = "null"
+        }
+        if savesTableSchema[schemaRowsIndex] != schemaRowsName + "," + schemaRowsType + "," + strconv.Itoa(schemaRowsNotNull) + "," + fmt.Sprint(schemaRowsDefault) + "," + strconv.Itoa(schemaRowsPk) {
             fixSchema = true
         }
     }
