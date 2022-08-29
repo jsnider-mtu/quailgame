@@ -1439,16 +1439,37 @@ func init() {
         for i, _ := range copyRowsPtrs {
             copyRowsPtrs[i] = &copyRowsArr[i]
         }
-        var nullStr string = strings.Repeat(", null", len(savesTableSchema) - copyColsCount)
+        var nullStr string
+        var newColsInd int = len(savesTableSchema) - (len(savesTableSchema) - copyColsCount)
         for copyRows.Next() {
             err = copyRows.Scan(copyRowsPtrs...)
             insertStmt := "insert into saves ("
             for cind, col := range savesTableSchema {
+                insStmtDone := false
+                skip := false
                 colArr := strings.Split(col, ",")
+                if cind >= newColsInd {
+                    if colArr[2] != "1" {
+                        nullStr += ", null"
+                    } else if colArr[3] != "null" {
+                        if cind == len(savesTableSchema) - 1 {
+                            insertStmt += ") values("
+                            insStmtDone = true
+                        } else {
+                            skip = true
+                        }
+                    } else {
+                        log.Fatal(fmt.Sprintf("%s is NOT NULL but DEFAULT is \"null\"", colArr[0]))
+                    }
+                }
                 if cind == len(savesTableSchema) - 1 {
-                    insertStmt += colArr[0] + ") values("
+                    if !insStmtDone {
+                        insertStmt += colArr[0] + ") values("
+                    }
                 } else {
-                    insertStmt += colArr[0] + ", "
+                    if !skip {
+                        insertStmt += colArr[0] + ", "
+                    }
                 }
             }
             for whatever, whateverPtr := range copyRowsArr {
