@@ -476,7 +476,7 @@ func (g *Game) Update() error {
                     case 0:
                         if l == nil {
                             l = levels.LvlOne(0)
-                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage}
+                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{Cap: 8}, Image: pcImage}
                         }
                         firstsave = true
                     case 1:
@@ -566,7 +566,7 @@ func (g *Game) Update() error {
                         invstr += item.Save() + ";"
                     }
                 }
-                _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1], csdonestr, invstr)
+                _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1], p.Inv.Cap, csdonestr, invstr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -591,10 +591,11 @@ func (g *Game) Update() error {
                 var savename string
                 var levelname string
                 var x, y int
+                var invcap int
                 var csdonestr string
                 var invstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &invcap, &csdonestr, &invstr)
                 }
                 err = rows.Err()
                 if err != nil {
@@ -622,6 +623,7 @@ func (g *Game) Update() error {
                 }
                 l = levels.LoadLvl(levelname, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
+                p.Inv.Cap = invcap
                 load = false
             }
             if cutscene {
@@ -1332,7 +1334,7 @@ func init() {
     }
     rainImage = ebiten.NewImageFromImage(rainimage)
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "invcap,INT,1,8,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)
