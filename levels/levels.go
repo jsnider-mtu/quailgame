@@ -31,10 +31,8 @@ type Level struct {
     Doors []*Door
     NPCs []*npcs.NPC
     Image *ebiten.Image
+    Anim func(*ebiten.Image, *Level, int, int, int)
 }
-
-//func (l *Level) Animate(screen *ebiten.Image, w, h int) {
-//}
 
 func LoadLvl(name string, x, y int) *Level {
     switch name {
@@ -104,7 +102,7 @@ func LvlOne(entrance int) *Level {
 
     return &Level{
         Name: "One", Cutscene: -1, Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
-            {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg}
+            {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg, Anim: func(a *ebiten.Image, l *Level, b, c, d int) {}}
 }
 
 func LvlTwo(entrance int) *Level {
@@ -140,7 +138,7 @@ func LvlTwo(entrance int) *Level {
             {192, 0, 336, 96},
             {192, 96, 240, 144},
             {288, 96, 336, 240},
-            {192, 192, 288, 240}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
+            {192, 192, 288, 240}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg, Anim: func(a *ebiten.Image, l *Level, b, c, d int) {}}
 }
 
 func VerticalWallLvl(entrance int) *Level {
@@ -149,6 +147,11 @@ func VerticalWallLvl(entrance int) *Level {
         log.Fatal(err)
     }
     lvlImg := ebiten.NewImageFromImage(lvlimg)
+    cloudimg, _, err := image.Decode(bytes.NewReader(lvlimages.Clouds_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    cloudImage := ebiten.NewImageFromImage(cloudimg)
 
     lvldoors := []*Door{}
 
@@ -174,5 +177,10 @@ func VerticalWallLvl(entrance int) *Level {
     return &Level{
         Name: "VerticalWall", Cutscene: -1, Max:[2]int{816, 5856}, Pos: pos, Boxes: [][4]int{
             {0, 0, 432, 6144},
-            {816, 0, 1248, 6144}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
+            {816, 0, 1248, 6144}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg,
+        Anim: func(screen *ebiten.Image, l *Level, count, w, h int) {
+            iw, _ := l.Image.Size()
+            gm := ebiten.GeoM{}
+            gm.Translate(float64(((iw - 96) + l.Pos[0]) - count), float64(l.Pos[1]))
+            screen.DrawImage(cloudImage, &ebiten.DrawImageOptions{GeoM: gm})}}
 }

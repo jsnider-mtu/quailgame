@@ -99,6 +99,7 @@ var (
     schemaRowsCount int = 0
     copyColsCount int = 0
     colsStr string
+    animCount int = 0
 )
 
 type Game struct {}
@@ -612,6 +613,10 @@ func (g *Game) Update() error {
             if npcCount == 6000 {
                 npcCount = 0
             }
+            animCount++
+            if animCount == 4000 {
+                animCount = 0
+            }
             if !dialogopen {
                 npcCount++
             }
@@ -1032,9 +1037,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 }
             }
         }
-    }
-    if !mcdrawn && !start && !cutscene {
-        drawmc(screen, w, h)
+        if !mcdrawn && !start && !cutscene {
+            drawmc(screen, w, h)
+        }
+        l.Anim(screen, l, animCount, w, h)
     }
     if dialogopen {
         if dialogCount == 1000 {
