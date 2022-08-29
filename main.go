@@ -1253,6 +1253,8 @@ func loadlvl(lvl [2]int) *levels.Level {
         return levels.LvlOne(lvl[1])
     case 2:
         return levels.LvlTwo(lvl[1])
+    case 3:
+        return levels.VerticalWallLvl(lvl[1])
     }
     return levels.LvlOne(lvl[1])
 }

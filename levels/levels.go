@@ -2,6 +2,7 @@ package levels
 
 import (
     "bytes"
+    "fmt"
     "image"
     _ "image/jpeg"
     _ "image/png"
@@ -16,6 +17,11 @@ import (
     //"github.com/jsnider-mtu/quailgame/player/pcimages"
 )
 
+type Door struct {
+    Coords [2]int
+    NewLvl [2]int
+}
+
 type Level struct {
     Name string
     Cutscene int
@@ -27,10 +33,8 @@ type Level struct {
     Image *ebiten.Image
 }
 
-type Door struct {
-    Coords [2]int
-    NewLvl [2]int
-}
+//func (l *Level) Animate(screen *ebiten.Image, w, h int) {
+//}
 
 func LoadLvl(name string, x, y int) *Level {
     switch name {
@@ -42,6 +46,12 @@ func LoadLvl(name string, x, y int) *Level {
         l := LvlTwo(0)
         l.Pos = [2]int{x, y}
         return l
+    case "VerticalWall":
+        l := VerticalWallLvl(0)
+        l.Pos = [2]int{x, y}
+        return l
+    default:
+        log.Fatal(fmt.Sprintf("Level %s does not exist"))
     }
     return LvlOne(0)
 }
@@ -88,6 +98,8 @@ func LvlOne(entrance int) *Level {
         pos = [2]int{-48, -144}
     case 1:
         pos = [2]int{-336, -504}
+    default:
+        log.Fatal(fmt.Sprintf("Entrace %d does not exist", entrance))
     }
 
     return &Level{
@@ -104,7 +116,7 @@ func LvlTwo(entrance int) *Level {
 
     lvldoors := []*Door{
         &Door{Coords: [2]int{48, 96}, NewLvl: [2]int{1, 1}},
-        &Door{Coords: [2]int{144, 0}, NewLvl: [2]int{1, 1}},
+        &Door{Coords: [2]int{144, 0}, NewLvl: [2]int{3, 1}},
         &Door{Coords: [2]int{240, 96}, NewLvl: [2]int{1, 1}}}
 
     var pos [2]int
@@ -116,6 +128,8 @@ func LvlTwo(entrance int) *Level {
         pos = [2]int{-96, -192}
     case 2:
         pos = [2]int{-144, 0}
+    default:
+        log.Fatal(fmt.Sprintf("Entrace %d does not exist", entrance))
     }
 
     return &Level{
@@ -127,4 +141,38 @@ func LvlTwo(entrance int) *Level {
             {192, 96, 240, 144},
             {288, 96, 336, 240},
             {192, 192, 288, 240}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
+}
+
+func VerticalWallLvl(entrance int) *Level {
+    lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.VerticalWallLvlOne_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    lvlImg := ebiten.NewImageFromImage(lvlimg)
+
+    lvldoors := []*Door{}
+
+    for x := 0; x < 15; x++ {
+        lvldoors = append(lvldoors, &Door{Coords: [2]int{432 + (24 * x), 288}, NewLvl: [2]int{2, 1}})
+    }
+
+    for x := 0; x < 15; x++ {
+        lvldoors = append(lvldoors, &Door{Coords: [2]int{432 + (24 * x), 5808}, NewLvl: [2]int{2, 2}})
+    }
+
+    var pos [2]int
+
+    switch entrance {
+    case 0:
+        pos = [2]int{-600, -336}
+    case 1:
+        pos = [2]int{-600, -5760}
+    default:
+        log.Fatal(fmt.Sprintf("Entrace %d does not exist", entrance))
+    }
+
+    return &Level{
+        Name: "VerticalWall", Cutscene: -1, Max:[2]int{816, 5856}, Pos: pos, Boxes: [][4]int{
+            {0, 0, 432, 6144},
+            {816, 0, 1248, 6144}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg}
 }
