@@ -7,7 +7,6 @@ todo
 *~
 *.swp
 *.swo
-shaders/lighting.go
 *.xcf
 Makefile
 *.txt
