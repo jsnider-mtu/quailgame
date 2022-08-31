@@ -46,6 +46,7 @@ var (
     loadsel int = 0
     findloads bool = true
     pause bool = false
+    overworld bool = false
     pausesel int = 0
     save bool = false
     firstsave bool = false
@@ -57,6 +58,7 @@ var (
     startImage *ebiten.Image
     lightningImage *ebiten.Image
     rainImage *ebiten.Image
+    overworldImage *ebiten.Image
     pcDownOffsetX int = 0
     pcDownOffsetY int = 0
     pcLeftOffsetX int = 0
@@ -499,6 +501,9 @@ func (g *Game) Update() error {
     } else {
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyM) {
+            overworld = !overworld
         }
         if pause {
             if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
@@ -1087,6 +1092,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
         l.Anim(screen, l, animCount, w, h)
     }
+    if overworld {
+        iw, _ := overworldImage.Size()
+        owgm := ebiten.GeoM{}
+        owgm.Translate(float64(iw) - (float64(iw) / 2.0), 0.0)
+        screen.DrawImage(
+            overworldImage, &ebiten.DrawImageOptions{
+                GeoM: owgm})
+    }
     if dialogopen {
         if dialogCount == 1000 {
             dialogCount = 0
@@ -1345,6 +1358,11 @@ func init() {
         log.Fatal(err)
     }
     rainImage = ebiten.NewImageFromImage(rainimage)
+
+    overworldimg, _, err := image.Decode(bytes.NewReader(assets.Overworld_PNG))
+    if err != nil {
+    }
+    overworldImage = ebiten.NewImageFromImage(overworldimg)
 
     savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "invcap,INT,1,8,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
