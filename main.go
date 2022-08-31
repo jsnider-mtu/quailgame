@@ -1333,7 +1333,7 @@ func init() {
     }
     downArrowImage = ebiten.NewImageFromImage(downarrowimage)
 
-    pcimage, _, err := image.Decode(bytes.NewReader(pcimages.PC_png))
+    pcimage, _, err := image.Decode(bytes.NewReader(pcimages.PC_Diamond_Sword_PNG))
     if err != nil {
         log.Fatal(err)
     }
