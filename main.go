@@ -434,7 +434,7 @@ func (g *Game) Update() error {
                             log.Fatal(err)
                         }
                         sb.Reset()
-                        l = levels.LoadLvl("One", 0, -1, -1)
+                        l = levels.LoadLvl("One", 0)
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
                         down = true

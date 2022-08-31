@@ -34,8 +34,8 @@ func LvlOne(entrance int) *Level {
     wizardImage := ebiten.NewImageFromImage(wizardimage)
 
     lvldoors := []*Door{
-        &Door{Coords: [2]int{0, 0}, NewLvl: []interface{}{"Two", 1, -1, -1}},
-        &Door{Coords: [2]int{336, 504}, NewLvl: []interface{}{"Two", 2, -1, -1}}}
+        &Door{Coords: [2]int{0, 0}, NewLvl: []interface{}{"Two", 1}},
+        &Door{Coords: [2]int{336, 504}, NewLvl: []interface{}{"Two", 2}}}
 
     NPCs := []*npcs.NPC{&npcs.NPC{
         Name: "Jane Doe", Msgs: [][]string{

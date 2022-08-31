@@ -26,26 +26,26 @@ type Level struct {
 }
 
 func LoadLvl(newlvl ...interface{}) *Level {
-    if len(newlvl) != 4 {
-        log.Fatal("Incorrect number of arguments passed to levels.LoadLvl; should be 4, got %d", len(newlvl))
+    if len(newlvl) != 4 && len(newlvl) != 2 {
+        log.Fatal("Incorrect number of arguments passed to levels.LoadLvl; should be 2 or 4, got %d", len(newlvl))
         return nil
     }
     switch newlvl[0] {
     case "One":
         l := LvlOne(newlvl[1].(int))
-        if newlvl[2].(int) != -1 && newlvl[3].(int) != -1 {
+        if len(newlvl) == 4 {
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
         }
         return l
     case "Two":
         l := LvlTwo(newlvl[1].(int))
-        if newlvl[2].(int) != -1 && newlvl[3].(int) != -1 {
+        if len(newlvl) == 4 {
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
         }
         return l
     case "VerticalWall":
         l := VerticalWallLvl(newlvl[1].(int))
-        if newlvl[2].(int) != -1 && newlvl[3].(int) != -1 {
+        if len(newlvl) == 4 {
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
         }
         return l
