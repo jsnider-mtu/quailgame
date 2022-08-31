@@ -24,9 +24,9 @@ func LvlTwo(entrance int) *Level {
     lvlImg := ebiten.NewImageFromImage(lvlimg)
 
     lvldoors := []*Door{
-        &Door{Coords: [2]int{48, 96}, NewLvl: [2]int{1, 1}},
-        &Door{Coords: [2]int{144, 0}, NewLvl: [2]int{3, 1}},
-        &Door{Coords: [2]int{240, 96}, NewLvl: [2]int{1, 1}}}
+        &Door{Coords: [2]int{48, 96}, NewLvl: []interface{}{"One", 1, -1, -1}},
+        &Door{Coords: [2]int{144, 0}, NewLvl: []interface{}{"VerticalWall", 1, -1, -1}},
+        &Door{Coords: [2]int{240, 96}, NewLvl: []interface{}{"One", 1, -1, -1}}}
 
     var pos [2]int
 

@@ -81,7 +81,7 @@ var (
     fo font.Face
     s int = 0
     lvlchange bool = false
-    newlvl [2]int
+    newlvl []interface{}
     f int = 0
     fadeImage *ebiten.Image
     dab int = 0
@@ -434,7 +434,7 @@ func (g *Game) Update() error {
                             log.Fatal(err)
                         }
                         sb.Reset()
-                        l = loadlvl([2]int{1, 0})
+                        l = levels.LoadLvl("One", 0, -1, -1)
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
                         down = true
@@ -621,7 +621,7 @@ func (g *Game) Update() error {
                     itemprops := strings.Split(item, ",")
                     p.Inv.Items = append(p.Inv.Items, items.LoadItem(itemprops[0], itemprops[1], itemprops[2]))
                 }
-                l = levels.LoadLvl(levelname, x, y)
+                l = levels.LoadLvl(levelname, 0, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
                 p.Inv.Cap = invcap
                 load = false
@@ -1179,7 +1179,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             screen.DrawImage(fadeScreen, nil)
             f = 0
             lvlchange = false
-            l = loadlvl(newlvl)
+            l = levels.LoadLvl(newlvl...)
             p.Pos[0] = -l.Pos[0]
             p.Pos[1] = -l.Pos[1]
             if l.Cutscene > 0 {
@@ -1272,18 +1272,6 @@ func drawmc(screen *ebiten.Image, w, h int) {
                             GeoM: gm})
         }
     }
-}
-
-func loadlvl(lvl [2]int) *levels.Level {
-    switch lvl[0] {
-    case 1:
-        return levels.LvlOne(lvl[1])
-    case 2:
-        return levels.LvlTwo(lvl[1])
-    case 3:
-        return levels.VerticalWallLvl(lvl[1])
-    }
-    return levels.LvlOne(lvl[1])
 }
 
 func init() {

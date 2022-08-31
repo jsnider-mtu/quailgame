@@ -10,7 +10,7 @@ import (
 
 type Door struct {
     Coords [2]int
-    NewLvl [2]int
+    NewLvl []interface{}
 }
 
 type Level struct {
@@ -25,22 +25,32 @@ type Level struct {
     Anim func(*ebiten.Image, *Level, int, int, int)
 }
 
-func LoadLvl(name string, x, y int) *Level {
-    switch name {
+func LoadLvl(newlvl ...interface{}) *Level {
+    if len(newlvl) != 4 {
+        log.Fatal("Incorrect number of arguments passed to levels.LoadLvl; should be 4, got %d", len(newlvl))
+        return nil
+    }
+    switch newlvl[0] {
     case "One":
-        l := LvlOne(0)
-        l.Pos = [2]int{x, y}
+        l := LvlOne(newlvl[1].(int))
+        if newlvl[2].(int) != -1 && newlvl[3].(int) != -1 {
+            l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
+        }
         return l
     case "Two":
-        l := LvlTwo(0)
-        l.Pos = [2]int{x, y}
+        l := LvlTwo(newlvl[1].(int))
+        if newlvl[2].(int) != -1 && newlvl[3].(int) != -1 {
+            l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
+        }
         return l
     case "VerticalWall":
-        l := VerticalWallLvl(0)
-        l.Pos = [2]int{x, y}
+        l := VerticalWallLvl(newlvl[1].(int))
+        if newlvl[2].(int) != -1 && newlvl[3].(int) != -1 {
+            l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
+        }
         return l
     default:
-        log.Fatal(fmt.Sprintf("Level %s does not exist"))
+        log.Fatal(fmt.Sprintf("Level %s does not exist", newlvl[0]))
     }
-    return LvlOne(0)
+    return LvlOne(newlvl[1].(int))
 }
