@@ -1093,6 +1093,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
         l.Anim(screen, l, animCount, w, h)
     }
     if overworld {
+        blankImage := ebiten.NewImage(w, h)
+        blankImage.Fill(color.RGBA{0x00, 0x00, 0x00, 0xb0})
+        screen.DrawImage(blankImage, nil)
         iw, _ := overworldImage.Size()
         owgm := ebiten.GeoM{}
         owgm.Translate(float64(iw) - (float64(iw) / 2.0), 0.0)
