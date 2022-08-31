@@ -826,14 +826,38 @@ func (g *Game) Draw(screen *ebiten.Image) {
     mcdrawn := false
     if !startanimdone {
         y++
+        animcm := ebiten.ColorM{}
+        animcm.Scale(1.0, 1.0, 1.0, float64(y) / 65.0)
         if y <= 65 {
-            animgm := ebiten.GeoM{}
-            animgm.Translate(float64(0), float64(h - (9 * y)))
             screen.DrawImage(
                 startImage, &ebiten.DrawImageOptions{
-                    GeoM: animgm})
+                    ColorM: animcm})
+            for b := 0; b < 9; b++ {
+                for c := 0; c < 12; c++ {
+                    raingm := ebiten.GeoM{}
+                    raingm.Reset()
+                    raingm.Translate(float64(c * 64), float64(b * 64))
+                    screen.DrawImage(
+                        rainImage.SubImage(
+                            image.Rect(
+                                (y % 16) * 64, 0, ((y % 16) + 1) * 64, 64)).(*ebiten.Image),
+                                &ebiten.DrawImageOptions{GeoM: raingm, ColorM: animcm})
+                }
+            }
         } else {
             screen.DrawImage(startImage, nil)
+            for b := 0; b < 9; b++ {
+                for c := 0; c < 12; c++ {
+                    raingm := ebiten.GeoM{}
+                    raingm.Reset()
+                    raingm.Translate(float64(c * 64), float64(b * 64))
+                    screen.DrawImage(
+                        rainImage.SubImage(
+                            image.Rect(
+                                (y % 16) * 64, 0, ((y % 16) + 1) * 64, 64)).(*ebiten.Image),
+                                &ebiten.DrawImageOptions{GeoM: raingm, ColorM: animcm})
+                }
+            }
             y = 0
             startanimdone = true
         }
