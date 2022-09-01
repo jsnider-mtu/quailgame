@@ -64,5 +64,8 @@ func lvlOne(entrance int) *Level {
 
     return &Level{
         name: "One", Cutscene: -1, max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
-            {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg, Anim: func(a *ebiten.Image, l *Level, b, c, d int) {}}
+            {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, grasses: [][2]int{
+            {336, 384}, {336, 432}}, Image: lvlImg,
+        Anim: func(screen *ebiten.Image, l *Level, count, w, h int) {
+            l.GrassAnim(screen, w, h)}}
 }

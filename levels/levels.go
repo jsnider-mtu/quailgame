@@ -1,12 +1,29 @@
 package levels
 
 import (
+    "bytes"
     "fmt"
+    "image"
+    _ "image/png"
     "log"
 
     "github.com/hajimehoshi/ebiten/v2"
+
+    "github.com/jsnider-mtu/quailgame/assets"
     "github.com/jsnider-mtu/quailgame/npcs"
 )
+
+var (
+    grassImage *ebiten.Image
+)
+
+func init() {
+    grassimg, _, err := image.Decode(bytes.NewReader(assets.Grass_Anim_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    grassImage = ebiten.NewImageFromImage(grassimg)
+}
 
 type Door struct {
     coords [2]int
@@ -25,8 +42,9 @@ type Level struct {
     Boxes [][4]int
     Doors []*Door
     NPCs []*npcs.NPC
+    grasses [][2]int
     Image *ebiten.Image
-    Anim func(*ebiten.Image, *Level, int, int, int)
+    Anim func(*ebiten.Image, *Level, int, int, int) // screen, l, count, w, h
 }
 
 func (l *Level) GetName() string {
@@ -35,6 +53,20 @@ func (l *Level) GetName() string {
 
 func (l *Level) GetMax() [2]int {
     return l.max
+}
+
+func (l *Level) GetGrasses() [][2]int {
+    return l.grasses
+}
+
+func (l *Level) GrassAnim(screen *ebiten.Image, w, h int) {
+    for _, g := range l.grasses {
+        if l.Pos[0] == -g[0] && l.Pos[1] == -g[1] {
+            gm := ebiten.GeoM{}
+            gm.Translate(float64(w / 2), float64(h / 2))
+            screen.DrawImage(grassImage, &ebiten.DrawImageOptions{GeoM: gm})
+        }
+    }
 }
 
 func LoadLvl(newlvl ...interface{}) *Level {
