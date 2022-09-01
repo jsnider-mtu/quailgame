@@ -104,6 +104,9 @@ var (
     schemaRowsCount int = 0
     colsStr string
     animCount int = 0
+    icon16img image.Image
+    icon32img image.Image
+    icon48img image.Image
 )
 
 type Game struct {}
@@ -1365,8 +1368,24 @@ func init() {
 
     overworldimg, _, err := image.Decode(bytes.NewReader(assets.Overworld_PNG))
     if err != nil {
+        log.Fatal(err)
     }
     overworldImage = ebiten.NewImageFromImage(overworldimg)
+
+    icon16img, _, err = image.Decode(bytes.NewReader(assets.Icon_16_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    icon32img, _, err = image.Decode(bytes.NewReader(assets.Icon_32_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    icon48img, _, err = image.Decode(bytes.NewReader(assets.Icon_48_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
 
     savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
@@ -1537,6 +1556,7 @@ func init() {
 func main() {
     ebiten.SetWindowSize(768, 576)
     ebiten.SetWindowTitle("CHANGEME")
+    ebiten.SetWindowIcon([]image.Image{icon16img, icon32img, icon48img})
 
     if err := ebiten.RunGame(&Game{}); err != nil {
         log.Fatal(err)
