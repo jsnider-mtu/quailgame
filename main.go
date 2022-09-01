@@ -502,9 +502,6 @@ func (g *Game) Update() error {
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause
         }
-        if inpututil.IsKeyJustPressed(ebiten.KeyM) {
-            overworld = !overworld
-        }
         if pause {
             if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
                 if pausesel > 0 {
@@ -643,6 +640,9 @@ func (g *Game) Update() error {
             }
             if !dialogopen {
                 npcCount++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyM) {
+                overworld = !overworld
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyF) {
                 if dialogopen {
