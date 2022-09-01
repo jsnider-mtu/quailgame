@@ -16,7 +16,7 @@ import (
 //    "github.com/jsnider-mtu/quailgame/player"
 )
 
-func LvlTwo(entrance int) *Level {
+func lvlTwo(entrance int) *Level {
     lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.Two_PNG))
     if err != nil {
         log.Fatal(err)
@@ -24,9 +24,9 @@ func LvlTwo(entrance int) *Level {
     lvlImg := ebiten.NewImageFromImage(lvlimg)
 
     lvldoors := []*Door{
-        &Door{Coords: [2]int{48, 96}, NewLvl: []interface{}{"One", 1}},
-        &Door{Coords: [2]int{144, 0}, NewLvl: []interface{}{"VerticalWall", 1}},
-        &Door{Coords: [2]int{240, 96}, NewLvl: []interface{}{"One", 1}}}
+        &Door{coords: [2]int{48, 96}, NewLvl: []interface{}{"One", 1}},
+        &Door{coords: [2]int{144, 0}, NewLvl: []interface{}{"VerticalWall", 1}},
+        &Door{coords: [2]int{240, 96}, NewLvl: []interface{}{"One", 1}}}
 
     var pos [2]int
 
@@ -42,7 +42,7 @@ func LvlTwo(entrance int) *Level {
     }
 
     return &Level{
-        Name: "Two", Cutscene: 1, Max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{
+        name: "Two", Cutscene: 1, max: [2]int{312, 216}, Pos: pos, Boxes: [][4]int{
             {0, 0, 144, 96},
             {0, 96, 48, 240},
             {96, 96, 144, 192},

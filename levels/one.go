@@ -16,7 +16,7 @@ import (
     "github.com/jsnider-mtu/quailgame/player"
 )
 
-func LvlOne(entrance int) *Level {
+func lvlOne(entrance int) *Level {
     lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.One_JPEG))
     if err != nil {
         log.Fatal(err)
@@ -34,22 +34,22 @@ func LvlOne(entrance int) *Level {
     wizardImage := ebiten.NewImageFromImage(wizardimage)
 
     lvldoors := []*Door{
-        &Door{Coords: [2]int{0, 0}, NewLvl: []interface{}{"Two", 1}},
-        &Door{Coords: [2]int{336, 504}, NewLvl: []interface{}{"Two", 2}}}
+        &Door{coords: [2]int{0, 0}, NewLvl: []interface{}{"Two", 1}},
+        &Door{coords: [2]int{336, 504}, NewLvl: []interface{}{"Two", 2}}}
 
-    NPCs := []*npcs.NPC{&npcs.NPC{
-        Name: "Jane Doe", Msgs: [][]string{
+    NPCs := []*npcs.NPC{npcs.NewNPC(
+        "Jane Doe", "down", [][]string{
             {"Hello there,", "ObiWan Kenobi."},
             {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
-        MsgCount: 0, Speed: 240, Offset: rand.Intn(60) + 60, Direction: "down", Stopped: true, PC: &player.Player{
-            Pos: [2]int{192, 192}, Image: npcGirlImage}},
-        &npcs.NPC{Name: "Wizard", Msgs: [][]string{
+        240, rand.Intn(60) + 60, &player.Player{
+            Pos: [2]int{192, 192}, Image: npcGirlImage}),
+        npcs.NewNPC("Wizard", "down", [][]string{
             {"I'm a wizard, Harry!"},
             {"The great and terrible Lord Adrian", "has invaded the peaceful Quail Kingdom,",
              "stoking a rebellion from within.", "", "Your quest is simple,",
              "quell the rebellion and defeat", "Lord Adrian!"}},
-        MsgCount: 0, Speed: 0, Offset: rand.Intn(60) + 60, Direction: "down", Stopped: true, PC: &player.Player{
-            Pos: [2]int{288, 288}, Image: wizardImage}}}
+        0, rand.Intn(60) + 60, &player.Player{
+            Pos: [2]int{288, 288}, Image: wizardImage})}
 
     var pos [2]int
 
@@ -63,6 +63,6 @@ func LvlOne(entrance int) *Level {
     }
 
     return &Level{
-        Name: "One", Cutscene: -1, Max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
+        name: "One", Cutscene: -1, max: [2]int{720, 528}, Pos: pos, Boxes: [][4]int{
             {48, 48, 96, 96}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg, Anim: func(a *ebiten.Image, l *Level, b, c, d int) {}}
 }

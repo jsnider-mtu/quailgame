@@ -15,7 +15,7 @@ func LoadItem(name, material, durability string) inventory.Item {
     }
     switch name {
     case "Pickaxe":
-        return Pickaxe{Material: material, Durability: dur}
+        return Pickaxe{material: material, durability: dur}
     //case "Axe":
     default:
         log.Fatal(fmt.Sprintf("Item with name %s does not exist", name))

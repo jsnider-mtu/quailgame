@@ -9,20 +9,32 @@ import (
 )
 
 type Door struct {
-    Coords [2]int
+    coords [2]int
     NewLvl []interface{}
 }
 
+func (d *Door) GetCoords() [2]int {
+    return d.coords
+}
+
 type Level struct {
-    Name string
+    name string
     Cutscene int
-    Max [2]int
+    max [2]int
     Pos [2]int
     Boxes [][4]int
     Doors []*Door
     NPCs []*npcs.NPC
     Image *ebiten.Image
     Anim func(*ebiten.Image, *Level, int, int, int)
+}
+
+func (l *Level) GetName() string {
+    return l.name
+}
+
+func (l *Level) GetMax() [2]int {
+    return l.max
 }
 
 func LoadLvl(newlvl ...interface{}) *Level {
@@ -32,19 +44,19 @@ func LoadLvl(newlvl ...interface{}) *Level {
     }
     switch newlvl[0] {
     case "One":
-        l := LvlOne(newlvl[1].(int))
+        l := lvlOne(newlvl[1].(int))
         if len(newlvl) == 4 {
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
         }
         return l
     case "Two":
-        l := LvlTwo(newlvl[1].(int))
+        l := lvlTwo(newlvl[1].(int))
         if len(newlvl) == 4 {
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
         }
         return l
     case "VerticalWall":
-        l := VerticalWallLvl(newlvl[1].(int))
+        l := verticalWallLvl(newlvl[1].(int))
         if len(newlvl) == 4 {
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
         }
@@ -52,5 +64,5 @@ func LoadLvl(newlvl ...interface{}) *Level {
     default:
         log.Fatal(fmt.Sprintf("Level %s does not exist", newlvl[0]))
     }
-    return LvlOne(newlvl[1].(int))
+    return lvlOne(newlvl[1].(int))
 }

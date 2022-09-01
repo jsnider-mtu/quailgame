@@ -7,7 +7,7 @@ import (
 
 func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist int, mc *player.Player) bool {
     if vert {
-        if p.Pos[1] + dist > l.Pos[1] && p.Pos[1] + dist < l.Max[1] {
+        if p.Pos[1] + dist > l.Pos[1] && p.Pos[1] + dist < l.GetMax()[1] {
             if dist < 0 {
                 if !pc {
                     if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
@@ -67,7 +67,7 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
         }
         return false
     } else {
-        if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.Max[0] {
+        if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.GetMax()[0] {
             if dist < 0 {
                 if !pc {
                     if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {

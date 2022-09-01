@@ -16,7 +16,7 @@ import (
 //    "github.com/jsnider-mtu/quailgame/player"
 )
 
-func VerticalWallLvl(entrance int) *Level {
+func verticalWallLvl(entrance int) *Level {
     lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.VerticalWallLvlOne_PNG))
     if err != nil {
         log.Fatal(err)
@@ -31,11 +31,11 @@ func VerticalWallLvl(entrance int) *Level {
     lvldoors := []*Door{}
 
     for x := 0; x < 15; x++ {
-        lvldoors = append(lvldoors, &Door{Coords: [2]int{432 + (24 * x), 288}, NewLvl: []interface{}{"Two", 1}})
+        lvldoors = append(lvldoors, &Door{coords: [2]int{432 + (24 * x), 288}, NewLvl: []interface{}{"Two", 1}})
     }
 
     for x := 0; x < 15; x++ {
-        lvldoors = append(lvldoors, &Door{Coords: [2]int{432 + (24 * x), 5808}, NewLvl: []interface{}{"Two", 2}})
+        lvldoors = append(lvldoors, &Door{coords: [2]int{432 + (24 * x), 5808}, NewLvl: []interface{}{"Two", 2}})
     }
 
     var pos [2]int
@@ -50,7 +50,7 @@ func VerticalWallLvl(entrance int) *Level {
     }
 
     return &Level{
-        Name: "VerticalWall", Cutscene: -1, Max:[2]int{816, 5856}, Pos: pos, Boxes: [][4]int{
+        name: "VerticalWall", Cutscene: -1, max:[2]int{816, 5856}, Pos: pos, Boxes: [][4]int{
             {0, 0, 432, 6144},
             {816, 0, 1248, 6144}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg,
         Anim: func(screen *ebiten.Image, l *Level, count, w, h int) {

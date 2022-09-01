@@ -30,6 +30,7 @@ import (
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
+    "github.com/hajimehoshi/ebiten/v2/ebitenutil"
     "github.com/hajimehoshi/ebiten/v2/text"
 
     _ "github.com/mattn/go-sqlite3"
@@ -101,7 +102,6 @@ var (
     fadeScreen *ebiten.Image
     savesTableSchema []string
     schemaRowsCount int = 0
-    copyColsCount int = 0
     colsStr string
     animCount int = 0
 )
@@ -477,8 +477,8 @@ func (g *Game) Update() error {
                     switch startsel {
                     case 0:
                         if l == nil {
-                            l = levels.LvlOne(0)
-                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{Cap: 8}, Image: pcImage}
+                            l = levels.LoadLvl("One", 0)
+                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage}
                         }
                         firstsave = true
                     case 1:
@@ -564,14 +564,14 @@ func (g *Game) Update() error {
                     }
                 }
                 var invstr string
-                for itemind, item := range p.Inv.Items {
-                    if itemind == len(p.Inv.Items) - 1 {
+                for itemind, item := range p.Inv.GetItems() {
+                    if itemind == len(p.Inv.GetItems()) - 1 {
                         invstr += item.Save()
                     } else {
                         invstr += item.Save() + ";"
                     }
                 }
-                _, err = db.Exec(saveStmt, name, l.Name, l.Pos[0], l.Pos[1], p.Inv.Cap, csdonestr, invstr)
+                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -596,11 +596,10 @@ func (g *Game) Update() error {
                 var savename string
                 var levelname string
                 var x, y int
-                var invcap int
                 var csdonestr string
                 var invstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &invcap, &csdonestr, &invstr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr)
                 }
                 err = rows.Err()
                 if err != nil {
@@ -624,11 +623,10 @@ func (g *Game) Update() error {
                         break
                     }
                     itemprops := strings.Split(item, ",")
-                    p.Inv.Items = append(p.Inv.Items, items.LoadItem(itemprops[0], itemprops[1], itemprops[2]))
+                    p.Inv.Add(items.LoadItem(itemprops[0], itemprops[1], itemprops[2]))
                 }
                 l = levels.LoadLvl(levelname, 0, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
-                p.Inv.Cap = invcap
                 load = false
             }
             if cutscene {
@@ -661,7 +659,7 @@ func (g *Game) Update() error {
                         if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
                             if !dialogopen {
                                 npc.Direction = "down"
-                                npcname = npc.Name
+                                npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
                             }
@@ -672,7 +670,7 @@ func (g *Game) Update() error {
                         if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 24 == p.Pos[1] {
                             if !dialogopen {
                                 npc.Direction = "up"
-                                npcname = npc.Name
+                                npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
                             }
@@ -683,7 +681,7 @@ func (g *Game) Update() error {
                         if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
                             if !dialogopen {
                                 npc.Direction = "right"
-                                npcname = npc.Name
+                                npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
                             }
@@ -694,7 +692,7 @@ func (g *Game) Update() error {
                         if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
                             if !dialogopen {
                                 npc.Direction = "left"
-                                npcname = npc.Name
+                                npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
                             }
@@ -704,7 +702,7 @@ func (g *Game) Update() error {
             }
             if !dialogopen && !lvlchange && !start {
                 for _, npc := range l.NPCs {
-                    if npc.Speed > 0 && (npcCount + npc.Offset) % npc.Speed == 0 {
+                    if npc.GetSpeed() > 0 && (npcCount + npc.GetOffset()) % npc.GetSpeed() == 0 {
                         npc.Stopped = false
                         switch rand.Intn(4) {
                         case 0:
@@ -720,7 +718,7 @@ func (g *Game) Update() error {
                             npc.Direction = "left"
                             utils.TryUpdatePos(false, npc.PC, l, false, -24, p)
                         }
-                    } else if !npc.Stopped && (npcCount + npc.Offset - 4) % npc.Speed == 0 {
+                    } else if !npc.Stopped && (npcCount + npc.GetOffset() - 4) % npc.GetSpeed() == 0 {
                         npc.Stopped = true
                     }
                 }
@@ -754,7 +752,7 @@ func (g *Game) Update() error {
                     if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, true, -24, p) {
                             for _, a := range l.Doors {
-                                if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
@@ -771,7 +769,7 @@ func (g *Game) Update() error {
                     if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, false, -24, p) {
                             for _, a := range l.Doors {
-                                if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
@@ -788,7 +786,7 @@ func (g *Game) Update() error {
                     if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, false, 24, p) {
                             for _, a := range l.Doors {
-                                if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
@@ -805,7 +803,7 @@ func (g *Game) Update() error {
                     if smallestnum % 4 == 0 {
                         if utils.TryUpdatePos(true, p, l, true, 24, p) {
                             for _, a := range l.Doors {
-                                if p.Pos[0] == a.Coords[0] && p.Pos[1] == a.Coords[1] {
+                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
@@ -1091,6 +1089,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
             drawmc(screen, w, h)
         }
         l.Anim(screen, l, animCount, w, h)
+    } else {
+        ebitenutil.DebugPrintAt(screen, "Loading...", w / 2, h / 2)
     }
     if dialogopen {
         if dialogCount == 1000 {
@@ -1368,7 +1368,7 @@ func init() {
     }
     overworldImage = ebiten.NewImageFromImage(overworldimg)
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "invcap,INT,1,8,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)
@@ -1419,7 +1419,9 @@ func init() {
         if schemaRowsDefault == nil {
             schemaRowsDefault = "null"
         }
-        if savesTableSchema[schemaRowsIndex] != schemaRowsName + "," + schemaRowsType + "," + strconv.Itoa(schemaRowsNotNull) + "," + fmt.Sprint(schemaRowsDefault) + "," + strconv.Itoa(schemaRowsPk) {
+        if schemaRowsIndex >= len(savesTableSchema) {
+            fixSchema = true
+        } else if savesTableSchema[schemaRowsIndex] != schemaRowsName + "," + schemaRowsType + "," + strconv.Itoa(schemaRowsNotNull) + "," + fmt.Sprint(schemaRowsDefault) + "," + strconv.Itoa(schemaRowsPk) {
             fixSchema = true
         }
     }
@@ -1451,72 +1453,60 @@ func init() {
             log.Fatal(err)
         }
         defer copyCols.Close()
+        var colNames []string
         for copyCols.Next() {
-            copyColsCount++
+            var colName string
+            var trash1 string
+            var trash2 int
+            var trash3 int
+            var trash4 string
+            var trash5 string
+            err = copyCols.Scan(&trash1, &colName, &trash2, &trash3, &trash4, &trash5)
+            colNames = append(colNames, colName)
         }
-        for copyColsIndex := 0; copyColsIndex < copyColsCount; copyColsIndex++ {
-            colsarr := strings.Split(savesTableSchema[copyColsIndex], ",")
-            if copyColsIndex == copyColsCount - 1 {
-                colsStr += colsarr[0]
-            } else {
-                colsStr += colsarr[0] + ", "
+        for _, colName := range colNames {
+            for _, colSchema := range savesTableSchema {
+                colSchemaArr := strings.Split(colSchema, ",")
+                if colSchemaArr[0] == colName {
+                    colsStr += colName + ", "
+                }
             }
         }
+        colsStr = colsStr[:len(colsStr) - 2]
         copyRows, err := db.Query("select " + colsStr + " from copied")
         if err != nil {
             log.Fatal(err)
         }
         defer copyRows.Close()
+        var colsArr = strings.Split(colsStr, ",")
+        var numCols = len(colsArr)
         var insertStmts = make([]string, 0)
-        var copyRowsPtrs = make([]interface{}, copyColsCount)
-        var copyRowsArr = make([]interface{}, copyColsCount)
+        var copyRowsPtrs = make([]interface{}, numCols)
+        var copyRowsArr = make([]interface{}, numCols)
         for i, _ := range copyRowsPtrs {
             copyRowsPtrs[i] = &copyRowsArr[i]
         }
-        var nullStr string
-        var newColsInd int = len(savesTableSchema) - (len(savesTableSchema) - copyColsCount)
         for copyRows.Next() {
             err = copyRows.Scan(copyRowsPtrs...)
             insertStmt := "insert into saves ("
-            for cind, col := range savesTableSchema {
-                insStmtDone := false
-                skip := false
-                colArr := strings.Split(col, ",")
-                if cind >= newColsInd {
-                    if colArr[2] != "1" {
-                        nullStr += ", null"
-                    } else if colArr[3] != "null" {
-                        if cind == len(savesTableSchema) - 1 {
-                            insertStmt += ") values("
-                            insStmtDone = true
-                        } else {
-                            skip = true
-                        }
-                    } else {
-                        log.Fatal(fmt.Sprintf("%s is NOT NULL but DEFAULT is \"null\"", colArr[0]))
-                    }
-                }
-                if cind == len(savesTableSchema) - 1 {
-                    if !insStmtDone {
-                        insertStmt += colArr[0] + ") values("
-                    }
+            for cind, col := range colsArr {
+                if cind == numCols - 1 {
+                    insertStmt += col + ") values ("
                 } else {
-                    if !skip {
-                        insertStmt += colArr[0] + ", "
-                    }
+                    insertStmt += col + ", "
                 }
             }
             for whatever, whateverPtr := range copyRowsArr {
                 switch reflect.TypeOf(whateverPtr).String() {
                 case "string":
                     if whatever == len(copyRowsArr) - 1 {
-                        insertStmt += "\"" + fmt.Sprint(whateverPtr) + "\"" + nullStr + ");"
+                        insertStmt += "\"" + fmt.Sprint(whateverPtr) + "\");"
                     } else {
                         insertStmt += "\"" + fmt.Sprint(whateverPtr) + "\", "
                     }
                 case "int64":
                     if whatever == len(copyRowsArr) - 1 {
-                        insertStmt += fmt.Sprint(whateverPtr) + nullStr + ");"
+                        insertStmt += fmt.Sprint(whateverPtr) + ");"
                     } else {
                         insertStmt += fmt.Sprint(whateverPtr) + ", "
                     }
@@ -1540,23 +1530,6 @@ func init() {
         _, err = db.Exec(copyDropStmt)
         if err != nil {
             log.Fatal(fmt.Sprintf("%q: %s\n", err, copyDropStmt))
-        }
-    }
-    if schemaRowsCount < len(savesTableSchema) && !fixSchema {
-        for colMisIndex := len(savesTableSchema) - schemaRowsCount; colMisIndex > 0; colMisIndex-- {
-            var colopts string
-            colarr := strings.Split(savesTableSchema[len(savesTableSchema) - colMisIndex], ",")
-            if colarr[2] == "1" {
-                colopts += " not null"
-            }
-            if colarr[3] == "1" {
-                colopts += " primary key"
-            }
-            alterStmt := "alter table saves add column " + colarr[0] + " " + colarr[1] + colopts + ";"
-            _, err = db.Exec(alterStmt)
-            if err != nil {
-                log.Fatal(err)
-            }
         }
     }
 }
