@@ -569,16 +569,6 @@ func (g *Game) Update() error {
                 if classsel < 0 {
                     classsel = 0
                 }
-            case 2:
-                backgroundsel--
-                if backgroundsel < 0 {
-                    backgroundsel = 0
-                }
-            case 3:
-                equipmentsel--
-                if equipmentsel < 0 {
-                    equipmentsel = 0
-                }
             default:
                 return errors.New("Out of bounds (577)")
             }
@@ -595,11 +585,6 @@ func (g *Game) Update() error {
                 if classsel > 11 {
                     classsel = 11
                 }
-            case 2:
-                backgroundsel++
-                if backgroundsel > 12 {
-                    backgroundsel = 12
-                }
             default:
                 return errors.New("Out of bounds (Update)")
             }
@@ -609,7 +594,7 @@ func (g *Game) Update() error {
         }
         if creationsel < 0 {
             creationsel = 0
-        } else if creationsel > 2 {
+        } else if creationsel > 1 {
             creationsel = 0
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
@@ -862,6 +847,7 @@ func (g *Game) Update() error {
             switch racesel {
             case 0:
                 con += 2
+                hp += 2
                 speed = 25
                 size = 1
                 languages = append(languages, "Common", "Dwarvish")
@@ -894,6 +880,7 @@ func (g *Game) Update() error {
                 intel++
                 wis++
                 cha++
+                hp++
                 speed = 30
                 size = 1
                 languages = append(languages, "Common") // 1 more language
@@ -924,6 +911,7 @@ func (g *Game) Update() error {
             case 7:
                 str += 2
                 con++
+                hp++
                 speed = 30
                 size = 1
                 proficiencies = append(proficiencies, "intimidation")
@@ -2613,14 +2601,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, fmt.Sprintf("Name:       %s", name), fo, 64, 64, color.White)
         text.Draw(screen, fmt.Sprintf("Race:       %s", racemap[racesel]), fo, 64, 128, color.White)
         text.Draw(screen, fmt.Sprintf("Class:      %s", classmap[classsel]), fo, 64, 192, color.White)
-        text.Draw(screen, fmt.Sprintf("Background: %s", backgroundmap[backgroundsel]), fo, 64, 256, color.White)
         switch creationsel {
         case 0:
             text.Draw(screen, ">", fo, 32, 128, color.White)
         case 1:
             text.Draw(screen, ">", fo, 32, 192, color.White)
-        case 2:
-            text.Draw(screen, ">", fo, 32, 256, color.White)
         default:
             log.Fatal("Out of bounds (Draw)")
         }
