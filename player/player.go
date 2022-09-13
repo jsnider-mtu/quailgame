@@ -33,6 +33,12 @@ type Stats struct {
     DeathSaveSucc int
     DeathSaveFail int
     Languages []string
+    Size int
+    Darkvision bool
+    Proficiencies []string
+    Resistances []string
+    Lucky bool
+    Nimbleness bool
 }
 
 type Equipment struct {
@@ -55,6 +61,7 @@ type Equipment struct {
 }
 
 type Player struct {
+    Name string
     Pos [2]int
     Inv *inventory.Inv
     Image *ebiten.Image

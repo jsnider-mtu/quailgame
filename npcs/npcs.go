@@ -8,7 +8,6 @@ import (
 )
 
 type NPC struct {
-    name string
     Msgs [][]string
     MsgCount int
     speed int
@@ -18,12 +17,12 @@ type NPC struct {
     PC *player.Player
 }
 
-func NewNPC(name, direction string, msgs [][]string, speed, offset int, pc *player.Player) *NPC {
-    return &NPC{name: name, Msgs: msgs, MsgCount: 0, speed: speed, offset: offset, Direction: direction, Stopped: true, PC: pc}
+func NewNPC(direction string, msgs [][]string, speed, offset int, pc *player.Player) *NPC {
+    return &NPC{Msgs: msgs, MsgCount: 0, speed: speed, offset: offset, Direction: direction, Stopped: true, PC: pc}
 }
 
 func (npc *NPC) GetName() string {
-    return npc.name
+    return npc.PC.Name
 }
 
 func (npc *NPC) GetSpeed() int {

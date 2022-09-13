@@ -3,6 +3,7 @@ package main
 import (
     "bytes"
     "database/sql"
+    "errors"
     "fmt"
     "image"
     "image/color"
@@ -11,6 +12,7 @@ import (
     "math/rand"
     "os"
     "reflect"
+    "sort"
     "strconv"
     "strings"
 
@@ -107,11 +109,53 @@ var (
     icon16img image.Image
     icon32img image.Image
     icon48img image.Image
+    creation bool = false
+    creationsel int = 0
+    creationpage [4]int
+    racesel int = 0
+    classsel int = 0
+    backgroundsel int = 0
+    equipmentsel int = 0
+    choices bool = false
+    dupwarning bool = false
+    option0 int = 0
+    option1 int = 0
+    option2 int = 0
+    option3 int = 0
+    option4 int = 0
+    option5 int = 0
+    option6 int = 0
+    option7 int = 0
+    option8 int = 0
 )
+
+var racemap = make(map[int]string)
+var classmap = make(map[int]string)
+var backgroundmap = make(map[int]string)
+var equipmentmap = make(map[int]string)
 
 type Game struct {}
 
 func (g *Game) Update() error {
+    abilities := make([]int, 6)
+    var str int
+    var dex int
+    var con int
+    var intel int
+    var wis int
+    var cha int
+    var pb int
+    var hp int
+    var hd string
+    var speed int
+    var size int // 0: Small, 1: Medium, 2: Large
+    var languages = make([]string, 0)
+    var proficiencies = make([]string, 0)
+    var resistances = make([]string, 0)
+    var darkvision bool = false
+    var lucky bool = false
+    var nimbleness bool = false
+    var savingthrows = make(map[string]int)
     if start {
         if startanimdone {
             if findloads {
@@ -451,6 +495,7 @@ func (g *Game) Update() error {
                         save = true
                         curCS = 0
                         cutscene = true
+                        creation = true
                     }
                 }
             } else {
@@ -499,6 +544,1518 @@ func (g *Game) Update() error {
             if inpututil.IsKeyJustPressed(ebiten.KeyEnter) || inpututil.IsKeyJustPressed(ebiten.KeySpace) || inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
                 startanimdone = true
             }
+        }
+        return nil
+    } else if creation {
+        // character creation
+        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+            creationsel--
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+            switch creationsel {
+            case 0:
+                racesel--
+                if racesel < 0 {
+                    racesel = 0
+                }
+            case 1:
+                classsel--
+                if classsel < 0 {
+                    classsel = 0
+                }
+            case 2:
+                backgroundsel--
+                if backgroundsel < 0 {
+                    backgroundsel = 0
+                }
+            case 3:
+                equipmentsel--
+                if equipmentsel < 0 {
+                    equipmentsel = 0
+                }
+            default:
+                return errors.New("Out of bounds (577)")
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+            switch creationsel {
+            case 0:
+                racesel++
+                if racesel > 8 {
+                    racesel = 8
+                }
+            case 1:
+                classsel++
+                if classsel > 11 {
+                    classsel = 11
+                }
+            case 2:
+                backgroundsel++
+                if backgroundsel > 12 {
+                    backgroundsel = 12
+                }
+            default:
+                return errors.New("Out of bounds (Update)")
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            creationsel++
+        }
+        if creationsel < 0 {
+            creationsel = 0
+        } else if creationsel > 2 {
+            creationsel = 0
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            // Save player info; gen stats
+            // Roll ability scores; sort then assign based on class
+            onescore := make([]int, 4)
+            for x := 0; x < 6; x++ {
+                for a := 0; a < 4; a++ {
+                    onescore[a] = rand.Intn(6) + 1
+                }
+                // sort onescore
+                sort.Slice(onescore, func(i, j int) bool {
+                    return onescore[i] > onescore[j]
+                })
+                score := onescore[0] + onescore[1] + onescore[2]
+                abilities[x] = score
+            }
+            sort.Slice(abilities, func(i, j int) bool {
+                return abilities[i] > abilities[j]
+            })
+            switch classsel {
+            case 0:
+                str = abilities[0]
+                con = abilities[1]
+                dex = abilities[2]
+                intel = abilities[3]
+                wis = abilities[4]
+                cha = abilities[5]
+                pb = 2
+                hp = 12 + con
+                hd = "1d12"
+                savingthrows["str"] = ((str - 10) / 2) + pb
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = ((con - 10) / 2) + pb
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = (wis - 10) / 2
+                savingthrows["cha"] = (cha - 10) / 2
+                proficiencies = append(proficiencies,
+                    "light armor", "medium armor", "shields",
+                    "simple weapons", "martial weapons")
+            case 1:
+                cha = abilities[0]
+                dex = abilities[1]
+                con = abilities[2]
+                intel = abilities[3]
+                wis = abilities[4]
+                str = abilities[5]
+                pb = 2
+                hp = 8 + con
+                hd = "1d8"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = ((dex - 10) / 2) + pb
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = (wis - 10) / 2
+                savingthrows["cha"] = ((cha - 10) / 2) + pb
+                proficiencies = append(proficiencies,
+                    "light armor", "simple weapons", "hand crossbows",
+                    "longswords", "rapiers", "shortswords") // 3 instruments
+            case 2:
+                wis = abilities[0]
+                con = abilities[1]
+                str = abilities[2]
+                wis = abilities[3]
+                intel = abilities[4]
+                cha = abilities[5]
+                pb = 2
+                hp = 8 + con
+                hd = "1d8"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = ((wis - 10) / 2) + pb
+                savingthrows["cha"] = ((cha - 10) / 2) + pb
+                proficiencies = append(proficiencies,
+                    "light armor", "medium armor", "shields",
+                    "simple weapons")
+            case 3:
+                wis = abilities[0]
+                con = abilities[1]
+                dex = abilities[2]
+                intel = abilities[3]
+                str = abilities[4]
+                cha = abilities[5]
+                pb = 2
+                hp = 8 + con
+                hd = "1d8"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = ((intel - 10) / 2) + pb
+                savingthrows["wis"] = ((wis - 10) / 2) + pb
+                savingthrows["cha"] = (cha - 10) / 2
+                proficiencies = append(proficiencies,
+                    "light armor", "medium armor", "shields",
+                    "clubs", "daggers", "darts", "javelins", "maces",
+                    "quarterstaffs", "scimitars", "sickles", "slings",
+                    "spears", "herbalism kit")
+            case 4:
+                str = abilities[0]
+                con = abilities[1]
+                dex = abilities[2]
+                intel = abilities[3]
+                wis = abilities[4]
+                cha = abilities[5]
+                pb = 2
+                hp = 10 + con
+                hd = "1d10"
+                savingthrows["str"] = ((str - 10) / 2) + pb
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = ((con - 10) / 2) + pb
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = (wis - 10) / 2
+                savingthrows["cha"] = (cha - 10) / 2
+                proficiencies = append(proficiencies,
+                    "all armor", "shields", "simple weapons", "martial weapons")
+            case 5:
+                dex = abilities[0]
+                wis = abilities[1]
+                str= abilities[2]
+                con = abilities[3]
+                intel = abilities[4]
+                cha = abilities[5]
+                pb = 2
+                hp = 8 + con
+                hd = "1d8"
+                savingthrows["str"] = ((str - 10) / 2) + pb
+                savingthrows["dex"] = ((dex - 10) / 2) + pb
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = (wis - 10) / 2
+                savingthrows["cha"] = (cha - 10) / 2
+                proficiencies = append(proficiencies,
+                    "simple weapons", "shortswords") // one artisan tools or one instrument
+            case 6:
+                str = abilities[0]
+                cha = abilities[1]
+                con = abilities[2]
+                wis = abilities[3]
+                dex = abilities[4]
+                intel = abilities[5]
+                pb = 2
+                hp = 10 + con
+                hd = "1d10"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = ((wis - 10) / 2) + pb
+                savingthrows["cha"] = ((cha - 10) / 2) + pb
+                proficiencies = append(proficiencies,
+                    "all armor", "shields", "simple weapons", "martial weapons")
+            case 7:
+                dex = abilities[0]
+                wis = abilities[1]
+                con = abilities[2]
+                intel = abilities[3]
+                str = abilities[4]
+                cha = abilities[5]
+                pb = 2
+                hp = 10 + con
+                hd = "1d10"
+                savingthrows["str"] = ((str - 10) / 2) + pb
+                savingthrows["dex"] = ((dex - 10) / 2) + pb
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = (wis - 10) / 2
+                savingthrows["cha"] = (cha - 10) / 2
+                proficiencies = append(proficiencies,
+                    "light armor", "medium armor", "shields", "simple weapons",
+                    "martial weapons")
+            case 8:
+                dex = abilities[0]
+                cha = abilities[1]
+                con = abilities[2]
+                intel = abilities[3]
+                wis = abilities[4]
+                str = abilities[5]
+                pb = 2
+                hp = 8 + con
+                hd = "1d8"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = ((dex - 10) / 2) + pb
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = ((intel - 10) / 2) + pb
+                savingthrows["wis"] = (wis - 10) / 2
+                savingthrows["cha"] = (cha - 10) / 2
+                proficiencies = append(proficiencies,
+                    "light armor", "simple weapons", "hand crossbows", "longswords",
+                    "rapiers", "shortswords", "thieves tools")
+            case 9:
+                cha = abilities[0]
+                con = abilities[1]
+                intel = abilities[2]
+                dex = abilities[3]
+                wis = abilities[4]
+                str = abilities[5]
+                pb = 2
+                hp = 6 + con
+                hd = "1d6"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = ((con - 10) / 2) + pb
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = (wis - 10) / 2
+                savingthrows["cha"] = ((cha - 10) / 2) + pb
+                proficiencies = append(proficiencies,
+                    "daggers", "darts", "slings", "quarterstaffs",
+                    "light crossbows")
+            case 10:
+                cha = abilities[0]
+                con = abilities[1]
+                dex = abilities[2]
+                intel = abilities[3]
+                wis = abilities[4]
+                str = abilities[5]
+                pb = 2
+                hp = 8 + con
+                hd = "1d8"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = (intel - 10) / 2
+                savingthrows["wis"] = ((wis - 10) / 2) + pb
+                savingthrows["cha"] = ((cha - 10) / 2) + pb
+                proficiencies = append(proficiencies,
+                    "light armor", "simple weapons")
+            case 11:
+                intel = abilities[0]
+                con = abilities[1]
+                dex = abilities[2]
+                cha = abilities[3]
+                wis = abilities[4]
+                str = abilities[5]
+                pb = 2
+                hp = 6 + con
+                hd = "1d6"
+                savingthrows["str"] = (str - 10) / 2
+                savingthrows["dex"] = (dex - 10) / 2
+                savingthrows["con"] = (con - 10) / 2
+                savingthrows["intel"] = ((intel - 10) / 2) + pb
+                savingthrows["wis"] = ((wis - 10) / 2) + pb
+                savingthrows["cha"] = (cha - 10) / 2
+                proficiencies = append(proficiencies,
+                    "daggers", "darts", "slings", "quarterstaffs", "light crossbows")
+            default:
+                return errors.New("Invalid value for classsel")
+            }
+            switch racesel {
+            case 0:
+                con += 2
+                speed = 25
+                size = 1
+                languages = append(languages, "Common", "Dwarvish")
+                proficiencies = append(proficiencies,
+                    "battleaxe", "handaxe", "light hammer", "warhammer",
+                    "smith tools", "brewer supplies", "mason tools")
+                resistances = append(resistances, "poison")
+                darkvision = true
+            case 1:
+                dex += 2
+                speed = 30
+                size = 1
+                languages = append(languages, "Common", "Elvish")
+                proficiencies = append(proficiencies, "perception")
+                resistances = append(resistances, "sleep")
+                darkvision = true
+            case 2:
+                dex += 2
+                speed = 25
+                size = 0
+                languages = append(languages, "Common", "Halfling")
+                darkvision = false
+                lucky = true
+                nimbleness = true
+                // brave
+            case 3:
+                str++
+                dex++
+                con++
+                intel++
+                wis++
+                cha++
+                speed = 30
+                size = 1
+                languages = append(languages, "Common") // 1 more language
+                darkvision = false
+            case 4:
+                str += 2
+                cha++
+                speed = 30
+                size = 1
+                // draconic ancestry
+                languages = append(languages, "Common", "Draconic")
+                darkvision = false
+            case 5:
+                intel += 2
+                speed = 25
+                size = 0
+                languages = append(languages, "Common", "Gnomish")
+                darkvision = true
+            case 6:
+                cha += 2
+                // two abilities +1
+                speed = 30
+                size = 1
+                // proficiency in 2 skills
+                languages = append(languages, "Common", "Elvish") // +1 language
+                resistances = append(resistances, "sleep")
+                darkvision = true
+            case 7:
+                str += 2
+                con++
+                speed = 30
+                size = 1
+                proficiencies = append(proficiencies, "intimidation")
+                languages = append(languages, "Common", "Orc")
+                darkvision = true
+            case 8:
+                intel++
+                cha += 2
+                speed = 30
+                size = 1
+                resistances = append(resistances, "fire")
+                languages = append(languages, "Common", "Infernal")
+                darkvision = true
+            default:
+                return errors.New("Invalid value for racesel")
+            }
+            creationsel = 0
+            creation = false
+            choices = true
+        }
+    } else if choices {
+        switch classsel {
+        case 0:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds (973)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 5 {
+                        option0 = 5
+                    }
+                case 1:
+                    option1++
+                    if option1 > 5 {
+                        option1 = 5
+                    }
+                case 2:
+                    option2++
+                    if option2 > 17 {
+                        option2 = 17
+                    }
+                case 3:
+                    option3++
+                    if option3 > 13 {
+                        option3 = 13
+                    }
+                default:
+                    return errors.New("Out of bounds (999)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 3 {
+                creationsel = 3
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 1:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                case 6:
+                    option6--
+                    if option6 < 0 {
+                        option6 = 0
+                    }
+                case 7:
+                    option7--
+                    if option7 < 0 {
+                        option7 = 0
+                    }
+                case 8:
+                    option8--
+                    if option8 < 0 {
+                        option8 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds (1067)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 9 {
+                        option0 = 9
+                    }
+                case 1:
+                    option1++
+                    if option1 > 9 {
+                        option1 = 9
+                    }
+                case 2:
+                    option2++
+                    if option2 > 9 {
+                        option2 = 9
+                    }
+                case 3:
+                    option3++
+                    if option3 > 17 {
+                        option3 = 17
+                    }
+                case 4:
+                    option4++
+                    if option4 > 17 {
+                        option4 = 17
+                    }
+                case 5:
+                    option5++
+                    if option5 > 17 {
+                        option5 = 17
+                    }
+                case 6:
+                    option6++
+                    if option6 > 15 {
+                        option6 = 15
+                    }
+                case 7:
+                    option7++
+                    if option7 > 1 {
+                        option7 = 1
+                    }
+                case 8:
+                    option8++
+                    if option8 > 9 {
+                        option8 = 9
+                    }
+                default:
+                    return errors.New("Out of bounds (1118)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 8 {
+                creationsel = 8
+            }
+            if option0 == option1 || option1 == option2 || option0 == option2 || option3 == option4 || option4 == option5 || option3 == option5 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 2:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds (1171)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 4 {
+                        option0 = 4
+                    }
+                case 1:
+                    option1++
+                    if option1 > 4 {
+                        option1 = 4
+                    }
+                case 2:
+                    option2++
+                    for _, prof := range proficiencies {
+                        if prof == "warhammer" || prof == "martial weapons" {
+                            if option2 > 1 {
+                                option2 = 1
+                            }
+                        } else {
+                            if option2 > 0 {
+                                option2 = 0
+                            }
+                        }
+                    }
+                case 3:
+                    option3++
+                    for _, prof := range proficiencies {
+                        if prof == "heavy armor" || prof == "all armor" {
+                            if option3 > 2 {
+                                option3 = 2
+                            }
+                        } else {
+                            if option3 > 1 {
+                                option3 = 1
+                            }
+                        }
+                    }
+                case 4:
+                    option4++
+                    if option4 > 14 {
+                        option4 = 14
+                    }
+                case 5:
+                    option5++
+                    if option5 > 1 {
+                        option5 = 1
+                    }
+                default:
+                    return errors.New("Out of bounds (1223)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 5 {
+                creationsel = 5
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 3:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1271)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 7 {
+                        option0 = 7
+                    }
+                case 1:
+                    option1++
+                    if option1 > 7 {
+                        option1 = 7
+                    }
+                case 2:
+                    option2++
+                    if option2 > 14 {
+                        option2 = 14
+                    }
+                case 3:
+                    option3++
+                    if option3 > 10 {
+                        option3 = 10
+                    }
+                default:
+                    log.Fatal("Out of bounds (1297)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 3 {
+                creationsel = 3
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 4:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1350)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 7 {
+                        option0 = 7
+                    }
+                case 1:
+                    option1++
+                    if option1 > 7 {
+                        option1 = 7
+                    }
+                case 2:
+                    option2++
+                    if option2 > 1 {
+                        option2 = 1
+                    }
+                case 3:
+                    option3++
+                    if option3 > 22 {
+                        option3 = 22
+                    }
+                case 4:
+                    option4++
+                    if option4 > 23 {
+                        option4 = 23
+                    }
+                case 5:
+                    option5++
+                    if option5 > 1 {
+                        option5 = 1
+                    }
+                case 6:
+                    option6++
+                    if option6 > 1 {
+                        option6 = 1
+                    }
+                default:
+                    log.Fatal("Out of bounds (1391)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 6 {
+                creationsel = 6
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 5:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 { option5 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1443)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 5 {
+                        option0 = 5
+                    }
+                case 1:
+                    option1++
+                    if option1 > 5 {
+                        option1 = 5
+                    }
+                case 2:
+                    option2++
+                    if option2 > 14 {
+                        option2 = 14
+                    }
+                case 3:
+                    option3++
+                    if option3 > 1 {
+                        option3 = 1
+                    }
+                default:
+                    log.Fatal("Out of bounds (1469)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 3 {
+                creationsel = 3
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 6:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1517)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 5 {
+                        option0 = 5
+                    }
+                case 1:
+                    option1++
+                    if option1 > 5 {
+                        option1 = 5
+                    }
+                case 2:
+                    option2++
+                    if option2 > 22 {
+                        option2 = 22
+                    }
+                case 3:
+                    option3++
+                    if option3 > 23 {
+                        option3 = 23
+                    }
+                case 4:
+                    option4++
+                    if option4 > 10 {
+                        option4 = 10
+                    }
+                case 5:
+                    option5++
+                    if option4 > 1 {
+                        option4 = 1
+                    }
+                default:
+                    log.Fatal("Out of bounds (1553)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 5 {
+                creationsel = 5
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 7:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1606)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 7 {
+                        option0 = 7
+                    }
+                case 1:
+                    option1++
+                    if option1 > 7 {
+                        option1 = 7
+                    }
+                case 2:
+                    option2++
+                    if option2 > 7 {
+                        option2 = 7
+                    }
+                case 3:
+                    option3++
+                    if option3 > 1 {
+                        option3 = 1
+                    }
+                case 4:
+                    option4++
+                    if option4 > 10 {
+                        option4 = 10
+                    }
+                case 5:
+                    option5++
+                    if option4 == 0 {
+                        if option5 > 0 {
+                            option5 = 0
+                        }
+                    } else {
+                        if option5 > 10 {
+                            option5 = 10
+                        }
+                    }
+                case 6:
+                    option6++
+                    if option6 > 1 {
+                        option6 = 1
+                    }
+                default:
+                    log.Fatal("Out of bounds (1653)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 3 {
+                creationsel = 3
+            }
+            if option0 == option1 || option1 == option2 || option0 == option2 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 8:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                case 6:
+                    option6--
+                    if option6 < 0 {
+                        option6 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1711)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 10 {
+                        option0 = 10
+                    }
+                case 1:
+                    option1++
+                    if option1 > 10 {
+                        option1 = 10
+                    }
+                case 2:
+                    option2++
+                    if option2 > 10 {
+                        option2 = 10
+                    }
+                case 3:
+                    option3++
+                    if option3 > 10 {
+                        option3 = 10
+                    }
+                case 4:
+                    option4++
+                    if option4 > 1 {
+                        option4 = 1
+                    }
+                case 5:
+                    option5++
+                    if option5 > 1 {
+                        option5 = 1
+                    }
+                case 6:
+                    option6++
+                    if option6 > 2 {
+                        option6 = 2
+                    }
+                default:
+                    log.Fatal("Out of bounds (1752)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 6 {
+                creationsel = 6
+            }
+            if option0 == option1 || option0 == option2 || option0 == option3 || option1 == option2 || option1 == option3 || option2 == option3 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 9:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1800)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 5 {
+                        option0 = 5
+                    }
+                case 1:
+                    option1++
+                    if option1 > 5 {
+                        option1 = 5
+                    }
+                case 2:
+                    option2++
+                    if option2 > 13 {
+                        option2 = 13
+                    }
+                case 3:
+                    option3++
+                    if option3 > 1 {
+                        option3 = 1
+                    }
+                case 4:
+                    option4++
+                    if option4 > 1 {
+                        option4 = 1
+                    }
+                default:
+                    log.Fatal("Out of bounds (1831)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 4 {
+                creationsel = 4
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 10:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1879)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 6 {
+                        option0 = 6
+                    }
+                case 1:
+                    option1++
+                    if option1 > 6 {
+                        option1 = 6
+                    }
+                case 2:
+                    option2++
+                    if option2 > 13 {
+                        option2 = 13
+                    }
+                case 3:
+                    option3++
+                    if option3 > 1 {
+                        option3 = 1
+                    }
+                case 4:
+                    option4++
+                    if option4 > 1 {
+                        option4 = 1
+                    }
+                default:
+                    log.Fatal("Out of bounds (1910)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 4 {
+                creationsel = 4
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 11:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                default:
+                    log.Fatal("Out of bounds (1958)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 5 {
+                        option0 = 5
+                    }
+                case 1:
+                    option1++
+                    if option1 > 5 {
+                        option1 = 5
+                    }
+                case 2:
+                    option2++
+                    if option2 > 1 {
+                        option2 = 1
+                    }
+                case 3:
+                    option3++
+                    if option3 > 1 {
+                        option3 = 1
+                    }
+                case 4:
+                    option4++
+                    if option4 < 1 {
+                        option4 = 1
+                    }
+                default:
+                    log.Fatal("Out of bounds (1989)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 4 {
+                creationsel = 4
+            }
+            if option0 == option1 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        default:
+            return errors.New("Invalid value for classsel")
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            switch classsel {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            default:
+                return errors.New("Invalid value for classsel")
+            }
+            p.Stats = &player.Stats{
+                Str: str,
+                StrMod: (str - 10) / 2,
+                Dex: dex,
+                DexMod: (dex - 10) / 2,
+                Con: con,
+                ConMod: (con - 10) / 2,
+                Intel: intel,
+                IntelMod: (intel - 10) / 2,
+                Wis: wis,
+                WisMod: (wis - 10) / 2,
+                Cha: cha,
+                ChaMod: (cha - 10) / 2,
+                ProfBonus: pb,
+                MaxHP: hp,
+                HP: hp,
+                TempHP: 0,
+                HitDice: hd,
+                DeathSaveSucc: 0,
+                DeathSaveFail: 0,
+                Speed: speed,
+                Languages: languages,
+                Size: size,
+                Darkvision: darkvision,
+                Proficiencies: proficiencies,
+                Resistances: resistances,
+                Lucky: lucky,
+                Nimbleness: nimbleness,
+            }
+            p.Race = racemap[racesel]
+            p.Class = classmap[classsel]
+            //p.Background = backgroundmap[backgroundsel]
+            p.Level = 1
+            p.XP = 0
+            p.Equipment = &player.Equipment{}
+            choices = false
+            creation = false
         }
         return nil
     } else {
@@ -1005,6 +2562,1538 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 cutscene = false
             }
         }
+    } else if creation {
+        // character creation
+        text.Draw(screen, fmt.Sprintf("Name:       %s", name), fo, 64, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Race:       %s", racemap[racesel]), fo, 64, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Class:      %s", classmap[classsel]), fo, 64, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Background: %s", backgroundmap[backgroundsel]), fo, 64, 256, color.White)
+        switch creationsel {
+        case 0:
+            text.Draw(screen, ">", fo, 32, 128, color.White)
+        case 1:
+            text.Draw(screen, ">", fo, 32, 192, color.White)
+        case 2:
+            text.Draw(screen, ">", fo, 32, 256, color.White)
+        default:
+            log.Fatal("Out of bounds (Draw)")
+        }
+    } else if choices {
+        text.Draw(screen, fmt.Sprintf("Class: %s", classmap[classsel]), fo, 64, 32, color.White)
+        if dupwarning {
+            text.Draw(screen, "No duplicates allowed", fo, 256, 512, color.RGBA{0xff, 0x0, 0x0, 0xff})
+        }
+        switch classsel {
+        case 0:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 496, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 496, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 496, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 496, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (2592)")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Animal Handling", fo, 512, 64, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 512, 64, color.White)
+            case 2:
+                text.Draw(screen, "Intimidation", fo, 512, 64, color.White)
+            case 3:
+                text.Draw(screen, "Nature", fo, 512, 64, color.White)
+            case 4:
+                text.Draw(screen, "Perception", fo, 512, 64, color.White)
+            case 5:
+                text.Draw(screen, "Survival", fo, 512, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (2604)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Animal Handling", fo, 512, 96, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 512, 96, color.White)
+            case 2:
+                text.Draw(screen, "Intimidation", fo, 512, 96, color.White)
+            case 3:
+                text.Draw(screen, "Nature", fo, 512, 96, color.White)
+            case 4:
+                text.Draw(screen, "Perception", fo, 512, 96, color.White)
+            case 5:
+                text.Draw(screen, "Survival", fo, 512, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (2620)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Greataxe", fo, 512, 160, color.White)
+            case 1:
+                text.Draw(screen, "Battleaxe", fo, 512, 160, color.White)
+            case 2:
+                text.Draw(screen, "Flail", fo, 512, 160, color.White)
+            case 3:
+                text.Draw(screen, "Glaive", fo, 512, 160, color.White)
+            case 4:
+                text.Draw(screen, "Greatsword", fo, 512, 160, color.White)
+            case 5:
+                text.Draw(screen, "Halberd", fo, 512, 160, color.White)
+            case 6:
+                text.Draw(screen, "Lance", fo, 512, 160, color.White)
+            case 7:
+                text.Draw(screen, "Longsword", fo, 512, 160, color.White)
+            case 8:
+                text.Draw(screen, "Maul", fo, 512, 160, color.White)
+            case 9:
+                text.Draw(screen, "Morningstar", fo, 512, 160, color.White)
+            case 10:
+                text.Draw(screen, "Pike", fo, 512, 160, color.White)
+            case 11:
+                text.Draw(screen, "Rapier", fo, 512, 160, color.White)
+            case 12:
+                text.Draw(screen, "Scimitar", fo, 512, 160, color.White)
+            case 13:
+                text.Draw(screen, "Shortsword", fo, 512, 160, color.White)
+            case 14:
+                text.Draw(screen, "Trident", fo, 512, 160, color.White)
+            case 15:
+                text.Draw(screen, "War pick", fo, 512, 160, color.White)
+            case 16:
+                text.Draw(screen, "Warhammer", fo, 512, 160, color.White)
+            case 17:
+                text.Draw(screen, "Whip", fo, 512, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (2660)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Two Handaxes", fo, 512, 192, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 512, 192, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 512, 192, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 512, 192, color.White)
+            case 4:
+                text.Draw(screen, "Javelin", fo, 512, 192, color.White)
+            case 5:
+                text.Draw(screen, "Light Hammer", fo, 512, 192, color.White)
+            case 6:
+                text.Draw(screen, "Mace", fo, 512, 192, color.White)
+            case 7:
+                text.Draw(screen, "Quarterstaff", fo, 512, 192, color.White)
+            case 8:
+                text.Draw(screen, "Sickle", fo, 512, 192, color.White)
+            case 9:
+                text.Draw(screen, "Spear", fo, 512, 192, color.White)
+            case 10:
+                text.Draw(screen, "Light Crossbow", fo, 512, 192, color.White)
+            case 11:
+                text.Draw(screen, "Dart", fo, 512, 192, color.White)
+            case 12:
+                text.Draw(screen, "Shortbow", fo, 512, 192, color.White)
+            case 13:
+                text.Draw(screen, "Sling", fo, 512, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (2692)")
+            }
+        case 1:
+            text.Draw(screen, "Instrument Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 192, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 320, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 496, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 496, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 496, 128, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 496, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 496, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 496, 256, color.White)
+            case 6:
+                text.Draw(screen, ">", fo, 496, 320, color.White)
+            case 7:
+                text.Draw(screen, ">", fo, 496, 352, color.White)
+            case 8:
+                text.Draw(screen, ">", fo, 496, 384, color.White)
+            default:
+                log.Fatal("Out of bounds (2592)")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Bagpipes", fo, 512, 64, color.White)
+            case 1:
+                text.Draw(screen, "Drum", fo, 512, 64, color.White)
+            case 2:
+                text.Draw(screen, "Dulcimer", fo, 512, 64, color.White)
+            case 3:
+                text.Draw(screen, "Flute", fo, 512, 64, color.White)
+            case 4:
+                text.Draw(screen, "Lute", fo, 512, 64, color.White)
+            case 5:
+                text.Draw(screen, "Lyre", fo, 512, 64, color.White)
+            case 6:
+                text.Draw(screen, "Horn", fo, 512, 64, color.White)
+            case 7:
+                text.Draw(screen, "Pan flute", fo, 512, 64, color.White)
+            case 8:
+                text.Draw(screen, "Shawm", fo, 512, 64, color.White)
+            case 9:
+                text.Draw(screen, "Viol", fo, 512, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (2720)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Bagpipes", fo, 512, 96, color.White)
+            case 1:
+                text.Draw(screen, "Drum", fo, 512, 96, color.White)
+            case 2:
+                text.Draw(screen, "Dulcimer", fo, 512, 96, color.White)
+            case 3:
+                text.Draw(screen, "Flute", fo, 512, 96, color.White)
+            case 4:
+                text.Draw(screen, "Lute", fo, 512, 96, color.White)
+            case 5:
+                text.Draw(screen, "Lyre", fo, 512, 96, color.White)
+            case 6:
+                text.Draw(screen, "Horn", fo, 512, 96, color.White)
+            case 7:
+                text.Draw(screen, "Pan flute", fo, 512, 96, color.White)
+            case 8:
+                text.Draw(screen, "Shawm", fo, 512, 96, color.White)
+            case 9:
+                text.Draw(screen, "Viol", fo, 512, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (2744)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Bagpipes", fo, 512, 128, color.White)
+            case 1:
+                text.Draw(screen, "Drum", fo, 512, 128, color.White)
+            case 2:
+                text.Draw(screen, "Dulcimer", fo, 512, 128, color.White)
+            case 3:
+                text.Draw(screen, "Flute", fo, 512, 128, color.White)
+            case 4:
+                text.Draw(screen, "Lute", fo, 512, 128, color.White)
+            case 5:
+                text.Draw(screen, "Lyre", fo, 512, 128, color.White)
+            case 6:
+                text.Draw(screen, "Horn", fo, 512, 128, color.White)
+            case 7:
+                text.Draw(screen, "Pan flute", fo, 512, 128, color.White)
+            case 8:
+                text.Draw(screen, "Shawm", fo, 512, 128, color.White)
+            case 9:
+                text.Draw(screen, "Viol", fo, 512, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (2768)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 512, 192, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 512, 192, color.White)
+            case 2:
+                text.Draw(screen, "Arcana", fo, 512, 192, color.White)
+            case 3:
+                text.Draw(screen, "Athletics", fo, 512, 192, color.White)
+            case 4:
+                text.Draw(screen, "Deception", fo, 512, 192, color.White)
+            case 5:
+                text.Draw(screen, "History", fo, 512, 192, color.White)
+            case 6:
+                text.Draw(screen, "Insight", fo, 512, 192, color.White)
+            case 7:
+                text.Draw(screen, "Intimidation", fo, 512, 192, color.White)
+            case 8:
+                text.Draw(screen, "Investigation", fo, 512, 192, color.White)
+            case 9:
+                text.Draw(screen, "Medicine", fo, 512, 192, color.White)
+            case 10:
+                text.Draw(screen, "Nature", fo, 512, 192, color.White)
+            case 11:
+                text.Draw(screen, "Perception", fo, 512, 192, color.White)
+            case 12:
+                text.Draw(screen, "Performance", fo, 512, 192, color.White)
+            case 13:
+                text.Draw(screen, "Persuasion", fo, 512, 192, color.White)
+            case 14:
+                text.Draw(screen, "Religion", fo, 512, 192, color.White)
+            case 15:
+                text.Draw(screen, "Sleight of Hand", fo, 512, 192, color.White)
+            case 16:
+                text.Draw(screen, "Stealth", fo, 512, 192, color.White)
+            case 17:
+                text.Draw(screen, "Acrobics", fo, 512, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (2808)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 512, 224, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 512, 224, color.White)
+            case 2:
+                text.Draw(screen, "Arcana", fo, 512, 224, color.White)
+            case 3:
+                text.Draw(screen, "Athletics", fo, 512, 224, color.White)
+            case 4:
+                text.Draw(screen, "Deception", fo, 512, 224, color.White)
+            case 5:
+                text.Draw(screen, "History", fo, 512, 224, color.White)
+            case 6:
+                text.Draw(screen, "Insight", fo, 512, 224, color.White)
+            case 7:
+                text.Draw(screen, "Intimidation", fo, 512, 224, color.White)
+            case 8:
+                text.Draw(screen, "Investigation", fo, 512, 224, color.White)
+            case 9:
+                text.Draw(screen, "Medicine", fo, 512, 224, color.White)
+            case 10:
+                text.Draw(screen, "Nature", fo, 512, 224, color.White)
+            case 11:
+                text.Draw(screen, "Perception", fo, 512, 224, color.White)
+            case 12:
+                text.Draw(screen, "Performance", fo, 512, 224, color.White)
+            case 13:
+                text.Draw(screen, "Persuasion", fo, 512, 224, color.White)
+            case 14:
+                text.Draw(screen, "Religion", fo, 512, 224, color.White)
+            case 15:
+                text.Draw(screen, "Sleight of Hand", fo, 512, 224, color.White)
+            case 16:
+                text.Draw(screen, "Stealth", fo, 512, 224, color.White)
+            case 17:
+                text.Draw(screen, "Acrobics", fo, 512, 224, color.White)
+            default:
+                log.Fatal("Out of bounds (2848)")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 512, 256, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 512, 256, color.White)
+            case 2:
+                text.Draw(screen, "Arcana", fo, 512, 256, color.White)
+            case 3:
+                text.Draw(screen, "Athletics", fo, 512, 256, color.White)
+            case 4:
+                text.Draw(screen, "Deception", fo, 512, 256, color.White)
+            case 5:
+                text.Draw(screen, "History", fo, 512, 256, color.White)
+            case 6:
+                text.Draw(screen, "Insight", fo, 512, 256, color.White)
+            case 7:
+                text.Draw(screen, "Intimidation", fo, 512, 256, color.White)
+            case 8:
+                text.Draw(screen, "Investigation", fo, 512, 256, color.White)
+            case 9:
+                text.Draw(screen, "Medicine", fo, 512, 256, color.White)
+            case 10:
+                text.Draw(screen, "Nature", fo, 512, 256, color.White)
+            case 11:
+                text.Draw(screen, "Perception", fo, 512, 256, color.White)
+            case 12:
+                text.Draw(screen, "Performance", fo, 512, 256, color.White)
+            case 13:
+                text.Draw(screen, "Persuasion", fo, 512, 256, color.White)
+            case 14:
+                text.Draw(screen, "Religion", fo, 512, 256, color.White)
+            case 15:
+                text.Draw(screen, "Sleight of Hand", fo, 512, 256, color.White)
+            case 16:
+                text.Draw(screen, "Stealth", fo, 512, 256, color.White)
+            case 17:
+                text.Draw(screen, "Acrobics", fo, 512, 256, color.White)
+            default:
+                log.Fatal("Out of bounds (2888)")
+            }
+            switch option6 {
+            case 0:
+                text.Draw(screen, "Rapier", fo, 512, 320, color.White)
+            case 1:
+                text.Draw(screen, "Longsword", fo, 512, 320, color.White)
+            case 2:
+                text.Draw(screen, "Club", fo, 512, 320, color.White)
+            case 3:
+                text.Draw(screen, "Dagger", fo, 512, 320, color.White)
+            case 4:
+                text.Draw(screen, "Greatclub", fo, 512, 320, color.White)
+            case 5:
+                text.Draw(screen, "Handaxe", fo, 512, 320, color.White)
+            case 6:
+                text.Draw(screen, "Javelin", fo, 512, 320, color.White)
+            case 7:
+                text.Draw(screen, "Light hammer", fo, 512, 320, color.White)
+            case 8:
+                text.Draw(screen, "Mace", fo, 512, 320, color.White)
+            case 9:
+                text.Draw(screen, "Quarterstaff", fo, 512, 320, color.White)
+            case 10:
+                text.Draw(screen, "Sickle", fo, 512, 320, color.White)
+            case 11:
+                text.Draw(screen, "Spear", fo, 512, 320, color.White)
+            case 12:
+                text.Draw(screen, "Light crossbow", fo, 512, 320, color.White)
+            case 13:
+                text.Draw(screen, "Dart", fo, 512, 320, color.White)
+            case 14:
+                text.Draw(screen, "Shortbow", fo, 512, 320, color.White)
+            case 15:
+                text.Draw(screen, "Sling", fo, 512, 320, color.White)
+            default:
+                log.Fatal("Out of bounds (2924)")
+            }
+            switch option7 {
+            case 0:
+                text.Draw(screen, "Diplomat's Pack", fo, 512, 352, color.White)
+            case 1:
+                text.Draw(screen, "Entertainer's Pack", fo, 512, 352, color.White)
+            default:
+                log.Fatal("Out of bounds (2932)")
+            }
+            switch option8 {
+            case 0:
+                text.Draw(screen, "Bagpipes", fo, 512, 384, color.White)
+            case 1:
+                text.Draw(screen, "Drum", fo, 512, 384, color.White)
+            case 2:
+                text.Draw(screen, "Dulcimer", fo, 512, 384, color.White)
+            case 3:
+                text.Draw(screen, "Flute", fo, 512, 384, color.White)
+            case 4:
+                text.Draw(screen, "Lute", fo, 512, 384, color.White)
+            case 5:
+                text.Draw(screen, "Lyre", fo, 512, 384, color.White)
+            case 6:
+                text.Draw(screen, "Horn", fo, 512, 384, color.White)
+            case 7:
+                text.Draw(screen, "Pan flute", fo, 512, 384, color.White)
+            case 8:
+                text.Draw(screen, "Shawm", fo, 512, 384, color.White)
+            case 9:
+                text.Draw(screen, "Viol", fo, 512, 384, color.White)
+            default:
+                log.Fatal("Out of bounds (2956)")
+            }
+        case 2:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "History", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Medicine", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Persuasion", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (2973)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "History", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Medicine", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Persuasion", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (2987)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Mace", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Warhammer", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (2995)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Scale mail", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Leather armor", fo, 128, 160, color.White)
+            case 2:
+                text.Draw(screen, "Chain mail", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3005)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Light crossbow", fo, 128, 192, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 192, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 192, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 192, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 192, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 192, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 192, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 192, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 192, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 192, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 192, color.White)
+            case 11:
+                text.Draw(screen, "Dart", fo, 128, 192, color.White)
+            case 12:
+                text.Draw(screen, "Shortbow", fo, 128, 192, color.White)
+            case 13:
+                text.Draw(screen, "Sling", fo, 128, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (3037)")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Priest's Pack", fo, 128, 224, color.White)
+            case 1:
+                text.Draw(screen, "Explorer's Pack", fo, 128, 224, color.White)
+            default:
+                log.Fatal("Out of bounds (3045)")
+            }
+        case 3:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Medicine", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Nature", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Perception", fo, 128, 64, color.White)
+            case 6:
+                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+            case 7:
+                text.Draw(screen, "Survival", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3068)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Medicine", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Nature", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Perception", fo, 128, 96, color.White)
+            case 6:
+                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+            case 7:
+                text.Draw(screen, "Survival", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3088)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Wooden shield", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 128, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 128, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 128, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 128, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 128, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 128, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 128, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 128, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 128, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 128, color.White)
+            case 11:
+                text.Draw(screen, "Light crossbow", fo, 128, 128, color.White)
+            case 12:
+                text.Draw(screen, "Dart", fo, 128, 128, color.White)
+            case 13:
+                text.Draw(screen, "Shortbow", fo, 128, 128, color.White)
+            case 14:
+                text.Draw(screen, "Sling", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3122)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Scimitar", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 160, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 160, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 160, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 160, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 160, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 160, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 160, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 160, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 160, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3148)")
+            }
+        case 4:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Athletics", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "History", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Intimidation", fo, 128, 64, color.White)
+            case 6:
+                text.Draw(screen, "Perception", fo, 128, 64, color.White)
+            case 7:
+                text.Draw(screen, "Survival", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3171)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Athletics", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "History", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Intimidation", fo, 128, 96, color.White)
+            case 6:
+                text.Draw(screen, "Perception", fo, 128, 96, color.White)
+            case 7:
+                text.Draw(screen, "Survival", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3191)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Chain mail", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Leather armor + longbow", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3199)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Battleaxe", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Flail", fo, 128, 160, color.White)
+            case 2:
+                text.Draw(screen, "Glaive", fo, 128, 160, color.White)
+            case 3:
+                text.Draw(screen, "Greataxe", fo, 128, 160, color.White)
+            case 4:
+                text.Draw(screen, "Greatsword", fo, 128, 160, color.White)
+            case 5:
+                text.Draw(screen, "Halberd", fo, 128, 160, color.White)
+            case 6:
+                text.Draw(screen, "Lance", fo, 128, 160, color.White)
+            case 7:
+                text.Draw(screen, "Longsword", fo, 128, 160, color.White)
+            case 8:
+                text.Draw(screen, "Maul", fo, 128, 160, color.White)
+            case 9:
+                text.Draw(screen, "Morningstar", fo, 128, 160, color.White)
+            case 10:
+                text.Draw(screen, "Pike", fo, 128, 160, color.White)
+            case 11:
+                text.Draw(screen, "Rapier", fo, 128, 160, color.White)
+            case 12:
+                text.Draw(screen, "Scimitar", fo, 128, 160, color.White)
+            case 13:
+                text.Draw(screen, "Shortsword", fo, 128, 160, color.White)
+            case 14:
+                text.Draw(screen, "Trident", fo, 128, 160, color.White)
+            case 15:
+                text.Draw(screen, "War pick", fo, 128, 160, color.White)
+            case 16:
+                text.Draw(screen, "Warhammer", fo, 128, 160, color.White)
+            case 17:
+                text.Draw(screen, "Whip", fo, 128, 160, color.White)
+            case 18:
+                text.Draw(screen, "Blowgun", fo, 128, 160, color.White)
+            case 19:
+                text.Draw(screen, "Hand crossbow", fo, 128, 160, color.White)
+            case 20:
+                text.Draw(screen, "Heavy crossbow", fo, 128, 160, color.White)
+            case 21:
+                text.Draw(screen, "Longbow", fo, 128, 160, color.White)
+            case 22:
+                text.Draw(screen, "Net", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3249)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Shield", fo, 128, 192, color.White)
+            case 1:
+                text.Draw(screen, "Battleaxe", fo, 128, 192, color.White)
+            case 2:
+                text.Draw(screen, "Flail", fo, 128, 192, color.White)
+            case 3:
+                text.Draw(screen, "Glaive", fo, 128, 192, color.White)
+            case 4:
+                text.Draw(screen, "Greataxe", fo, 128, 192, color.White)
+            case 5:
+                text.Draw(screen, "Greatsword", fo, 128, 192, color.White)
+            case 6:
+                text.Draw(screen, "Halberd", fo, 128, 192, color.White)
+            case 7:
+                text.Draw(screen, "Lance", fo, 128, 192, color.White)
+            case 8:
+                text.Draw(screen, "Longsword", fo, 128, 192, color.White)
+            case 9:
+                text.Draw(screen, "Maul", fo, 128, 192, color.White)
+            case 10:
+                text.Draw(screen, "Morningstar", fo, 128, 192, color.White)
+            case 11:
+                text.Draw(screen, "Pike", fo, 128, 192, color.White)
+            case 12:
+                text.Draw(screen, "Rapier", fo, 128, 192, color.White)
+            case 13:
+                text.Draw(screen, "Scimitar", fo, 128, 192, color.White)
+            case 14:
+                text.Draw(screen, "Shortsword", fo, 128, 192, color.White)
+            case 15:
+                text.Draw(screen, "Trident", fo, 128, 192, color.White)
+            case 16:
+                text.Draw(screen, "War pick", fo, 128, 192, color.White)
+            case 17:
+                text.Draw(screen, "Warhammer", fo, 128, 192, color.White)
+            case 18:
+                text.Draw(screen, "Whip", fo, 128, 192, color.White)
+            case 19:
+                text.Draw(screen, "Blowgun", fo, 128, 192, color.White)
+            case 20:
+                text.Draw(screen, "Hand crossbow", fo, 128, 192, color.White)
+            case 21:
+                text.Draw(screen, "Heavy crossbow", fo, 128, 192, color.White)
+            case 22:
+                text.Draw(screen, "Longbow", fo, 128, 192, color.White)
+            case 23:
+                text.Draw(screen, "Net", fo, 128, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (3301)")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Light crossbow", fo, 128, 224, color.White)
+            case 1:
+                text.Draw(screen, "Two handaxes", fo, 128, 224, color.White)
+            default:
+                log.Fatal("Out of bounds (3309)")
+            }
+            switch option6 {
+            case 0:
+                text.Draw(screen, "Dungeoneer's Pack", fo, 128, 256, color.White)
+            case 1:
+                text.Draw(screen, "Explorer's Pack", fo, 128, 256, color.White)
+            default:
+                log.Fatal("Out of bounds (3317)")
+            }
+        case 5:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "History", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Stealth", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3336)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "History", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Stealth", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3352)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Shortsword", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 128, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 128, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 128, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 128, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 128, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 128, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 128, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 128, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 128, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 128, color.White)
+            case 11:
+                text.Draw(screen, "Light crossbow", fo, 128, 128, color.White)
+            case 12:
+                text.Draw(screen, "Dart", fo, 128, 128, color.White)
+            case 13:
+                text.Draw(screen, "Shortbow", fo, 128, 128, color.White)
+            case 14:
+                text.Draw(screen, "Sling", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3386)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Dungeoneer's Pack", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Explorer's Pack", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3394)")
+            }
+        case 6:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Athletics", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Intimidation", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Medicine", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Persuasion", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3413)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Athletics", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Intimidation", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Medicine", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Persuasion", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3429)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Battleaxe", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Flail", fo, 128, 128, color.White)
+            case 2:
+                text.Draw(screen, "Glaive", fo, 128, 128, color.White)
+            case 3:
+                text.Draw(screen, "Greataxe", fo, 128, 128, color.White)
+            case 4:
+                text.Draw(screen, "Greatsword", fo, 128, 128, color.White)
+            case 5:
+                text.Draw(screen, "Halberd", fo, 128, 128, color.White)
+            case 6:
+                text.Draw(screen, "Lance", fo, 128, 128, color.White)
+            case 7:
+                text.Draw(screen, "Longsword", fo, 128, 128, color.White)
+            case 8:
+                text.Draw(screen, "Maul", fo, 128, 128, color.White)
+            case 9:
+                text.Draw(screen, "Morningstar", fo, 128, 128, color.White)
+            case 10:
+                text.Draw(screen, "Pike", fo, 128, 128, color.White)
+            case 11:
+                text.Draw(screen, "Rapier", fo, 128, 128, color.White)
+            case 12:
+                text.Draw(screen, "Scimitar", fo, 128, 128, color.White)
+            case 13:
+                text.Draw(screen, "Shortsword", fo, 128, 128, color.White)
+            case 14:
+                text.Draw(screen, "Trident", fo, 128, 128, color.White)
+            case 15:
+                text.Draw(screen, "War pick", fo, 128, 128, color.White)
+            case 16:
+                text.Draw(screen, "Warhammer", fo, 128, 128, color.White)
+            case 17:
+                text.Draw(screen, "Whip", fo, 128, 128, color.White)
+            case 18:
+                text.Draw(screen, "Blowgun", fo, 128, 128, color.White)
+            case 19:
+                text.Draw(screen, "Hand crossbow", fo, 128, 128, color.White)
+            case 20:
+                text.Draw(screen, "Heavy crossbow", fo, 128, 128, color.White)
+            case 21:
+                text.Draw(screen, "Longbow", fo, 128, 128, color.White)
+            case 22:
+                text.Draw(screen, "Net", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3479)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Shield", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Battleaxe", fo, 128, 160, color.White)
+            case 2:
+                text.Draw(screen, "Flail", fo, 128, 160, color.White)
+            case 3:
+                text.Draw(screen, "Glaive", fo, 128, 160, color.White)
+            case 4:
+                text.Draw(screen, "Greataxe", fo, 128, 160, color.White)
+            case 5:
+                text.Draw(screen, "Greatsword", fo, 128, 160, color.White)
+            case 6:
+                text.Draw(screen, "Halberd", fo, 128, 160, color.White)
+            case 7:
+                text.Draw(screen, "Lance", fo, 128, 160, color.White)
+            case 8:
+                text.Draw(screen, "Longsword", fo, 128, 160, color.White)
+            case 9:
+                text.Draw(screen, "Maul", fo, 128, 160, color.White)
+            case 10:
+                text.Draw(screen, "Morningstar", fo, 128, 160, color.White)
+            case 11:
+                text.Draw(screen, "Pike", fo, 128, 160, color.White)
+            case 12:
+                text.Draw(screen, "Rapier", fo, 128, 160, color.White)
+            case 13:
+                text.Draw(screen, "Scimitar", fo, 128, 160, color.White)
+            case 14:
+                text.Draw(screen, "Shortsword", fo, 128, 160, color.White)
+            case 15:
+                text.Draw(screen, "Trident", fo, 128, 160, color.White)
+            case 16:
+                text.Draw(screen, "War pick", fo, 128, 160, color.White)
+            case 17:
+                text.Draw(screen, "Warhammer", fo, 128, 160, color.White)
+            case 18:
+                text.Draw(screen, "Whip", fo, 128, 160, color.White)
+            case 19:
+                text.Draw(screen, "Blowgun", fo, 128, 160, color.White)
+            case 20:
+                text.Draw(screen, "Hand crossbow", fo, 128, 160, color.White)
+            case 21:
+                text.Draw(screen, "Heavy crossbow", fo, 128, 160, color.White)
+            case 22:
+                text.Draw(screen, "Longbow", fo, 128, 160, color.White)
+            case 23:
+                text.Draw(screen, "Net", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3531)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Five javelins", fo, 128, 192, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 192, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 192, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 192, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 192, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 192, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 192, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 192, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 192, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 192, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (3557)")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Priest's Pack", fo, 128, 224, color.White)
+            case 1:
+                text.Draw(screen, "Explorer's Pack", fo, 128, 224, color.White)
+            default:
+                log.Fatal("Out of bounds (3565)")
+            }
+        case 7:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Animal Handling", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Investigation", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Nature", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Perception", fo, 128, 64, color.White)
+            case 6:
+                text.Draw(screen, "Stealth", fo, 128, 64, color.White)
+            case 7:
+                text.Draw(screen, "Survival", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3588)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Animal Handling", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Investigation", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Nature", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Perception", fo, 128, 96, color.White)
+            case 6:
+                text.Draw(screen, "Stealth", fo, 128, 96, color.White)
+            case 7:
+                text.Draw(screen, "Survival", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3608)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Animal Handling", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 128, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 128, color.White)
+            case 3:
+                text.Draw(screen, "Investigation", fo, 128, 128, color.White)
+            case 4:
+                text.Draw(screen, "Nature", fo, 128, 128, color.White)
+            case 5:
+                text.Draw(screen, "Perception", fo, 128, 128, color.White)
+            case 6:
+                text.Draw(screen, "Stealth", fo, 128, 128, color.White)
+            case 7:
+                text.Draw(screen, "Survival", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3628)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Scale mail", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Leather armor", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3636)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Shortsword", fo, 128, 192, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 192, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 192, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 192, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 192, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 192, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 192, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 192, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 192, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 192, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (3662)")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Shortsword", fo, 128, 224, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 224, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 224, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 224, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 224, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 224, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 224, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 224, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 224, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 224, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 224, color.White)
+            default:
+                log.Fatal("Out of bounds (3688)")
+            }
+            switch option6 {
+            case 0:
+                text.Draw(screen, "Dungeoneer's Pack", fo, 128, 256, color.White)
+            case 1:
+                text.Draw(screen, "Explorer's Pack", fo, 128, 256, color.White)
+            default:
+                log.Fatal("Out of bounds (3696)")
+            }
+        case 8:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 192, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Deception", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Intimidation", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Investigation", fo, 128, 64, color.White)
+            case 6:
+                text.Draw(screen, "Perception", fo, 128, 64, color.White)
+            case 7:
+                text.Draw(screen, "Performance", fo, 128, 64, color.White)
+            case 8:
+                text.Draw(screen, "Persuasion", fo, 128, 64, color.White)
+            case 9:
+                text.Draw(screen, "Sleight of Hand", fo, 128, 64, color.White)
+            case 10:
+                text.Draw(screen, "Stealth", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3725)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Deception", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Intimidation", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Investigation", fo, 128, 96, color.White)
+            case 6:
+                text.Draw(screen, "Perception", fo, 128, 96, color.White)
+            case 7:
+                text.Draw(screen, "Performance", fo, 128, 96, color.White)
+            case 8:
+                text.Draw(screen, "Persuasion", fo, 128, 96, color.White)
+            case 9:
+                text.Draw(screen, "Sleight of Hand", fo, 128, 96, color.White)
+            case 10:
+                text.Draw(screen, "Stealth", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3751)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 128, color.White)
+            case 2:
+                text.Draw(screen, "Deception", fo, 128, 128, color.White)
+            case 3:
+                text.Draw(screen, "Insight", fo, 128, 128, color.White)
+            case 4:
+                text.Draw(screen, "Intimidation", fo, 128, 128, color.White)
+            case 5:
+                text.Draw(screen, "Investigation", fo, 128, 128, color.White)
+            case 6:
+                text.Draw(screen, "Perception", fo, 128, 128, color.White)
+            case 7:
+                text.Draw(screen, "Performance", fo, 128, 128, color.White)
+            case 8:
+                text.Draw(screen, "Persuasion", fo, 128, 128, color.White)
+            case 9:
+                text.Draw(screen, "Sleight of Hand", fo, 128, 128, color.White)
+            case 10:
+                text.Draw(screen, "Stealth", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3777)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Athletics", fo, 128, 160, color.White)
+            case 2:
+                text.Draw(screen, "Deception", fo, 128, 160, color.White)
+            case 3:
+                text.Draw(screen, "Insight", fo, 128, 160, color.White)
+            case 4:
+                text.Draw(screen, "Intimidation", fo, 128, 160, color.White)
+            case 5:
+                text.Draw(screen, "Investigation", fo, 128, 160, color.White)
+            case 6:
+                text.Draw(screen, "Perception", fo, 128, 160, color.White)
+            case 7:
+                text.Draw(screen, "Performance", fo, 128, 160, color.White)
+            case 8:
+                text.Draw(screen, "Persuasion", fo, 128, 160, color.White)
+            case 9:
+                text.Draw(screen, "Sleight of Hand", fo, 128, 160, color.White)
+            case 10:
+                text.Draw(screen, "Stealth", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3803)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Rapier", fo, 128, 192, color.White)
+            case 1:
+                text.Draw(screen, "Shortsword", fo, 128, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (3811)")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Shortbow", fo, 128, 224, color.White)
+            case 1:
+                text.Draw(screen, "Shortsword", fo, 128, 224, color.White)
+            default:
+                log.Fatal("Out of bounds (3819)")
+            }
+            switch option6 {
+            case 0:
+                text.Draw(screen, "Burglar's Pack", fo, 128, 256, color.White)
+            case 1:
+                text.Draw(screen, "Dungeoneer's Pack", fo, 128, 256, color.White)
+            case 2:
+                text.Draw(screen, "Explorer's Pack", fo, 128, 256, color.White)
+            default:
+                log.Fatal("Out of bounds (3829)")
+            }
+        case 9:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Deception", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Intimidation", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Persuasion", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3848)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Deception", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Intimidation", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Persuasion", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3864)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Light crossbow", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 128, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 128, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 128, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 128, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 128, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 128, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 128, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 128, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 128, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 128, color.White)
+            case 11:
+                text.Draw(screen, "Dart", fo, 128, 128, color.White)
+            case 12:
+                text.Draw(screen, "Shortbow", fo, 128, 128, color.White)
+            case 13:
+                text.Draw(screen, "Sling", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3896)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Component pouch", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Arcane focus", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3904)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Dungeoneer's Pack", fo, 128, 192, color.White)
+            case 1:
+                text.Draw(screen, "Explorer's Pack", fo, 128, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (3912)")
+            }
+        case 10:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Deception", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "History", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Intimidation", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Investigation", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Nature", fo, 128, 64, color.White)
+            case 6:
+                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (3933)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "Deception", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "History", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Intimidation", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Investigation", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Nature", fo, 128, 96, color.White)
+            case 6:
+                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (3951)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Light crossbow", fo, 128, 128, color.White)
+            case 1:
+                text.Draw(screen, "Club", fo, 128, 128, color.White)
+            case 2:
+                text.Draw(screen, "Dagger", fo, 128, 128, color.White)
+            case 3:
+                text.Draw(screen, "Greatclub", fo, 128, 128, color.White)
+            case 4:
+                text.Draw(screen, "Handaxe", fo, 128, 128, color.White)
+            case 5:
+                text.Draw(screen, "Javelin", fo, 128, 128, color.White)
+            case 6:
+                text.Draw(screen, "Light hammer", fo, 128, 128, color.White)
+            case 7:
+                text.Draw(screen, "Mace", fo, 128, 128, color.White)
+            case 8:
+                text.Draw(screen, "Quarterstaff", fo, 128, 128, color.White)
+            case 9:
+                text.Draw(screen, "Sickle", fo, 128, 128, color.White)
+            case 10:
+                text.Draw(screen, "Spear", fo, 128, 128, color.White)
+            case 11:
+                text.Draw(screen, "Dart", fo, 128, 128, color.White)
+            case 12:
+                text.Draw(screen, "Shortbow", fo, 128, 128, color.White)
+            case 13:
+                text.Draw(screen, "Sling", fo, 128, 128, color.White)
+            default:
+                log.Fatal("Out of bounds (3983)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Component pouch", fo, 128, 160, color.White)
+            case 1:
+                text.Draw(screen, "Arcane focus", fo, 128, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (3991)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Scholar's Pack", fo, 128, 192, color.White)
+            case 1:
+                text.Draw(screen, "Dungeoneer's Pack", fo, 128, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (3999)")
+            }
+        case 11:
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "History", fo, 128, 64, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+            case 3:
+                text.Draw(screen, "Investigation", fo, 128, 64, color.White)
+            case 4:
+                text.Draw(screen, "Medicine", fo, 128, 64, color.White)
+            case 5:
+                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (4018)")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Arcana", fo, 128, 96, color.White)
+            case 1:
+                text.Draw(screen, "History", fo, 128, 96, color.White)
+            case 2:
+                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+            case 3:
+                text.Draw(screen, "Investigation", fo, 128, 96, color.White)
+            case 4:
+                text.Draw(screen, "Medicine", fo, 128, 96, color.White)
+            case 5:
+                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (4034)")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Quarterstaff", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Dagger", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (4042)")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Component pouch", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Arcane focus", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (4050)")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Scholar's pack", fo, 128, 64, color.White)
+            case 1:
+                text.Draw(screen, "Explorer's pack", fo, 128, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (4058)")
+            }
+        default:
+            log.Fatal("Out of bounds (Draw choices)")
+        }
     } else if l != nil {
         lgm := ebiten.GeoM{}
         lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
@@ -1386,6 +4475,46 @@ func init() {
     if err != nil {
         log.Fatal(err)
     }
+
+    racemap[0] = "Dwarf"
+    racemap[1] = "Elf"
+    racemap[2] = "Halfling"
+    racemap[3] = "Human"
+    racemap[4] = "Dragonborn"
+    racemap[5] = "Gnome"
+    racemap[6] = "Half-Elf"
+    racemap[7] = "Half-Orc"
+    racemap[8] = "Tiefling"
+
+    classmap[0] = "Barbarian"
+    classmap[1] = "Bard"
+    classmap[2] = "Cleric"
+    classmap[3] = "Druid"
+    classmap[4] = "Fighter"
+    classmap[5] = "Monk"
+    classmap[6] = "Paladin"
+    classmap[7] = "Ranger"
+    classmap[8] = "Rogue"
+    classmap[9] = "Sorceror"
+    classmap[10] = "Warlock"
+    classmap[11] = "Wizard"
+
+    backgroundmap[0] = "Acolyte"
+    backgroundmap[1] = "Charlatan"
+    backgroundmap[2] = "Criminal"
+    backgroundmap[3] = "Entertainer"
+    backgroundmap[4] = "Folk Hero"
+    backgroundmap[5] = "Guild Artisan"
+    backgroundmap[6] = "Hermit"
+    backgroundmap[7] = "Noble"
+    backgroundmap[8] = "Outlander"
+    backgroundmap[9] = "Sage"
+    backgroundmap[10] = "Sailor"
+    backgroundmap[11] = "Soldier"
+    backgroundmap[12] = "Urchin"
+
+    equipmentmap[0] = "Pack 1"
+    equipmentmap[1] = "Pack 2"
 
     savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
