@@ -39,6 +39,7 @@ type Stats struct {
     Resistances []string
     Lucky bool
     Nimbleness bool
+    Brave bool
 }
 
 type Equipment struct {

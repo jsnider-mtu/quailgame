@@ -141,6 +141,7 @@ var (
     darkvision bool = false
     lucky bool = false
     nimbleness bool = false
+    brave bool = false
 )
 
 var racemap = make(map[int]string)
@@ -872,7 +873,7 @@ func (g *Game) Update() error {
                 darkvision = false
                 lucky = true
                 nimbleness = true
-                // brave
+                brave = true
             case 3:
                 str++
                 dex++
@@ -2081,6 +2082,7 @@ func (g *Game) Update() error {
                 Resistances: resistances,
                 Lucky: lucky,
                 Nimbleness: nimbleness,
+                Brave: brave,
             }
             p.Race = racemap[racesel]
             p.Class = classmap[classsel]
