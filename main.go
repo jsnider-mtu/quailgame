@@ -547,6 +547,12 @@ func (g *Game) Update() error {
         }
         return nil
     } else if creation {
+        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+            creationsel = 0
+            choices = false
+            creation = false
+            start = true
+        }
         // character creation
         if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
             creationsel--
@@ -939,6 +945,11 @@ func (g *Game) Update() error {
             choices = true
         }
     } else if choices {
+        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+            creationsel = 0
+            choices = false
+            creation = true
+        }
         switch classsel {
         case 0:
             if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
