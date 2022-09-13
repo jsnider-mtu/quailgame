@@ -2028,7 +2028,7 @@ func (g *Game) Update() error {
                     }
                 case 4:
                     option4++
-                    if option4 < 1 {
+                    if option4 > 1 {
                         option4 = 1
                     }
                 default:
@@ -4218,60 +4218,74 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         case 11:
             text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
-            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 224, color.White)
+            default:
+                log.Fatal("Out of bounds (2592)")
+            }
             switch option0 {
             case 0:
-                text.Draw(screen, "Arcana", fo, 128, 64, color.White)
+                text.Draw(screen, "Arcana", fo, 448, 64, color.White)
             case 1:
-                text.Draw(screen, "History", fo, 128, 64, color.White)
+                text.Draw(screen, "History", fo, 448, 64, color.White)
             case 2:
-                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+                text.Draw(screen, "Insight", fo, 448, 64, color.White)
             case 3:
-                text.Draw(screen, "Investigation", fo, 128, 64, color.White)
+                text.Draw(screen, "Investigation", fo, 448, 64, color.White)
             case 4:
-                text.Draw(screen, "Medicine", fo, 128, 64, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 64, color.White)
             case 5:
-                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+                text.Draw(screen, "Religion", fo, 448, 64, color.White)
             default:
                 log.Fatal("Out of bounds (4018)")
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Arcana", fo, 128, 96, color.White)
+                text.Draw(screen, "Arcana", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "History", fo, 128, 96, color.White)
+                text.Draw(screen, "History", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+                text.Draw(screen, "Insight", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Investigation", fo, 128, 96, color.White)
+                text.Draw(screen, "Investigation", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Medicine", fo, 128, 96, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 96, color.White)
             case 5:
-                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+                text.Draw(screen, "Religion", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds (4034)")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Quarterstaff", fo, 128, 64, color.White)
+                text.Draw(screen, "Quarterstaff", fo, 448, 160, color.White)
             case 1:
-                text.Draw(screen, "Dagger", fo, 128, 64, color.White)
+                text.Draw(screen, "Dagger", fo, 448, 160, color.White)
             default:
                 log.Fatal("Out of bounds (4042)")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Component pouch", fo, 128, 64, color.White)
+                text.Draw(screen, "Component pouch", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Arcane focus", fo, 128, 64, color.White)
+                text.Draw(screen, "Arcane focus", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds (4050)")
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Scholar's pack", fo, 128, 64, color.White)
+                text.Draw(screen, "Scholar's pack", fo, 448, 224, color.White)
             case 1:
-                text.Draw(screen, "Explorer's pack", fo, 128, 64, color.White)
+                text.Draw(screen, "Explorer's pack", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds (4058)")
             }
