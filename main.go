@@ -946,6 +946,12 @@ func (g *Game) Update() error {
         }
     } else if choices {
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+            proficiencies = make([]string, 0)
+            resistances = make([]string, 0)
+            languages = make([]string, 0)
+            darkvision = false
+            lucky = false
+            nimbleness = false
             creationsel = 0
             choices = false
             creation = true
