@@ -127,35 +127,35 @@ var (
     option6 int = 0
     option7 int = 0
     option8 int = 0
+    str int
+    dex int
+    con int
+    intel int
+    wis int
+    cha int
+    pb int
+    hp int
+    hd string
+    speed int
+    size int // 0: Small, 1: Medium, 2: Large
+    darkvision bool = false
+    lucky bool = false
+    nimbleness bool = false
 )
 
 var racemap = make(map[int]string)
 var classmap = make(map[int]string)
 var backgroundmap = make(map[int]string)
 var equipmentmap = make(map[int]string)
+var abilities = make([]int, 6)
+var savingthrows = make(map[string]int)
+var languages = make([]string, 0)
+var proficiencies = make([]string, 0)
+var resistances = make([]string, 0)
 
 type Game struct {}
 
 func (g *Game) Update() error {
-    abilities := make([]int, 6)
-    var str int
-    var dex int
-    var con int
-    var intel int
-    var wis int
-    var cha int
-    var pb int
-    var hp int
-    var hd string
-    var speed int
-    var size int // 0: Small, 1: Medium, 2: Large
-    var languages = make([]string, 0)
-    var proficiencies = make([]string, 0)
-    var resistances = make([]string, 0)
-    var darkvision bool = false
-    var lucky bool = false
-    var nimbleness bool = false
-    var savingthrows = make(map[string]int)
     if start {
         if startanimdone {
             if findloads {
@@ -1186,15 +1186,21 @@ func (g *Game) Update() error {
                 case 2:
                     option2++
                     for _, prof := range proficiencies {
+                        fmt.Println(prof)
                         if prof == "warhammer" || prof == "martial weapons" {
                             if option2 > 1 {
                                 option2 = 1
                             }
-                        } else {
-                            if option2 > 0 {
-                                option2 = 0
-                            }
+                            return nil
                         }
+//                        } else {
+//                            if option2 > 0 {
+//                                option2 = 0
+//                            }
+//                        }
+                    }
+                    if option2 > 0 {
+                        option2 = 0
                     }
                 case 3:
                     option3++
@@ -1203,16 +1209,21 @@ func (g *Game) Update() error {
                             if option3 > 2 {
                                 option3 = 2
                             }
-                        } else {
-                            if option3 > 1 {
-                                option3 = 1
-                            }
+                            return nil
                         }
+//                        } else {
+//                            if option3 > 1 {
+//                                option3 = 1
+//                            }
+//                        }
+                    }
+                    if option3 > 1 {
+                        option3 = 1
                     }
                 case 4:
                     option4++
-                    if option4 > 14 {
-                        option4 = 14
+                    if option4 > 13 {
+                        option4 = 13
                     }
                 case 5:
                     option5++
@@ -2991,90 +3002,106 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         case 2:
             text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
-            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 496, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 496, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 496, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 496, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 496, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 496, 256, color.White)
+            default:
+                log.Fatal("Out of bounds (2592)")
+            }
             switch option0 {
             case 0:
-                text.Draw(screen, "History", fo, 128, 64, color.White)
+                text.Draw(screen, "History", fo, 512, 64, color.White)
             case 1:
-                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+                text.Draw(screen, "Insight", fo, 512, 64, color.White)
             case 2:
-                text.Draw(screen, "Medicine", fo, 128, 64, color.White)
+                text.Draw(screen, "Medicine", fo, 512, 64, color.White)
             case 3:
-                text.Draw(screen, "Persuasion", fo, 128, 64, color.White)
+                text.Draw(screen, "Persuasion", fo, 512, 64, color.White)
             case 4:
-                text.Draw(screen, "Religion", fo, 128, 64, color.White)
+                text.Draw(screen, "Religion", fo, 512, 64, color.White)
             default:
                 log.Fatal("Out of bounds (2973)")
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "History", fo, 128, 96, color.White)
+                text.Draw(screen, "History", fo, 512, 96, color.White)
             case 1:
-                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+                text.Draw(screen, "Insight", fo, 512, 96, color.White)
             case 2:
-                text.Draw(screen, "Medicine", fo, 128, 96, color.White)
+                text.Draw(screen, "Medicine", fo, 512, 96, color.White)
             case 3:
-                text.Draw(screen, "Persuasion", fo, 128, 96, color.White)
+                text.Draw(screen, "Persuasion", fo, 512, 96, color.White)
             case 4:
-                text.Draw(screen, "Religion", fo, 128, 96, color.White)
+                text.Draw(screen, "Religion", fo, 512, 96, color.White)
             default:
                 log.Fatal("Out of bounds (2987)")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Mace", fo, 128, 128, color.White)
+                text.Draw(screen, "Mace", fo, 512, 160, color.White)
             case 1:
-                text.Draw(screen, "Warhammer", fo, 128, 128, color.White)
+                text.Draw(screen, "Warhammer", fo, 512, 160, color.White)
             default:
                 log.Fatal("Out of bounds (2995)")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Scale mail", fo, 128, 160, color.White)
+                text.Draw(screen, "Scale mail", fo, 512, 192, color.White)
             case 1:
-                text.Draw(screen, "Leather armor", fo, 128, 160, color.White)
+                text.Draw(screen, "Leather armor", fo, 512, 192, color.White)
             case 2:
-                text.Draw(screen, "Chain mail", fo, 128, 160, color.White)
+                text.Draw(screen, "Chain mail", fo, 512, 192, color.White)
             default:
                 log.Fatal("Out of bounds (3005)")
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Light crossbow", fo, 128, 192, color.White)
+                text.Draw(screen, "Light crossbow", fo, 512, 224, color.White)
             case 1:
-                text.Draw(screen, "Club", fo, 128, 192, color.White)
+                text.Draw(screen, "Club", fo, 512, 224, color.White)
             case 2:
-                text.Draw(screen, "Dagger", fo, 128, 192, color.White)
+                text.Draw(screen, "Dagger", fo, 512, 224, color.White)
             case 3:
-                text.Draw(screen, "Greatclub", fo, 128, 192, color.White)
+                text.Draw(screen, "Greatclub", fo, 512, 224, color.White)
             case 4:
-                text.Draw(screen, "Handaxe", fo, 128, 192, color.White)
+                text.Draw(screen, "Handaxe", fo, 512, 224, color.White)
             case 5:
-                text.Draw(screen, "Javelin", fo, 128, 192, color.White)
+                text.Draw(screen, "Javelin", fo, 512, 224, color.White)
             case 6:
-                text.Draw(screen, "Light hammer", fo, 128, 192, color.White)
+                text.Draw(screen, "Light hammer", fo, 512, 224, color.White)
             case 7:
-                text.Draw(screen, "Mace", fo, 128, 192, color.White)
+                text.Draw(screen, "Mace", fo, 512, 224, color.White)
             case 8:
-                text.Draw(screen, "Quarterstaff", fo, 128, 192, color.White)
+                text.Draw(screen, "Quarterstaff", fo, 512, 224, color.White)
             case 9:
-                text.Draw(screen, "Sickle", fo, 128, 192, color.White)
+                text.Draw(screen, "Sickle", fo, 512, 224, color.White)
             case 10:
-                text.Draw(screen, "Spear", fo, 128, 192, color.White)
+                text.Draw(screen, "Spear", fo, 512, 224, color.White)
             case 11:
-                text.Draw(screen, "Dart", fo, 128, 192, color.White)
+                text.Draw(screen, "Dart", fo, 512, 224, color.White)
             case 12:
-                text.Draw(screen, "Shortbow", fo, 128, 192, color.White)
+                text.Draw(screen, "Shortbow", fo, 512, 224, color.White)
             case 13:
-                text.Draw(screen, "Sling", fo, 128, 192, color.White)
+                text.Draw(screen, "Sling", fo, 512, 224, color.White)
             default:
                 log.Fatal("Out of bounds (3037)")
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Priest's Pack", fo, 128, 224, color.White)
+                text.Draw(screen, "Priest's Pack", fo, 512, 256, color.White)
             case 1:
-                text.Draw(screen, "Explorer's Pack", fo, 128, 224, color.White)
+                text.Draw(screen, "Explorer's Pack", fo, 512, 256, color.White)
             default:
                 log.Fatal("Out of bounds (3045)")
             }
