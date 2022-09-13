@@ -953,6 +953,15 @@ func (g *Game) Update() error {
             lucky = false
             nimbleness = false
             creationsel = 0
+            option0 = 0
+            option1 = 0
+            option2 = 0
+            option3 = 0
+            option4 = 0
+            option5 = 0
+            option6 = 0
+            option7 = 0
+            option8 = 0
             choices = false
             creation = true
         }
@@ -1374,6 +1383,11 @@ func (g *Game) Update() error {
                     if option5 < 0 {
                         option5 = 0
                     }
+                case 6:
+                    option6--
+                    if option6 < 0 {
+                        option6 = 0
+                    }
                 default:
                     log.Fatal("Out of bounds (1350)")
                 }
@@ -1424,7 +1438,7 @@ func (g *Game) Update() error {
             } else if creationsel > 6 {
                 creationsel = 6
             }
-            if option0 == option1 {
+            if option0 == option1 || option3 + 1 == option4 {
                 dupwarning = true
             } else {
                 dupwarning = false
@@ -2617,117 +2631,117 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
             switch creationsel {
             case 0:
-                text.Draw(screen, ">", fo, 496, 64, color.White)
+                text.Draw(screen, ">", fo, 432, 64, color.White)
             case 1:
-                text.Draw(screen, ">", fo, 496, 96, color.White)
+                text.Draw(screen, ">", fo, 432, 96, color.White)
             case 2:
-                text.Draw(screen, ">", fo, 496, 160, color.White)
+                text.Draw(screen, ">", fo, 432, 160, color.White)
             case 3:
-                text.Draw(screen, ">", fo, 496, 192, color.White)
+                text.Draw(screen, ">", fo, 432, 192, color.White)
             default:
                 log.Fatal("Out of bounds (2592)")
             }
             switch option0 {
             case 0:
-                text.Draw(screen, "Animal Handling", fo, 512, 64, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 64, color.White)
             case 1:
-                text.Draw(screen, "Athletics", fo, 512, 64, color.White)
+                text.Draw(screen, "Athletics", fo, 448, 64, color.White)
             case 2:
-                text.Draw(screen, "Intimidation", fo, 512, 64, color.White)
+                text.Draw(screen, "Intimidation", fo, 448, 64, color.White)
             case 3:
-                text.Draw(screen, "Nature", fo, 512, 64, color.White)
+                text.Draw(screen, "Nature", fo, 448, 64, color.White)
             case 4:
-                text.Draw(screen, "Perception", fo, 512, 64, color.White)
+                text.Draw(screen, "Perception", fo, 448, 64, color.White)
             case 5:
-                text.Draw(screen, "Survival", fo, 512, 64, color.White)
+                text.Draw(screen, "Survival", fo, 448, 64, color.White)
             default:
                 log.Fatal("Out of bounds (2604)")
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Animal Handling", fo, 512, 96, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Athletics", fo, 512, 96, color.White)
+                text.Draw(screen, "Athletics", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Intimidation", fo, 512, 96, color.White)
+                text.Draw(screen, "Intimidation", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Nature", fo, 512, 96, color.White)
+                text.Draw(screen, "Nature", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Perception", fo, 512, 96, color.White)
+                text.Draw(screen, "Perception", fo, 448, 96, color.White)
             case 5:
-                text.Draw(screen, "Survival", fo, 512, 96, color.White)
+                text.Draw(screen, "Survival", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds (2620)")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Greataxe", fo, 512, 160, color.White)
+                text.Draw(screen, "Greataxe", fo, 448, 160, color.White)
             case 1:
-                text.Draw(screen, "Battleaxe", fo, 512, 160, color.White)
+                text.Draw(screen, "Battleaxe", fo, 448, 160, color.White)
             case 2:
-                text.Draw(screen, "Flail", fo, 512, 160, color.White)
+                text.Draw(screen, "Flail", fo, 448, 160, color.White)
             case 3:
-                text.Draw(screen, "Glaive", fo, 512, 160, color.White)
+                text.Draw(screen, "Glaive", fo, 448, 160, color.White)
             case 4:
-                text.Draw(screen, "Greatsword", fo, 512, 160, color.White)
+                text.Draw(screen, "Greatsword", fo, 448, 160, color.White)
             case 5:
-                text.Draw(screen, "Halberd", fo, 512, 160, color.White)
+                text.Draw(screen, "Halberd", fo, 448, 160, color.White)
             case 6:
-                text.Draw(screen, "Lance", fo, 512, 160, color.White)
+                text.Draw(screen, "Lance", fo, 448, 160, color.White)
             case 7:
-                text.Draw(screen, "Longsword", fo, 512, 160, color.White)
+                text.Draw(screen, "Longsword", fo, 448, 160, color.White)
             case 8:
-                text.Draw(screen, "Maul", fo, 512, 160, color.White)
+                text.Draw(screen, "Maul", fo, 448, 160, color.White)
             case 9:
-                text.Draw(screen, "Morningstar", fo, 512, 160, color.White)
+                text.Draw(screen, "Morningstar", fo, 448, 160, color.White)
             case 10:
-                text.Draw(screen, "Pike", fo, 512, 160, color.White)
+                text.Draw(screen, "Pike", fo, 448, 160, color.White)
             case 11:
-                text.Draw(screen, "Rapier", fo, 512, 160, color.White)
+                text.Draw(screen, "Rapier", fo, 448, 160, color.White)
             case 12:
-                text.Draw(screen, "Scimitar", fo, 512, 160, color.White)
+                text.Draw(screen, "Scimitar", fo, 448, 160, color.White)
             case 13:
-                text.Draw(screen, "Shortsword", fo, 512, 160, color.White)
+                text.Draw(screen, "Shortsword", fo, 448, 160, color.White)
             case 14:
-                text.Draw(screen, "Trident", fo, 512, 160, color.White)
+                text.Draw(screen, "Trident", fo, 448, 160, color.White)
             case 15:
-                text.Draw(screen, "War pick", fo, 512, 160, color.White)
+                text.Draw(screen, "War pick", fo, 448, 160, color.White)
             case 16:
-                text.Draw(screen, "Warhammer", fo, 512, 160, color.White)
+                text.Draw(screen, "Warhammer", fo, 448, 160, color.White)
             case 17:
-                text.Draw(screen, "Whip", fo, 512, 160, color.White)
+                text.Draw(screen, "Whip", fo, 448, 160, color.White)
             default:
                 log.Fatal("Out of bounds (2660)")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Two Handaxes", fo, 512, 192, color.White)
+                text.Draw(screen, "Two Handaxes", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Club", fo, 512, 192, color.White)
+                text.Draw(screen, "Club", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Dagger", fo, 512, 192, color.White)
+                text.Draw(screen, "Dagger", fo, 448, 192, color.White)
             case 3:
-                text.Draw(screen, "Greatclub", fo, 512, 192, color.White)
+                text.Draw(screen, "Greatclub", fo, 448, 192, color.White)
             case 4:
-                text.Draw(screen, "Javelin", fo, 512, 192, color.White)
+                text.Draw(screen, "Javelin", fo, 448, 192, color.White)
             case 5:
-                text.Draw(screen, "Light Hammer", fo, 512, 192, color.White)
+                text.Draw(screen, "Light Hammer", fo, 448, 192, color.White)
             case 6:
-                text.Draw(screen, "Mace", fo, 512, 192, color.White)
+                text.Draw(screen, "Mace", fo, 448, 192, color.White)
             case 7:
-                text.Draw(screen, "Quarterstaff", fo, 512, 192, color.White)
+                text.Draw(screen, "Quarterstaff", fo, 448, 192, color.White)
             case 8:
-                text.Draw(screen, "Sickle", fo, 512, 192, color.White)
+                text.Draw(screen, "Sickle", fo, 448, 192, color.White)
             case 9:
-                text.Draw(screen, "Spear", fo, 512, 192, color.White)
+                text.Draw(screen, "Spear", fo, 448, 192, color.White)
             case 10:
-                text.Draw(screen, "Light Crossbow", fo, 512, 192, color.White)
+                text.Draw(screen, "Light Crossbow", fo, 448, 192, color.White)
             case 11:
-                text.Draw(screen, "Dart", fo, 512, 192, color.White)
+                text.Draw(screen, "Dart", fo, 448, 192, color.White)
             case 12:
-                text.Draw(screen, "Shortbow", fo, 512, 192, color.White)
+                text.Draw(screen, "Shortbow", fo, 448, 192, color.White)
             case 13:
-                text.Draw(screen, "Sling", fo, 512, 192, color.White)
+                text.Draw(screen, "Sling", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds (2692)")
             }
@@ -2737,283 +2751,283 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, "Equipment:", fo, 64, 320, color.White)
             switch creationsel {
             case 0:
-                text.Draw(screen, ">", fo, 496, 64, color.White)
+                text.Draw(screen, ">", fo, 432, 64, color.White)
             case 1:
-                text.Draw(screen, ">", fo, 496, 96, color.White)
+                text.Draw(screen, ">", fo, 432, 96, color.White)
             case 2:
-                text.Draw(screen, ">", fo, 496, 128, color.White)
+                text.Draw(screen, ">", fo, 432, 128, color.White)
             case 3:
-                text.Draw(screen, ">", fo, 496, 192, color.White)
+                text.Draw(screen, ">", fo, 432, 192, color.White)
             case 4:
-                text.Draw(screen, ">", fo, 496, 224, color.White)
+                text.Draw(screen, ">", fo, 432, 224, color.White)
             case 5:
-                text.Draw(screen, ">", fo, 496, 256, color.White)
+                text.Draw(screen, ">", fo, 432, 256, color.White)
             case 6:
-                text.Draw(screen, ">", fo, 496, 320, color.White)
+                text.Draw(screen, ">", fo, 432, 320, color.White)
             case 7:
-                text.Draw(screen, ">", fo, 496, 352, color.White)
+                text.Draw(screen, ">", fo, 432, 352, color.White)
             case 8:
-                text.Draw(screen, ">", fo, 496, 384, color.White)
+                text.Draw(screen, ">", fo, 432, 384, color.White)
             default:
                 log.Fatal("Out of bounds (2592)")
             }
             switch option0 {
             case 0:
-                text.Draw(screen, "Bagpipes", fo, 512, 64, color.White)
+                text.Draw(screen, "Bagpipes", fo, 448, 64, color.White)
             case 1:
-                text.Draw(screen, "Drum", fo, 512, 64, color.White)
+                text.Draw(screen, "Drum", fo, 448, 64, color.White)
             case 2:
-                text.Draw(screen, "Dulcimer", fo, 512, 64, color.White)
+                text.Draw(screen, "Dulcimer", fo, 448, 64, color.White)
             case 3:
-                text.Draw(screen, "Flute", fo, 512, 64, color.White)
+                text.Draw(screen, "Flute", fo, 448, 64, color.White)
             case 4:
-                text.Draw(screen, "Lute", fo, 512, 64, color.White)
+                text.Draw(screen, "Lute", fo, 448, 64, color.White)
             case 5:
-                text.Draw(screen, "Lyre", fo, 512, 64, color.White)
+                text.Draw(screen, "Lyre", fo, 448, 64, color.White)
             case 6:
-                text.Draw(screen, "Horn", fo, 512, 64, color.White)
+                text.Draw(screen, "Horn", fo, 448, 64, color.White)
             case 7:
-                text.Draw(screen, "Pan flute", fo, 512, 64, color.White)
+                text.Draw(screen, "Pan flute", fo, 448, 64, color.White)
             case 8:
-                text.Draw(screen, "Shawm", fo, 512, 64, color.White)
+                text.Draw(screen, "Shawm", fo, 448, 64, color.White)
             case 9:
-                text.Draw(screen, "Viol", fo, 512, 64, color.White)
+                text.Draw(screen, "Viol", fo, 448, 64, color.White)
             default:
                 log.Fatal("Out of bounds (2720)")
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Bagpipes", fo, 512, 96, color.White)
+                text.Draw(screen, "Bagpipes", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Drum", fo, 512, 96, color.White)
+                text.Draw(screen, "Drum", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Dulcimer", fo, 512, 96, color.White)
+                text.Draw(screen, "Dulcimer", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Flute", fo, 512, 96, color.White)
+                text.Draw(screen, "Flute", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Lute", fo, 512, 96, color.White)
+                text.Draw(screen, "Lute", fo, 448, 96, color.White)
             case 5:
-                text.Draw(screen, "Lyre", fo, 512, 96, color.White)
+                text.Draw(screen, "Lyre", fo, 448, 96, color.White)
             case 6:
-                text.Draw(screen, "Horn", fo, 512, 96, color.White)
+                text.Draw(screen, "Horn", fo, 448, 96, color.White)
             case 7:
-                text.Draw(screen, "Pan flute", fo, 512, 96, color.White)
+                text.Draw(screen, "Pan flute", fo, 448, 96, color.White)
             case 8:
-                text.Draw(screen, "Shawm", fo, 512, 96, color.White)
+                text.Draw(screen, "Shawm", fo, 448, 96, color.White)
             case 9:
-                text.Draw(screen, "Viol", fo, 512, 96, color.White)
+                text.Draw(screen, "Viol", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds (2744)")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Bagpipes", fo, 512, 128, color.White)
+                text.Draw(screen, "Bagpipes", fo, 448, 128, color.White)
             case 1:
-                text.Draw(screen, "Drum", fo, 512, 128, color.White)
+                text.Draw(screen, "Drum", fo, 448, 128, color.White)
             case 2:
-                text.Draw(screen, "Dulcimer", fo, 512, 128, color.White)
+                text.Draw(screen, "Dulcimer", fo, 448, 128, color.White)
             case 3:
-                text.Draw(screen, "Flute", fo, 512, 128, color.White)
+                text.Draw(screen, "Flute", fo, 448, 128, color.White)
             case 4:
-                text.Draw(screen, "Lute", fo, 512, 128, color.White)
+                text.Draw(screen, "Lute", fo, 448, 128, color.White)
             case 5:
-                text.Draw(screen, "Lyre", fo, 512, 128, color.White)
+                text.Draw(screen, "Lyre", fo, 448, 128, color.White)
             case 6:
-                text.Draw(screen, "Horn", fo, 512, 128, color.White)
+                text.Draw(screen, "Horn", fo, 448, 128, color.White)
             case 7:
-                text.Draw(screen, "Pan flute", fo, 512, 128, color.White)
+                text.Draw(screen, "Pan flute", fo, 448, 128, color.White)
             case 8:
-                text.Draw(screen, "Shawm", fo, 512, 128, color.White)
+                text.Draw(screen, "Shawm", fo, 448, 128, color.White)
             case 9:
-                text.Draw(screen, "Viol", fo, 512, 128, color.White)
+                text.Draw(screen, "Viol", fo, 448, 128, color.White)
             default:
                 log.Fatal("Out of bounds (2768)")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Acrobatics", fo, 512, 192, color.White)
+                text.Draw(screen, "Acrobatics", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Animal Handling", fo, 512, 192, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Arcana", fo, 512, 192, color.White)
+                text.Draw(screen, "Arcana", fo, 448, 192, color.White)
             case 3:
-                text.Draw(screen, "Athletics", fo, 512, 192, color.White)
+                text.Draw(screen, "Athletics", fo, 448, 192, color.White)
             case 4:
-                text.Draw(screen, "Deception", fo, 512, 192, color.White)
+                text.Draw(screen, "Deception", fo, 448, 192, color.White)
             case 5:
-                text.Draw(screen, "History", fo, 512, 192, color.White)
+                text.Draw(screen, "History", fo, 448, 192, color.White)
             case 6:
-                text.Draw(screen, "Insight", fo, 512, 192, color.White)
+                text.Draw(screen, "Insight", fo, 448, 192, color.White)
             case 7:
-                text.Draw(screen, "Intimidation", fo, 512, 192, color.White)
+                text.Draw(screen, "Intimidation", fo, 448, 192, color.White)
             case 8:
-                text.Draw(screen, "Investigation", fo, 512, 192, color.White)
+                text.Draw(screen, "Investigation", fo, 448, 192, color.White)
             case 9:
-                text.Draw(screen, "Medicine", fo, 512, 192, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 192, color.White)
             case 10:
-                text.Draw(screen, "Nature", fo, 512, 192, color.White)
+                text.Draw(screen, "Nature", fo, 448, 192, color.White)
             case 11:
-                text.Draw(screen, "Perception", fo, 512, 192, color.White)
+                text.Draw(screen, "Perception", fo, 448, 192, color.White)
             case 12:
-                text.Draw(screen, "Performance", fo, 512, 192, color.White)
+                text.Draw(screen, "Performance", fo, 448, 192, color.White)
             case 13:
-                text.Draw(screen, "Persuasion", fo, 512, 192, color.White)
+                text.Draw(screen, "Persuasion", fo, 448, 192, color.White)
             case 14:
-                text.Draw(screen, "Religion", fo, 512, 192, color.White)
+                text.Draw(screen, "Religion", fo, 448, 192, color.White)
             case 15:
-                text.Draw(screen, "Sleight of Hand", fo, 512, 192, color.White)
+                text.Draw(screen, "Sleight of Hand", fo, 448, 192, color.White)
             case 16:
-                text.Draw(screen, "Stealth", fo, 512, 192, color.White)
+                text.Draw(screen, "Stealth", fo, 448, 192, color.White)
             case 17:
-                text.Draw(screen, "Acrobics", fo, 512, 192, color.White)
+                text.Draw(screen, "Acrobics", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds (2808)")
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Acrobatics", fo, 512, 224, color.White)
+                text.Draw(screen, "Acrobatics", fo, 448, 224, color.White)
             case 1:
-                text.Draw(screen, "Animal Handling", fo, 512, 224, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 224, color.White)
             case 2:
-                text.Draw(screen, "Arcana", fo, 512, 224, color.White)
+                text.Draw(screen, "Arcana", fo, 448, 224, color.White)
             case 3:
-                text.Draw(screen, "Athletics", fo, 512, 224, color.White)
+                text.Draw(screen, "Athletics", fo, 448, 224, color.White)
             case 4:
-                text.Draw(screen, "Deception", fo, 512, 224, color.White)
+                text.Draw(screen, "Deception", fo, 448, 224, color.White)
             case 5:
-                text.Draw(screen, "History", fo, 512, 224, color.White)
+                text.Draw(screen, "History", fo, 448, 224, color.White)
             case 6:
-                text.Draw(screen, "Insight", fo, 512, 224, color.White)
+                text.Draw(screen, "Insight", fo, 448, 224, color.White)
             case 7:
-                text.Draw(screen, "Intimidation", fo, 512, 224, color.White)
+                text.Draw(screen, "Intimidation", fo, 448, 224, color.White)
             case 8:
-                text.Draw(screen, "Investigation", fo, 512, 224, color.White)
+                text.Draw(screen, "Investigation", fo, 448, 224, color.White)
             case 9:
-                text.Draw(screen, "Medicine", fo, 512, 224, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 224, color.White)
             case 10:
-                text.Draw(screen, "Nature", fo, 512, 224, color.White)
+                text.Draw(screen, "Nature", fo, 448, 224, color.White)
             case 11:
-                text.Draw(screen, "Perception", fo, 512, 224, color.White)
+                text.Draw(screen, "Perception", fo, 448, 224, color.White)
             case 12:
-                text.Draw(screen, "Performance", fo, 512, 224, color.White)
+                text.Draw(screen, "Performance", fo, 448, 224, color.White)
             case 13:
-                text.Draw(screen, "Persuasion", fo, 512, 224, color.White)
+                text.Draw(screen, "Persuasion", fo, 448, 224, color.White)
             case 14:
-                text.Draw(screen, "Religion", fo, 512, 224, color.White)
+                text.Draw(screen, "Religion", fo, 448, 224, color.White)
             case 15:
-                text.Draw(screen, "Sleight of Hand", fo, 512, 224, color.White)
+                text.Draw(screen, "Sleight of Hand", fo, 448, 224, color.White)
             case 16:
-                text.Draw(screen, "Stealth", fo, 512, 224, color.White)
+                text.Draw(screen, "Stealth", fo, 448, 224, color.White)
             case 17:
-                text.Draw(screen, "Acrobics", fo, 512, 224, color.White)
+                text.Draw(screen, "Acrobics", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds (2848)")
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Acrobatics", fo, 512, 256, color.White)
+                text.Draw(screen, "Acrobatics", fo, 448, 256, color.White)
             case 1:
-                text.Draw(screen, "Animal Handling", fo, 512, 256, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 256, color.White)
             case 2:
-                text.Draw(screen, "Arcana", fo, 512, 256, color.White)
+                text.Draw(screen, "Arcana", fo, 448, 256, color.White)
             case 3:
-                text.Draw(screen, "Athletics", fo, 512, 256, color.White)
+                text.Draw(screen, "Athletics", fo, 448, 256, color.White)
             case 4:
-                text.Draw(screen, "Deception", fo, 512, 256, color.White)
+                text.Draw(screen, "Deception", fo, 448, 256, color.White)
             case 5:
-                text.Draw(screen, "History", fo, 512, 256, color.White)
+                text.Draw(screen, "History", fo, 448, 256, color.White)
             case 6:
-                text.Draw(screen, "Insight", fo, 512, 256, color.White)
+                text.Draw(screen, "Insight", fo, 448, 256, color.White)
             case 7:
-                text.Draw(screen, "Intimidation", fo, 512, 256, color.White)
+                text.Draw(screen, "Intimidation", fo, 448, 256, color.White)
             case 8:
-                text.Draw(screen, "Investigation", fo, 512, 256, color.White)
+                text.Draw(screen, "Investigation", fo, 448, 256, color.White)
             case 9:
-                text.Draw(screen, "Medicine", fo, 512, 256, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 256, color.White)
             case 10:
-                text.Draw(screen, "Nature", fo, 512, 256, color.White)
+                text.Draw(screen, "Nature", fo, 448, 256, color.White)
             case 11:
-                text.Draw(screen, "Perception", fo, 512, 256, color.White)
+                text.Draw(screen, "Perception", fo, 448, 256, color.White)
             case 12:
-                text.Draw(screen, "Performance", fo, 512, 256, color.White)
+                text.Draw(screen, "Performance", fo, 448, 256, color.White)
             case 13:
-                text.Draw(screen, "Persuasion", fo, 512, 256, color.White)
+                text.Draw(screen, "Persuasion", fo, 448, 256, color.White)
             case 14:
-                text.Draw(screen, "Religion", fo, 512, 256, color.White)
+                text.Draw(screen, "Religion", fo, 448, 256, color.White)
             case 15:
-                text.Draw(screen, "Sleight of Hand", fo, 512, 256, color.White)
+                text.Draw(screen, "Sleight of Hand", fo, 448, 256, color.White)
             case 16:
-                text.Draw(screen, "Stealth", fo, 512, 256, color.White)
+                text.Draw(screen, "Stealth", fo, 448, 256, color.White)
             case 17:
-                text.Draw(screen, "Acrobics", fo, 512, 256, color.White)
+                text.Draw(screen, "Acrobics", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds (2888)")
             }
             switch option6 {
             case 0:
-                text.Draw(screen, "Rapier", fo, 512, 320, color.White)
+                text.Draw(screen, "Rapier", fo, 448, 320, color.White)
             case 1:
-                text.Draw(screen, "Longsword", fo, 512, 320, color.White)
+                text.Draw(screen, "Longsword", fo, 448, 320, color.White)
             case 2:
-                text.Draw(screen, "Club", fo, 512, 320, color.White)
+                text.Draw(screen, "Club", fo, 448, 320, color.White)
             case 3:
-                text.Draw(screen, "Dagger", fo, 512, 320, color.White)
+                text.Draw(screen, "Dagger", fo, 448, 320, color.White)
             case 4:
-                text.Draw(screen, "Greatclub", fo, 512, 320, color.White)
+                text.Draw(screen, "Greatclub", fo, 448, 320, color.White)
             case 5:
-                text.Draw(screen, "Handaxe", fo, 512, 320, color.White)
+                text.Draw(screen, "Handaxe", fo, 448, 320, color.White)
             case 6:
-                text.Draw(screen, "Javelin", fo, 512, 320, color.White)
+                text.Draw(screen, "Javelin", fo, 448, 320, color.White)
             case 7:
-                text.Draw(screen, "Light hammer", fo, 512, 320, color.White)
+                text.Draw(screen, "Light hammer", fo, 448, 320, color.White)
             case 8:
-                text.Draw(screen, "Mace", fo, 512, 320, color.White)
+                text.Draw(screen, "Mace", fo, 448, 320, color.White)
             case 9:
-                text.Draw(screen, "Quarterstaff", fo, 512, 320, color.White)
+                text.Draw(screen, "Quarterstaff", fo, 448, 320, color.White)
             case 10:
-                text.Draw(screen, "Sickle", fo, 512, 320, color.White)
+                text.Draw(screen, "Sickle", fo, 448, 320, color.White)
             case 11:
-                text.Draw(screen, "Spear", fo, 512, 320, color.White)
+                text.Draw(screen, "Spear", fo, 448, 320, color.White)
             case 12:
-                text.Draw(screen, "Light crossbow", fo, 512, 320, color.White)
+                text.Draw(screen, "Light crossbow", fo, 448, 320, color.White)
             case 13:
-                text.Draw(screen, "Dart", fo, 512, 320, color.White)
+                text.Draw(screen, "Dart", fo, 448, 320, color.White)
             case 14:
-                text.Draw(screen, "Shortbow", fo, 512, 320, color.White)
+                text.Draw(screen, "Shortbow", fo, 448, 320, color.White)
             case 15:
-                text.Draw(screen, "Sling", fo, 512, 320, color.White)
+                text.Draw(screen, "Sling", fo, 448, 320, color.White)
             default:
                 log.Fatal("Out of bounds (2924)")
             }
             switch option7 {
             case 0:
-                text.Draw(screen, "Diplomat's Pack", fo, 512, 352, color.White)
+                text.Draw(screen, "Diplomat's Pack", fo, 448, 352, color.White)
             case 1:
-                text.Draw(screen, "Entertainer's Pack", fo, 512, 352, color.White)
+                text.Draw(screen, "Entertainer's Pack", fo, 448, 352, color.White)
             default:
                 log.Fatal("Out of bounds (2932)")
             }
             switch option8 {
             case 0:
-                text.Draw(screen, "Bagpipes", fo, 512, 384, color.White)
+                text.Draw(screen, "Bagpipes", fo, 448, 384, color.White)
             case 1:
-                text.Draw(screen, "Drum", fo, 512, 384, color.White)
+                text.Draw(screen, "Drum", fo, 448, 384, color.White)
             case 2:
-                text.Draw(screen, "Dulcimer", fo, 512, 384, color.White)
+                text.Draw(screen, "Dulcimer", fo, 448, 384, color.White)
             case 3:
-                text.Draw(screen, "Flute", fo, 512, 384, color.White)
+                text.Draw(screen, "Flute", fo, 448, 384, color.White)
             case 4:
-                text.Draw(screen, "Lute", fo, 512, 384, color.White)
+                text.Draw(screen, "Lute", fo, 448, 384, color.White)
             case 5:
-                text.Draw(screen, "Lyre", fo, 512, 384, color.White)
+                text.Draw(screen, "Lyre", fo, 448, 384, color.White)
             case 6:
-                text.Draw(screen, "Horn", fo, 512, 384, color.White)
+                text.Draw(screen, "Horn", fo, 448, 384, color.White)
             case 7:
-                text.Draw(screen, "Pan flute", fo, 512, 384, color.White)
+                text.Draw(screen, "Pan flute", fo, 448, 384, color.White)
             case 8:
-                text.Draw(screen, "Shawm", fo, 512, 384, color.White)
+                text.Draw(screen, "Shawm", fo, 448, 384, color.White)
             case 9:
-                text.Draw(screen, "Viol", fo, 512, 384, color.White)
+                text.Draw(screen, "Viol", fo, 448, 384, color.White)
             default:
                 log.Fatal("Out of bounds (2956)")
             }
@@ -3022,103 +3036,103 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
             switch creationsel {
             case 0:
-                text.Draw(screen, ">", fo, 496, 64, color.White)
+                text.Draw(screen, ">", fo, 432, 64, color.White)
             case 1:
-                text.Draw(screen, ">", fo, 496, 96, color.White)
+                text.Draw(screen, ">", fo, 432, 96, color.White)
             case 2:
-                text.Draw(screen, ">", fo, 496, 160, color.White)
+                text.Draw(screen, ">", fo, 432, 160, color.White)
             case 3:
-                text.Draw(screen, ">", fo, 496, 192, color.White)
+                text.Draw(screen, ">", fo, 432, 192, color.White)
             case 4:
-                text.Draw(screen, ">", fo, 496, 224, color.White)
+                text.Draw(screen, ">", fo, 432, 224, color.White)
             case 5:
-                text.Draw(screen, ">", fo, 496, 256, color.White)
+                text.Draw(screen, ">", fo, 432, 256, color.White)
             default:
                 log.Fatal("Out of bounds (2592)")
             }
             switch option0 {
             case 0:
-                text.Draw(screen, "History", fo, 512, 64, color.White)
+                text.Draw(screen, "History", fo, 448, 64, color.White)
             case 1:
-                text.Draw(screen, "Insight", fo, 512, 64, color.White)
+                text.Draw(screen, "Insight", fo, 448, 64, color.White)
             case 2:
-                text.Draw(screen, "Medicine", fo, 512, 64, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 64, color.White)
             case 3:
-                text.Draw(screen, "Persuasion", fo, 512, 64, color.White)
+                text.Draw(screen, "Persuasion", fo, 448, 64, color.White)
             case 4:
-                text.Draw(screen, "Religion", fo, 512, 64, color.White)
+                text.Draw(screen, "Religion", fo, 448, 64, color.White)
             default:
                 log.Fatal("Out of bounds (2973)")
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "History", fo, 512, 96, color.White)
+                text.Draw(screen, "History", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Insight", fo, 512, 96, color.White)
+                text.Draw(screen, "Insight", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Medicine", fo, 512, 96, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Persuasion", fo, 512, 96, color.White)
+                text.Draw(screen, "Persuasion", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Religion", fo, 512, 96, color.White)
+                text.Draw(screen, "Religion", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds (2987)")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Mace", fo, 512, 160, color.White)
+                text.Draw(screen, "Mace", fo, 448, 160, color.White)
             case 1:
-                text.Draw(screen, "Warhammer", fo, 512, 160, color.White)
+                text.Draw(screen, "Warhammer", fo, 448, 160, color.White)
             default:
                 log.Fatal("Out of bounds (2995)")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Scale mail", fo, 512, 192, color.White)
+                text.Draw(screen, "Scale mail", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Leather armor", fo, 512, 192, color.White)
+                text.Draw(screen, "Leather armor", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Chain mail", fo, 512, 192, color.White)
+                text.Draw(screen, "Chain mail", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds (3005)")
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Light crossbow", fo, 512, 224, color.White)
+                text.Draw(screen, "Light crossbow", fo, 448, 224, color.White)
             case 1:
-                text.Draw(screen, "Club", fo, 512, 224, color.White)
+                text.Draw(screen, "Club", fo, 448, 224, color.White)
             case 2:
-                text.Draw(screen, "Dagger", fo, 512, 224, color.White)
+                text.Draw(screen, "Dagger", fo, 448, 224, color.White)
             case 3:
-                text.Draw(screen, "Greatclub", fo, 512, 224, color.White)
+                text.Draw(screen, "Greatclub", fo, 448, 224, color.White)
             case 4:
-                text.Draw(screen, "Handaxe", fo, 512, 224, color.White)
+                text.Draw(screen, "Handaxe", fo, 448, 224, color.White)
             case 5:
-                text.Draw(screen, "Javelin", fo, 512, 224, color.White)
+                text.Draw(screen, "Javelin", fo, 448, 224, color.White)
             case 6:
-                text.Draw(screen, "Light hammer", fo, 512, 224, color.White)
+                text.Draw(screen, "Light hammer", fo, 448, 224, color.White)
             case 7:
-                text.Draw(screen, "Mace", fo, 512, 224, color.White)
+                text.Draw(screen, "Mace", fo, 448, 224, color.White)
             case 8:
-                text.Draw(screen, "Quarterstaff", fo, 512, 224, color.White)
+                text.Draw(screen, "Quarterstaff", fo, 448, 224, color.White)
             case 9:
-                text.Draw(screen, "Sickle", fo, 512, 224, color.White)
+                text.Draw(screen, "Sickle", fo, 448, 224, color.White)
             case 10:
-                text.Draw(screen, "Spear", fo, 512, 224, color.White)
+                text.Draw(screen, "Spear", fo, 448, 224, color.White)
             case 11:
-                text.Draw(screen, "Dart", fo, 512, 224, color.White)
+                text.Draw(screen, "Dart", fo, 448, 224, color.White)
             case 12:
-                text.Draw(screen, "Shortbow", fo, 512, 224, color.White)
+                text.Draw(screen, "Shortbow", fo, 448, 224, color.White)
             case 13:
-                text.Draw(screen, "Sling", fo, 512, 224, color.White)
+                text.Draw(screen, "Sling", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds (3037)")
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Priest's Pack", fo, 512, 256, color.White)
+                text.Draw(screen, "Priest's Pack", fo, 448, 256, color.White)
             case 1:
-                text.Draw(screen, "Explorer's Pack", fo, 512, 256, color.White)
+                text.Draw(screen, "Explorer's Pack", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds (3045)")
             }
@@ -3127,282 +3141,300 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
             switch creationsel {
             case 0:
-                text.Draw(screen, ">", fo, 496, 64, color.White)
+                text.Draw(screen, ">", fo, 432, 64, color.White)
             case 1:
-                text.Draw(screen, ">", fo, 496, 96, color.White)
+                text.Draw(screen, ">", fo, 432, 96, color.White)
             case 2:
-                text.Draw(screen, ">", fo, 496, 160, color.White)
+                text.Draw(screen, ">", fo, 432, 160, color.White)
             case 3:
-                text.Draw(screen, ">", fo, 496, 192, color.White)
+                text.Draw(screen, ">", fo, 432, 192, color.White)
             default:
                 log.Fatal("Out of bounds (2592)")
             }
             switch option0 {
             case 0:
-                text.Draw(screen, "Arcana", fo, 512, 64, color.White)
+                text.Draw(screen, "Arcana", fo, 448, 64, color.White)
             case 1:
-                text.Draw(screen, "Animal Handling", fo, 512, 64, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 64, color.White)
             case 2:
-                text.Draw(screen, "Insight", fo, 512, 64, color.White)
+                text.Draw(screen, "Insight", fo, 448, 64, color.White)
             case 3:
-                text.Draw(screen, "Medicine", fo, 512, 64, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 64, color.White)
             case 4:
-                text.Draw(screen, "Nature", fo, 512, 64, color.White)
+                text.Draw(screen, "Nature", fo, 448, 64, color.White)
             case 5:
-                text.Draw(screen, "Perception", fo, 512, 64, color.White)
+                text.Draw(screen, "Perception", fo, 448, 64, color.White)
             case 6:
-                text.Draw(screen, "Religion", fo, 512, 64, color.White)
+                text.Draw(screen, "Religion", fo, 448, 64, color.White)
             case 7:
-                text.Draw(screen, "Survival", fo, 512, 64, color.White)
+                text.Draw(screen, "Survival", fo, 448, 64, color.White)
             default:
                 log.Fatal("Out of bounds (3068)")
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Arcana", fo, 512, 96, color.White)
+                text.Draw(screen, "Arcana", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Animal Handling", fo, 512, 96, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Insight", fo, 512, 96, color.White)
+                text.Draw(screen, "Insight", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Medicine", fo, 512, 96, color.White)
+                text.Draw(screen, "Medicine", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Nature", fo, 512, 96, color.White)
+                text.Draw(screen, "Nature", fo, 448, 96, color.White)
             case 5:
-                text.Draw(screen, "Perception", fo, 512, 96, color.White)
+                text.Draw(screen, "Perception", fo, 448, 96, color.White)
             case 6:
-                text.Draw(screen, "Religion", fo, 512, 96, color.White)
+                text.Draw(screen, "Religion", fo, 448, 96, color.White)
             case 7:
-                text.Draw(screen, "Survival", fo, 512, 96, color.White)
+                text.Draw(screen, "Survival", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds (3088)")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Wooden shield", fo, 512, 160, color.White)
+                text.Draw(screen, "Wooden shield", fo, 448, 160, color.White)
             case 1:
-                text.Draw(screen, "Club", fo, 512, 160, color.White)
+                text.Draw(screen, "Club", fo, 448, 160, color.White)
             case 2:
-                text.Draw(screen, "Dagger", fo, 512, 160, color.White)
+                text.Draw(screen, "Dagger", fo, 448, 160, color.White)
             case 3:
-                text.Draw(screen, "Greatclub", fo, 512, 160, color.White)
+                text.Draw(screen, "Greatclub", fo, 448, 160, color.White)
             case 4:
-                text.Draw(screen, "Handaxe", fo, 512, 160, color.White)
+                text.Draw(screen, "Handaxe", fo, 448, 160, color.White)
             case 5:
-                text.Draw(screen, "Javelin", fo, 512, 160, color.White)
+                text.Draw(screen, "Javelin", fo, 448, 160, color.White)
             case 6:
-                text.Draw(screen, "Light hammer", fo, 512, 160, color.White)
+                text.Draw(screen, "Light hammer", fo, 448, 160, color.White)
             case 7:
-                text.Draw(screen, "Mace", fo, 512, 160, color.White)
+                text.Draw(screen, "Mace", fo, 448, 160, color.White)
             case 8:
-                text.Draw(screen, "Quarterstaff", fo, 512, 160, color.White)
+                text.Draw(screen, "Quarterstaff", fo, 448, 160, color.White)
             case 9:
-                text.Draw(screen, "Sickle", fo, 512, 160, color.White)
+                text.Draw(screen, "Sickle", fo, 448, 160, color.White)
             case 10:
-                text.Draw(screen, "Spear", fo, 512, 160, color.White)
+                text.Draw(screen, "Spear", fo, 448, 160, color.White)
             case 11:
-                text.Draw(screen, "Light crossbow", fo, 512, 160, color.White)
+                text.Draw(screen, "Light crossbow", fo, 448, 160, color.White)
             case 12:
-                text.Draw(screen, "Dart", fo, 512, 160, color.White)
+                text.Draw(screen, "Dart", fo, 448, 160, color.White)
             case 13:
-                text.Draw(screen, "Shortbow", fo, 512, 160, color.White)
+                text.Draw(screen, "Shortbow", fo, 448, 160, color.White)
             case 14:
-                text.Draw(screen, "Sling", fo, 512, 160, color.White)
+                text.Draw(screen, "Sling", fo, 448, 160, color.White)
             default:
                 log.Fatal("Out of bounds (3122)")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Scimitar", fo, 512, 192, color.White)
+                text.Draw(screen, "Scimitar", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Club", fo, 512, 192, color.White)
+                text.Draw(screen, "Club", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Dagger", fo, 512, 192, color.White)
+                text.Draw(screen, "Dagger", fo, 448, 192, color.White)
             case 3:
-                text.Draw(screen, "Greatclub", fo, 512, 192, color.White)
+                text.Draw(screen, "Greatclub", fo, 448, 192, color.White)
             case 4:
-                text.Draw(screen, "Handaxe", fo, 512, 192, color.White)
+                text.Draw(screen, "Handaxe", fo, 448, 192, color.White)
             case 5:
-                text.Draw(screen, "Javelin", fo, 512, 192, color.White)
+                text.Draw(screen, "Javelin", fo, 448, 192, color.White)
             case 6:
-                text.Draw(screen, "Light hammer", fo, 512, 192, color.White)
+                text.Draw(screen, "Light hammer", fo, 448, 192, color.White)
             case 7:
-                text.Draw(screen, "Mace", fo, 512, 192, color.White)
+                text.Draw(screen, "Mace", fo, 448, 192, color.White)
             case 8:
-                text.Draw(screen, "Quarterstaff", fo, 512, 192, color.White)
+                text.Draw(screen, "Quarterstaff", fo, 448, 192, color.White)
             case 9:
-                text.Draw(screen, "Sickle", fo, 512, 192, color.White)
+                text.Draw(screen, "Sickle", fo, 448, 192, color.White)
             case 10:
-                text.Draw(screen, "Spear", fo, 512, 192, color.White)
+                text.Draw(screen, "Spear", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds (3148)")
             }
         case 4:
             text.Draw(screen, "Skill Proficiencies:", fo, 64, 64, color.White)
-            text.Draw(screen, "Equipment:", fo, 64, 128, color.White)
+            text.Draw(screen, "Equipment:", fo, 64, 160, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 432, 256, color.White)
+            case 6:
+                text.Draw(screen, ">", fo, 432, 288, color.White)
+            default:
+                log.Fatal("Out of bounds (2592)")
+            }
             switch option0 {
             case 0:
-                text.Draw(screen, "Acrobatics", fo, 128, 64, color.White)
+                text.Draw(screen, "Acrobatics", fo, 448, 64, color.White)
             case 1:
-                text.Draw(screen, "Animal Handling", fo, 128, 64, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 64, color.White)
             case 2:
-                text.Draw(screen, "Athletics", fo, 128, 64, color.White)
+                text.Draw(screen, "Athletics", fo, 448, 64, color.White)
             case 3:
-                text.Draw(screen, "History", fo, 128, 64, color.White)
+                text.Draw(screen, "History", fo, 448, 64, color.White)
             case 4:
-                text.Draw(screen, "Insight", fo, 128, 64, color.White)
+                text.Draw(screen, "Insight", fo, 448, 64, color.White)
             case 5:
-                text.Draw(screen, "Intimidation", fo, 128, 64, color.White)
+                text.Draw(screen, "Intimidation", fo, 448, 64, color.White)
             case 6:
-                text.Draw(screen, "Perception", fo, 128, 64, color.White)
+                text.Draw(screen, "Perception", fo, 448, 64, color.White)
             case 7:
-                text.Draw(screen, "Survival", fo, 128, 64, color.White)
+                text.Draw(screen, "Survival", fo, 448, 64, color.White)
             default:
                 log.Fatal("Out of bounds (3171)")
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Acrobatics", fo, 128, 96, color.White)
+                text.Draw(screen, "Acrobatics", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Animal Handling", fo, 128, 96, color.White)
+                text.Draw(screen, "Animal Handling", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Athletics", fo, 128, 96, color.White)
+                text.Draw(screen, "Athletics", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "History", fo, 128, 96, color.White)
+                text.Draw(screen, "History", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Insight", fo, 128, 96, color.White)
+                text.Draw(screen, "Insight", fo, 448, 96, color.White)
             case 5:
-                text.Draw(screen, "Intimidation", fo, 128, 96, color.White)
+                text.Draw(screen, "Intimidation", fo, 448, 96, color.White)
             case 6:
-                text.Draw(screen, "Perception", fo, 128, 96, color.White)
+                text.Draw(screen, "Perception", fo, 448, 96, color.White)
             case 7:
-                text.Draw(screen, "Survival", fo, 128, 96, color.White)
+                text.Draw(screen, "Survival", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds (3191)")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Chain mail", fo, 128, 128, color.White)
+                text.Draw(screen, "Chain mail", fo, 448, 160, color.White)
             case 1:
-                text.Draw(screen, "Leather armor + longbow", fo, 128, 128, color.White)
+                text.Draw(screen, "Leather armor + longbow", fo, 448, 160, color.White)
             default:
                 log.Fatal("Out of bounds (3199)")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Battleaxe", fo, 128, 160, color.White)
+                text.Draw(screen, "Battleaxe", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Flail", fo, 128, 160, color.White)
+                text.Draw(screen, "Flail", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Glaive", fo, 128, 160, color.White)
+                text.Draw(screen, "Glaive", fo, 448, 192, color.White)
             case 3:
-                text.Draw(screen, "Greataxe", fo, 128, 160, color.White)
+                text.Draw(screen, "Greataxe", fo, 448, 192, color.White)
             case 4:
-                text.Draw(screen, "Greatsword", fo, 128, 160, color.White)
+                text.Draw(screen, "Greatsword", fo, 448, 192, color.White)
             case 5:
-                text.Draw(screen, "Halberd", fo, 128, 160, color.White)
+                text.Draw(screen, "Halberd", fo, 448, 192, color.White)
             case 6:
-                text.Draw(screen, "Lance", fo, 128, 160, color.White)
+                text.Draw(screen, "Lance", fo, 448, 192, color.White)
             case 7:
-                text.Draw(screen, "Longsword", fo, 128, 160, color.White)
+                text.Draw(screen, "Longsword", fo, 448, 192, color.White)
             case 8:
-                text.Draw(screen, "Maul", fo, 128, 160, color.White)
+                text.Draw(screen, "Maul", fo, 448, 192, color.White)
             case 9:
-                text.Draw(screen, "Morningstar", fo, 128, 160, color.White)
+                text.Draw(screen, "Morningstar", fo, 448, 192, color.White)
             case 10:
-                text.Draw(screen, "Pike", fo, 128, 160, color.White)
+                text.Draw(screen, "Pike", fo, 448, 192, color.White)
             case 11:
-                text.Draw(screen, "Rapier", fo, 128, 160, color.White)
+                text.Draw(screen, "Rapier", fo, 448, 192, color.White)
             case 12:
-                text.Draw(screen, "Scimitar", fo, 128, 160, color.White)
+                text.Draw(screen, "Scimitar", fo, 448, 192, color.White)
             case 13:
-                text.Draw(screen, "Shortsword", fo, 128, 160, color.White)
+                text.Draw(screen, "Shortsword", fo, 448, 192, color.White)
             case 14:
-                text.Draw(screen, "Trident", fo, 128, 160, color.White)
+                text.Draw(screen, "Trident", fo, 448, 192, color.White)
             case 15:
-                text.Draw(screen, "War pick", fo, 128, 160, color.White)
+                text.Draw(screen, "War pick", fo, 448, 192, color.White)
             case 16:
-                text.Draw(screen, "Warhammer", fo, 128, 160, color.White)
+                text.Draw(screen, "Warhammer", fo, 448, 192, color.White)
             case 17:
-                text.Draw(screen, "Whip", fo, 128, 160, color.White)
+                text.Draw(screen, "Whip", fo, 448, 192, color.White)
             case 18:
-                text.Draw(screen, "Blowgun", fo, 128, 160, color.White)
+                text.Draw(screen, "Blowgun", fo, 448, 192, color.White)
             case 19:
-                text.Draw(screen, "Hand crossbow", fo, 128, 160, color.White)
+                text.Draw(screen, "Hand crossbow", fo, 448, 192, color.White)
             case 20:
-                text.Draw(screen, "Heavy crossbow", fo, 128, 160, color.White)
+                text.Draw(screen, "Heavy crossbow", fo, 448, 192, color.White)
             case 21:
-                text.Draw(screen, "Longbow", fo, 128, 160, color.White)
+                text.Draw(screen, "Longbow", fo, 448, 192, color.White)
             case 22:
-                text.Draw(screen, "Net", fo, 128, 160, color.White)
+                text.Draw(screen, "Net", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds (3249)")
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Shield", fo, 128, 192, color.White)
+                text.Draw(screen, "Shield", fo, 448, 224, color.White)
             case 1:
-                text.Draw(screen, "Battleaxe", fo, 128, 192, color.White)
+                text.Draw(screen, "Battleaxe", fo, 448, 224, color.White)
             case 2:
-                text.Draw(screen, "Flail", fo, 128, 192, color.White)
+                text.Draw(screen, "Flail", fo, 448, 224, color.White)
             case 3:
-                text.Draw(screen, "Glaive", fo, 128, 192, color.White)
+                text.Draw(screen, "Glaive", fo, 448, 224, color.White)
             case 4:
-                text.Draw(screen, "Greataxe", fo, 128, 192, color.White)
+                text.Draw(screen, "Greataxe", fo, 448, 224, color.White)
             case 5:
-                text.Draw(screen, "Greatsword", fo, 128, 192, color.White)
+                text.Draw(screen, "Greatsword", fo, 448, 224, color.White)
             case 6:
-                text.Draw(screen, "Halberd", fo, 128, 192, color.White)
+                text.Draw(screen, "Halberd", fo, 448, 224, color.White)
             case 7:
-                text.Draw(screen, "Lance", fo, 128, 192, color.White)
+                text.Draw(screen, "Lance", fo, 448, 224, color.White)
             case 8:
-                text.Draw(screen, "Longsword", fo, 128, 192, color.White)
+                text.Draw(screen, "Longsword", fo, 448, 224, color.White)
             case 9:
-                text.Draw(screen, "Maul", fo, 128, 192, color.White)
+                text.Draw(screen, "Maul", fo, 448, 224, color.White)
             case 10:
-                text.Draw(screen, "Morningstar", fo, 128, 192, color.White)
+                text.Draw(screen, "Morningstar", fo, 448, 224, color.White)
             case 11:
-                text.Draw(screen, "Pike", fo, 128, 192, color.White)
+                text.Draw(screen, "Pike", fo, 448, 224, color.White)
             case 12:
-                text.Draw(screen, "Rapier", fo, 128, 192, color.White)
+                text.Draw(screen, "Rapier", fo, 448, 224, color.White)
             case 13:
-                text.Draw(screen, "Scimitar", fo, 128, 192, color.White)
+                text.Draw(screen, "Scimitar", fo, 448, 224, color.White)
             case 14:
-                text.Draw(screen, "Shortsword", fo, 128, 192, color.White)
+                text.Draw(screen, "Shortsword", fo, 448, 224, color.White)
             case 15:
-                text.Draw(screen, "Trident", fo, 128, 192, color.White)
+                text.Draw(screen, "Trident", fo, 448, 224, color.White)
             case 16:
-                text.Draw(screen, "War pick", fo, 128, 192, color.White)
+                text.Draw(screen, "War pick", fo, 448, 224, color.White)
             case 17:
-                text.Draw(screen, "Warhammer", fo, 128, 192, color.White)
+                text.Draw(screen, "Warhammer", fo, 448, 224, color.White)
             case 18:
-                text.Draw(screen, "Whip", fo, 128, 192, color.White)
+                text.Draw(screen, "Whip", fo, 448, 224, color.White)
             case 19:
-                text.Draw(screen, "Blowgun", fo, 128, 192, color.White)
+                text.Draw(screen, "Blowgun", fo, 448, 224, color.White)
             case 20:
-                text.Draw(screen, "Hand crossbow", fo, 128, 192, color.White)
+                text.Draw(screen, "Hand crossbow", fo, 448, 224, color.White)
             case 21:
-                text.Draw(screen, "Heavy crossbow", fo, 128, 192, color.White)
+                text.Draw(screen, "Heavy crossbow", fo, 448, 224, color.White)
             case 22:
-                text.Draw(screen, "Longbow", fo, 128, 192, color.White)
+                text.Draw(screen, "Longbow", fo, 448, 224, color.White)
             case 23:
-                text.Draw(screen, "Net", fo, 128, 192, color.White)
+                text.Draw(screen, "Net", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds (3301)")
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Light crossbow", fo, 128, 224, color.White)
+                text.Draw(screen, "Light crossbow", fo, 448, 256, color.White)
             case 1:
-                text.Draw(screen, "Two handaxes", fo, 128, 224, color.White)
+                text.Draw(screen, "Two handaxes", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds (3309)")
             }
             switch option6 {
             case 0:
-                text.Draw(screen, "Dungeoneer's Pack", fo, 128, 256, color.White)
+                text.Draw(screen, "Dungeoneer's Pack", fo, 448, 288, color.White)
             case 1:
-                text.Draw(screen, "Explorer's Pack", fo, 128, 256, color.White)
+                text.Draw(screen, "Explorer's Pack", fo, 448, 288, color.White)
             default:
                 log.Fatal("Out of bounds (3317)")
             }
