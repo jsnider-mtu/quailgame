@@ -5422,6 +5422,21 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option4 (case 10)")
                 }
+                var leatherarmor items.Leatherarmor
+                var dagger0 items.Dagger
+                var dagger1 items.Dagger
+                err = p.Inv.Add(leatherarmor)
+                if err != nil {
+                    return errors.New("Failed to add leatherarmor to inv")
+                }
+                err = p.Inv.Add(dagger0)
+                if err != nil {
+                    return errors.New("Failed to add dagger0 to inv")
+                }
+                err = p.Inv.Add(dagger1)
+                if err != nil {
+                    return errors.New("Failed to add dagger1 to inv")
+                }
             case 11:
                 ac = 10 + ((dex - 10) / 2)
                 switch option0 {
