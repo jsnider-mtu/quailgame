@@ -1117,24 +1117,34 @@ func (g *Game) Update() error {
                 switch raceopt0 {
                 case 0:
                     ancestry = "Black"
+                    resistances = append(resistances, "acid")
                 case 1:
                     ancestry = "Blue"
+                    resistances = append(resistances, "lightning")
                 case 2:
                     ancestry = "Brass"
+                    resistances = append(resistances, "fire")
                 case 3:
                     ancestry = "Bronze"
+                    resistances = append(resistances, "lightning")
                 case 4:
                     ancestry = "Copper"
+                    resistances = append(resistances, "acid")
                 case 5:
                     ancestry = "Gold"
+                    resistances = append(resistances, "fire")
                 case 6:
                     ancestry = "Green"
+                    resistances = append(resistances, "poison")
                 case 7:
                     ancestry = "Red"
+                    resistances = append(resistances, "fire")
                 case 8:
                     ancestry = "Silver"
+                    resistances = append(resistances, "cold")
                 case 9:
                     ancestry = "White"
+                    resistances = append(resistances, "cold")
                 default:
                     return errors.New("Invalid value for raceopt0 (case 4)")
                 }
@@ -5412,6 +5422,7 @@ func (g *Game) Update() error {
                 Cha: cha,
                 ChaMod: (cha - 10) / 2,
                 ProfBonus: pb,
+                SavingThrows: savingthrows,
                 MaxHP: hp,
                 HP: hp,
                 TempHP: 0,

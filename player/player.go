@@ -86,9 +86,7 @@ func (s *Stats) Check() error {
 func (s *Stats) Save() string {
     var savingthrowsstr string
     for stkey, stval := range s.SavingThrows {
-    }
-    var skillsstr string
-    for skkey, skval := range s.Skills {
+        savingthrowsstr += stkey + ":" + strconv.Itoa(stval) + ","
     }
     var languagesstr string
     for lind, language := range s.Languages {
@@ -128,8 +126,7 @@ func (s *Stats) Save() string {
            "Cha:" + strconv.Itoa(s.Cha) + ";" +
            "ChaMod:" + strconv.Itoa(s.ChaMod) + ";" +
            "ProfBonus:" + strconv.Itoa(s.ProfBonus) + ";" +
-           "SavingThrows:" + "TODO;" +
-           "Skills:" + "TODO;" +
+           "SavingThrows:" + savingthrowsstr + ";" +
            "Speed:" + strconv.Itoa(s.Speed) + ";" +
            "MaxHP:" + strconv.Itoa(s.MaxHP) + ";" +
            "HP:" + strconv.Itoa(s.HP) + ";" +
