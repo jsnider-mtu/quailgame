@@ -1,16 +1,16 @@
 package items
 
-type WarPick struct {
+type Warpick struct {
 }
 
-func (w WarPick) Slot() string {
+func (w Warpick) Slot() string {
     return "RightHand"
 }
 
-func (w WarPick) Use() {
+func (w Warpick) Use() {
     // must be equipped to use
 }
 
-func (w WarPick) Save() string {
-    return "WarPick"
+func (w Warpick) Save() string {
+    return "Warpick"
 }

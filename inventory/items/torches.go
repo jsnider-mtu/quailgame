@@ -3,7 +3,7 @@ package items
 import "strconv"
 
 type Torches struct {
-    quantity int
+    Quantity int
 }
 
 func (t Torches) Slot() string {
@@ -14,5 +14,5 @@ func (t Torches) Use() {
 }
 
 func (t Torches) Save() string {
-    return "Torches," + strconv.Itoa(t.quantity)
+    return "Torches," + strconv.Itoa(t.Quantity)
 }

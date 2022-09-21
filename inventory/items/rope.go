@@ -3,7 +3,7 @@ package items
 import "strconv"
 
 type Rope struct {
-    length int
+    Length int
 }
 
 func (r Rope) Slot() string {
@@ -14,5 +14,5 @@ func (r Rope) Use() {
 }
 
 func (r Rope) Save() string {
-    return "Rope," + strconv.Itoa(r.length)
+    return "Rope," + strconv.Itoa(r.Length)
 }

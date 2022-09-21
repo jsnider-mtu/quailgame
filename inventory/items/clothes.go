@@ -1,7 +1,7 @@
 package items
 
 type Clothes struct {
-    quality string
+    Quality string
 }
 
 func (c Clothes) Slot() string {
@@ -12,5 +12,5 @@ func (c Clothes) Use() {
 }
 
 func (c Clothes) Save() string {
-    return "Clothes," + c.quality
+    return "Clothes," + c.Quality
 }

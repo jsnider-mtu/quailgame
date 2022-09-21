@@ -117,6 +117,7 @@ var (
     backgroundsel int = 0
     equipmentsel int = 0
     choices bool = false
+    racechoices bool = false
     dupwarning bool = false
     option0 int = 0
     option1 int = 0
@@ -127,6 +128,11 @@ var (
     option6 int = 0
     option7 int = 0
     option8 int = 0
+    raceopt0 int = 0
+    raceopt1 int = 0
+    raceopt2 int = 0
+    raceopt3 int = 0
+    raceopt4 int = 0
     str int
     dex int
     con int
@@ -2922,12 +2928,12 @@ func (g *Game) Update() error {
                 }
                 switch option7 {
                 case 0:
-                    var clothes = items.Clothes{quality: "Fine"}
+                    var clothes = items.Clothes{Quality: "Fine"}
                     var inkbottle items.Inkbottle
                     var inkpen items.Inkpen
                     var lamp items.Lamp
-                    var oilflask = items.Oilflask{quantity: 2}
-                    var paper = items.Paper{quantity: 5}
+                    var oilflask = items.Oilflask{Quantity: 2}
+                    var paper = items.Paper{Quantity: 5}
                     var perfume items.Perfume
                     var sealingwax items.Sealingwax
                     var soap items.Soap
@@ -2968,8 +2974,8 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add soap to inv")
                     }
                 case 1:
-                    var clothes = items.Clothes{quality: "Costume"}
-                    var candles = items.Candles{quantity: 5}
+                    var clothes = items.Clothes{Quality: "Costume"}
+                    var candles = items.Candles{Quantity: 5}
                     var disguisekit items.Disguisekit
                     err = p.Inv.Add(clothes)
                     if err != nil {
@@ -3207,7 +3213,7 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var candles = items.Candles{quantity: 10}
+                    var candles = items.Candles{Quantity: 10}
                     var tinderbox items.Tinderbox
                     err = p.Inv.Add(candles)
                     if err != nil {
@@ -3219,8 +3225,8 @@ func (g *Game) Update() error {
                     }
                 case 1:
                     var tinderbox items.Tinderbox
-                    var torches = items.Torches{quantity: 10}
-                    var rope = items.Rope{length: 50}
+                    var torches = items.Torches{Quantity: 10}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(tinderbox)
                     if err != nil {
                         return errors.New("Failed to add tinderbox to inv")
@@ -3816,9 +3822,9 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -3832,9 +3838,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -3979,9 +3985,9 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -3995,9 +4001,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4428,7 +4434,7 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var candles = items.Candles{quantity: 10}
+                    var candles = items.Candles{Quantity: 10}
                     var tinderbox items.Tinderbox
                     err = p.Inv.Add(candles)
                     if err != nil {
@@ -4440,8 +4446,8 @@ func (g *Game) Update() error {
                     }
                 case 1:
                     var tinderbox items.Tinderbox
-                    var torches = items.Torches{quantity: 10}
-                    var rope = items.Rope{length: 50}
+                    var torches = items.Torches{Quantity: 10}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(tinderbox)
                     if err != nil {
                         return errors.New("Failed to add tinderbox to inv")
@@ -4478,7 +4484,7 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option0 (case 7)")
                 }
-                switch optino1 {
+                switch option1 {
                 case 0:
                     proficiencies = append(proficiencies, "animal handling")
                 case 1:
@@ -4676,9 +4682,9 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4692,9 +4698,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4849,10 +4855,10 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var candles = items.Candles{quantity: 5}
-                    var oilflasks = items.Oilflask{quantity: 2}
+                    var candles = items.Candles{Quantity: 5}
+                    var oilflasks = items.Oilflask{Quantity: 2}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(candles)
                     if err != nil {
                         return errors.New("Failed to add candles to inv")
@@ -4870,9 +4876,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4886,9 +4892,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 2:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -5043,9 +5049,9 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -5059,9 +5065,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -5217,12 +5223,12 @@ func (g *Game) Update() error {
                     }
                 default:
                     return errors.New("Invalid value for option3 (case 10)")
-                j
+                }
                 switch option4 {
                 case 0:
                     var inkbottle items.Inkbottle
                     var inkpen items.Inkpen
-                    var papers = items.Paper{quantity: 10}
+                    var papers = items.Paper{Quantity: 10}
                     err = p.Inv.Add(inkbottle)
                     if err != nil {
                         return errors.New("Failed to add inkbottle to inv")
@@ -5236,10 +5242,10 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add papers to inv")
                     }
                 case 1:
-                    var candles = items.Candles{quantity: 5}
-                    var oilflasks = items.Oilflask{quantity: 2}
+                    var candles = items.Candles{Quantity: 5}
+                    var oilflasks = items.Oilflask{Quantity: 2}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(candles)
                     if err != nil {
                         return errors.New("Failed to add candles to inv")
@@ -5251,6 +5257,11 @@ func (g *Game) Update() error {
                     err = p.Inv.Add(tinderbox)
                     if err != nil {
                         return errors.New("Failed to add tinderbox to inv")
+                    }
+                    err = p.Inv.Add(rope)
+                    if err != nil {
+                        return errors.New("Failed to add rope to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option4 (case 10)")
                 }
@@ -5323,7 +5334,7 @@ func (g *Game) Update() error {
                 case 0:
                     var inkbottle items.Inkbottle
                     var inkpen items.Inkpen
-                    var papers = items.Paper{quantity: 10}
+                    var papers = items.Paper{Quantity: 10}
                     err = p.Inv.Add(inkbottle)
                     if err != nil {
                         return errors.New("Failed to add inkbottle to inv")
@@ -5337,9 +5348,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add papers to inv")
                     }
                 case 1:
-                    var torches = items.Torches{quantity: 10}
+                    var torches = items.Torches{Quantity: 10}
                     var tinderbox items.Tinderbox
-                    var rope = items.Rope{length: 50}
+                    var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -5958,6 +5969,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 text.Draw(screen, "Undercommon", fo, 448, 64, color.White)
             default:
                 log.Fatal("Out of bounds (2779)")
+            }
         case 4:
             text.Draw(screen, "Draconic Ancestry:", fo, 64, 64, color.White)
             text.Draw(screen, ">", fo, 432, 64, color.White)
@@ -8222,23 +8234,6 @@ func init() {
     classmap[9] = "Sorceror"
     classmap[10] = "Warlock"
     classmap[11] = "Wizard"
-
-    backgroundmap[0] = "Acolyte"
-    backgroundmap[1] = "Charlatan"
-    backgroundmap[2] = "Criminal"
-    backgroundmap[3] = "Entertainer"
-    backgroundmap[4] = "Folk Hero"
-    backgroundmap[5] = "Guild Artisan"
-    backgroundmap[6] = "Hermit"
-    backgroundmap[7] = "Noble"
-    backgroundmap[8] = "Outlander"
-    backgroundmap[9] = "Sage"
-    backgroundmap[10] = "Sailor"
-    backgroundmap[11] = "Soldier"
-    backgroundmap[12] = "Urchin"
-
-    equipmentmap[0] = "Pack 1"
-    equipmentmap[1] = "Pack 2"
 
     savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
