@@ -1,6 +1,9 @@
 package items
 
+import "strconv"
+
 type Dart struct {
+    Quantity int
 }
 
 func (d Dart) Slot() string {
@@ -12,5 +15,5 @@ func (d Dart) Use() {
 }
 
 func (d Dart) Save() string {
-    return "Dart"
+    return "Dart," + strconv.Itoa(d.Quantity)
 }

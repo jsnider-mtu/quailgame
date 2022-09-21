@@ -2645,6 +2645,41 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option3 (case 0)")
                 }
+                var torches = items.Torches{Quantity: 10}
+                var tinderbox items.Tinderbox
+                var rope = items.Rope{Length: 50}
+                err = p.Inv.Add(torches)
+                if err != nil {
+                    return errors.New("Failed to add torches to inv")
+                }
+                err = p.Inv.Add(tinderbox)
+                if err != nil {
+                    return errors.New("Failed to add tinderbox to inv")
+                }
+                err = p.Inv.Add(rope)
+                if err != nil {
+                    return errors.New("Failed to add rope to inv")
+                }
+                var javelin0 items.Javelin
+                var javelin1 items.Javelin
+                var javelin2 items.Javelin
+                var javelin3 items.Javelin
+                err = p.Inv.Add(javelin0)
+                if err != nil {
+                    return errors.New("Failed to javelin0 rope to inv")
+                }
+                err = p.Inv.Add(javelin1)
+                if err != nil {
+                    return errors.New("Failed to add javelin1 to inv")
+                }
+                err = p.Inv.Add(javelin2)
+                if err != nil {
+                    return errors.New("Failed to add javelin2 to inv")
+                }
+                err = p.Inv.Add(javelin3)
+                if err != nil {
+                    return errors.New("Failed to add javelin3 to inv")
+                }
             case 1:
                 ac = 11 + ((dex - 10) / 2)
                 switch option0 {
@@ -3069,6 +3104,16 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option8 (case 1)")
                 }
+                var leatherarmor items.Leatherarmor
+                var dagger items.Dagger
+                err = p.Inv.Add(leatherarmor)
+                if err != nil {
+                    return errors.New("Failed to add leatherarmor to inv")
+                }
+                err = p.Inv.Add(dagger)
+                if err != nil {
+                    return errors.New("Failed to add dagger to inv")
+                }
             case 2:
                 switch option0 {
                 case 0:
@@ -3261,6 +3306,11 @@ func (g *Game) Update() error {
                     }
                 default:
                     return errors.New("Invalid value for option5 (case 2)")
+                }
+                var shield items.Shield
+                err = p.Inv.Add(shield)
+                if err != nil {
+                    return errors.New("Failed to add shield to inv")
                 }
             case 3:
                 ac = 11 + ((dex - 10) / 2)
@@ -3468,6 +3518,26 @@ func (g *Game) Update() error {
                     }
                 default:
                     return errors.New("Invalid value for option3 (case 3)")
+                }
+                var leatherarmor items.Leatherarmor
+                err = p.Inv.Add(leatherarmor)
+                if err != nil {
+                    return errors.New("Failed to add leatherarmor to inv")
+                }
+                var torches = items.Torches{Quantity: 10}
+                var tinderbox items.Tinderbox
+                var rope = items.Rope{Length: 50}
+                err = p.Inv.Add(torches)
+                if err != nil {
+                    return errors.New("Failed to add torches to inv")
+                }
+                err = p.Inv.Add(tinderbox)
+                if err != nil {
+                    return errors.New("Failed to add tinderbox to inv")
+                }
+                err = p.Inv.Add(rope)
+                if err != nil {
+                    return errors.New("Failed to add rope to inv")
                 }
             case 4:
                 switch option0 {
@@ -4045,6 +4115,11 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option3 (case 5)")
                 }
+                var darts = items.Darts{Quantity: 10}
+                err = p.Inv.Add(darts)
+                if err != nil {
+                    return errors.New("Failed to add darts to inv")
+                }
             case 6:
                 ac = 16
                 switch option0 {
@@ -4491,6 +4566,11 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option5 (case 6)")
                 }
+                var chainmail items.Chainmail
+                err = p.Inv.Add(chainmail)
+                if err != nil {
+                    return errors.New("Failed to add chainmail to inv")
+                }
             case 7:
                 switch option0 {
                 case 0:
@@ -4750,6 +4830,16 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option6 (case 7)")
                 }
+                var longbow items.Longbow
+                var quiver = items.Quiver{Arrows: 20}
+                err = p.Inv.Add(longbow)
+                if err != nil {
+                    return errors.New("Failed to add longbow to inv")
+                }
+                err = p.Inv.Add(quiver)
+                if err != nil {
+                    return errors.New("Failed to add quiver to inv")
+                }
             case 8:
                 ac = 11 + ((dex - 10) / 2)
                 switch option0 {
@@ -4945,6 +5035,26 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option6 (case 8)")
                 }
+                var leatherarmor items.Leatherarmor
+                var dagger0 items.Dagger
+                var dagger1 items.Dagger
+                var thievestools items.Thievestools
+                err = p.Inv.Add(leatherarmor)
+                if err != nil {
+                    return errors.New("Failed to add leatherarmor to inv")
+                }
+                err = p.Inv.Add(dagger0)
+                if err != nil {
+                    return errors.New("Failed to add dagger0 to inv")
+                }
+                err = p.Inv.Add(dagger1)
+                if err != nil {
+                    return errors.New("Failed to add dagger1 to inv")
+                }
+                err = p.Inv.Add(thievestools)
+                if err != nil {
+                    return errors.New("Failed to add thievestools to inv")
+                }
             case 9:
                 ac = 10 + ((dex - 10) / 2)
                 switch option0 {
@@ -5118,6 +5228,16 @@ func (g *Game) Update() error {
                     }
                 default:
                     return errors.New("Invalid value for option4 (case 9)")
+                }
+                var dagger0 items.Dagger
+                var dagger1 items.Dagger
+                err = p.Inv.Add(dagger0)
+                if err != nil {
+                    return errors.New("Failed to add dagger0 to inv")
+                }
+                err = p.Inv.Add(dagger1)
+                if err != nil {
+                    return errors.New("Failed to add dagger1 to inv")
                 }
             case 10:
                 ac = 11 + ((dex - 10) / 2)

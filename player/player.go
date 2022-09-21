@@ -149,6 +149,10 @@ func (s *Stats) Save() string {
            "Ancestry:" + s.Ancestry + ";"
 }
 
+func (e *Equipment) Save() string {
+    return ""
+}
+
 func (p *Player) Unequip(slot string) {
     switch slot {
     case "Head":
