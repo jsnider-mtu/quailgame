@@ -5678,8 +5678,14 @@ func (g *Game) Update() error {
                 var x, y int
                 var csdonestr string
                 var invstr string
+                var statsstr string
+                var racestr string
+                var classstr string
+                var playerlvl int
+                var playerxp int
+                var equipmentstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &racestr, &classstr, &playerlvl, &playerxp, &equipmentstr)
                 }
                 err = rows.Err()
                 if err != nil {
@@ -5703,7 +5709,14 @@ func (g *Game) Update() error {
                         break
                     }
                     itemprops := strings.Split(item, ",")
-                    p.Inv.Add(items.LoadItem(itemprops[0], itemprops[1], itemprops[2]))
+                    switch len(itemprops) {
+                    case 1:
+                        p.Inv.Add(items.LoadItem(itemprops[0], nil))
+                    case 2:
+                        p.Inv.Add(items.LoadItem(itemprops[0], itemprops[1]))
+                    default:
+                        return errors.New("Too many itemprops")
+                    }
                 }
                 l = levels.LoadLvl(levelname, 0, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
