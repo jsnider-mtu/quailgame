@@ -6333,6 +6333,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if done {
                 csDone = append(csDone, curCS)
                 cutscene = false
+                save = true
             }
         }
     } else if creation {
