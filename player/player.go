@@ -87,8 +87,13 @@ func (s *Stats) Check() error {
 
 func (s *Stats) Save() string {
     var savingthrowsstr string
+    if s.SavingThrows == nil {
+        fmt.Println("s.SavingThrows == nil")
+    } else {
+        fmt.Println(fmt.Sprint(len(s.SavingThrows)))
+    }
     for stkey, stval := range s.SavingThrows {
-        savingthrowsstr += stkey + ":" + strconv.Itoa(stval) + ","
+        savingthrowsstr += stkey + "=" + strconv.Itoa(stval) + ","
     }
     var languagestr string
     for lind, language := range s.Languages {
@@ -135,8 +140,8 @@ func (s *Stats) Save() string {
            "HP:" + strconv.Itoa(s.HP) + ";" +
            "TempHP:" + strconv.Itoa(s.TempHP) + ";" +
            "HitDice:" + s.HitDice + ";" +
-           "DeathSaveSucc" + strconv.Itoa(s.DeathSaveSucc) + ";" +
-           "DeathSaveFail" + strconv.Itoa(s.DeathSaveFail) + ";" +
+           "DeathSaveSucc:" + strconv.Itoa(s.DeathSaveSucc) + ";" +
+           "DeathSaveFail:" + strconv.Itoa(s.DeathSaveFail) + ";" +
            "Languages:" + languagestr + ";" +
            "Size:" + strconv.Itoa(s.Size) + ";" +
            "Inspiration:" + strconv.FormatBool(s.Inspiration) + ";" +

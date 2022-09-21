@@ -633,7 +633,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 12 + con
+                hp = 12 + ((con - 10) / 2)
                 hd = "1d12"
                 savingthrows["str"] = ((str - 10) / 2) + pb
                 savingthrows["dex"] = (dex - 10) / 2
@@ -652,7 +652,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 8 + con
+                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = ((dex - 10) / 2) + pb
@@ -671,7 +671,7 @@ func (g *Game) Update() error {
                 intel = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 8 + con
+                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = (dex - 10) / 2
@@ -690,7 +690,7 @@ func (g *Game) Update() error {
                 str = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 8 + con
+                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = (dex - 10) / 2
@@ -711,7 +711,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 10 + con
+                hp = 10 + ((con - 10) / 2)
                 hd = "1d10"
                 savingthrows["str"] = ((str - 10) / 2) + pb
                 savingthrows["dex"] = (dex - 10) / 2
@@ -729,7 +729,7 @@ func (g *Game) Update() error {
                 intel = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 8 + con
+                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
                 savingthrows["str"] = ((str - 10) / 2) + pb
                 savingthrows["dex"] = ((dex - 10) / 2) + pb
@@ -747,7 +747,7 @@ func (g *Game) Update() error {
                 dex = abilities[4]
                 intel = abilities[5]
                 pb = 2
-                hp = 10 + con
+                hp = 10 + ((con - 10) / 2)
                 hd = "1d10"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = (dex - 10) / 2
@@ -765,7 +765,7 @@ func (g *Game) Update() error {
                 str = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 10 + con
+                hp = 10 + ((con - 10) / 2)
                 hd = "1d10"
                 savingthrows["str"] = ((str - 10) / 2) + pb
                 savingthrows["dex"] = ((dex - 10) / 2) + pb
@@ -784,7 +784,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 8 + con
+                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = ((dex - 10) / 2) + pb
@@ -803,7 +803,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 6 + con
+                hp = 6 + ((con - 10) / 2)
                 hd = "1d6"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = (dex - 10) / 2
@@ -822,7 +822,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 8 + con
+                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = (dex - 10) / 2
@@ -840,7 +840,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 6 + con
+                hp = 6 + ((con - 10) / 2)
                 hd = "1d6"
                 savingthrows["str"] = (str - 10) / 2
                 savingthrows["dex"] = (dex - 10) / 2
@@ -5650,6 +5650,7 @@ func (g *Game) Update() error {
                 }
                 var invstr string = p.Inv.Save()
                 var statsstr string = p.Stats.Save()
+                fmt.Println(statsstr)
                 var equipmentstr string = p.Equipment.Save()
                 _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Race, p.Class, p.Level, p.XP, equipmentstr)
                 if err != nil {
@@ -5691,6 +5692,11 @@ func (g *Game) Update() error {
                 if err != nil {
                     log.Fatal(err)
                 }
+                p.Stats = &player.Stats{}
+                p.Race = racestr
+                p.Class = classstr
+                p.Level = playerlvl
+                p.XP = playerxp
                 csdonestrarr := strings.Split(csdonestr, ",")
                 csDone = []int{}
                 for _, numstr := range csdonestrarr {
@@ -5716,6 +5722,237 @@ func (g *Game) Update() error {
                         p.Inv.Add(items.LoadItem(itemprops[0], itemprops[1]))
                     default:
                         return errors.New("Too many itemprops")
+                    }
+                }
+                statsstrarr := strings.Split(statsstr, ";")
+                for _, stat := range statsstrarr {
+                    if stat == "" {
+                        break
+                    }
+                    statname := strings.Split(stat, ":")[0]
+                    switch statname {
+                    case "AC":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("AC value is not an int")
+                        }
+                        p.Stats.AC = val
+                    case "Str":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Str value is not an int")
+                        }
+                        p.Stats.Str = val
+                    case "StrMod":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("StrMod value is not an int")
+                        }
+                        p.Stats.StrMod = val
+                    case "Dex":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Dex value is not an int")
+                        }
+                        p.Stats.Dex = val
+                    case "DexMod":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("DexMod value is not an int")
+                        }
+                        p.Stats.DexMod = val
+                    case "Con":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Con value is not an int")
+                        }
+                        p.Stats.Con = val
+                    case "ConMod":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("ConMod value is not an int")
+                        }
+                        p.Stats.ConMod = val
+                    case "Intel":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Intel value is not an int")
+                        }
+                        p.Stats.Intel = val
+                    case "IntelMod":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("IntelMod value is not an int")
+                        }
+                        p.Stats.IntelMod = val
+                    case "Wis":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Wis value is not an int")
+                        }
+                        p.Stats.Wis = val
+                    case "WisMod":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("WisMod value is not an int")
+                        }
+                        p.Stats.WisMod = val
+                    case "Cha":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Cha value is not an int")
+                        }
+                        p.Stats.Cha = val
+                    case "ChaMod":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("ChaMod value is not an int")
+                        }
+                        p.Stats.ChaMod = val
+                    case "ProfBonus":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("ProfBonus value is not an int")
+                        }
+                        p.Stats.ProfBonus = val
+                    case "Initiative":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Initiative value is not an int")
+                        }
+                        p.Stats.Initiative = val
+                    case "SavingThrows":
+                        starr := strings.Split(strings.Split(stat, ":")[1], ",")
+                        p.Stats.SavingThrows = make(map[string]int)
+                        for _, st := range starr {
+                            if st == "" {
+                                break
+                            }
+                            switch strings.Split(st, "=")[0] {
+                            case "str":
+                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
+                                if err != nil {
+                                    return errors.New("Saving throw str is not an int")
+                                }
+                                p.Stats.SavingThrows["str"] = val
+                            case "dex":
+                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
+                                if err != nil {
+                                    return errors.New("Saving throw dex is not an int")
+                                }
+                                p.Stats.SavingThrows["dex"] = val
+                            case "con":
+                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
+                                if err != nil {
+                                    return errors.New("Saving throw con is not an int")
+                                }
+                                p.Stats.SavingThrows["con"] = val
+                            case "intel":
+                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
+                                if err != nil {
+                                    return errors.New("Saving throw intel is not an int")
+                                }
+                                p.Stats.SavingThrows["intel"] = val
+                            case "wis":
+                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
+                                if err != nil {
+                                    return errors.New("Saving throw wis is not an int")
+                                }
+                                p.Stats.SavingThrows["wis"] = val
+                            case "cha":
+                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
+                                if err != nil {
+                                    return errors.New("Saving throw cha is not an int")
+                                }
+                                p.Stats.SavingThrows["cha"] = val
+                            default:
+                                return errors.New(fmt.Sprintf("Invalid saving throw: %s", strings.Split(st, "=")[0]))
+                            }
+                        }
+                    case "MaxHP":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("MaxHP value is not an int")
+                        }
+                        p.Stats.MaxHP = val
+                    case "HP":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("HP value is not an int")
+                        }
+                        p.Stats.HP = val
+                    case "TempHP":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("TempHP value is not an int")
+                        }
+                        p.Stats.TempHP = val
+                    case "HitDice":
+                        p.Stats.HitDice = strings.Split(stat, ":")[1]
+                    case "DeathSaveSucc":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("DeathSaveSucc value is not an int")
+                        }
+                        p.Stats.DeathSaveSucc = val
+                    case "DeathSaveFail":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("DeathSaveFail value is not an int")
+                        }
+                        p.Stats.DeathSaveFail = val
+                    case "Speed":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Speed value is not an int")
+                        }
+                        p.Stats.Speed = val
+                    case "Languages":
+                        p.Stats.Languages = strings.Split(strings.Split(stat, ":")[1], ",")
+                    case "Size":
+                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Size value is not an int")
+                        }
+                        p.Stats.Size = val
+                    case "Inspiration":
+                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Inspiration val is not bool")
+                        }
+                        p.Stats.Inspiration = boolval
+                    case "Darkvision":
+                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Darkvision val is not bool")
+                        }
+                        p.Stats.Darkvision = boolval
+                    case "Proficiencies":
+                        p.Stats.Proficiencies = strings.Split(strings.Split(stat, ":")[1], ",")
+                    case "Resistances":
+                        p.Stats.Resistances = strings.Split(strings.Split(stat, ":")[1], ",")
+                    case "Lucky":
+                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Lucky val is not bool")
+                        }
+                        p.Stats.Lucky = boolval
+                    case "Nimbleness":
+                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Nimbleness val is not bool")
+                        }
+                        p.Stats.Nimbleness = boolval
+                    case "Brave":
+                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return errors.New("Brave val is not bool")
+                        }
+                        p.Stats.Brave = boolval
+                    case "Ancestry":
+                        p.Stats.Ancestry = strings.Split(stat, ":")[1]
+                    default:
+                        return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
                 }
                 l = levels.LoadLvl(levelname, 0, x, y)
