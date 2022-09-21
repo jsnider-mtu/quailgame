@@ -51,3 +51,11 @@ func (i *Inv) SubtractSeeds(amount int) error {
     i.seeds -= amount
     return nil
 }
+
+func (i *Inv) Save() string {
+    var result string
+    for _, val := range i.items {
+        result += val.Save() + ";"
+    }
+    return result
+}
