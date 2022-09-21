@@ -503,7 +503,7 @@ func (g *Game) Update() error {
                         start = false
                         save = true
                         curCS = 0
-                        cutscene = true
+                        cutscene = false
                         creation = true
                     }
                 }
@@ -5583,6 +5583,7 @@ func (g *Game) Update() error {
             p.Equipment = &player.Equipment{}
             choices = false
             creation = false
+            cutscene = true
         }
         return nil
     } else {
