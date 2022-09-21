@@ -2625,7 +2625,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 11:
-                    var dart items.Dart
+                    var dart items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
@@ -2954,7 +2954,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 13:
-                    var dart items.Dart
+                    var dart items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
@@ -3256,7 +3256,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var dart items.Dart
+                    var dart items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
@@ -3429,7 +3429,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 12:
-                    var dart items.Dart
+                    var dart items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
@@ -4059,7 +4059,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 12:
-                    var dart items.Dart
+                    var dart items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
@@ -5157,7 +5157,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var dart items.Dart
+                    var dart items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
@@ -5345,7 +5345,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var dart items.Dart
+                    var dart items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")

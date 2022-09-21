@@ -14,5 +14,5 @@ func (q Quiver) Use() {
 }
 
 func (q Quiver) Save() string {
-    return "Quiver," + strconv.Itoa(d.Arrows)
+    return "Quiver," + strconv.Itoa(q.Arrows)
 }

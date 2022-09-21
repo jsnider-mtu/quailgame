@@ -2,18 +2,18 @@ package items
 
 import "strconv"
 
-type Dart struct {
+type Darts struct {
     Quantity int
 }
 
-func (d Dart) Slot() string {
+func (d Darts) Slot() string {
     return "RightHand"
 }
 
-func (d Dart) Use() {
+func (d Darts) Use() {
     // must be equipped to use
 }
 
-func (d Dart) Save() string {
+func (d Darts) Save() string {
     return "Dart," + strconv.Itoa(d.Quantity)
 }

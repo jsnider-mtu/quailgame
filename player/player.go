@@ -90,7 +90,7 @@ func (s *Stats) Save() string {
     for stkey, stval := range s.SavingThrows {
         savingthrowsstr += stkey + ":" + strconv.Itoa(stval) + ","
     }
-    var languagesstr string
+    var languagestr string
     for lind, language := range s.Languages {
         if lind == len(s.Languages) - 1 {
             languagestr += language
@@ -139,13 +139,13 @@ func (s *Stats) Save() string {
            "DeathSaveFail" + strconv.Itoa(s.DeathSaveFail) + ";" +
            "Languages:" + languagestr + ";" +
            "Size:" + strconv.Itoa(s.Size) + ";" +
-           "Inspiration:" + string(s.Inspiration) + ";" +
-           "Darkvision:" + string(s.Darkvision) + ";" +
+           "Inspiration:" + strconv.FormatBool(s.Inspiration) + ";" +
+           "Darkvision:" + strconv.FormatBool(s.Darkvision) + ";" +
            "Proficiencies:" + proficienciesstr + ";" +
            "Resistances:" + resistancesstr + ";" +
-           "Lucky:" + string(s.Lucky) + ";" +
-           "Nimbleness:" + string(s.Nimbleness) + ";" +
-           "Brave:" + string(s.Brave) + ";" +
+           "Lucky:" + strconv.FormatBool(s.Lucky) + ";" +
+           "Nimbleness:" + strconv.FormatBool(s.Nimbleness) + ";" +
+           "Brave:" + strconv.FormatBool(s.Brave) + ";" +
            "Ancestry:" + s.Ancestry + ";"
 }
 
