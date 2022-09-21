@@ -133,6 +133,7 @@ var (
     raceopt2 int = 0
     raceopt3 int = 0
     raceopt4 int = 0
+    ac int
     str int
     dex int
     con int
@@ -2396,6 +2397,7 @@ func (g *Game) Update() error {
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !dupwarning {
             switch classsel {
             case 0:
+                ac = 10 + ((dex - 10) / 2) + ((con - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "animal handling")
@@ -2634,6 +2636,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option3 (case 0)")
                 }
             case 1:
+                ac = 11 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "bagpipes")
@@ -3108,18 +3111,25 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add scalemail to inv")
                     }
+                    if ((dex - 10) / 2) > 2 {
+                        ac = 18
+                    } else {
+                        ac = 16 + ((dex - 10) / 2)
+                    }
                 case 1:
                     var leatherarmor items.Leatherarmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
                     }
+                    ac = 13 + ((dex - 10) / 2)
                 case 2:
                     var chainmail items.Chainmail
                     err = p.Inv.Add(chainmail)
                     if err != nil {
                         return errors.New("Failed to add chainmail to inv")
                     }
+                    ac = 18
                 default:
                     return errors.New("Invalid value for option3 (case 2)")
                 }
@@ -3243,6 +3253,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option5 (case 2)")
                 }
             case 3:
+                ac = 11 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -3290,6 +3301,7 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add shield to inv")
                     }
+                    ac += 2
                 case 1:
                     var club items.Club
                     err = p.Inv.Add(club)
@@ -3495,6 +3507,7 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add chainmail to inv")
                     }
+                    ac = 16
                 case 1:
                     var leatherarmor items.Leatherarmor
                     var longbow items.Longbow
@@ -3506,6 +3519,7 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add longbow to inv")
                     }
+                    ac = 11 + ((dex - 10) / 2)
                 default:
                     return errors.New("Invalid value for option2 (case 4)")
                 }
@@ -3658,6 +3672,7 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add shield to inv")
                     }
+                    ac += 2
                 case 1:
                     var battleaxe items.Battleaxe
                     err = p.Inv.Add(battleaxe)
@@ -3857,6 +3872,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option6 (case 4)")
                 }
             case 5:
+                ac = 10 + ((dex - 10) / 2) + ((wis - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "acrobatics")
@@ -3887,7 +3903,7 @@ func (g *Game) Update() error {
                 case 5:
                     proficiencies = append(proficiencies, "stealth")
                 default:
-                    return errors.New("Invalid value for optino1 (case 5)")
+                    return errors.New("Invalid value for option1 (case 5)")
                 }
                 switch option2 {
                 case 0:
@@ -4020,6 +4036,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option3 (case 5)")
                 }
             case 6:
+                ac = 16
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "athletics")
@@ -4201,6 +4218,7 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add shield to inv")
                     }
+                    ac += 2
                 case 1:
                     var battleaxe items.Battleaxe
                     err = p.Inv.Add(battleaxe)
@@ -4531,12 +4549,18 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add scalemail to inv")
                     }
+                    if ((dex - 10) / 2) > 2 {
+                        ac = 16
+                    } else {
+                        ac = 14 + ((dex - 10) / 2)
+                    }
                 case 1:
                     var leatherarmor items.Leatherarmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
                     }
+                    ac = 11 + ((dex - 10) / 2)
                 default:
                     return errors.New("Invalid value for option3 (case 7)")
                 }
@@ -4717,6 +4741,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option6 (case 7)")
                 }
             case 8:
+                ac = 11 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "acrobatics")
@@ -4911,6 +4936,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option6 (case 8)")
                 }
             case 9:
+                ac = 10 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -5084,6 +5110,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option4 (case 9)")
                 }
             case 10:
+                ac = 11 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -5266,6 +5293,7 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option4 (case 10)")
                 }
             case 11:
+                ac = 10 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -5370,6 +5398,7 @@ func (g *Game) Update() error {
                 return errors.New("Invalid value for classsel")
             }
             p.Stats = &player.Stats{
+                AC: ac,
                 Str: str,
                 StrMod: (str - 10) / 2,
                 Dex: dex,
@@ -5402,7 +5431,6 @@ func (g *Game) Update() error {
             }
             p.Race = racemap[racesel]
             p.Class = classmap[classsel]
-            //p.Background = backgroundmap[backgroundsel]
             p.Level = 1
             p.XP = 0
             p.Equipment = &player.Equipment{}
@@ -5472,15 +5500,10 @@ func (g *Game) Update() error {
                         csdonestr += strconv.Itoa(csdoneval) + ","
                     }
                 }
-                var invstr string
-                for itemind, item := range p.Inv.GetItems() {
-                    if itemind == len(p.Inv.GetItems()) - 1 {
-                        invstr += item.Save()
-                    } else {
-                        invstr += item.Save() + ";"
-                    }
-                }
-                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr)
+                var invstr string = p.Inv.Save()
+                var statsstr string = p.Stats.Save()
+                var equipmentstr string = p.Equipment.Save()
+                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Race, p.Class, p.Level, p.XP, equipmentstr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -8235,7 +8258,7 @@ func init() {
     classmap[10] = "Warlock"
     classmap[11] = "Wizard"
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "race,TEXT,0,null,0", "class,TEXT,0,null,0", "playerlevel,INT,0,null,0", "xp,INT,0,null,0", "equipment,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)

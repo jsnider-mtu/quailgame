@@ -3,6 +3,7 @@ package player
 import (
     "fmt"
     "log"
+    "strconv"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/quailgame/inventory"
@@ -80,6 +81,71 @@ type Player struct {
 
 func (s *Stats) Check() error {
     return nil
+}
+
+func (s *Stats) Save() string {
+    var savingthrowsstr string
+    for stkey, stval := range s.SavingThrows {
+    }
+    var skillsstr string
+    for skkey, skval := range s.Skills {
+    }
+    var languagesstr string
+    for lind, language := range s.Languages {
+        if lind == len(s.Languages) - 1 {
+            languagestr += language
+        } else {
+            languagestr += language + ","
+        }
+    }
+    var proficienciesstr string
+    for pind, prof := range s.Proficiencies {
+        if pind == len(s.Proficiencies) - 1 {
+            proficienciesstr += prof
+        } else {
+            proficienciesstr += prof + ","
+        }
+    }
+    var resistancesstr string
+    for rind, resist := range s.Resistances {
+        if rind == len(s.Resistances) - 1 {
+            resistancesstr += resist
+        } else {
+            resistancesstr += resist + ","
+        }
+    }
+    return "AC:" + strconv.Itoa(s.AC) + ";" +
+           "Str:" + strconv.Itoa(s.Str) + ";" +
+           "StrMod:" + strconv.Itoa(s.StrMod) + ";" +
+           "Dex:" + strconv.Itoa(s.Dex) + ";" +
+           "DexMod:" + strconv.Itoa(s.DexMod) + ";" +
+           "Con:" + strconv.Itoa(s.Con) + ";" +
+           "ConMod:" + strconv.Itoa(s.ConMod) + ";" +
+           "Intel:" + strconv.Itoa(s.Intel) + ";" +
+           "IntelMod:" + strconv.Itoa(s.IntelMod) + ";" +
+           "Wis:" + strconv.Itoa(s.Wis) + ";" +
+           "WisMod:" + strconv.Itoa(s.WisMod) + ";" +
+           "Cha:" + strconv.Itoa(s.Cha) + ";" +
+           "ChaMod:" + strconv.Itoa(s.ChaMod) + ";" +
+           "ProfBonus:" + strconv.Itoa(s.ProfBonus) + ";" +
+           "SavingThrows:" + "TODO;" +
+           "Skills:" + "TODO;" +
+           "Speed:" + strconv.Itoa(s.Speed) + ";" +
+           "MaxHP:" + strconv.Itoa(s.MaxHP) + ";" +
+           "HP:" + strconv.Itoa(s.HP) + ";" +
+           "TempHP:" + strconv.Itoa(s.TempHP) + ";" +
+           "HitDice:" + s.HitDice + ";" +
+           "DeathSaveSucc" + strconv.Itoa(s.DeathSaveSucc) + ";" +
+           "DeathSaveFail" + strconv.Itoa(s.DeathSaveFail) + ";" +
+           "Languages:" + languagestr + ";" +
+           "Size:" + strconv.Itoa(s.Size) + ";" +
+           "Darkvision:" + string(s.Darkvision) + ";" +
+           "Proficiencies:" + proficienciesstr + ";" +
+           "Resistances:" + resistancesstr + ";" +
+           "Lucky:" + string(s.Lucky) + ";" +
+           "Nimbleness:" + string(s.Nimbleness) + ";" +
+           "Brave:" + string(s.Brave) + ";" +
+           "Ancestry:" + s.Ancestry + ";"
 }
 
 func (p *Player) Unequip(slot string) {
