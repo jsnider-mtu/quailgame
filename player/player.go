@@ -24,6 +24,7 @@ type Stats struct {
     Cha int
     ChaMod int
     ProfBonus int
+    Initiative int
     SavingThrows map[string]int
     Skills map[string]int
     Speed int
@@ -35,6 +36,7 @@ type Stats struct {
     DeathSaveFail int
     Languages []string
     Size int
+    Inspiration bool
     Darkvision bool
     Proficiencies []string
     Resistances []string
@@ -126,6 +128,7 @@ func (s *Stats) Save() string {
            "Cha:" + strconv.Itoa(s.Cha) + ";" +
            "ChaMod:" + strconv.Itoa(s.ChaMod) + ";" +
            "ProfBonus:" + strconv.Itoa(s.ProfBonus) + ";" +
+           "Initiative:" + strconv.Itoa(s.Initiative) + ";" +
            "SavingThrows:" + savingthrowsstr + ";" +
            "Speed:" + strconv.Itoa(s.Speed) + ";" +
            "MaxHP:" + strconv.Itoa(s.MaxHP) + ";" +
@@ -136,6 +139,7 @@ func (s *Stats) Save() string {
            "DeathSaveFail" + strconv.Itoa(s.DeathSaveFail) + ";" +
            "Languages:" + languagestr + ";" +
            "Size:" + strconv.Itoa(s.Size) + ";" +
+           "Inspiration:" + string(s.Inspiration) + ";" +
            "Darkvision:" + string(s.Darkvision) + ";" +
            "Proficiencies:" + proficienciesstr + ";" +
            "Resistances:" + resistancesstr + ";" +
