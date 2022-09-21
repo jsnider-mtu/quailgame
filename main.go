@@ -2988,15 +2988,65 @@ func (g *Game) Update() error {
                 }
                 switch option8 {
                 case 0:
+                    var bagpipes items.Bagpipes
+                    err = p.Inv.Add(bagpipes)
+                    if err != nil {
+                        return errors.New("Failed to add bagpipes to inv")
+                    }
                 case 1:
+                    var drum items.Drum
+                    err = p.Inv.Add(drum)
+                    if err != nil {
+                        return errors.New("Failed to add drum to inv")
+                    }
                 case 2:
+                    var dulcimer items.Dulcimer
+                    err = p.Inv.Add(dulcimer)
+                    if err != nil {
+                        return errors.New("Failed to add dulcimer to inv")
+                    }
                 case 3:
+                    var flute items.Flute
+                    err = p.Inv.Add(flute)
+                    if err != nil {
+                        return errors.New("Failed to add flute to inv")
+                    }
                 case 4:
+                    var lute items.Lute
+                    err = p.Inv.Add(lute)
+                    if err != nil {
+                        return errors.New("Failed to add lute to inv")
+                    }
                 case 5:
+                    var lyre items.Lyre
+                    err = p.Inv.Add(lyre)
+                    if err != nil {
+                        return errors.New("Failed to add lyre to inv")
+                    }
                 case 6:
+                    var horn items.Horn
+                    err = p.Inv.Add(horn)
+                    if err != nil {
+                        return errors.New("Failed to add horn to inv")
+                    }
                 case 7:
+                    var panflute items.Panflute
+                    err = p.Inv.Add(panflute)
+                    if err != nil {
+                        return errors.New("Failed to add panflute to inv")
+                    }
                 case 8:
+                    var shawm items.Shawm
+                    err = p.Inv.Add(shawm)
+                    if err != nil {
+                        return errors.New("Failed to add shawm to inv")
+                    }
                 case 9:
+                    var viol items.Viol
+                    err = p.Inv.Add(viol)
+                    if err != nil {
+                        return errors.New("Failed to add viol to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option8 (case 1)")
                 }
