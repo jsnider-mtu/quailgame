@@ -40,6 +40,7 @@ type Stats struct {
     Lucky bool
     Nimbleness bool
     Brave bool
+    Ancestry string
 }
 
 type Equipment struct {

@@ -142,6 +142,7 @@ var (
     lucky bool = false
     nimbleness bool = false
     brave bool = false
+    ancestry string
 )
 
 var racemap = make(map[int]string)
@@ -931,7 +932,356 @@ func (g *Game) Update() error {
             }
             creationsel = 0
             creation = false
+            switch racesel {
+            case 3, 4, 6:
+                racechoices = true
+            default:
+                choices = true
+            }
+        }
+    } else if racechoices {
+        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+            proficiencies = make([]string, 0)
+            resistances = make([]string, 0)
+            languages = make([]string, 0)
+            darkvision = false
+            lucky = false
+            nimbleness = false
+            creationsel = 0
+            option0 = 0
+            option1 = 0
+            option2 = 0
+            option3 = 0
+            option4 = 0
+            option5 = 0
+            option6 = 0
+            option7 = 0
+            option8 = 0
+            racechoices = false
+            creation = true
+        }
+        switch racesel {
+        case 3:
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                raceopt0--
+                if raceopt0 < 0 {
+                    raceopt0 = 0
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                raceopt0++
+                if raceopt0 > 14 {
+                    raceopt0 = 14
+                }
+            }
+        case 4:
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                raceopt0--
+                if raceopt0 < 0 {
+                    raceopt0 = 0
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                raceopt0++
+                if raceopt0 > 9 {
+                    raceopt0 = 9
+                }
+            }
+        case 6:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    raceopt0--
+                    if raceopt0 < 0 {
+                        raceopt0 = 0
+                    }
+                case 1:
+                    raceopt1--
+                    if raceopt1 < 0 {
+                        raceopt1 = 0
+                    }
+                case 2:
+                    raceopt2--
+                    if raceopt2 < 0 {
+                        raceopt2 = 0
+                    }
+                case 3:
+                    raceopt3--
+                    if raceopt3 < 0 {
+                        raceopt3 = 0
+                    }
+                case 4:
+                    raceopt4--
+                    if raceopt4 < 0 {
+                        raceopt4 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds (1019)")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    raceopt0++
+                    if raceopt0 > 5 {
+                        raceopt0 = 5
+                    }
+                case 1:
+                    raceopt1++
+                    if raceopt1 > 5 {
+                        raceopt1 = 5
+                    }
+                case 2:
+                    raceopt2++
+                    if raceopt2 > 17 {
+                        raceopt2 = 17
+                    }
+                case 3:
+                    raceopt3++
+                    if raceopt3 > 17 {
+                        raceopt3 = 17
+                    }
+                case 4:
+                    raceopt4++
+                    if raceopt4 > 13 {
+                        raceopt4 = 13
+                    }
+                default:
+                    return errors.New("Out of bounds (1055)")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 4 {
+                creationsel = 4
+            }
+            if raceopt0 == raceopt1 || raceopt2 == raceopt3 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        default:
+            return errors.New("Invalid value for racesel")
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !dupwarning {
+            switch racesel {
+            case 3:
+                switch raceopt0 {
+                case 0:
+                    languages = append(languages, "Dwarvish")
+                case 1:
+                    languages = append(languages, "Elvish")
+                case 2:
+                    languages = append(languages, "Giant")
+                case 3:
+                    languages = append(languages, "Gnomish")
+                case 4:
+                    languages = append(languages, "Goblin")
+                case 5:
+                    languages = append(languages, "Halfling")
+                case 6:
+                    languages = append(languages, "Orc")
+                case 7:
+                    languages = append(languages, "Abyssal")
+                case 8:
+                    languages = append(languages, "Celestial")
+                case 9:
+                    languages = append(languages, "Draconic")
+                case 10:
+                    languages = append(languages, "Deep Speech")
+                case 11:
+                    languages = append(languages, "Infernal")
+                case 12:
+                    languages = append(languages, "Primordial")
+                case 13:
+                    languages = append(languages, "Sylvan")
+                case 14:
+                    languages = append(languages, "Undercommon")
+                default:
+                    return errors.New("Invalid value for raceopt0 (case 3)")
+                }
+            case 4:
+                switch raceopt0 {
+                case 0:
+                    ancestry = "Black"
+                case 1:
+                    ancestry = "Blue"
+                case 2:
+                    ancestry = "Brass"
+                case 3:
+                    ancestry = "Bronze"
+                case 4:
+                    ancestry = "Copper"
+                case 5:
+                    ancestry = "Gold"
+                case 6:
+                    ancestry = "Green"
+                case 7:
+                    ancestry = "Red"
+                case 8:
+                    ancestry = "Silver"
+                case 9:
+                    ancestry = "White"
+                default:
+                    return errors.New("Invalid value for raceopt0 (case 4)")
+                }
+            case 6:
+                switch raceopt0 {
+                case 0:
+                    str++
+                case 1:
+                    dex++
+                case 2:
+                    con++
+                case 3:
+                    intel++
+                case 4:
+                    wis++
+                case 5:
+                    cha++
+                default:
+                    return errors.New("Invalid value for raceopt0 (case 6)")
+                }
+                switch raceopt1 {
+                case 0:
+                    str++
+                case 1:
+                    dex++
+                case 2:
+                    con++
+                case 3:
+                    intel++
+                case 4:
+                    wis++
+                case 5:
+                    cha++
+                default:
+                    return errors.New("Invalid value for raceopt1 (case 6)")
+                }
+                switch raceopt2 {
+                case 0:
+                    proficiencies = append(proficiencies, "acrobatics")
+                case 1:
+                    proficiencies = append(proficiencies, "animal handling")
+                case 2:
+                    proficiencies = append(proficiencies, "arcana")
+                case 3:
+                    proficiencies = append(proficiencies, "athletics")
+                case 4:
+                    proficiencies = append(proficiencies, "deception")
+                case 5:
+                    proficiencies = append(proficiencies, "history")
+                case 6:
+                    proficiencies = append(proficiencies, "insight")
+                case 7:
+                    proficiencies = append(proficiencies, "intimidation")
+                case 8:
+                    proficiencies = append(proficiencies, "investigation")
+                case 9:
+                    proficiencies = append(proficiencies, "medicine")
+                case 10:
+                    proficiencies = append(proficiencies, "nature")
+                case 11:
+                    proficiencies = append(proficiencies, "perception")
+                case 12:
+                    proficiencies = append(proficiencies, "performance")
+                case 13:
+                    proficiencies = append(proficiencies, "persuasion")
+                case 14:
+                    proficiencies = append(proficiencies, "religion")
+                case 15:
+                    proficiencies = append(proficiencies, "sleight of hand")
+                case 16:
+                    proficiencies = append(proficiencies, "stealth")
+                case 17:
+                    proficiencies = append(proficiencies, "survival")
+                default:
+                    return errors.New("Invalid value for raceopt2 (case 6)")
+                }
+                switch raceopt3 {
+                case 0:
+                    proficiencies = append(proficiencies, "acrobatics")
+                case 1:
+                    proficiencies = append(proficiencies, "animal handling")
+                case 2:
+                    proficiencies = append(proficiencies, "arcana")
+                case 3:
+                    proficiencies = append(proficiencies, "athletics")
+                case 4:
+                    proficiencies = append(proficiencies, "deception")
+                case 5:
+                    proficiencies = append(proficiencies, "history")
+                case 6:
+                    proficiencies = append(proficiencies, "insight")
+                case 7:
+                    proficiencies = append(proficiencies, "intimidation")
+                case 8:
+                    proficiencies = append(proficiencies, "investigation")
+                case 9:
+                    proficiencies = append(proficiencies, "medicine")
+                case 10:
+                    proficiencies = append(proficiencies, "nature")
+                case 11:
+                    proficiencies = append(proficiencies, "perception")
+                case 12:
+                    proficiencies = append(proficiencies, "performance")
+                case 13:
+                    proficiencies = append(proficiencies, "persuasion")
+                case 14:
+                    proficiencies = append(proficiencies, "religion")
+                case 15:
+                    proficiencies = append(proficiencies, "sleight of hand")
+                case 16:
+                    proficiencies = append(proficiencies, "stealth")
+                case 17:
+                    proficiencies = append(proficiencies, "survival")
+                default:
+                    return errors.New("Invalid value for raceopt3 (case 6)")
+                }
+                switch raceopt4 {
+                case 0:
+                    languages = append(languages, "Dwarvish")
+                case 1:
+                    languages = append(languages, "Undercommon")
+                case 2:
+                    languages = append(languages, "Giant")
+                case 3:
+                    languages = append(languages, "Gnomish")
+                case 4:
+                    languages = append(languages, "Goblin")
+                case 5:
+                    languages = append(languages, "Halfling")
+                case 6:
+                    languages = append(languages, "Orc")
+                case 7:
+                    languages = append(languages, "Abyssal")
+                case 8:
+                    languages = append(languages, "Celestial")
+                case 9:
+                    languages = append(languages, "Draconic")
+                case 10:
+                    languages = append(languages, "Deep Speech")
+                case 11:
+                    languages = append(languages, "Infernal")
+                case 12:
+                    languages = append(languages, "Primordial")
+                case 13:
+                    languages = append(languages, "Sylvan")
+                default:
+                    return errors.New("Invalid value for raceopt4 (case 6)")
+                }
+            default:
+                return errors.New("Invalid value for racesel")
+            }
+            racechoices = false
             choices = true
+            return nil
         }
     } else if choices {
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
@@ -2037,7 +2387,7 @@ func (g *Game) Update() error {
         default:
             return errors.New("Invalid value for classsel")
         }
-        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !dupwarning {
             switch classsel {
             case 0:
             case 1:
@@ -2083,6 +2433,7 @@ func (g *Game) Update() error {
                 Lucky: lucky,
                 Nimbleness: nimbleness,
                 Brave: brave,
+                Ancestry: ancestry,
             }
             p.Race = racemap[racesel]
             p.Class = classmap[classsel]
@@ -2610,6 +2961,240 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, ">", fo, 32, 192, color.White)
         default:
             log.Fatal("Out of bounds (Draw)")
+        }
+    } else if racechoices {
+        text.Draw(screen, fmt.Sprintf("Race: %s", racemap[racesel]), fo, 64, 32, color.White)
+        if dupwarning {
+            text.Draw(screen, "No duplicates allowed", fo, 256, 512, color.RGBA{0xff, 0x0, 0x0, 0xff})
+        }
+        switch racesel {
+        case 3:
+            text.Draw(screen, "Language:", fo, 64, 64, color.White)
+            text.Draw(screen, ">", fo, 432, 64, color.White)
+            switch raceopt0 {
+            case 0:
+                text.Draw(screen, "Dwarvish", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Elvish", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Giant", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Gnomish", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Goblin", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Halfling", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Orc", fo, 448, 64, color.White)
+            case 7:
+                text.Draw(screen, "Abyssal", fo, 448, 64, color.White)
+            case 8:
+                text.Draw(screen, "Celestial", fo, 448, 64, color.White)
+            case 9:
+                text.Draw(screen, "Draconic", fo, 448, 64, color.White)
+            case 10:
+                text.Draw(screen, "Deep Speech", fo, 448, 64, color.White)
+            case 11:
+                text.Draw(screen, "Infernal", fo, 448, 64, color.White)
+            case 12:
+                text.Draw(screen, "Primordial", fo, 448, 64, color.White)
+            case 13:
+                text.Draw(screen, "Sylvan", fo, 448, 64, color.White)
+            case 14:
+                text.Draw(screen, "Undercommon", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (2779)")
+        case 4:
+            text.Draw(screen, "Draconic Ancestry:", fo, 64, 64, color.White)
+            text.Draw(screen, ">", fo, 432, 64, color.White)
+            switch raceopt0 {
+            case 0:
+                text.Draw(screen, "Black", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Blue", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Brass", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Bronze", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Copper", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Gold", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Green", fo, 448, 64, color.White)
+            case 7:
+                text.Draw(screen, "Red", fo, 448, 64, color.White)
+            case 8:
+                text.Draw(screen, "Silver", fo, 448, 64, color.White)
+            case 9:
+                text.Draw(screen, "White", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Ount of bounds (2805)")
+            }
+        case 6:
+            text.Draw(screen, "+1 to Attributes:", fo, 64, 64, color.White)
+            text.Draw(screen, "Skill Proficiencies:", fo, 64, 160, color.White)
+            text.Draw(screen, "Language:", fo, 64, 256, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 256, color.White)
+            default:
+                log.Fatal("Out of bounds (2592)")
+            }
+            switch raceopt0 {
+            case 0:
+                text.Draw(screen, "Strength", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Dexterity", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Constitution", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Intelligence", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Wisdom", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Charisma", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds (2836)")
+            }
+            switch raceopt1 {
+            case 0:
+                text.Draw(screen, "Strength", fo, 448, 96, color.White)
+            case 1:
+                text.Draw(screen, "Dexterity", fo, 448, 96, color.White)
+            case 2:
+                text.Draw(screen, "Constitution", fo, 448, 96, color.White)
+            case 3:
+                text.Draw(screen, "Intelligence", fo, 448, 96, color.White)
+            case 4:
+                text.Draw(screen, "Wisdom", fo, 448, 96, color.White)
+            case 5:
+                text.Draw(screen, "Charisma", fo, 448, 96, color.White)
+            default:
+                log.Fatal("Out of bounds (2852)")
+            }
+            switch raceopt2 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 448, 160, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 448, 160, color.White)
+            case 2:
+                text.Draw(screen, "Arcana", fo, 448, 160, color.White)
+            case 3:
+                text.Draw(screen, "Athletics", fo, 448, 160, color.White)
+            case 4:
+                text.Draw(screen, "Deception", fo, 448, 160, color.White)
+            case 5:
+                text.Draw(screen, "History", fo, 448, 160, color.White)
+            case 6:
+                text.Draw(screen, "Insight", fo, 448, 160, color.White)
+            case 7:
+                text.Draw(screen, "Intimidation", fo, 448, 160, color.White)
+            case 8:
+                text.Draw(screen, "Investigation", fo, 448, 160, color.White)
+            case 9:
+                text.Draw(screen, "Medicine", fo, 448, 160, color.White)
+            case 10:
+                text.Draw(screen, "Nature", fo, 448, 160, color.White)
+            case 11:
+                text.Draw(screen, "Perception", fo, 448, 160, color.White)
+            case 12:
+                text.Draw(screen, "Performance", fo, 448, 160, color.White)
+            case 13:
+                text.Draw(screen, "Persuasion", fo, 448, 160, color.White)
+            case 14:
+                text.Draw(screen, "Religion", fo, 448, 160, color.White)
+            case 15:
+                text.Draw(screen, "Sleight of Hand", fo, 448, 160, color.White)
+            case 16:
+                text.Draw(screen, "Stealth", fo, 448, 160, color.White)
+            case 17:
+                text.Draw(screen, "Survival", fo, 448, 160, color.White)
+            default:
+                log.Fatal("Out of bounds (2892)")
+            }
+            switch raceopt3 {
+            case 0:
+                text.Draw(screen, "Acrobatics", fo, 448, 192, color.White)
+            case 1:
+                text.Draw(screen, "Animal Handling", fo, 448, 192, color.White)
+            case 2:
+                text.Draw(screen, "Arcana", fo, 448, 192, color.White)
+            case 3:
+                text.Draw(screen, "Athletics", fo, 448, 192, color.White)
+            case 4:
+                text.Draw(screen, "Deception", fo, 448, 192, color.White)
+            case 5:
+                text.Draw(screen, "History", fo, 448, 192, color.White)
+            case 6:
+                text.Draw(screen, "Insight", fo, 448, 192, color.White)
+            case 7:
+                text.Draw(screen, "Intimidation", fo, 448, 192, color.White)
+            case 8:
+                text.Draw(screen, "Investigation", fo, 448, 192, color.White)
+            case 9:
+                text.Draw(screen, "Medicine", fo, 448, 192, color.White)
+            case 10:
+                text.Draw(screen, "Nature", fo, 448, 192, color.White)
+            case 11:
+                text.Draw(screen, "Perception", fo, 448, 192, color.White)
+            case 12:
+                text.Draw(screen, "Performance", fo, 448, 192, color.White)
+            case 13:
+                text.Draw(screen, "Persuasion", fo, 448, 192, color.White)
+            case 14:
+                text.Draw(screen, "Religion", fo, 448, 192, color.White)
+            case 15:
+                text.Draw(screen, "Sleight of Hand", fo, 448, 192, color.White)
+            case 16:
+                text.Draw(screen, "Stealth", fo, 448, 192, color.White)
+            case 17:
+                text.Draw(screen, "Survival", fo, 448, 192, color.White)
+            default:
+                log.Fatal("Out of bounds (2932)")
+            }
+            switch raceopt4 {
+            case 0:
+                text.Draw(screen, "Dwarvish", fo, 448, 256, color.White)
+            case 1:
+                text.Draw(screen, "Undercommon", fo, 448, 256, color.White)
+            case 2:
+                text.Draw(screen, "Giant", fo, 448, 256, color.White)
+            case 3:
+                text.Draw(screen, "Gnomish", fo, 448, 256, color.White)
+            case 4:
+                text.Draw(screen, "Goblin", fo, 448, 256, color.White)
+            case 5:
+                text.Draw(screen, "Halfling", fo, 448, 256, color.White)
+            case 6:
+                text.Draw(screen, "Orc", fo, 448, 256, color.White)
+            case 7:
+                text.Draw(screen, "Abyssal", fo, 448, 256, color.White)
+            case 8:
+                text.Draw(screen, "Celestial", fo, 448, 256, color.White)
+            case 9:
+                text.Draw(screen, "Draconic", fo, 448, 256, color.White)
+            case 10:
+                text.Draw(screen, "Deep Speech", fo, 448, 256, color.White)
+            case 11:
+                text.Draw(screen, "Infernal", fo, 448, 256, color.White)
+            case 12:
+                text.Draw(screen, "Primordial", fo, 448, 256, color.White)
+            case 13:
+                text.Draw(screen, "Sylvan", fo, 448, 256, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+        default:
+            fmt.Println("Skipping race choices")
         }
     } else if choices {
         text.Draw(screen, fmt.Sprintf("Class: %s", classmap[classsel]), fo, 64, 32, color.White)
