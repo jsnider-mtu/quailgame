@@ -5079,43 +5079,279 @@ func (g *Game) Update() error {
                 }
             case 10:
                 switch option0 {
+                case 0:
+                    proficiencies = append(proficiencies, "arcana")
+                case 1:
+                    proficiencies = append(proficiencies, "deception")
+                case 2:
+                    proficiencies = append(proficiencies, "history")
+                case 3:
+                    proficiencies = append(proficiencies, "intimidation")
+                case 4:
+                    proficiencies = append(proficiencies, "investigation")
+                case 5:
+                    proficiencies = append(proficiencies, "nature")
+                case 6:
+                    proficiencies = append(proficiencies, "religion")
                 default:
                     return errors.New("Invalid value for option0 (case 10)")
                 }
                 switch option1 {
+                case 0:
+                    proficiencies = append(proficiencies, "arcana")
+                case 1:
+                    proficiencies = append(proficiencies, "deception")
+                case 2:
+                    proficiencies = append(proficiencies, "history")
+                case 3:
+                    proficiencies = append(proficiencies, "intimidation")
+                case 4:
+                    proficiencies = append(proficiencies, "investigation")
+                case 5:
+                    proficiencies = append(proficiencies, "nature")
+                case 6:
+                    proficiencies = append(proficiencies, "religion")
                 default:
                     return errors.New("Invalid value for option1 (case 10)")
                 }
                 switch option2 {
+                case 0:
+                    var lightcrossbow items.Lightcrossbow
+                    err = p.Inv.Add(lightcrossbow)
+                    if err != nil {
+                        return errors.New("Failed to add lightcrossbow to inv")
+                    }
+                case 1:
+                    var club items.Club
+                    err = p.Inv.Add(club)
+                    if err != nil {
+                        return errors.New("Failed to add club to inv")
+                    }
+                case 2:
+                    var dagger items.Dagger
+                    err = p.Inv.Add(dagger)
+                    if err != nil {
+                        return errors.New("Failed to add dagger to inv")
+                    }
+                case 3:
+                    var greatclub items.Greatclub
+                    err = p.Inv.Add(greatclub)
+                    if err != nil {
+                        return errors.New("Failed to add greatclub to inv")
+                    }
+                case 4:
+                    var handaxe items.Handaxe
+                    err = p.Inv.Add(handaxe)
+                    if err != nil {
+                        return errors.New("Failed to add handaxe to inv")
+                    }
+                case 5:
+                    var javelin items.Javelin
+                    err = p.Inv.Add(javelin)
+                    if err != nil {
+                        return errors.New("Failed to add javelin to inv")
+                    }
+                case 6:
+                    var lighthammer items.Lighthammer
+                    err = p.Inv.Add(lighthammer)
+                    if err != nil {
+                        return errors.New("Failed to add lighthammer to inv")
+                    }
+                case 7:
+                    var mace items.Mace
+                    err = p.Inv.Add(mace)
+                    if err != nil {
+                        return errors.New("Failed to add mace to inv")
+                    }
+                case 8:
+                    var quarterstaff items.Quarterstaff
+                    err = p.Inv.Add(quarterstaff)
+                    if err != nil {
+                        return errors.New("Failed to add quarterstaff to inv")
+                    }
+                case 9:
+                    var sickle items.Sickle
+                    err = p.Inv.Add(sickle)
+                    if err != nil {
+                        return errors.New("Failed to add sickle to inv")
+                    }
+                case 10:
+                    var spear items.Spear
+                    err = p.Inv.Add(spear)
+                    if err != nil {
+                        return errors.New("Failed to add spear to inv")
+                    }
+                case 11:
+                    var dart items.Dart
+                    err = p.Inv.Add(dart)
+                    if err != nil {
+                        return errors.New("Failed to add dart to inv")
+                    }
+                case 12:
+                    var shortbow items.Shortbow
+                    err = p.Inv.Add(shortbow)
+                    if err != nil {
+                        return errors.New("Failed to add shortbow to inv")
+                    }
+                case 13:
+                    var sling items.Sling
+                    err = p.Inv.Add(sling)
+                    if err != nil {
+                        return errors.New("Failed to add sling to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option2 (case 10)")
                 }
                 switch option3 {
+                case 0:
+                    var componentpouch items.Componentpouch
+                    err = p.Inv.Add(componentpouch)
+                    if err != nil {
+                        return errors.New("Failed to add componentpouch to inv")
+                    }
+                case 1:
+                    var arcanefocus items.Arcanefocus
+                    err = p.Inv.Add(arcanefocus)
+                    if err != nil {
+                        return errors.New("Failed to add arcanefocus to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option3 (case 10)")
                 j
                 switch option4 {
+                case 0:
+                    var inkbottle items.Inkbottle
+                    var inkpen items.Inkpen
+                    var papers = items.Paper{quantity: 10}
+                    err = p.Inv.Add(inkbottle)
+                    if err != nil {
+                        return errors.New("Failed to add inkbottle to inv")
+                    }
+                    err = p.Inv.Add(inkpen)
+                    if err != nil {
+                        return errors.New("Failed to add inkpen to inv")
+                    }
+                    err = p.Inv.Add(papers)
+                    if err != nil {
+                        return errors.New("Failed to add papers to inv")
+                    }
+                case 1:
+                    var candles = items.Candles{quantity: 5}
+                    var oilflasks = items.Oilflask{quantity: 2}
+                    var tinderbox items.Tinderbox
+                    var rope = items.Rope{length: 50}
+                    err = p.Inv.Add(candles)
+                    if err != nil {
+                        return errors.New("Failed to add candles to inv")
+                    }
+                    err = p.Inv.Add(oilflasks)
+                    if err != nil {
+                        return errors.New("Failed to add oilflasks to inv")
+                    }
+                    err = p.Inv.Add(tinderbox)
+                    if err != nil {
+                        return errors.New("Failed to add tinderbox to inv")
                 default:
                     return errors.New("Invalid value for option4 (case 10)")
                 }
             case 11:
                 switch option0 {
+                case 0:
+                    proficiencies = append(proficiencies, "arcana")
+                case 1:
+                    proficiencies = append(proficiencies, "history")
+                case 2:
+                    proficiencies = append(proficiencies, "insight")
+                case 3:
+                    proficiencies = append(proficiencies, "investigation")
+                case 4:
+                    proficiencies = append(proficiencies, "medicine")
+                case 5:
+                    proficiencies = append(proficiencies, "religion")
                 default:
                     return errors.New("Invalid value for option0 (case 11)")
                 }
                 switch option1 {
+                case 0:
+                    proficiencies = append(proficiencies, "arcana")
+                case 1:
+                    proficiencies = append(proficiencies, "history")
+                case 2:
+                    proficiencies = append(proficiencies, "insight")
+                case 3:
+                    proficiencies = append(proficiencies, "investigation")
+                case 4:
+                    proficiencies = append(proficiencies, "medicine")
+                case 5:
+                    proficiencies = append(proficiencies, "religion")
                 default:
                     return errors.New("Invalid value for option1 (case 11)")
                 }
                 switch option2 {
+                case 0:
+                    var quarterstaff items.Quarterstaff
+                    err = p.Inv.Add(quarterstaff)
+                    if err != nil {
+                        return errors.New("Failed to add quarterstaff to inv")
+                    }
+                case 1:
+                    var dagger items.Dagger
+                    err = p.Inv.Add(dagger)
+                    if err != nil {
+                        return errors.New("Failed to add dagger to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option2 (case 11)")
                 }
                 switch option3 {
+                case 0:
+                    var componentpouch items.Componentpouch
+                    err = p.Inv.Add(componentpouch)
+                    if err != nil {
+                        return errors.New("Failed to add componentpouch to inv")
+                    }
+                case 1:
+                    var arcanefocus items.Arcanefocus
+                    err = p.Inv.Add(arcanefocus)
+                    if err != nil {
+                        return errors.New("Failed to add arcanefocus to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option3 (case 11)")
                 }
                 switch option4 {
+                case 0:
+                    var inkbottle items.Inkbottle
+                    var inkpen items.Inkpen
+                    var papers = items.Paper{quantity: 10}
+                    err = p.Inv.Add(inkbottle)
+                    if err != nil {
+                        return errors.New("Failed to add inkbottle to inv")
+                    }
+                    err = p.Inv.Add(inkpen)
+                    if err != nil {
+                        return errors.New("Failed to add inkpen to inv")
+                    }
+                    err = p.Inv.Add(papers)
+                    if err != nil {
+                        return errors.New("Failed to add papers to inv")
+                    }
+                case 1:
+                    var torches = items.Torches{quantity: 10}
+                    var tinderbox items.Tinderbox
+                    var rope = items.Rope{length: 50}
+                    err = p.Inv.Add(torches)
+                    if err != nil {
+                        return errors.New("Failed to add torches to inv")
+                    }
+                    err = p.Inv.Add(tinderbox)
+                    if err != nil {
+                        return errors.New("Failed to add tinderbox to inv")
+                    }
+                    err = p.Inv.Add(rope)
+                    if err != nil {
+                        return errors.New("Failed to add rope to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option4 (case 11)")
                 }
