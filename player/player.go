@@ -87,11 +87,6 @@ func (s *Stats) Check() error {
 
 func (s *Stats) Save() string {
     var savingthrowsstr string
-    if s.SavingThrows == nil {
-        fmt.Println("s.SavingThrows == nil")
-    } else {
-        fmt.Println(fmt.Sprint(len(s.SavingThrows)))
-    }
     for stkey, stval := range s.SavingThrows {
         savingthrowsstr += stkey + "=" + strconv.Itoa(stval) + ","
     }

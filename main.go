@@ -1568,7 +1568,6 @@ func (g *Game) Update() error {
                 case 2:
                     option2++
                     for _, prof := range proficiencies {
-                        fmt.Println(prof)
                         if prof == "warhammer" || prof == "martial weapons" {
                             if option2 > 1 {
                                 option2 = 1
