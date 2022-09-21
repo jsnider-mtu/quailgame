@@ -1,5 +1,7 @@
 package items
 
+import "strconv"
+
 type Candles struct {
     quantity int
 }
@@ -12,5 +14,5 @@ func (c Candles) Use() {
 }
 
 func (c Candles) Save() string {
-    return "Candles"
+    return "Candles," + strconv.Itoa(c.quantity)
 }

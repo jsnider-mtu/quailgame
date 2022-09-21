@@ -1,5 +1,7 @@
 package items
 
+import "strconv"
+
 type Paper struct {
     quantity int
 }
@@ -12,5 +14,5 @@ func (p Paper) Use() {
 }
 
 func (p Paper) Save() string {
-    return "Paper"
+    return "Paper," + strconv.Itoa(p.quantity)
 }
