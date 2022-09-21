@@ -60,6 +60,7 @@ type Equipment struct {
     RightMid inventory.Item
     RightInd inventory.Item
     RightThumb inventory.Item
+    Clothes inventory.Item
 }
 
 type Player struct {

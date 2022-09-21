@@ -2629,38 +2629,374 @@ func (g *Game) Update() error {
                 }
             case 1:
                 switch option0 {
+                case 0:
+                    proficiencies = append(proficiencies, "bagpipes")
+                case 1:
+                    proficiencies = append(proficiencies, "drum")
+                case 2:
+                    proficiencies = append(proficiencies, "dulcimer")
+                case 3:
+                    proficiencies = append(proficiencies, "flute")
+                case 4:
+                    proficiencies = append(proficiencies, "lute")
+                case 5:
+                    proficiencies = append(proficiencies, "lyre")
+                case 6:
+                    proficiencies = append(proficiencies, "horn")
+                case 7:
+                    proficiencies = append(proficiencies, "pan flute")
+                case 8:
+                    proficiencies = append(proficiencies, "shawm")
+                case 9:
+                    proficiencies = append(proficiencies, "viol")
                 default:
                     return errors.New("Invalid value for option0 (case 1)")
                 }
                 switch option1 {
+                case 0:
+                    proficiencies = append(proficiencies, "bagpipes")
+                case 1:
+                    proficiencies = append(proficiencies, "drum")
+                case 2:
+                    proficiencies = append(proficiencies, "dulcimer")
+                case 3:
+                    proficiencies = append(proficiencies, "flute")
+                case 4:
+                    proficiencies = append(proficiencies, "lute")
+                case 5:
+                    proficiencies = append(proficiencies, "lyre")
+                case 6:
+                    proficiencies = append(proficiencies, "horn")
+                case 7:
+                    proficiencies = append(proficiencies, "pan flute")
+                case 8:
+                    proficiencies = append(proficiencies, "shawm")
+                case 9:
+                    proficiencies = append(proficiencies, "viol")
                 default:
                     return errors.New("Invalid value for option1 (case 1)")
                 }
                 switch option2 {
+                case 0:
+                    proficiencies = append(proficiencies, "bagpipes")
+                case 1:
+                    proficiencies = append(proficiencies, "drum")
+                case 2:
+                    proficiencies = append(proficiencies, "dulcimer")
+                case 3:
+                    proficiencies = append(proficiencies, "flute")
+                case 4:
+                    proficiencies = append(proficiencies, "lute")
+                case 5:
+                    proficiencies = append(proficiencies, "lyre")
+                case 6:
+                    proficiencies = append(proficiencies, "horn")
+                case 7:
+                    proficiencies = append(proficiencies, "pan flute")
+                case 8:
+                    proficiencies = append(proficiencies, "shawm")
+                case 9:
+                    proficiencies = append(proficiencies, "viol")
                 default:
                     return errors.New("Invalid value for option2 (case 1)")
                 }
                 switch option3 {
+                case 0:
+                    proficiencies = append(proficiencies, "acrobatics")
+                case 1:
+                    proficiencies = append(proficiencies, "animal handling")
+                case 2:
+                    proficiencies = append(proficiencies, "arcana")
+                case 3:
+                    proficiencies = append(proficiencies, "athletics")
+                case 4:
+                    proficiencies = append(proficiencies, "deception")
+                case 5:
+                    proficiencies = append(proficiencies, "history")
+                case 6:
+                    proficiencies = append(proficiencies, "insight")
+                case 7:
+                    proficiencies = append(proficiencies, "intimidation")
+                case 8:
+                    proficiencies = append(proficiencies, "investigation")
+                case 9:
+                    proficiencies = append(proficiencies, "medicine")
+                case 10:
+                    proficiencies = append(proficiencies, "nature")
+                case 11:
+                    proficiencies = append(proficiencies, "perception")
+                case 12:
+                    proficiencies = append(proficiencies, "performance")
+                case 13:
+                    proficiencies = append(proficiencies, "persuasion")
+                case 14:
+                    proficiencies = append(proficiencies, "religion")
+                case 15:
+                    proficiencies = append(proficiencies, "sleight of hand")
+                case 16:
+                    proficiencies = append(proficiencies, "stealth")
+                case 17:
+                    proficiencies = append(proficiencies, "survival")
                 default:
                     return errors.New("Invalid value for option3 (case 1)")
                 }
                 switch option4 {
+                case 0:
+                    proficiencies = append(proficiencies, "acrobatics")
+                case 1:
+                    proficiencies = append(proficiencies, "animal handling")
+                case 2:
+                    proficiencies = append(proficiencies, "arcana")
+                case 3:
+                    proficiencies = append(proficiencies, "athletics")
+                case 4:
+                    proficiencies = append(proficiencies, "deception")
+                case 5:
+                    proficiencies = append(proficiencies, "history")
+                case 6:
+                    proficiencies = append(proficiencies, "insight")
+                case 7:
+                    proficiencies = append(proficiencies, "intimidation")
+                case 8:
+                    proficiencies = append(proficiencies, "investigation")
+                case 9:
+                    proficiencies = append(proficiencies, "medicine")
+                case 10:
+                    proficiencies = append(proficiencies, "nature")
+                case 11:
+                    proficiencies = append(proficiencies, "perception")
+                case 12:
+                    proficiencies = append(proficiencies, "performance")
+                case 13:
+                    proficiencies = append(proficiencies, "persuasion")
+                case 14:
+                    proficiencies = append(proficiencies, "religion")
+                case 15:
+                    proficiencies = append(proficiencies, "sleight of hand")
+                case 16:
+                    proficiencies = append(proficiencies, "stealth")
+                case 17:
+                    proficiencies = append(proficiencies, "survival")
                 default:
                     return errors.New("Invalid value for option4 (case 1)")
                 }
                 switch option5 {
+                case 0:
+                    proficiencies = append(proficiencies, "acrobatics")
+                case 1:
+                    proficiencies = append(proficiencies, "animal handling")
+                case 2:
+                    proficiencies = append(proficiencies, "arcana")
+                case 3:
+                    proficiencies = append(proficiencies, "athletics")
+                case 4:
+                    proficiencies = append(proficiencies, "deception")
+                case 5:
+                    proficiencies = append(proficiencies, "history")
+                case 6:
+                    proficiencies = append(proficiencies, "insight")
+                case 7:
+                    proficiencies = append(proficiencies, "intimidation")
+                case 8:
+                    proficiencies = append(proficiencies, "investigation")
+                case 9:
+                    proficiencies = append(proficiencies, "medicine")
+                case 10:
+                    proficiencies = append(proficiencies, "nature")
+                case 11:
+                    proficiencies = append(proficiencies, "perception")
+                case 12:
+                    proficiencies = append(proficiencies, "performance")
+                case 13:
+                    proficiencies = append(proficiencies, "persuasion")
+                case 14:
+                    proficiencies = append(proficiencies, "religion")
+                case 15:
+                    proficiencies = append(proficiencies, "sleight of hand")
+                case 16:
+                    proficiencies = append(proficiencies, "stealth")
+                case 17:
+                    proficiencies = append(proficiencies, "survival")
                 default:
                     return errors.New("Invalid value for option5 (case 1)")
                 }
                 switch option6 {
+                case 0:
+                    var rapier items.Rapier
+                    err = p.Inv.Add(rapier)
+                    if err != nil {
+                        return errors.New("Failed to add rapier to inv")
+                    }
+                case 1:
+                    var longsword items.Longsword
+                    err = p.Inv.Add(longsword)
+                    if err != nil {
+                        return errors.New("Failed to add longsword to inv")
+                    }
+                case 2:
+                    var club items.Club
+                    err = p.Inv.Add(club)
+                    if err != nil {
+                        return errors.New("Failed to add club to inv")
+                    }
+                case 3:
+                    var dagger items.Dagger
+                    err = p.Inv.Add(dagger)
+                    if err != nil {
+                        return errors.New("Failed to add dagger to inv")
+                    }
+                case 4:
+                    var greatclub items.Greatclub
+                    err = p.Inv.Add(greatclub)
+                    if err != nil {
+                        return errors.New("Failed to add greatclub to inv")
+                    }
+                case 5:
+                    var handaxe items.Handaxe
+                    err = p.Inv.Add(handaxe)
+                    if err != nil {
+                        return errors.New("Failed to add handaxe to inv")
+                    }
+                case 6:
+                    var javelin items.Javelin
+                    err = p.Inv.Add(javelin)
+                    if err != nil {
+                        return errors.New("Failed to add javelin to inv")
+                    }
+                case 7:
+                    var lighthammer items.Lighthammer
+                    err = p.Inv.Add(lighthammer)
+                    if err != nil {
+                        return errors.New("Failed to add lighthammer to inv")
+                    }
+                case 8:
+                    var mace items.Mace
+                    err = p.Inv.Add(mace)
+                    if err != nil {
+                        return errors.New("Failed to add mace to inv")
+                    }
+                case 9:
+                    var quarterstaff items.Quarterstaff
+                    err = p.Inv.Add(quarterstaff)
+                    if err != nil {
+                        return errors.New("Failed to add quarterstaff to inv")
+                    }
+                case 10:
+                    var sickle items.Sickle
+                    err = p.Inv.Add(sickle)
+                    if err != nil {
+                        return errors.New("Failed to add sickle to inv")
+                    }
+                case 11:
+                    var spear items.Spear
+                    err = p.Inv.Add(spear)
+                    if err != nil {
+                        return errors.New("Failed to add spear to inv")
+                    }
+                case 12:
+                    var lightcrossbow items.Lightcrossbow
+                    err = p.Inv.Add(lightcrossbow)
+                    if err != nil {
+                        return errors.New("Failed to add lightcrossbow to inv")
+                    }
+                case 13:
+                    var dart items.Dart
+                    err = p.Inv.Add(dart)
+                    if err != nil {
+                        return errors.New("Failed to add dart to inv")
+                    }
+                case 14:
+                    var shortbow items.Shortbow
+                    err = p.Inv.Add(shortbow)
+                    if err != nil {
+                        return errors.New("Failed to add shortbow to inv")
+                    }
+                case 15:
+                    var sling items.Sling
+                    err = p.Inv.Add(sling)
+                    if err != nil {
+                        return errors.New("Failed to add sling to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option6 (case 1)")
                 }
                 switch option7 {
+                case 0:
+                    var clothes = items.Clothes{quality: "Fine"}
+                    var inkbottle items.Inkbottle
+                    var inkpen items.Inkpen
+                    var lamp items.Lamp
+                    var oilflask = items.Oilflask{quantity: 2}
+                    var paper = items.Paper{quantity: 5}
+                    var perfume items.Perfume
+                    var sealingwax items.Sealingwax
+                    var soap items.Soap
+                    err = p.Inv.Add(clothes)
+                    if err != nil {
+                        return errors.New("Failed to add clothes to inv")
+                    }
+                    err = p.Inv.Add(inkbottle)
+                    if err != nil {
+                        return errors.New("Failed to add inkbottle to inv")
+                    }
+                    err = p.Inv.Add(inkpen)
+                    if err != nil {
+                        return errors.New("Failed to add inkpen to inv")
+                    }
+                    err = p.Inv.Add(lamp)
+                    if err != nil {
+                        return errors.New("Failed to add lamp to inv")
+                    }
+                    err = p.Inv.Add(oilflask)
+                    if err != nil {
+                        return errors.New("Failed to add oilflask to inv")
+                    }
+                    err = p.Inv.Add(paper)
+                    if err != nil {
+                        return errors.New("Failed to add paper to inv")
+                    }
+                    err = p.Inv.Add(perfume)
+                    if err != nil {
+                        return errors.New("Failed to add perfume to inv")
+                    }
+                    err = p.Inv.Add(sealingwax)
+                    if err != nil {
+                        return errors.New("Failed to add sealingwax to inv")
+                    }
+                    err = p.Inv.Add(soap)
+                    if err != nil {
+                        return errors.New("Failed to add soap to inv")
+                    }
+                case 1:
+                    var clothes = items.Clothes{quality: "Costume"}
+                    var candles = items.Candles{quantity: 5}
+                    var disguisekit items.Disguisekit
+                    err = p.Inv.Add(clothes)
+                    if err != nil {
+                        return errors.New("Failed to add clothes to inv")
+                    }
+                    err = p.Inv.Add(candles)
+                    if err != nil {
+                        return errors.New("Failed to add candles to inv")
+                    }
+                    err = p.Inv.Add(disguisekit)
+                    if err != nil {
+                        return errors.New("Failed to add disguisekit to inv")
+                    }
                 default:
                     return errors.New("Invalid value for option7 (case 1)")
                 }
                 switch option8 {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
                 default:
                     return errors.New("Invalid value for option8 (case 1)")
                 }
@@ -3952,7 +4288,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             case 16:
                 text.Draw(screen, "Stealth", fo, 448, 192, color.White)
             case 17:
-                text.Draw(screen, "Acrobics", fo, 448, 192, color.White)
+                text.Draw(screen, "Survival", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds (2808)")
             }
@@ -3992,7 +4328,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             case 16:
                 text.Draw(screen, "Stealth", fo, 448, 224, color.White)
             case 17:
-                text.Draw(screen, "Acrobics", fo, 448, 224, color.White)
+                text.Draw(screen, "Survival", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds (2848)")
             }
@@ -4032,7 +4368,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             case 16:
                 text.Draw(screen, "Stealth", fo, 448, 256, color.White)
             case 17:
-                text.Draw(screen, "Acrobics", fo, 448, 256, color.White)
+                text.Draw(screen, "Survival", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds (2888)")
             }
