@@ -154,7 +154,6 @@ var (
 
 var racemap = make(map[int]string)
 var classmap = make(map[int]string)
-//var backgroundmap = make(map[int]string)
 var equipmentmap = make(map[int]string)
 var abilities = make([]int, 6)
 var savingthrows = make(map[string]int)
@@ -562,7 +561,6 @@ func (g *Game) Update() error {
             creation = false
             start = true
         }
-        // character creation
         if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
             creationsel--
         }
@@ -607,14 +605,11 @@ func (g *Game) Update() error {
             creationsel = 0
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-            // Save player info; gen stats
-            // Roll ability scores; sort then assign based on class
             onescore := make([]int, 4)
             for x := 0; x < 6; x++ {
                 for a := 0; a < 4; a++ {
                     onescore[a] = rand.Intn(6) + 1
                 }
-                // sort onescore
                 sort.Slice(onescore, func(i, j int) bool {
                     return onescore[i] > onescore[j]
                 })
@@ -1574,11 +1569,6 @@ func (g *Game) Update() error {
                             }
                             return nil
                         }
-//                        } else {
-//                            if option2 > 0 {
-//                                option2 = 0
-//                            }
-//                        }
                     }
                     if option2 > 0 {
                         option2 = 0
@@ -1592,11 +1582,6 @@ func (g *Game) Update() error {
                             }
                             return nil
                         }
-//                        } else {
-//                            if option3 > 1 {
-//                                option3 = 1
-//                            }
-//                        }
                     }
                     if option3 > 1 {
                         option3 = 1
@@ -6337,7 +6322,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
     } else if creation {
-        // character creation
         text.Draw(screen, fmt.Sprintf("Name:       %s", name), fo, 64, 64, color.White)
         text.Draw(screen, fmt.Sprintf("Race:       %s", racemap[racesel]), fo, 64, 128, color.White)
         text.Draw(screen, fmt.Sprintf("Class:      %s", classmap[classsel]), fo, 64, 192, color.White)
