@@ -259,6 +259,7 @@ func (g *Game) Update() error {
                         firstsave = false
                         start = false
                         save = true
+                        creation = true
                         overwritewarning = false
                     } else {
                         overwritewarning = false
