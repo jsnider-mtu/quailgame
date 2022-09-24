@@ -492,6 +492,7 @@ func (g *Game) Update() error {
                         }
                         sb.Reset()
                         l = levels.LoadLvl("One", 0)
+                        p.Name = name
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
                         down = true
@@ -5677,6 +5678,7 @@ func (g *Game) Update() error {
                 if err != nil {
                     log.Fatal(err)
                 }
+                p.Name = savename
                 p.Stats = &player.Stats{}
                 p.Race = racestr
                 p.Class = classstr

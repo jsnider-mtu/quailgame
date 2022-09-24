@@ -75,8 +75,6 @@ type Player struct {
     Race string
     Class string
     Level int
-    Background string
-    Alignment string
     XP int
     Equipment *Equipment
 }
@@ -268,91 +266,91 @@ func (p *Player) Equip(item inventory.Item) {
                 p.Inv.Drop(item)
             case "Torso":
                 if p.Equipment.Torso != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.Torso)
                 }
                 p.Equipment.Torso = item
                 p.Inv.Drop(item)
             case "Legs":
                 if p.Equipment.Legs != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.Legs)
                 }
                 p.Equipment.Legs = item
                 p.Inv.Drop(item)
             case "Feet":
                 if p.Equipment.Feet != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.Feet)
                 }
                 p.Equipment.Feet = item
                 p.Inv.Drop(item)
             case "LeftPinky":
                 if p.Equipment.LeftPinky != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.LeftPinky)
                 }
                 p.Equipment.LeftPinky = item
                 p.Inv.Drop(item)
             case "LeftRing":
                 if p.Equipment.LeftRing != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.LeftRing)
                 }
                 p.Equipment.LeftRing = item
                 p.Inv.Drop(item)
             case "LeftMid":
                 if p.Equipment.LeftMid != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.LeftMid)
                 }
                 p.Equipment.LeftMid = item
                 p.Inv.Drop(item)
             case "LeftInd":
                 if p.Equipment.LeftInd != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.LeftInd)
                 }
                 p.Equipment.LeftInd = item
                 p.Inv.Drop(item)
             case "LeftThumb":
                 if p.Equipment.LeftThumb != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.LeftThumb)
                 }
                 p.Equipment.LeftThumb = item
                 p.Inv.Drop(item)
             case "RightPinky":
                 if p.Equipment.RightPinky != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.RightPinky)
                 }
                 p.Equipment.RightPinky = item
                 p.Inv.Drop(item)
             case "RightRing":
                 if p.Equipment.RightRing != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.RightRing)
                 }
                 p.Equipment.RightRing = item
                 p.Inv.Drop(item)
             case "RightMid":
                 if p.Equipment.RightMid != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.RightMid)
                 }
                 p.Equipment.RightMid = item
                 p.Inv.Drop(item)
             case "RightInd":
                 if p.Equipment.RightInd != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.RightInd)
                 }
                 p.Equipment.RightInd = item
                 p.Inv.Drop(item)
             case "RightThumb":
                 if p.Equipment.RightThumb != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.RightThumb)
                 }
                 p.Equipment.RightThumb = item
                 p.Inv.Drop(item)
             case "LeftHand":
                 if p.Equipment.LeftHand != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.LeftHand)
                 }
                 p.Equipment.LeftHand = item
                 p.Inv.Drop(item)
             case "RightHand":
                 if p.Equipment.RightHand != nil {
-                    p.Inv.Add(p.Equipment.Head)
+                    p.Inv.Add(p.Equipment.RightHand)
                 }
                 p.Equipment.RightHand = item
                 p.Inv.Drop(item)
