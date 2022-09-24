@@ -609,6 +609,7 @@ func (g *Game) Update() error {
             creationsel = 0
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            p.Inv.Clear()
             onescore := make([]int, 4)
             for x := 0; x < 6; x++ {
                 for a := 0; a < 4; a++ {

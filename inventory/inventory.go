@@ -40,6 +40,11 @@ func (i *Inv) Drop(item Item) {
     return
 }
 
+func (i *Inv) Clear() {
+    i.items = make([]Item, 0)
+    return
+}
+
 func (i *Inv) AddSeeds(amount int) {
     i.seeds += amount
     return
