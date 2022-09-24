@@ -1,6 +1,9 @@
 package items
 
-import "strconv"
+import (
+    "fmt"
+    "strconv"
+)
 
 type Paper struct {
     Quantity int
@@ -18,5 +21,5 @@ func (p Paper) Save() string {
 }
 
 func (p Paper) PrettyPrint() string {
-    return "Paper\t\tQuantity: " + strconv.Itoa(p.Quantity)
+    return fmt.Sprintf("Paper%17s", "Quantity: " + strconv.Itoa(p.Quantity))
 }

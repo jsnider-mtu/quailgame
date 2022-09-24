@@ -50,6 +50,7 @@ var (
     findloads bool = true
     pause bool = false
     overworld bool = false
+    invmenu bool = false
     pausesel int = 0
     save bool = false
     firstsave bool = false
@@ -5594,12 +5595,16 @@ func (g *Game) Update() error {
                     pause = false
                 case 1:
                     load = true
+                    overworld = false
+                    invmenu = false
                     pause = false
                 case 2:
                     start = true
                     loads = [][2]string{}
                     loadsfound = false
                     findloads = true
+                    overworld = false
+                    invmenu = false
                     pause = false
                 case 3:
                     os.Exit(0)
@@ -5960,6 +5965,9 @@ func (g *Game) Update() error {
             }
             if !dialogopen {
                 npcCount++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyI) && !overworld {
+                invmenu = !invmenu
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyM) {
                 overworld = !overworld
@@ -8371,6 +8379,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
                             GeoM: dagm})
                 }
             }
+        }
+    }
+    if invmenu {
+        blankImage := ebiten.NewImage(w, h)
+        blankImage.Fill(color.RGBA{0x00, 0x00, 0x00, 0x80})
+        screen.DrawImage(blankImage, nil)
+        invitems := p.Inv.GetItems()
+        for iind, ival := range invitems {
+            text.Draw(screen, ival.PrettyPrint(), fo, 64, 64 + (32 * iind), color.White)
         }
     }
     if overworld {

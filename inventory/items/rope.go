@@ -1,6 +1,9 @@
 package items
 
-import "strconv"
+import (
+    "fmt"
+    "strconv"
+)
 
 type Rope struct {
     Length int
@@ -18,5 +21,5 @@ func (r Rope) Save() string {
 }
 
 func (r Rope) PrettyPrint() string {
-    return "Rope\t\tLength: " + strconv.Itoa(r.Length)
+    return fmt.Sprintf("Rope%18s", "Length: " + strconv.Itoa(r.Length))
 }
