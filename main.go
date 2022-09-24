@@ -8418,7 +8418,12 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, fmt.Sprintf("Int: %d (%+d)", p.Stats.Intel, p.Stats.IntelMod), fo, 32, 192, color.White)
         text.Draw(screen, fmt.Sprintf("Wis: %d (%+d)", p.Stats.Wis, p.Stats.WisMod), fo, 32, 224, color.White)
         text.Draw(screen, fmt.Sprintf("Cha: %d (%+d)", p.Stats.Cha, p.Stats.ChaMod), fo, 32, 256, color.White)
-        text.Draw(screen, fmt.Sprintf("AC: %d", p.Stats.AC), fo, 192, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("AC: %d", p.Stats.AC), fo, 576, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Proficiency Bonus: %+d", p.Stats.ProfBonus), fo, 256, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("HP: %d/%d", p.Stats.HP, p.Stats.MaxHP), fo, 256, 32, color.White)
+        text.Draw(screen, fmt.Sprintf("Temp HP: %d", p.Stats.TempHP), fo, 576, 32, color.White)
+        text.Draw(screen, fmt.Sprintf("Initiative: %+d", p.Stats.Initiative), fo, 256, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Speed: %d", p.Stats.Speed), fo, 576, 128, color.White)
     }
     if overworld {
         screen.DrawImage(blankImage, nil)
