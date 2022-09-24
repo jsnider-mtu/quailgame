@@ -51,6 +51,7 @@ var (
     pause bool = false
     overworld bool = false
     invmenu bool = false
+    charsheet bool = false
     pausesel int = 0
     save bool = false
     firstsave bool = false
@@ -63,6 +64,7 @@ var (
     lightningImage *ebiten.Image
     rainImage *ebiten.Image
     overworldImage *ebiten.Image
+    blankImage *ebiten.Image
     pcDownOffsetX int = 0
     pcDownOffsetY int = 0
     pcLeftOffsetX int = 0
@@ -5597,6 +5599,7 @@ func (g *Game) Update() error {
                     load = true
                     overworld = false
                     invmenu = false
+                    charsheet = false
                     pause = false
                 case 2:
                     start = true
@@ -5605,6 +5608,7 @@ func (g *Game) Update() error {
                     findloads = true
                     overworld = false
                     invmenu = false
+                    charsheet = false
                     pause = false
                 case 3:
                     os.Exit(0)
@@ -5967,7 +5971,12 @@ func (g *Game) Update() error {
                 npcCount++
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyI) && !overworld {
+                charsheet = false
                 invmenu = !invmenu
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyC) && !overworld {
+                invmenu = false
+                charsheet = !charsheet
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyM) {
                 overworld = !overworld
@@ -8382,17 +8391,26 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if invmenu {
-        blankImage := ebiten.NewImage(w, h)
-        blankImage.Fill(color.RGBA{0x00, 0x00, 0x00, 0x80})
         screen.DrawImage(blankImage, nil)
         invitems := p.Inv.GetItems()
         for iind, ival := range invitems {
             text.Draw(screen, ival.PrettyPrint(), fo, 64, 64 + (32 * iind), color.White)
         }
     }
+    if charsheet {
+        screen.DrawImage(blankImage, nil)
+        text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
+        text.Draw(screen, fmt.Sprintf("Race: %s", p.Race), fo, 32, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Class: %s", p.Class), fo, 256, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Level: %d", p.Level), fo, 576, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Str: %d (%+d)", p.Stats.Str, p.Stats.StrMod), fo, 32, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Dex: %d (%+d)", p.Stats.Dex, p.Stats.DexMod), fo, 32, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Con: %d (%+d)", p.Stats.Con, p.Stats.ConMod), fo, 32, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Int: %d (%+d)", p.Stats.Intel, p.Stats.IntelMod), fo, 32, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Wis: %d (%+d)", p.Stats.Wis, p.Stats.WisMod), fo, 32, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("Cha: %d (%+d)", p.Stats.Cha, p.Stats.ChaMod), fo, 32, 256, color.White)
+    }
     if overworld {
-        blankImage := ebiten.NewImage(w, h)
-        blankImage.Fill(color.RGBA{0x00, 0x00, 0x00, 0xb0})
         screen.DrawImage(blankImage, nil)
         iw, _ := overworldImage.Size()
         owgm := ebiten.GeoM{}
@@ -8636,6 +8654,9 @@ func init() {
     if err != nil {
         log.Fatal(err)
     }
+
+    blankImage = ebiten.NewImage(768, 576)
+    blankImage.Fill(color.RGBA{0x00, 0x00, 0x00, 0xb0})
 
     racemap[0] = "Dwarf"
     racemap[1] = "Elf"
