@@ -14,3 +14,7 @@ func (r Rapier) Use() {
 func (r Rapier) Save() string {
     return "Rapier"
 }
+
+func (r Rapier) PrettyPrint() string {
+    return "Rapier"
+}

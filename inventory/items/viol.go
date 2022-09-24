@@ -13,3 +13,7 @@ func (v Viol) Use() {
 func (v Viol) Save() string {
     return "Viol"
 }
+
+func (v Viol) PrettyPrint() string {
+    return "Viol"
+}

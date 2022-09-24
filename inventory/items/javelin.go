@@ -14,3 +14,7 @@ func (j Javelin) Use() {
 func (j Javelin) Save() string {
     return "Javelin"
 }
+
+func (j Javelin) PrettyPrint() string {
+    return "Javelin"
+}

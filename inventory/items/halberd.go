@@ -14,3 +14,7 @@ func (h Halberd) Use() {
 func (h Halberd) Save() string {
     return "Halberd"
 }
+
+func (h Halberd) PrettyPrint() string {
+    return "Halberd"
+}

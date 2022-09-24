@@ -13,3 +13,7 @@ func (t Tinderbox) Use() {
 func (t Tinderbox) Save() string {
     return "Tinderbox"
 }
+
+func (t Tinderbox) PrettyPrint() string {
+    return "Tinderbox"
+}

@@ -13,3 +13,7 @@ func (p Perfume) Use() {
 func (p Perfume) Save() string {
     return "Perfume"
 }
+
+func (p Perfume) PrettyPrint() string {
+    return "Perfume"
+}

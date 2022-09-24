@@ -14,3 +14,7 @@ func (c Club) Use() {
 func (c Club) Save() string {
     return "Club"
 }
+
+func (c Club) PrettyPrint() string {
+    return "Club"
+}

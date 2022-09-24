@@ -13,3 +13,7 @@ func (s Sealingwax) Use() {
 func (s Sealingwax) Save() string {
     return "Sealingwax"
 }
+
+func (s Sealingwax) PrettyPrint() string {
+    return "Sealingwax"
+}

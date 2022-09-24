@@ -16,3 +16,7 @@ func (o Oilflask) Use() {
 func (o Oilflask) Save() string {
     return "Oilflask," + strconv.Itoa(o.Quantity)
 }
+
+func (o Oilflask) PrettyPrint() string {
+    return "Oilflask\t\tQuantity: " + strconv.Itoa(o.Quantity)
+}

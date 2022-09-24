@@ -14,3 +14,7 @@ func (l Lance) Use() {
 func (l Lance) Save() string {
     return "Lance"
 }
+
+func (l Lance) PrettyPrint() string {
+    return "Lance"
+}

@@ -14,3 +14,7 @@ func (l Longsword) Use() {
 func (l Longsword) Save() string {
     return "Longsword"
 }
+
+func (l Longsword) PrettyPrint() string {
+    return "Longsword"
+}

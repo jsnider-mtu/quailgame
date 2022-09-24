@@ -16,3 +16,7 @@ func (t Torches) Use() {
 func (t Torches) Save() string {
     return "Torches," + strconv.Itoa(t.Quantity)
 }
+
+func (t Torches) PrettyPrint() string {
+    return "Torches\t\tQuantity: " + strconv.Itoa(t.Quantity)
+}

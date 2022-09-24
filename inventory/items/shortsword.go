@@ -14,3 +14,7 @@ func (s Shortsword) Use() {
 func (s Shortsword) Save() string {
     return "Shortsword"
 }
+
+func (s Shortsword) PrettyPrint() string {
+    return "Shortsword"
+}

@@ -14,3 +14,7 @@ func (t Trident) Use() {
 func (t Trident) Save() string {
     return "Trident"
 }
+
+func (t Trident) PrettyPrint() string {
+    return "Trident"
+}

@@ -14,3 +14,7 @@ func (l Lighthammer) Use() {
 func (l Lighthammer) Save() string {
     return "Lighthammer"
 }
+
+func (l Lighthammer) PrettyPrint() string {
+    return "Lighthammer"
+}

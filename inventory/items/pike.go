@@ -14,3 +14,7 @@ func (p Pike) Use() {
 func (p Pike) Save() string {
     return "Pike"
 }
+
+func (p Pike) PrettyPrint() string {
+    return "Pike"
+}

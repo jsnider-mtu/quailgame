@@ -14,3 +14,7 @@ func (q Quarterstaff) Use() {
 func (q Quarterstaff) Save() string {
     return "Quarterstaff"
 }
+
+func (q Quarterstaff) PrettyPrint() string {
+    return "Quarterstaff"
+}

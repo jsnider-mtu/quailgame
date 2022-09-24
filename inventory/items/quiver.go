@@ -16,3 +16,7 @@ func (q Quiver) Use() {
 func (q Quiver) Save() string {
     return "Quiver," + strconv.Itoa(q.Arrows)
 }
+
+func (q Quiver) PrettyPrint() string {
+    return "Quiver\t\tArrows: " + strconv.Itoa(q.Arrows)
+}

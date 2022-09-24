@@ -14,3 +14,7 @@ func (l Lightcrossbow) Use() {
 func (l Lightcrossbow) Save() string {
     return "Lightcrossbow"
 }
+
+func (l Lightcrossbow) PrettyPrint() string {
+    return "Lightcrossbow"
+}

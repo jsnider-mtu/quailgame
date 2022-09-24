@@ -14,3 +14,7 @@ func (h Handaxe) Use() {
 func (h Handaxe) Save() string {
     return "Handaxe"
 }
+
+func (h Handaxe) PrettyPrint() string {
+    return "Handaxe"
+}

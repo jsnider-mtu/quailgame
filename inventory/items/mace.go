@@ -14,3 +14,7 @@ func (m Mace) Use() {
 func (m Mace) Save() string {
     return "Mace"
 }
+
+func (m Mace) PrettyPrint() string {
+    return "Mace"
+}

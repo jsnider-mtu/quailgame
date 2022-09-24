@@ -14,3 +14,7 @@ func (s Scimitar) Use() {
 func (s Scimitar) Save() string {
     return "Scimitar"
 }
+
+func (s Scimitar) PrettyPrint() string {
+    return "Scimitar"
+}

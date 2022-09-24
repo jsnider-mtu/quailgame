@@ -13,3 +13,7 @@ func (t Thievestools) Use() {
 func (t Thievestools) Save() string {
     return "Thievestools"
 }
+
+func (t Thievestools) PrettyPrint() string {
+    return "Thievestools"
+}

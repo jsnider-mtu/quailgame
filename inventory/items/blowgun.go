@@ -14,3 +14,7 @@ func (b Blowgun) Use() {
 func (b Blowgun) Save() string {
     return "Blowgun"
 }
+
+func (b Blowgun) PrettyPrint() string {
+    return "Blowgun"
+}

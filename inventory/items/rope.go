@@ -16,3 +16,7 @@ func (r Rope) Use() {
 func (r Rope) Save() string {
     return "Rope," + strconv.Itoa(r.Length)
 }
+
+func (r Rope) PrettyPrint() string {
+    return "Rope\t\tLength: " + strconv.Itoa(r.Length)
+}

@@ -14,3 +14,7 @@ func (m Morningstar) Use() {
 func (m Morningstar) Save() string {
     return "Morningstar"
 }
+
+func (m Morningstar) PrettyPrint() string {
+    return "Morningstar"
+}

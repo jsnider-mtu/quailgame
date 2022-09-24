@@ -9,6 +9,7 @@ type Item interface {
     Slot() string
     Use()
     Save() string
+    PrettyPrint() string
 }
 
 type Inv struct {

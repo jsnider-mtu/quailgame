@@ -14,3 +14,7 @@ func (h Handcrossbow) Use() {
 func (h Handcrossbow) Save() string {
     return "Handcrossbow"
 }
+
+func (h Handcrossbow) PrettyPrint() string {
+    return "Handcrossbow"
+}

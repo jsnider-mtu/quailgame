@@ -14,3 +14,7 @@ func (w Whip) Use() {
 func (w Whip) Save() string {
     return "Whip"
 }
+
+func (w Whip) PrettyPrint() string {
+    return "Whip"
+}

@@ -13,3 +13,7 @@ func (s Scalemail) Use() {
 func (s Scalemail) Save() string {
     return "Scalemail"
 }
+
+func (s Scalemail) PrettyPrint() string {
+    return "Scalemail"
+}

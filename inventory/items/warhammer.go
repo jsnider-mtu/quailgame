@@ -14,3 +14,7 @@ func (w Warhammer) Use() {
 func (w Warhammer) Save() string {
     return "Warhammer"
 }
+
+func (w Warhammer) PrettyPrint() string {
+    return "Warhammer"
+}

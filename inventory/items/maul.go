@@ -14,3 +14,7 @@ func (m Maul) Use() {
 func (m Maul) Save() string {
     return "Maul"
 }
+
+func (m Maul) PrettyPrint() string {
+    return "Maul"
+}

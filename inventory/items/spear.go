@@ -14,3 +14,7 @@ func (s Spear) Use() {
 func (s Spear) Save() string {
     return "Spear"
 }
+
+func (s Spear) PrettyPrint() string {
+    return "Spear"
+}

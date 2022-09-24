@@ -13,3 +13,7 @@ func (l Leatherarmor) Use() {
 func (l Leatherarmor) Save() string {
     return "Leatherarmor"
 }
+
+func (l Leatherarmor) PrettyPrint() string {
+    return "Leatherarmor"
+}

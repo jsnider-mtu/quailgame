@@ -13,3 +13,7 @@ func (d Dulcimer) Use() {
 func (d Dulcimer) Save() string {
     return "Dulcimer"
 }
+
+func (d Dulcimer) PrettyPrint() string {
+    return "Dulcimer"
+}

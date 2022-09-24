@@ -14,3 +14,7 @@ func (g Greataxe) Use() {
 func (g Greataxe) Save() string {
     return "Greataxe"
 }
+
+func (g Greataxe) PrettyPrint() string {
+    return "Greataxe"
+}

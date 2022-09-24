@@ -14,3 +14,7 @@ func (g Greatclub) Use() {
 func (g Greatclub) Save() string {
     return "Greatclub"
 }
+
+func (g Greatclub) PrettyPrint() string {
+    return "Greatclub"
+}

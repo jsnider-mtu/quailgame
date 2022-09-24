@@ -14,3 +14,7 @@ func (f Flail) Use() {
 func (f Flail) Save() string {
     return "Flail"
 }
+
+func (f Flail) PrettyPrint() string {
+    return "Flail"
+}

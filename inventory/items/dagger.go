@@ -14,3 +14,7 @@ func (d Dagger) Use() {
 func (d Dagger) Save() string {
     return "Dagger"
 }
+
+func (d Dagger) PrettyPrint() string {
+    return "Dagger"
+}

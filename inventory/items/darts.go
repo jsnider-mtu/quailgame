@@ -15,5 +15,9 @@ func (d Darts) Use() {
 }
 
 func (d Darts) Save() string {
-    return "Dart," + strconv.Itoa(d.Quantity)
+    return "Darts," + strconv.Itoa(d.Quantity)
+}
+
+func (d Darts) PrettyPrint() string {
+    return "Darts\t\tQuantity: " + strconv.Itoa(d.Quantity)
 }

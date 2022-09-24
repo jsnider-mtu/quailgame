@@ -14,3 +14,7 @@ func (g Greatsword) Use() {
 func (g Greatsword) Save() string {
     return "Greatsword"
 }
+
+func (g Greatsword) PrettyPrint() string {
+    return "Greatsword"
+}

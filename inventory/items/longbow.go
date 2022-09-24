@@ -14,3 +14,7 @@ func (l Longbow) Use() {
 func (l Longbow) Save() string {
     return "Longbow"
 }
+
+func (l Longbow) PrettyPrint() string {
+    return "Longbow"
+}

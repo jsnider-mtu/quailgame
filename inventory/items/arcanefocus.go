@@ -13,3 +13,7 @@ func (a Arcanefocus) Use() {
 func (a Arcanefocus) Save() string {
     return "Arcanefocus"
 }
+
+func (a Arcanefocus) PrettyPrint() string {
+    return "Arcanefocus" 
+}

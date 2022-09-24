@@ -14,3 +14,7 @@ func (s Sling) Use() {
 func (s Sling) Save() string {
     return "Sling"
 }
+
+func (s Sling) PrettyPrint() string {
+    return "Sling"
+}

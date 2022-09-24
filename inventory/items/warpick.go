@@ -14,3 +14,7 @@ func (w Warpick) Use() {
 func (w Warpick) Save() string {
     return "Warpick"
 }
+
+func (w Warpick) PrettyPrint() string {
+    return "Warpick"
+}

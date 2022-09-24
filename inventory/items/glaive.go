@@ -14,3 +14,7 @@ func (g Glaive) Use() {
 func (g Glaive) Save() string {
     return "Glaive"
 }
+
+func (g Glaive) PrettyPrint() string {
+    return "Glaive"
+}

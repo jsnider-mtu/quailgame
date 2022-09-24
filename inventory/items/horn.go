@@ -13,3 +13,7 @@ func (h Horn) Use() {
 func (h Horn) Save() string {
     return "Horn"
 }
+
+func (h Horn) PrettyPrint() string {
+    return "Horn"
+}

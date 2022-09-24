@@ -13,3 +13,7 @@ func (l Lamp) Use() {
 func (l Lamp) Save() string {
     return "Lamp"
 }
+
+func (l Lamp) PrettyPrint() string {
+    return "Lamp"
+}

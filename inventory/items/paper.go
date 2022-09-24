@@ -16,3 +16,7 @@ func (p Paper) Use() {
 func (p Paper) Save() string {
     return "Paper," + strconv.Itoa(p.Quantity)
 }
+
+func (p Paper) PrettyPrint() string {
+    return "Paper\t\tQuantity: " + strconv.Itoa(p.Quantity)
+}

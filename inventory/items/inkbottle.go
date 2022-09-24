@@ -13,3 +13,7 @@ func (i Inkbottle) Use() {
 func (i Inkbottle) Save() string {
     return "Inkbottle"
 }
+
+func (i Inkbottle) PrettyPrint() string {
+    return "Inkbottle"
+}

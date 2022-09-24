@@ -14,3 +14,7 @@ func (b Battleaxe) Use() {
 func (b Battleaxe) Save() string {
     return "Battleaxe"
 }
+
+func (b Battleaxe) PrettyPrint() string {
+    return "Battleaxe"
+}

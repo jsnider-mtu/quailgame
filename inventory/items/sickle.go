@@ -14,3 +14,7 @@ func (s Sickle) Use() {
 func (s Sickle) Save() string {
     return "Sickle"
 }
+
+func (s Sickle) PrettyPrint() string {
+    return "Sickle"
+}

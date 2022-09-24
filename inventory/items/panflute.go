@@ -13,3 +13,7 @@ func (p Panflute) Use() {
 func (p Panflute) Save() string {
     return "Panflute"
 }
+
+func (p Panflute) PrettyPrint() string {
+    return "Panflute"
+}

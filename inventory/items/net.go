@@ -14,3 +14,7 @@ func (n Net) Use() {
 func (n Net) Save() string {
     return "Net"
 }
+
+func (n Net) PrettyPrint() string {
+    return "Net"
+}
