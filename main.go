@@ -610,6 +610,14 @@ func (g *Game) Update() error {
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
             p.Inv.Clear()
+            curCS = 0
+            csDone = make([]int, 0)
+            proficiencies = make([]string, 0)
+            resistances = make([]string, 0)
+            languages = make([]string, 0)
+            darkvision = false
+            lucky = false
+            nimbleness = false
             onescore := make([]int, 4)
             for x := 0; x < 6; x++ {
                 for a := 0; a < 4; a++ {
@@ -8410,6 +8418,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, fmt.Sprintf("Int: %d (%+d)", p.Stats.Intel, p.Stats.IntelMod), fo, 32, 192, color.White)
         text.Draw(screen, fmt.Sprintf("Wis: %d (%+d)", p.Stats.Wis, p.Stats.WisMod), fo, 32, 224, color.White)
         text.Draw(screen, fmt.Sprintf("Cha: %d (%+d)", p.Stats.Cha, p.Stats.ChaMod), fo, 32, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("AC: %d", p.Stats.AC), fo, 192, 96, color.White)
     }
     if overworld {
         screen.DrawImage(blankImage, nil)
