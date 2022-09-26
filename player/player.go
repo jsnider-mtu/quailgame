@@ -88,6 +88,10 @@ func (s *Stats) Save() string {
     for stkey, stval := range s.SavingThrows {
         savingthrowsstr += stkey + "=" + strconv.Itoa(stval) + ","
     }
+    var skillsstr string
+    for skkey, skval := range s.Skills {
+        skillsstr += skkey + "=" + strconv.Itoa(skval) + ","
+    }
     var languagestr string
     for lind, language := range s.Languages {
         if lind == len(s.Languages) - 1 {
@@ -128,6 +132,7 @@ func (s *Stats) Save() string {
            "ProfBonus:" + strconv.Itoa(s.ProfBonus) + ";" +
            "Initiative:" + strconv.Itoa(s.Initiative) + ";" +
            "SavingThrows:" + savingthrowsstr + ";" +
+           "Skills:" + skillsstr + ";" +
            "Speed:" + strconv.Itoa(s.Speed) + ";" +
            "MaxHP:" + strconv.Itoa(s.MaxHP) + ";" +
            "HP:" + strconv.Itoa(s.HP) + ";" +

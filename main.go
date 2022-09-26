@@ -643,14 +643,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 12 + ((con - 10) / 2)
                 hd = "1d12"
-                savingthrows["str"] = ((str - 10) / 2) + pb
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = ((con - 10) / 2) + pb
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = (wis - 10) / 2
-                savingthrows["cha"] = (cha - 10) / 2
                 proficiencies = append(proficiencies,
                     "light armor", "medium armor", "shields",
                     "simple weapons", "martial weapons")
@@ -662,14 +655,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = ((dex - 10) / 2) + pb
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = (wis - 10) / 2
-                savingthrows["cha"] = ((cha - 10) / 2) + pb
                 proficiencies = append(proficiencies,
                     "light armor", "simple weapons", "hand crossbows",
                     "longswords", "rapiers", "shortswords") // 3 instruments
@@ -681,14 +667,7 @@ func (g *Game) Update() error {
                 intel = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = ((wis - 10) / 2) + pb
-                savingthrows["cha"] = ((cha - 10) / 2) + pb
                 proficiencies = append(proficiencies,
                     "light armor", "medium armor", "shields",
                     "simple weapons")
@@ -700,14 +679,7 @@ func (g *Game) Update() error {
                 str = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = ((intel - 10) / 2) + pb
-                savingthrows["wis"] = ((wis - 10) / 2) + pb
-                savingthrows["cha"] = (cha - 10) / 2
                 proficiencies = append(proficiencies,
                     "light armor", "medium armor", "shields",
                     "clubs", "daggers", "darts", "javelins", "maces",
@@ -721,14 +693,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 10 + ((con - 10) / 2)
                 hd = "1d10"
-                savingthrows["str"] = ((str - 10) / 2) + pb
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = ((con - 10) / 2) + pb
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = (wis - 10) / 2
-                savingthrows["cha"] = (cha - 10) / 2
                 proficiencies = append(proficiencies,
                     "all armor", "shields", "simple weapons", "martial weapons")
             case 5:
@@ -739,14 +704,7 @@ func (g *Game) Update() error {
                 intel = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
-                savingthrows["str"] = ((str - 10) / 2) + pb
-                savingthrows["dex"] = ((dex - 10) / 2) + pb
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = (wis - 10) / 2
-                savingthrows["cha"] = (cha - 10) / 2
                 proficiencies = append(proficiencies,
                     "simple weapons", "shortswords") // one artisan tools or one instrument
             case 6:
@@ -757,14 +715,7 @@ func (g *Game) Update() error {
                 dex = abilities[4]
                 intel = abilities[5]
                 pb = 2
-                hp = 10 + ((con - 10) / 2)
                 hd = "1d10"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = ((wis - 10) / 2) + pb
-                savingthrows["cha"] = ((cha - 10) / 2) + pb
                 proficiencies = append(proficiencies,
                     "all armor", "shields", "simple weapons", "martial weapons")
             case 7:
@@ -775,14 +726,7 @@ func (g *Game) Update() error {
                 str = abilities[4]
                 cha = abilities[5]
                 pb = 2
-                hp = 10 + ((con - 10) / 2)
                 hd = "1d10"
-                savingthrows["str"] = ((str - 10) / 2) + pb
-                savingthrows["dex"] = ((dex - 10) / 2) + pb
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = (wis - 10) / 2
-                savingthrows["cha"] = (cha - 10) / 2
                 proficiencies = append(proficiencies,
                     "light armor", "medium armor", "shields", "simple weapons",
                     "martial weapons")
@@ -794,14 +738,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = ((dex - 10) / 2) + pb
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = ((intel - 10) / 2) + pb
-                savingthrows["wis"] = (wis - 10) / 2
-                savingthrows["cha"] = (cha - 10) / 2
                 proficiencies = append(proficiencies,
                     "light armor", "simple weapons", "hand crossbows", "longswords",
                     "rapiers", "shortswords", "thieves tools")
@@ -813,14 +750,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 6 + ((con - 10) / 2)
                 hd = "1d6"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = ((con - 10) / 2) + pb
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = (wis - 10) / 2
-                savingthrows["cha"] = ((cha - 10) / 2) + pb
                 proficiencies = append(proficiencies,
                     "daggers", "darts", "slings", "quarterstaffs",
                     "light crossbows")
@@ -832,14 +762,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 8 + ((con - 10) / 2)
                 hd = "1d8"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = (intel - 10) / 2
-                savingthrows["wis"] = ((wis - 10) / 2) + pb
-                savingthrows["cha"] = ((cha - 10) / 2) + pb
                 proficiencies = append(proficiencies,
                     "light armor", "simple weapons")
             case 11:
@@ -850,14 +773,7 @@ func (g *Game) Update() error {
                 wis = abilities[4]
                 str = abilities[5]
                 pb = 2
-                hp = 6 + ((con - 10) / 2)
                 hd = "1d6"
-                savingthrows["str"] = (str - 10) / 2
-                savingthrows["dex"] = (dex - 10) / 2
-                savingthrows["con"] = (con - 10) / 2
-                savingthrows["intel"] = ((intel - 10) / 2) + pb
-                savingthrows["wis"] = ((wis - 10) / 2) + pb
-                savingthrows["cha"] = (cha - 10) / 2
                 proficiencies = append(proficiencies,
                     "daggers", "darts", "slings", "quarterstaffs", "light crossbows")
             default:
@@ -5541,23 +5457,221 @@ func (g *Game) Update() error {
             default:
                 return errors.New("Invalid value for classsel")
             }
+            var strmod int
+            var dexmod int
+            var conmod int
+            var intelmod int
+            var wismod int
+            var chamod int
+            if str < 10 && str % 2 == 1 {
+                strmod = ((str - 10) / 2) - 1
+            } else {
+                strmod = (str - 10) / 2
+            }
+            if dex < 10 && dex % 2 == 1 {
+                dexmod = ((dex - 10) / 2) - 1
+            } else {
+                dexmod = (dex - 10) / 2
+            }
+            if con < 10 && con % 2 == 1 {
+                conmod = ((con - 10) / 2) - 1
+            } else {
+                conmod = (con - 10) / 2
+            }
+            if intel < 10 && intel % 2 == 1 {
+                intelmod = ((intel - 10) / 2) - 1
+            } else {
+                intelmod = (intel - 10) / 2
+            }
+            if wis < 10 && wis % 2 == 1 {
+                wismod = ((wis - 10) / 2) - 1
+            } else {
+                wismod = (wis - 10) / 2
+            }
+            if cha < 10 && cha % 2 == 1 {
+                chamod = ((cha - 10) / 2) - 1
+            } else {
+                chamod = (cha - 10) / 2
+            }
+            switch classsel {
+            case 0:
+                hp = 12 + conmod
+                savingthrows["str"] = strmod + pb
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod + pb
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod
+                savingthrows["cha"] = chamod
+            case 1:
+                hp = 8 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod + pb
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod
+                savingthrows["cha"] = chamod + pb
+            case 2:
+                hp = 8 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod + pb
+                savingthrows["cha"] = chamod + pb
+            case 3:
+                hp = 8 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod + pb
+                savingthrows["wis"] = wismod + pb
+                savingthrows["cha"] = chamod
+            case 4:
+                hp = 10 + conmod
+                savingthrows["str"] = strmod + pb
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod + pb
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod
+                savingthrows["cha"] = chamod
+            case 5:
+                hp = 8 + conmod
+                savingthrows["str"] = strmod + pb
+                savingthrows["dex"] = dexmod + pb
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod
+                savingthrows["cha"] = chamod
+            case 6:
+                hp = 10 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod + pb
+                savingthrows["cha"] = chamod + pb
+            case 7:
+                hp = 10 + conmod
+                savingthrows["str"] = strmod + pb
+                savingthrows["dex"] = dexmod + pb
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod
+                savingthrows["cha"] = chamod
+            case 8:
+                hp = 8 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod + pb
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod + pb
+                savingthrows["wis"] = wismod
+                savingthrows["cha"] = chamod
+            case 9:
+                hp = 6 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod + pb
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod
+                savingthrows["cha"] = chamod + pb
+            case 10:
+                hp = 8 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod
+                savingthrows["wis"] = wismod + pb
+                savingthrows["cha"] = chamod + pb
+            case 11:
+                hp = 6 + conmod
+                savingthrows["str"] = strmod
+                savingthrows["dex"] = dexmod
+                savingthrows["con"] = conmod
+                savingthrows["intel"] = intelmod + pb
+                savingthrows["wis"] = wismod + pb
+                savingthrows["cha"] = chamod
+            default:
+                return errors.New("Invalid classsel value (savingthrows)")
+            }
+            skills := make(map[string]int)
+            skills["acrobatics"] = dexmod
+            skills["animal handling"] = wismod
+            skills["arcana"] = intelmod
+            skills["athletics"] = strmod
+            skills["deception"] = chamod
+            skills["history"] = intelmod
+            skills["insight"] = wismod
+            skills["intimidation"] = chamod
+            skills["investigation"] = intelmod
+            skills["medicine"] = wismod
+            skills["nature"] = intelmod
+            skills["perception"] = wismod
+            skills["performance"] = chamod
+            skills["persuasion"] = chamod
+            skills["religion"] = intelmod
+            skills["sleight of hand"] = dexmod
+            skills["stealth"] = dexmod
+            skills["survival"] = wismod
+            for _, skill := range proficiencies {
+                switch skill {
+                    case "acrobatics":
+                        skills["acrobatics"] += 2
+                    case "animal handling":
+                        skills["animal handling"] += 2
+                    case "arcana":
+                        skills["arcana"] += 2
+                    case "athletics":
+                        skills["athletics"] += 2
+                    case "deception":
+                        skills["deception"] += 2
+                    case "history":
+                        skills["history"] += 2
+                    case "insight":
+                        skills["insight"] += 2
+                    case "intimidation":
+                        skills["intimidation"] += 2
+                    case "investigation":
+                        skills["investigation"] += 2
+                    case "medicine":
+                        skills["medicine"] += 2
+                    case "nature":
+                        skills["nature"] += 2
+                    case "perception":
+                        skills["perception"] += 2
+                    case "performance":
+                        skills["performance"] += 2
+                    case "persuasion":
+                        skills["persuasion"] += 2
+                    case "religion":
+                        skills["religion"] += 2
+                    case "sleight of hand":
+                        skills["sleight of hand"] += 2
+                    case "stealth":
+                        skills["stealth"] += 2
+                    case "survival":
+                        skills["survival"] += 2
+                    default:
+                        log.Println(fmt.Sprintf("%s is not a skill", skill))
+                }
+            }
             p.Stats = &player.Stats{
                 AC: ac,
                 Str: str,
-                StrMod: (str - 10) / 2,
+                StrMod: strmod,
                 Dex: dex,
-                DexMod: (dex - 10) / 2,
+                DexMod: dexmod,
                 Con: con,
-                ConMod: (con - 10) / 2,
+                ConMod: conmod,
                 Intel: intel,
-                IntelMod: (intel - 10) / 2,
+                IntelMod: intelmod,
                 Wis: wis,
-                WisMod: (wis - 10) / 2,
+                WisMod: wismod,
                 Cha: cha,
-                ChaMod: (cha - 10) / 2,
+                ChaMod: chamod,
                 ProfBonus: pb,
                 Initiative: savingthrows["dex"],
                 SavingThrows: savingthrows,
+                Skills: skills,
                 MaxHP: hp,
                 HP: hp,
                 TempHP: 0,
@@ -5876,6 +5990,126 @@ func (g *Game) Update() error {
                                 p.Stats.SavingThrows["cha"] = val
                             default:
                                 return errors.New(fmt.Sprintf("Invalid saving throw: %s", strings.Split(st, "=")[0]))
+                            }
+                        }
+                    case "Skills":
+                        skarr := strings.Split(strings.Split(stat, ":")[1], ",")
+                        p.Stats.Skills = make(map[string]int)
+                        for _, sk := range skarr {
+                            if sk == "" {
+                                break
+                            }
+                            switch strings.Split(sk, "=")[0] {
+                            case "acrobatics":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill acrobatics is not an int")
+                                }
+                                p.Stats.Skills["acrobatics"] = val
+                            case "animal handling":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill animal handling is not an int")
+                                }
+                                p.Stats.Skills["animal handling"] = val
+                            case "arcana":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill arcana is not an int")
+                                }
+                                p.Stats.Skills["arcana"] = val
+                            case "athletics":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill athletics is not an int")
+                                }
+                                p.Stats.Skills["athletics"] = val
+                            case "deception":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill deception is not an int")
+                                }
+                                p.Stats.Skills["deception"] = val
+                            case "history":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill history is not an int")
+                                }
+                                p.Stats.Skills["history"] = val
+                            case "insight":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill insight is not an int")
+                                }
+                                p.Stats.Skills["insight"] = val
+                            case "intimidation":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill intimidation is not an int")
+                                }
+                                p.Stats.Skills["intimidation"] = val
+                            case "investigation":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill investigation is not an int")
+                                }
+                                p.Stats.Skills["investigation"] = val
+                            case "medicine":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill medicine is not an int")
+                                }
+                                p.Stats.Skills["medicine"] = val
+                            case "nature":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill nature is not an int")
+                                }
+                                p.Stats.Skills["nature"] = val
+                            case "perception":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill perception is not an int")
+                                }
+                                p.Stats.Skills["perception"] = val
+                            case "performance":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill performance is not an int")
+                                }
+                                p.Stats.Skills["performance"] = val
+                            case "persuasion":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill persuasion is not an int")
+                                }
+                                p.Stats.Skills["persuasion"] = val
+                            case "religion":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill religion is not an int")
+                                }
+                                p.Stats.Skills["religion"] = val
+                            case "sleight of hand":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill sleight of hand is not an int")
+                                }
+                                p.Stats.Skills["sleight of hand"] = val
+                            case "stealth":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill stealth is not an int")
+                                }
+                                p.Stats.Skills["stealth"] = val
+                            case "survival":
+                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
+                                if err != nil {
+                                    return errors.New("Skill survival is not an int")
+                                }
+                                p.Stats.Skills["survival"] = val
+                            default:
+                                return errors.New(fmt.Sprintf("Invalid skill: %s", strings.Split(sk, "=")[0]))
                             }
                         }
                     case "MaxHP":
@@ -8446,6 +8680,33 @@ func (g *Game) Draw(screen *ebiten.Image) {
     } else if charsheet1 {
         screen.DrawImage(blankImage, nil)
         text.Draw(screen, "<", fo, 64, 512, color.White)
+        text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
+        text.Draw(screen, "Saving Throws:", fo, 32, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Str: %+d", p.Stats.SavingThrows["str"]), fo, 32, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Dex: %+d", p.Stats.SavingThrows["dex"]), fo, 32, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Con: %+d", p.Stats.SavingThrows["con"]), fo, 32, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Int: %+d", p.Stats.SavingThrows["intel"]), fo, 32, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Wis: %+d", p.Stats.SavingThrows["wis"]), fo, 32, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("Cha: %+d", p.Stats.SavingThrows["cha"]), fo, 32, 256, color.White)
+        text.Draw(screen, "Skills:", fo, 256, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Acrobatics:      %+d", p.Stats.Skills["acrobatics"]), fo, 256, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Stats.Skills["animal handling"]), fo, 256, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Arcana:          %+d", p.Stats.Skills["arcana"]), fo, 256, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Athletics:       %+d", p.Stats.Skills["athletics"]), fo, 256, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Deception:       %+d", p.Stats.Skills["deception"]), fo, 256, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("History:         %+d", p.Stats.Skills["history"]), fo, 256, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("Insight:         %+d", p.Stats.Skills["insight"]), fo, 256, 288, color.White)
+        text.Draw(screen, fmt.Sprintf("Intimidation:    %+d", p.Stats.Skills["intimidation"]), fo, 256, 320, color.White)
+        text.Draw(screen, fmt.Sprintf("Investigation:   %+d", p.Stats.Skills["investigation"]), fo, 256, 352, color.White)
+        text.Draw(screen, fmt.Sprintf("Medicine:        %+d", p.Stats.Skills["medicine"]), fo, 512, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Nature:          %+d", p.Stats.Skills["nature"]), fo, 512, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Perception:      %+d", p.Stats.Skills["perception"]), fo, 512, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Performance:     %+d", p.Stats.Skills["performance"]), fo, 512, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Persuasion:      %+d", p.Stats.Skills["persuasion"]), fo, 512, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("Religion:        %+d", p.Stats.Skills["religion"]), fo, 512, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Stats.Skills["sleight of hand"]), fo, 512, 288, color.White)
+        text.Draw(screen, fmt.Sprintf("Stealth:         %+d", p.Stats.Skills["stealth"]), fo, 512, 320, color.White)
+        text.Draw(screen, fmt.Sprintf("Survival:        %+d", p.Stats.Skills["survival"]), fo, 512, 352, color.White)
     }
     if overworld {
         screen.DrawImage(blankImage, nil)
