@@ -51,7 +51,8 @@ var (
     pause bool = false
     overworld bool = false
     invmenu bool = false
-    charsheet bool = false
+    charsheet0 bool = false
+    charsheet1 bool = false
     pausesel int = 0
     save bool = false
     firstsave bool = false
@@ -5609,7 +5610,8 @@ func (g *Game) Update() error {
                     load = true
                     overworld = false
                     invmenu = false
-                    charsheet = false
+                    charsheet0 = false
+                    charsheet1 = false
                     pause = false
                 case 2:
                     start = true
@@ -5618,7 +5620,8 @@ func (g *Game) Update() error {
                     findloads = true
                     overworld = false
                     invmenu = false
-                    charsheet = false
+                    charsheet0 = false
+                    charsheet1 = false
                     pause = false
                 case 3:
                     os.Exit(0)
@@ -5981,12 +5984,26 @@ func (g *Game) Update() error {
                 npcCount++
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyI) && !overworld {
-                charsheet = false
+                charsheet0 = false
+                charsheet1 = false
                 invmenu = !invmenu
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyC) && !overworld {
                 invmenu = false
-                charsheet = !charsheet
+                if charsheet0 || charsheet1 {
+                    charsheet0 = false
+                    charsheet1 = false
+                } else {
+                    charsheet0 = true
+                }
+            }
+            if charsheet0 && inpututil.IsKeyJustPressed(ebiten.KeyArrowRight) {
+                charsheet0 = false
+                charsheet1 = true
+            }
+            if charsheet1 && inpututil.IsKeyJustPressed(ebiten.KeyArrowLeft) {
+                charsheet1 = false
+                charsheet0 = true
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyM) {
                 overworld = !overworld
@@ -8407,7 +8424,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, ival.PrettyPrint(), fo, 64, 64 + (32 * iind), color.White)
         }
     }
-    if charsheet {
+    if charsheet0 {
         screen.DrawImage(blankImage, nil)
         text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
         text.Draw(screen, fmt.Sprintf("Race: %s", p.Race), fo, 32, 64, color.White)
@@ -8425,6 +8442,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, fmt.Sprintf("Temp HP: %d", p.Stats.TempHP), fo, 576, 32, color.White)
         text.Draw(screen, fmt.Sprintf("Initiative: %+d", p.Stats.Initiative), fo, 256, 128, color.White)
         text.Draw(screen, fmt.Sprintf("Speed: %d", p.Stats.Speed), fo, 576, 128, color.White)
+        text.Draw(screen, ">", fo, 704, 512, color.White)
+    } else if charsheet1 {
+        screen.DrawImage(blankImage, nil)
+        text.Draw(screen, "<", fo, 64, 512, color.White)
     }
     if overworld {
         screen.DrawImage(blankImage, nil)
