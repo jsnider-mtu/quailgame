@@ -5615,41 +5615,41 @@ func (g *Game) Update() error {
             for _, skill := range proficiencies {
                 switch skill {
                     case "acrobatics":
-                        skills["acrobatics"] += 2
+                        skills["acrobatics"] += pb
                     case "animal handling":
-                        skills["animal handling"] += 2
+                        skills["animal handling"] += pb
                     case "arcana":
-                        skills["arcana"] += 2
+                        skills["arcana"] += pb
                     case "athletics":
-                        skills["athletics"] += 2
+                        skills["athletics"] += pb
                     case "deception":
-                        skills["deception"] += 2
+                        skills["deception"] += pb
                     case "history":
-                        skills["history"] += 2
+                        skills["history"] += pb
                     case "insight":
-                        skills["insight"] += 2
+                        skills["insight"] += pb
                     case "intimidation":
-                        skills["intimidation"] += 2
+                        skills["intimidation"] += pb
                     case "investigation":
-                        skills["investigation"] += 2
+                        skills["investigation"] += pb
                     case "medicine":
-                        skills["medicine"] += 2
+                        skills["medicine"] += pb
                     case "nature":
-                        skills["nature"] += 2
+                        skills["nature"] += pb
                     case "perception":
-                        skills["perception"] += 2
+                        skills["perception"] += pb
                     case "performance":
-                        skills["performance"] += 2
+                        skills["performance"] += pb
                     case "persuasion":
-                        skills["persuasion"] += 2
+                        skills["persuasion"] += pb
                     case "religion":
-                        skills["religion"] += 2
+                        skills["religion"] += pb
                     case "sleight of hand":
-                        skills["sleight of hand"] += 2
+                        skills["sleight of hand"] += pb
                     case "stealth":
-                        skills["stealth"] += 2
+                        skills["stealth"] += pb
                     case "survival":
-                        skills["survival"] += 2
+                        skills["survival"] += pb
                     default:
                         log.Println(fmt.Sprintf("%s is not a skill", skill))
                 }
