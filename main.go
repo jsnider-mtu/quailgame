@@ -122,6 +122,7 @@ var (
     equipmentsel int = 0
     choices bool = false
     racechoices bool = false
+    spells bool = false
     dupwarning bool = false
     option0 int = 0
     option1 int = 0
@@ -144,6 +145,12 @@ var (
     intel int
     wis int
     cha int
+    strmod int
+    dexmod int
+    conmod int
+    intelmod int
+    wismod int
+    chamod int
     pb int
     hp int
     hd string
@@ -164,6 +171,8 @@ var savingthrows = make(map[string]int)
 var languages = make([]string, 0)
 var proficiencies = make([]string, 0)
 var resistances = make([]string, 0)
+var cantrips = make([]string, 0)
+var spellsslice = make([]string, 0)
 
 type Game struct {}
 
@@ -659,11 +668,12 @@ func (g *Game) Update() error {
                 proficiencies = append(proficiencies,
                     "light armor", "simple weapons", "hand crossbows",
                     "longswords", "rapiers", "shortswords") // 3 instruments
+                spells = true
             case 2:
                 wis = abilities[0]
                 con = abilities[1]
                 str = abilities[2]
-                wis = abilities[3]
+                dex = abilities[3]
                 intel = abilities[4]
                 cha = abilities[5]
                 pb = 2
@@ -671,6 +681,7 @@ func (g *Game) Update() error {
                 proficiencies = append(proficiencies,
                     "light armor", "medium armor", "shields",
                     "simple weapons")
+                spells = true
             case 3:
                 wis = abilities[0]
                 con = abilities[1]
@@ -685,6 +696,7 @@ func (g *Game) Update() error {
                     "clubs", "daggers", "darts", "javelins", "maces",
                     "quarterstaffs", "scimitars", "sickles", "slings",
                     "spears", "herbalism kit")
+                spells = true
             case 4:
                 str = abilities[0]
                 con = abilities[1]
@@ -754,6 +766,7 @@ func (g *Game) Update() error {
                 proficiencies = append(proficiencies,
                     "daggers", "darts", "slings", "quarterstaffs",
                     "light crossbows")
+                spells = true
             case 10:
                 cha = abilities[0]
                 con = abilities[1]
@@ -765,6 +778,7 @@ func (g *Game) Update() error {
                 hd = "1d8"
                 proficiencies = append(proficiencies,
                     "light armor", "simple weapons")
+                spells = true
             case 11:
                 intel = abilities[0]
                 con = abilities[1]
@@ -776,6 +790,7 @@ func (g *Game) Update() error {
                 hd = "1d6"
                 proficiencies = append(proficiencies,
                     "daggers", "darts", "slings", "quarterstaffs", "light crossbows")
+                spells = true
             default:
                 return errors.New("Invalid value for classsel")
             }
@@ -890,6 +905,11 @@ func (g *Game) Update() error {
             option6 = 0
             option7 = 0
             option8 = 0
+            raceopt0 = 0
+            raceopt1 = 0
+            raceopt2 = 0
+            raceopt3 = 0
+            raceopt4 = 0
             racechoices = false
             creation = true
         }
@@ -2322,7 +2342,6 @@ func (g *Game) Update() error {
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !dupwarning {
             switch classsel {
             case 0:
-                ac = 10 + ((dex - 10) / 2) + ((con - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "animal handling")
@@ -2596,7 +2615,6 @@ func (g *Game) Update() error {
                     return errors.New("Failed to add javelin3 to inv")
                 }
             case 1:
-                ac = 11 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "bagpipes")
@@ -3081,25 +3099,18 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add scalemail to inv")
                     }
-                    if ((dex - 10) / 2) > 2 {
-                        ac = 18
-                    } else {
-                        ac = 16 + ((dex - 10) / 2)
-                    }
                 case 1:
                     var leatherarmor items.Leatherarmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
                     }
-                    ac = 13 + ((dex - 10) / 2)
                 case 2:
                     var chainmail items.Chainmail
                     err = p.Inv.Add(chainmail)
                     if err != nil {
                         return errors.New("Failed to add chainmail to inv")
                     }
-                    ac = 18
                 default:
                     return errors.New("Invalid value for option3 (case 2)")
                 }
@@ -3228,7 +3239,7 @@ func (g *Game) Update() error {
                     return errors.New("Failed to add shield to inv")
                 }
             case 3:
-                ac = 11 + ((dex - 10) / 2)
+                languages = append(languages, "Druidic")
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -3502,7 +3513,6 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add chainmail to inv")
                     }
-                    ac = 16
                 case 1:
                     var leatherarmor items.Leatherarmor
                     var longbow items.Longbow
@@ -3514,7 +3524,6 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add longbow to inv")
                     }
-                    ac = 11 + ((dex - 10) / 2)
                 default:
                     return errors.New("Invalid value for option2 (case 4)")
                 }
@@ -3867,7 +3876,6 @@ func (g *Game) Update() error {
                     return errors.New("Invalid value for option6 (case 4)")
                 }
             case 5:
-                ac = 10 + ((dex - 10) / 2) + ((wis - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "acrobatics")
@@ -4036,7 +4044,6 @@ func (g *Game) Update() error {
                     return errors.New("Failed to add darts to inv")
                 }
             case 6:
-                ac = 16
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "athletics")
@@ -4554,18 +4561,12 @@ func (g *Game) Update() error {
                     if err != nil {
                         return errors.New("Failed to add scalemail to inv")
                     }
-                    if ((dex - 10) / 2) > 2 {
-                        ac = 16
-                    } else {
-                        ac = 14 + ((dex - 10) / 2)
-                    }
                 case 1:
                     var leatherarmor items.Leatherarmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
                     }
-                    ac = 11 + ((dex - 10) / 2)
                 default:
                     return errors.New("Invalid value for option3 (case 7)")
                 }
@@ -4756,7 +4757,6 @@ func (g *Game) Update() error {
                     return errors.New("Failed to add quiver to inv")
                 }
             case 8:
-                ac = 11 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "acrobatics")
@@ -4971,7 +4971,6 @@ func (g *Game) Update() error {
                     return errors.New("Failed to add thievestools to inv")
                 }
             case 9:
-                ac = 10 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -5155,7 +5154,6 @@ func (g *Game) Update() error {
                     return errors.New("Failed to add dagger1 to inv")
                 }
             case 10:
-                ac = 11 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -5353,7 +5351,6 @@ func (g *Game) Update() error {
                     return errors.New("Failed to add dagger1 to inv")
                 }
             case 11:
-                ac = 10 + ((dex - 10) / 2)
                 switch option0 {
                 case 0:
                     proficiencies = append(proficiencies, "arcana")
@@ -5457,12 +5454,6 @@ func (g *Game) Update() error {
             default:
                 return errors.New("Invalid value for classsel")
             }
-            var strmod int
-            var dexmod int
-            var conmod int
-            var intelmod int
-            var wismod int
-            var chamod int
             if str < 10 && str % 2 == 1 {
                 strmod = ((str - 10) / 2) - 1
             } else {
@@ -5495,6 +5486,7 @@ func (g *Game) Update() error {
             }
             switch classsel {
             case 0:
+                ac = 10 + dexmod + conmod
                 hp = 12 + conmod
                 savingthrows["str"] = strmod + pb
                 savingthrows["dex"] = dexmod
@@ -5503,6 +5495,7 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod
                 savingthrows["cha"] = chamod
             case 1:
+                ac = 11 + dexmod
                 hp = 8 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod + pb
@@ -5511,6 +5504,23 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod
                 savingthrows["cha"] = chamod + pb
             case 2:
+                for _, item := range p.Inv.GetItems() {
+                    itemname := item.PrettyPrint()
+                    switch itemname {
+                    case "Scalemail":
+                        if dexmod > 2 {
+                            ac = 18
+                        } else {
+                            ac = 16 + dexmod
+                        }
+                    case "Leatherarmor":
+                        ac = 13 + dexmod
+                    case "Chainmail":
+                        ac = 18
+                    default:
+                        continue
+                    }
+                }
                 hp = 8 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod
@@ -5519,6 +5529,7 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod + pb
                 savingthrows["cha"] = chamod + pb
             case 3:
+                ac = 11 + dexmod
                 hp = 8 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod
@@ -5527,6 +5538,23 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod + pb
                 savingthrows["cha"] = chamod
             case 4:
+                shield := false
+                for _, item := range p.Inv.GetItems() {
+                    itemname := item.PrettyPrint()
+                    switch itemname {
+                    case "Leatherarmor":
+                        ac = 11 + dexmod
+                    case "Chainmail":
+                        ac = 16
+                    case "Shield":
+                        shield = true
+                    default:
+                        continue
+                    }
+                }
+                if shield {
+                    ac += 2
+                }
                 hp = 10 + conmod
                 savingthrows["str"] = strmod + pb
                 savingthrows["dex"] = dexmod
@@ -5535,6 +5563,7 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod
                 savingthrows["cha"] = chamod
             case 5:
+                ac = 10 + dexmod + wismod
                 hp = 8 + conmod
                 savingthrows["str"] = strmod + pb
                 savingthrows["dex"] = dexmod + pb
@@ -5543,6 +5572,13 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod
                 savingthrows["cha"] = chamod
             case 6:
+                for _, item := range p.Inv.GetItems() {
+                    if item.PrettyPrint() == "Shield"{
+                        ac = 18
+                    } else {
+                        ac = 16
+                    }
+                }
                 hp = 10 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod
@@ -5551,6 +5587,17 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod + pb
                 savingthrows["cha"] = chamod + pb
             case 7:
+                for _, item := range p.Inv.GetItems() {
+                    itemname := item.PrettyPrint()
+                    switch itemname {
+                    case "Leatherarmor":
+                        ac = 11 + dexmod
+                    case "Scalemail":
+                        ac = 16
+                    default:
+                        continue
+                    }
+                }
                 hp = 10 + conmod
                 savingthrows["str"] = strmod + pb
                 savingthrows["dex"] = dexmod + pb
@@ -5559,6 +5606,7 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod
                 savingthrows["cha"] = chamod
             case 8:
+                ac = 11 + dexmod
                 hp = 8 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod + pb
@@ -5567,6 +5615,7 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod
                 savingthrows["cha"] = chamod
             case 9:
+                ac = 13 + dexmod
                 hp = 6 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod
@@ -5575,6 +5624,7 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod
                 savingthrows["cha"] = chamod + pb
             case 10:
+                ac = 11 + dexmod
                 hp = 8 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod
@@ -5583,6 +5633,7 @@ func (g *Game) Update() error {
                 savingthrows["wis"] = wismod + pb
                 savingthrows["cha"] = chamod + pb
             case 11:
+                ac = 10 + dexmod
                 hp = 6 + conmod
                 savingthrows["str"] = strmod
                 savingthrows["dex"] = dexmod
@@ -5651,7 +5702,7 @@ func (g *Game) Update() error {
                     case "survival":
                         skills["survival"] += pb
                     default:
-                        log.Println(fmt.Sprintf("%s is not a skill", skill))
+                        continue
                 }
             }
             p.Stats = &player.Stats{
@@ -5697,9 +5748,2196 @@ func (g *Game) Update() error {
             p.Equipment = &player.Equipment{}
             choices = false
             creation = false
+            switch classsel {
+            case 1, 2, 3, 9, 10, 11:
+                creationsel = 0
+                option0 = 0
+                option1 = 0
+                option2 = 0
+                option3 = 0
+                option4 = 0
+                option5 = 0
+                option6 = 0
+                option7 = 0
+                option8 = 0
+                spells = true
+                return nil
+            default:
+                return errors.New(fmt.Sprintf("Class %s does not get spells at level 1", classmap[classsel]))
+            }
+            if !spells {
+                cutscene = true
+                return nil
+            }
+        }
+    } else if spells {
+        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+            proficiencies = make([]string, 0)
+            resistances = make([]string, 0)
+            languages = make([]string, 0)
+            darkvision = false
+            lucky = false
+            nimbleness = false
+            creationsel = 0
+            option0 = 0
+            option1 = 0
+            option2 = 0
+            option3 = 0
+            option4 = 0
+            option5 = 0
+            option6 = 0
+            option7 = 0
+            option8 = 0
+            spells = false
+            creation = true
+        }
+        switch classsel {
+        case 1:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 10 {
+                        option0 = 10
+                    }
+                case 1:
+                    option1++
+                    if option1 > 10 {
+                        option1 = 10
+                    }
+                case 2:
+                    option2++
+                    if option2 > 20 {
+                        option2 = 20
+                    }
+                case 3:
+                    option3++
+                    if option3 > 20 {
+                        option3 = 20
+                    }
+                case 4:
+                    option4++
+                    if option4 > 20 {
+                        option4 = 20
+                    }
+                case 5:
+                    option5++
+                    if option5 > 20 {
+                        option5 = 20
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if creationsel > 5 {
+                creationsel = 5
+            }
+            if option0 == option1 || option2 == option3 || option2 == option4 || option2 == option5 || option3 == option4 || option3 == option5 || option4 == option5 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 2:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                case 6:
+                    option6--
+                    if option6 < 0 {
+                        option6 = 0
+                    }
+                case 7:
+                    option7--
+                    if option7 < 0 {
+                        option7 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 6 {
+                        option0 = 6
+                    }
+                case 1:
+                    option1++
+                    if option1 > 6 {
+                        option1 = 6
+                    }
+                case 2:
+                    option2++
+                    if option2 > 6 {
+                        option2 = 6
+                    }
+                case 3:
+                    option3++
+                    if option3 > 14 {
+                        option3 = 14
+                    }
+                case 4:
+                    option4++
+                    if option4 > 14 {
+                        option4 = 14
+                    }
+                case 5:
+                    option5++
+                    if option5 > 14 {
+                        option5 = 14
+                    }
+                case 6:
+                    option6++
+                    if option6 > 14 {
+                        option6 = 14
+                    }
+                case 7:
+                    option7++
+                    if option7 > 14 {
+                        option5 = 14
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if wismod > 0 {
+                if creationsel > wismod + 3 {
+                    creationsel = wismod + 3
+                }
+            } else {
+                if creationsel > 3 {
+                    creationsel = 3
+                }
+            }
+            switch wismod {
+            case -3, -2, -1, 0:
+                if option0 == option1 || option0 == option2 || option1 == option2 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 1:
+                if option0 == option1 || option0 == option2 || option1 == option2 || option3 == option4 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 2:
+                if option0 == option1 || option0 == option2 || option1 == option2 || option3 == option4 || option3 == option5 || option4 == option5 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 3:
+                if option0 == option1 || option0 == option2 || option1 == option2 || option3 == option4 || option3 == option5 || option3 == option6 || option4 == option5 || option4 == option6 || option5 == option6 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 4:
+                if option0 == option1 || option0 == option2 || option1 == option2 || option3 == option4 || option3 == option5 || option3 == option6 || option3 == option7 || option4 == option5 || option4 == option6 || option4 == option7 || option5 == option6 || option5 == option7 || option6 == option7 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            default:
+                log.Fatal(fmt.Sprintf("wismod %d is out of bounds", wismod))
+            }
+        case 3:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                case 6:
+                    option6--
+                    if option6 < 0 {
+                        option6 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 7 {
+                        option0 = 7
+                    }
+                case 1:
+                    option1++
+                    if option1 > 7 {
+                        option1 = 7
+                    }
+                case 2:
+                    option2++
+                    if option2 > 15 {
+                        option2 = 15
+                    }
+                case 3:
+                    option3++
+                    if option3 > 15 {
+                        option3 = 15
+                    }
+                case 4:
+                    option4++
+                    if option4 > 15 {
+                        option4 = 15
+                    }
+                case 5:
+                    option5++
+                    if option5 > 15 {
+                        option5 = 15
+                    }
+                case 6:
+                    option6++
+                    if option6 > 15 {
+                        option6 = 15
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if creationsel < 0 {
+                creationsel = 0
+            } else if wismod > 0 {
+                if creationsel > wismod + 2 {
+                    creationsel = wismod + 2
+                }
+            } else {
+                if creationsel > 2 {
+                    creationsel = 2
+                }
+            }
+            switch wismod {
+            case -3, -2, -1, 0:
+                if option0 == option1 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 1:
+                if option0 == option1 || option2 == option3 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 2:
+                if option0 == option1 || option2 == option3 || option2 == option4 || option3 == option4 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 3:
+                if option0 == option1 || option2 == option3 || option2 == option4 || option2 == option5 || option3 == option4 || option3 == option5 || option4 == option5 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            case 4:
+                if option0 == option1 || option2 == option3 || option2 == option4 || option2 == option5 || option2 == option6 || option3 == option4 || option3 == option5 || option3 == option6 || option4 == option5 || option5 == option6 {
+                    dupwarning = true
+                } else {
+                    dupwarning = false
+                }
+            default:
+                log.Fatal(fmt.Sprintf("wismod %d is out of bounds", wismod))
+            }
+        case 9:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 15 {
+                        option0 = 15
+                    }
+                case 1:
+                    option1++
+                    if option1 > 15 {
+                        option1 = 15
+                    }
+                case 2:
+                    option2++
+                    if option2 > 15 {
+                        option2 = 15
+                    }
+                case 3:
+                    option3++
+                    if option3 > 15 {
+                        option3 = 15
+                    }
+                case 4:
+                    option4++
+                    if option4 > 19 {
+                        option4 = 19
+                    }
+                case 5:
+                    option5++
+                    if option5 > 19 {
+                        option5 = 19
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if option0 == option1 || option0 == option2 || option0 == option3 || option4 == option5 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 10:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 8 {
+                        option0 = 8
+                    }
+                case 1:
+                    option1++
+                    if option1 > 8 {
+                        option1 = 8
+                    }
+                case 2:
+                    option2++
+                    if option2 > 10 {
+                        option2 = 10
+                    }
+                case 3:
+                    option3++
+                    if option3 > 10 {
+                        option3 = 10
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if option0 == option1 ||  option2 == option3 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        case 11:
+            if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                creationsel--
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                creationsel++
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                switch creationsel {
+                case 0:
+                    option0--
+                    if option0 < 0 {
+                        option0 = 0
+                    }
+                case 1:
+                    option1--
+                    if option1 < 0 {
+                        option1 = 0
+                    }
+                case 2:
+                    option2--
+                    if option2 < 0 {
+                        option2 = 0
+                    }
+                case 3:
+                    option3--
+                    if option3 < 0 {
+                        option3 = 0
+                    }
+                case 4:
+                    option4--
+                    if option4 < 0 {
+                        option4 = 0
+                    }
+                case 5:
+                    option5--
+                    if option5 < 0 {
+                        option5 = 0
+                    }
+                case 6:
+                    option6--
+                    if option6 < 0 {
+                        option6 = 0
+                    }
+                case 7:
+                    option7--
+                    if option7 < 0 {
+                        option7 = 0
+                    }
+                case 8:
+                    option8--
+                    if option8 < 0 {
+                        option8 = 0
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                switch creationsel {
+                case 0:
+                    option0++
+                    if option0 > 15 {
+                        option0 = 15
+                    }
+                case 1:
+                    option1++
+                    if option1 > 15 {
+                        option1 = 15
+                    }
+                case 2:
+                    option2++
+                    if option2 > 15 {
+                        option2 = 15
+                    }
+                case 3:
+                    option3++
+                    if option3 > 29 {
+                        option3 = 29
+                    }
+                case 4:
+                    option4++
+                    if option4 > 29 {
+                        option4 = 29
+                    }
+                case 5:
+                    option5++
+                    if option5 > 29 {
+                        option5 = 29
+                    }
+                case 6:
+                    option6++
+                    if option6 > 29 {
+                        option6 = 29
+                    }
+                case 7:
+                    option7++
+                    if option7 > 29 {
+                        option7 = 29
+                    }
+                case 8:
+                    option8++
+                    if option8 > 29 {
+                        option8 = 29
+                    }
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            }
+            if option0 == option1 || option0 == option2 || option1 == option2 || option3 == option4 || option3 == option5 || option3 == option6 || option3 == option7 || option3 == option8 || option4 == option5 || option4 == option6 || option4 == option7 || option4 == option8 || option5 == option6 || option5 == option7 || option5 == option8 || option6 == option7 || option6 == option8 || option7 == option8 {
+                dupwarning = true
+            } else {
+                dupwarning = false
+            }
+        default:
+            return errors.New("Invalid value for classsel (spells)")
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) && !dupwarning {
+            switch classsel {
+            case 1:
+                switch option0 {
+                case 0:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 1:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 2:
+                    cantrips = append(cantrips, "Friends")
+                case 3:
+                    cantrips = append(cantrips, "Light")
+                case 4:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 5:
+                    cantrips = append(cantrips, "Mending")
+                case 6:
+                    cantrips = append(cantrips, "Message")
+                case 7:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 8:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 9:
+                    cantrips = append(cantrips, "True Strike")
+                case 10:
+                    cantrips = append(cantrips, "Vicious Mockery")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option1 {
+                case 0:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 1:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 2:
+                    cantrips = append(cantrips, "Friends")
+                case 3:
+                    cantrips = append(cantrips, "Light")
+                case 4:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 5:
+                    cantrips = append(cantrips, "Mending")
+                case 6:
+                    cantrips = append(cantrips, "Message")
+                case 7:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 8:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 9:
+                    cantrips = append(cantrips, "True Strike")
+                case 10:
+                    cantrips = append(cantrips, "Vicious Mockery")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option2 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Bane")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 6:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 7:
+                    spellsslice = append(spellsslice, "Dissonant Whispers")
+                case 8:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 9:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Heroism")
+                case 12:
+                    spellsslice = append(spellsslice, "Identify")
+                case 13:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 14:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 15:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 16:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 17:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 18:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 19:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 20:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option3 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Bane")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 6:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 7:
+                    spellsslice = append(spellsslice, "Dissonant Whispers")
+                case 8:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 9:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Heroism")
+                case 12:
+                    spellsslice = append(spellsslice, "Identify")
+                case 13:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 14:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 15:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 16:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 17:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 18:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 19:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 20:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option4 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Bane")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 6:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 7:
+                    spellsslice = append(spellsslice, "Dissonant Whispers")
+                case 8:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 9:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Heroism")
+                case 12:
+                    spellsslice = append(spellsslice, "Identify")
+                case 13:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 14:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 15:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 16:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 17:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 18:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 19:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 20:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option5 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Bane")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 6:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 7:
+                    spellsslice = append(spellsslice, "Dissonant Whispers")
+                case 8:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 9:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Heroism")
+                case 12:
+                    spellsslice = append(spellsslice, "Identify")
+                case 13:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 14:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 15:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 16:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 17:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 18:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 19:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 20:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            case 2:
+                switch option0 {
+                case 0:
+                    cantrips = append(cantrips, "Guidance")
+                case 1:
+                    cantrips = append(cantrips, "Light")
+                case 2:
+                    cantrips = append(cantrips, "Mending")
+                case 3:
+                    cantrips = append(cantrips, "Resistance")
+                case 4:
+                    cantrips = append(cantrips, "Sacred Flame")
+                case 5:
+                    cantrips = append(cantrips, "Spare the Dying")
+                case 6:
+                    cantrips = append(cantrips, "Thaumaturgy")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option1 {
+                case 0:
+                    cantrips = append(cantrips, "Guidance")
+                case 1:
+                    cantrips = append(cantrips, "Light")
+                case 2:
+                    cantrips = append(cantrips, "Mending")
+                case 3:
+                    cantrips = append(cantrips, "Resistance")
+                case 4:
+                    cantrips = append(cantrips, "Sacred Flame")
+                case 5:
+                    cantrips = append(cantrips, "Spare the Dying")
+                case 6:
+                    cantrips = append(cantrips, "Thaumaturgy")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option2 {
+                case 0:
+                    cantrips = append(cantrips, "Guidance")
+                case 1:
+                    cantrips = append(cantrips, "Light")
+                case 2:
+                    cantrips = append(cantrips, "Mending")
+                case 3:
+                    cantrips = append(cantrips, "Resistance")
+                case 4:
+                    cantrips = append(cantrips, "Sacred Flame")
+                case 5:
+                    cantrips = append(cantrips, "Spare the Dying")
+                case 6:
+                    cantrips = append(cantrips, "Thaumaturgy")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option3 {
+                case 0:
+                    spellsslice = append(spellsslice, "Bane")
+                case 1:
+                    spellsslice = append(spellsslice, "Bless")
+                case 2:
+                    spellsslice = append(spellsslice, "Command")
+                case 3:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Evil and Good")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 8:
+                    spellsslice = append(spellsslice, "Guiding Bolt")
+                case 9:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 10:
+                    spellsslice = append(spellsslice, "Inflict Wounds")
+                case 11:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 12:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 13:
+                    spellsslice = append(spellsslice, "Sanctuary")
+                case 14:
+                    spellsslice = append(spellsslice, "Shield of Faith")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option4 {
+                case 0:
+                    spellsslice = append(spellsslice, "Bane")
+                case 1:
+                    spellsslice = append(spellsslice, "Bless")
+                case 2:
+                    spellsslice = append(spellsslice, "Command")
+                case 3:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Evil and Good")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 8:
+                    spellsslice = append(spellsslice, "Guiding Bolt")
+                case 9:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 10:
+                    spellsslice = append(spellsslice, "Inflict Wounds")
+                case 11:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 12:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 13:
+                    spellsslice = append(spellsslice, "Sanctuary")
+                case 14:
+                    spellsslice = append(spellsslice, "Shield of Faith")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option5 {
+                case 0:
+                    spellsslice = append(spellsslice, "Bane")
+                case 1:
+                    spellsslice = append(spellsslice, "Bless")
+                case 2:
+                    spellsslice = append(spellsslice, "Command")
+                case 3:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Evil and Good")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 8:
+                    spellsslice = append(spellsslice, "Guiding Bolt")
+                case 9:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 10:
+                    spellsslice = append(spellsslice, "Inflict Wounds")
+                case 11:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 12:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 13:
+                    spellsslice = append(spellsslice, "Sanctuary")
+                case 14:
+                    spellsslice = append(spellsslice, "Shield of Faith")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option6 {
+                case 0:
+                    spellsslice = append(spellsslice, "Bane")
+                case 1:
+                    spellsslice = append(spellsslice, "Bless")
+                case 2:
+                    spellsslice = append(spellsslice, "Command")
+                case 3:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Evil and Good")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 8:
+                    spellsslice = append(spellsslice, "Guiding Bolt")
+                case 9:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 10:
+                    spellsslice = append(spellsslice, "Inflict Wounds")
+                case 11:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 12:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 13:
+                    spellsslice = append(spellsslice, "Sanctuary")
+                case 14:
+                    spellsslice = append(spellsslice, "Shield of Faith")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option7 {
+                case 0:
+                    spellsslice = append(spellsslice, "Bane")
+                case 1:
+                    spellsslice = append(spellsslice, "Bless")
+                case 2:
+                    spellsslice = append(spellsslice, "Command")
+                case 3:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 4:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Evil and Good")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 8:
+                    spellsslice = append(spellsslice, "Guiding Bolt")
+                case 9:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 10:
+                    spellsslice = append(spellsslice, "Inflict Wounds")
+                case 11:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 12:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 13:
+                    spellsslice = append(spellsslice, "Sanctuary")
+                case 14:
+                    spellsslice = append(spellsslice, "Shield of Faith")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            case 3:
+                switch option0 {
+                case 0:
+                    cantrips = append(cantrips, "Druidcraft")
+                case 1:
+                    cantrips = append(cantrips, "Guidance")
+                case 2:
+                    cantrips = append(cantrips, "Mending")
+                case 3:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 4:
+                    cantrips = append(cantrips, "Produce Flame")
+                case 5:
+                    cantrips = append(cantrips, "Resistance")
+                case 6:
+                    cantrips = append(cantrips, "Shillelagh")
+                case 7:
+                    cantrips = append(cantrips, "Thorn Whip")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option1 {
+                case 0:
+                    cantrips = append(cantrips, "Druidcraft")
+                case 1:
+                    cantrips = append(cantrips, "Guidance")
+                case 2:
+                    cantrips = append(cantrips, "Mending")
+                case 3:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 4:
+                    cantrips = append(cantrips, "Produce Flame")
+                case 5:
+                    cantrips = append(cantrips, "Resistance")
+                case 6:
+                    cantrips = append(cantrips, "Shillelagh")
+                case 7:
+                    cantrips = append(cantrips, "Thorn Whip")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option2 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 2:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 3:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 4:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 6:
+                    spellsslice = append(spellsslice, "Entangle")
+                case 7:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 8:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 9:
+                    spellsslice = append(spellsslice, "Goodberry")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Jump")
+                case 12:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 13:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 14:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 15:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option3 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 2:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 3:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 4:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 6:
+                    spellsslice = append(spellsslice, "Entangle")
+                case 7:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 8:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 9:
+                    spellsslice = append(spellsslice, "Goodberry")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Jump")
+                case 12:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 13:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 14:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 15:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option4 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 2:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 3:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 4:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 6:
+                    spellsslice = append(spellsslice, "Entangle")
+                case 7:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 8:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 9:
+                    spellsslice = append(spellsslice, "Goodberry")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Jump")
+                case 12:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 13:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 14:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 15:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option5 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 2:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 3:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 4:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 6:
+                    spellsslice = append(spellsslice, "Entangle")
+                case 7:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 8:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 9:
+                    spellsslice = append(spellsslice, "Goodberry")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Jump")
+                case 12:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 13:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 14:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 15:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option6 {
+                case 0:
+                    spellsslice = append(spellsslice, "Animal Friendship")
+                case 1:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 2:
+                    spellsslice = append(spellsslice, "Create or Destroy Water")
+                case 3:
+                    spellsslice = append(spellsslice, "Cure Wounds")
+                case 4:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Poison and Disease")
+                case 6:
+                    spellsslice = append(spellsslice, "Entangle")
+                case 7:
+                    spellsslice = append(spellsslice, "Faerie Fire")
+                case 8:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 9:
+                    spellsslice = append(spellsslice, "Goodberry")
+                case 10:
+                    spellsslice = append(spellsslice, "Healing Word")
+                case 11:
+                    spellsslice = append(spellsslice, "Jump")
+                case 12:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 13:
+                    spellsslice = append(spellsslice, "Purify Food and Drink")
+                case 14:
+                    spellsslice = append(spellsslice, "Speak with Animals")
+                case 15:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            case 9:
+                switch option0 {
+                case 0:
+                    cantrips = append(cantrips, "Acid Splash")
+                case 1:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 2:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 3:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 4:
+                    cantrips = append(cantrips, "Fire Bolt")
+                case 5:
+                    cantrips = append(cantrips, "Friends")
+                case 6:
+                    cantrips = append(cantrips, "Light")
+                case 7:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 8:
+                    cantrips = append(cantrips, "Mending")
+                case 9:
+                    cantrips = append(cantrips, "Message")
+                case 10:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 11:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 12:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 13:
+                    cantrips = append(cantrips, "Ray of Frost")
+                case 14:
+                    cantrips = append(cantrips, "Shocking Grasp")
+                case 15:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option1 {
+                case 0:
+                    cantrips = append(cantrips, "Acid Splash")
+                case 1:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 2:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 3:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 4:
+                    cantrips = append(cantrips, "Fire Bolt")
+                case 5:
+                    cantrips = append(cantrips, "Friends")
+                case 6:
+                    cantrips = append(cantrips, "Light")
+                case 7:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 8:
+                    cantrips = append(cantrips, "Mending")
+                case 9:
+                    cantrips = append(cantrips, "Message")
+                case 10:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 11:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 12:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 13:
+                    cantrips = append(cantrips, "Ray of Frost")
+                case 14:
+                    cantrips = append(cantrips, "Shocking Grasp")
+                case 15:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option2 {
+                case 0:
+                    cantrips = append(cantrips, "Acid Splash")
+                case 1:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 2:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 3:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 4:
+                    cantrips = append(cantrips, "Fire Bolt")
+                case 5:
+                    cantrips = append(cantrips, "Friends")
+                case 6:
+                    cantrips = append(cantrips, "Light")
+                case 7:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 8:
+                    cantrips = append(cantrips, "Mending")
+                case 9:
+                    cantrips = append(cantrips, "Message")
+                case 10:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 11:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 12:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 13:
+                    cantrips = append(cantrips, "Ray of Frost")
+                case 14:
+                    cantrips = append(cantrips, "Shocking Grasp")
+                case 15:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option3 {
+                case 0:
+                    cantrips = append(cantrips, "Acid Splash")
+                case 1:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 2:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 3:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 4:
+                    cantrips = append(cantrips, "Fire Bolt")
+                case 5:
+                    cantrips = append(cantrips, "Friends")
+                case 6:
+                    cantrips = append(cantrips, "Light")
+                case 7:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 8:
+                    cantrips = append(cantrips, "Mending")
+                case 9:
+                    cantrips = append(cantrips, "Message")
+                case 10:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 11:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 12:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 13:
+                    cantrips = append(cantrips, "Ray of Frost")
+                case 14:
+                    cantrips = append(cantrips, "Shocking Grasp")
+                case 15:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option4 {
+                case 0:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 1:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 2:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 3:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 4:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 6:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 7:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 8:
+                    spellsslice = append(spellsslice, "False Life")
+                case 9:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 10:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 11:
+                    spellsslice = append(spellsslice, "Jump")
+                case 12:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 13:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 14:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 15:
+                    spellsslice = append(spellsslice, "Shield")
+                case 16:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 17:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 18:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 19:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option5 {
+                case 0:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 1:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 2:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 3:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 4:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 5:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 6:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 7:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 8:
+                    spellsslice = append(spellsslice, "False Life")
+                case 9:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 10:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 11:
+                    spellsslice = append(spellsslice, "Jump")
+                case 12:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 13:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 14:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 15:
+                    spellsslice = append(spellsslice, "Shield")
+                case 16:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 17:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 18:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 19:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            case 10:
+                switch option0 {
+                case 0:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 1:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 2:
+                    cantrips = append(cantrips, "Eldritch Blast")
+                case 3:
+                    cantrips = append(cantrips, "Friends")
+                case 4:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 5:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 6:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 7:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 8:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option1 {
+                case 0:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 1:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 2:
+                    cantrips = append(cantrips, "Eldritch Blast")
+                case 3:
+                    cantrips = append(cantrips, "Friends")
+                case 4:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 5:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 6:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 7:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 8:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option2 {
+                case 0:
+                    spellsslice = append(spellsslice, "Armor of Agathys")
+                case 1:
+                    spellsslice = append(spellsslice, "Arms of Hadar")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 4:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 5:
+                    spellsslice = append(spellsslice, "Hellish Rebuke")
+                case 6:
+                    spellsslice = append(spellsslice, "Hex")
+                case 7:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 8:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 9:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 10:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option3 {
+                case 0:
+                    spellsslice = append(spellsslice, "Armor of Agathys")
+                case 1:
+                    spellsslice = append(spellsslice, "Arms of Hadar")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 4:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 5:
+                    spellsslice = append(spellsslice, "Hellish Rebuke")
+                case 6:
+                    spellsslice = append(spellsslice, "Hex")
+                case 7:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 8:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 9:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 10:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            case 11:
+                switch option0 {
+                case 0:
+                    cantrips = append(cantrips, "Acid Splash")
+                case 1:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 2:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 3:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 4:
+                    cantrips = append(cantrips, "Fire Bolt")
+                case 5:
+                    cantrips = append(cantrips, "Friends")
+                case 6:
+                    cantrips = append(cantrips, "Light")
+                case 7:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 8:
+                    cantrips = append(cantrips, "Mending")
+                case 9:
+                    cantrips = append(cantrips, "Message")
+                case 10:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 11:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 12:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 13:
+                    cantrips = append(cantrips, "Ray of Frost")
+                case 14:
+                    cantrips = append(cantrips, "Shocking Grasp")
+                case 15:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option1 {
+                case 0:
+                    cantrips = append(cantrips, "Acid Splash")
+                case 1:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 2:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 3:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 4:
+                    cantrips = append(cantrips, "Fire Bolt")
+                case 5:
+                    cantrips = append(cantrips, "Friends")
+                case 6:
+                    cantrips = append(cantrips, "Light")
+                case 7:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 8:
+                    cantrips = append(cantrips, "Mending")
+                case 9:
+                    cantrips = append(cantrips, "Message")
+                case 10:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 11:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 12:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 13:
+                    cantrips = append(cantrips, "Ray of Frost")
+                case 14:
+                    cantrips = append(cantrips, "Shocking Grasp")
+                case 15:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option2 {
+                case 0:
+                    cantrips = append(cantrips, "Acid Splash")
+                case 1:
+                    cantrips = append(cantrips, "Blade Ward")
+                case 2:
+                    cantrips = append(cantrips, "Chill Touch")
+                case 3:
+                    cantrips = append(cantrips, "Dancing Lights")
+                case 4:
+                    cantrips = append(cantrips, "Fire Bolt")
+                case 5:
+                    cantrips = append(cantrips, "Friends")
+                case 6:
+                    cantrips = append(cantrips, "Light")
+                case 7:
+                    cantrips = append(cantrips, "Mage Hand")
+                case 8:
+                    cantrips = append(cantrips, "Mending")
+                case 9:
+                    cantrips = append(cantrips, "Message")
+                case 10:
+                    cantrips = append(cantrips, "Minor Illusion")
+                case 11:
+                    cantrips = append(cantrips, "Poison Spray")
+                case 12:
+                    cantrips = append(cantrips, "Prestidigitation")
+                case 13:
+                    cantrips = append(cantrips, "Ray of Frost")
+                case 14:
+                    cantrips = append(cantrips, "Shocking Grasp")
+                case 15:
+                    cantrips = append(cantrips, "True Strike")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option3 {
+                case 0:
+                    spellsslice = append(spellsslice, "Alarm")
+                case 1:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 4:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 5:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 8:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 9:
+                    spellsslice = append(spellsslice, "False Life")
+                case 10:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 11:
+                    spellsslice = append(spellsslice, "Find Familiar")
+                case 12:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 13:
+                    spellsslice = append(spellsslice, "Grease")
+                case 14:
+                    spellsslice = append(spellsslice, "Identify")
+                case 15:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 16:
+                    spellsslice = append(spellsslice, "Jump")
+                case 17:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 18:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 19:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 20:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 21:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 22:
+                    spellsslice = append(spellsslice, "Shield")
+                case 23:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 24:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 25:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 26:
+                    spellsslice = append(spellsslice, "Tenser's Floating Disk")
+                case 27:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 28:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 29:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option4 {
+                case 0:
+                    spellsslice = append(spellsslice, "Alarm")
+                case 1:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 4:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 5:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 8:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 9:
+                    spellsslice = append(spellsslice, "False Life")
+                case 10:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 11:
+                    spellsslice = append(spellsslice, "Find Familiar")
+                case 12:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 13:
+                    spellsslice = append(spellsslice, "Grease")
+                case 14:
+                    spellsslice = append(spellsslice, "Identify")
+                case 15:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 16:
+                    spellsslice = append(spellsslice, "Jump")
+                case 17:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 18:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 19:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 20:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 21:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 22:
+                    spellsslice = append(spellsslice, "Shield")
+                case 23:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 24:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 25:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 26:
+                    spellsslice = append(spellsslice, "Tenser's Floating Disk")
+                case 27:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 28:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 29:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option5 {
+                case 0:
+                    spellsslice = append(spellsslice, "Alarm")
+                case 1:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 4:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 5:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 8:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 9:
+                    spellsslice = append(spellsslice, "False Life")
+                case 10:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 11:
+                    spellsslice = append(spellsslice, "Find Familiar")
+                case 12:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 13:
+                    spellsslice = append(spellsslice, "Grease")
+                case 14:
+                    spellsslice = append(spellsslice, "Identify")
+                case 15:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 16:
+                    spellsslice = append(spellsslice, "Jump")
+                case 17:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 18:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 19:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 20:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 21:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 22:
+                    spellsslice = append(spellsslice, "Shield")
+                case 23:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 24:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 25:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 26:
+                    spellsslice = append(spellsslice, "Tenser's Floating Disk")
+                case 27:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 28:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 29:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option6 {
+                case 0:
+                    spellsslice = append(spellsslice, "Alarm")
+                case 1:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 4:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 5:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 8:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 9:
+                    spellsslice = append(spellsslice, "False Life")
+                case 10:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 11:
+                    spellsslice = append(spellsslice, "Find Familiar")
+                case 12:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 13:
+                    spellsslice = append(spellsslice, "Grease")
+                case 14:
+                    spellsslice = append(spellsslice, "Identify")
+                case 15:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 16:
+                    spellsslice = append(spellsslice, "Jump")
+                case 17:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 18:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 19:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 20:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 21:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 22:
+                    spellsslice = append(spellsslice, "Shield")
+                case 23:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 24:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 25:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 26:
+                    spellsslice = append(spellsslice, "Tenser's Floating Disk")
+                case 27:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 28:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 29:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option7 {
+                case 0:
+                    spellsslice = append(spellsslice, "Alarm")
+                case 1:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 4:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 5:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 8:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 9:
+                    spellsslice = append(spellsslice, "False Life")
+                case 10:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 11:
+                    spellsslice = append(spellsslice, "Find Familiar")
+                case 12:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 13:
+                    spellsslice = append(spellsslice, "Grease")
+                case 14:
+                    spellsslice = append(spellsslice, "Identify")
+                case 15:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 16:
+                    spellsslice = append(spellsslice, "Jump")
+                case 17:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 18:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 19:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 20:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 21:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 22:
+                    spellsslice = append(spellsslice, "Shield")
+                case 23:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 24:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 25:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 26:
+                    spellsslice = append(spellsslice, "Tenser's Floating Disk")
+                case 27:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 28:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 29:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+                switch option8 {
+                case 0:
+                    spellsslice = append(spellsslice, "Alarm")
+                case 1:
+                    spellsslice = append(spellsslice, "Burning Hands")
+                case 2:
+                    spellsslice = append(spellsslice, "Charm Person")
+                case 3:
+                    spellsslice = append(spellsslice, "Chromatic Orb")
+                case 4:
+                    spellsslice = append(spellsslice, "Color Spray")
+                case 5:
+                    spellsslice = append(spellsslice, "Comprehend Languages")
+                case 6:
+                    spellsslice = append(spellsslice, "Detect Magic")
+                case 7:
+                    spellsslice = append(spellsslice, "Disguise Self")
+                case 8:
+                    spellsslice = append(spellsslice, "Expeditious Retreat")
+                case 9:
+                    spellsslice = append(spellsslice, "False Life")
+                case 10:
+                    spellsslice = append(spellsslice, "Feather Fall")
+                case 11:
+                    spellsslice = append(spellsslice, "Find Familiar")
+                case 12:
+                    spellsslice = append(spellsslice, "Fog Cloud")
+                case 13:
+                    spellsslice = append(spellsslice, "Grease")
+                case 14:
+                    spellsslice = append(spellsslice, "Identify")
+                case 15:
+                    spellsslice = append(spellsslice, "Illusory Script")
+                case 16:
+                    spellsslice = append(spellsslice, "Jump")
+                case 17:
+                    spellsslice = append(spellsslice, "Longstrider")
+                case 18:
+                    spellsslice = append(spellsslice, "Mage Armor")
+                case 19:
+                    spellsslice = append(spellsslice, "Magic Missile")
+                case 20:
+                    spellsslice = append(spellsslice, "Protection from Evil and Good")
+                case 21:
+                    spellsslice = append(spellsslice, "Ray of Sickness")
+                case 22:
+                    spellsslice = append(spellsslice, "Shield")
+                case 23:
+                    spellsslice = append(spellsslice, "Silent Image")
+                case 24:
+                    spellsslice = append(spellsslice, "Sleep")
+                case 25:
+                    spellsslice = append(spellsslice, "Tasha's Hideous Laughter")
+                case 26:
+                    spellsslice = append(spellsslice, "Tenser's Floating Disk")
+                case 27:
+                    spellsslice = append(spellsslice, "Thunderwave")
+                case 28:
+                    spellsslice = append(spellsslice, "Unseen Servant")
+                case 29:
+                    spellsslice = append(spellsslice, "Witch Bolt")
+                default:
+                    return errors.New("Out of bounds ()")
+                }
+            default:
+                return errors.New("Invalid value for classsel (spells2)")
+            }
+            spells = false
             cutscene = true
         }
-        return nil
     } else {
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause
@@ -6846,7 +9084,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 log.Fatal("Out of bounds ()")
             }
         default:
-            fmt.Println("Skipping race choices")
+            log.Println("Skipping race choices")
         }
     } else if choices {
         text.Draw(screen, fmt.Sprintf("Class: %s", classmap[classsel]), fo, 64, 32, color.White)
@@ -8515,6 +10753,1689 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         default:
             log.Fatal("Out of bounds (Draw choices)")
+        }
+    } else if spells {
+        text.Draw(screen, fmt.Sprintf("Class: %s", classmap[classsel]), fo, 64, 32, color.White)
+        if dupwarning {
+            text.Draw(screen, "No duplicates allowed", fo, 256, 512, color.RGBA{0xff, 0x0, 0x0, 0xff})
+        }
+        switch classsel {
+        case 1:
+            text.Draw(screen, "Cantrips:", fo, 64, 64, color.White)
+            text.Draw(screen, "Spells:", fo, 64, 160, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 432, 256, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Dancing Lights", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Friends", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Light", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Mage Hand", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Mending", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Message", fo, 448, 64, color.White)
+            case 7:
+                text.Draw(screen, "Minor Illusion", fo, 448, 64, color.White)
+            case 8:
+                text.Draw(screen, "Prestidigitation", fo, 448, 64, color.White)
+            case 9:
+                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+            case 10:
+                text.Draw(screen, "Vicious Mockery", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
+            case 1:
+                text.Draw(screen, "Dancing Lights", fo, 448, 96, color.White)
+            case 2:
+                text.Draw(screen, "Friends", fo, 448, 96, color.White)
+            case 3:
+                text.Draw(screen, "Light", fo, 448, 96, color.White)
+            case 4:
+                text.Draw(screen, "Mage Hand", fo, 448, 96, color.White)
+            case 5:
+                text.Draw(screen, "Mending", fo, 448, 96, color.White)
+            case 6:
+                text.Draw(screen, "Message", fo, 448, 96, color.White)
+            case 7:
+                text.Draw(screen, "Minor Illusion", fo, 448, 96, color.White)
+            case 8:
+                text.Draw(screen, "Prestidigitation", fo, 448, 96, color.White)
+            case 9:
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
+            case 10:
+                text.Draw(screen, "Vicious Mockery", fo, 448, 96, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 160, color.White)
+            case 1:
+                text.Draw(screen, "Bane", fo, 448, 160, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 160, color.White)
+            case 3:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 160, color.White)
+            case 4:
+                text.Draw(screen, "Cure Wounds", fo, 448, 160, color.White)
+            case 5:
+                text.Draw(screen, "Detect Magic", fo, 448, 160, color.White)
+            case 6:
+                text.Draw(screen, "Disguise Self", fo, 448, 160, color.White)
+            case 7:
+                text.Draw(screen, "Dissonant Whispers", fo, 448, 160, color.White)
+            case 8:
+                text.Draw(screen, "Faerie Fire", fo, 448, 160, color.White)
+            case 9:
+                text.Draw(screen, "Feather Fall", fo, 448, 160, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 160, color.White)
+            case 11:
+                text.Draw(screen, "Heroism", fo, 448, 160, color.White)
+            case 12:
+                text.Draw(screen, "Identify", fo, 448, 160, color.White)
+            case 13:
+                text.Draw(screen, "Illusory Script", fo, 448, 160, color.White)
+            case 14:
+                text.Draw(screen, "Longstrider", fo, 448, 160, color.White)
+            case 15:
+                text.Draw(screen, "Silent Image", fo, 448, 160, color.White)
+            case 16:
+                text.Draw(screen, "Sleep", fo, 448, 160, color.White)
+            case 17:
+                text.Draw(screen, "Speak with Animals", fo, 448, 160, color.White)
+            case 18:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 160, color.White)
+            case 19:
+                text.Draw(screen, "Thunderwave", fo, 448, 160, color.White)
+            case 20:
+                text.Draw(screen, "Unseen Servant", fo, 448, 160, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 192, color.White)
+            case 1:
+                text.Draw(screen, "Bane", fo, 448, 192, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 192, color.White)
+            case 3:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+            case 4:
+                text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
+            case 5:
+                text.Draw(screen, "Detect Magic", fo, 448, 192, color.White)
+            case 6:
+                text.Draw(screen, "Disguise Self", fo, 448, 192, color.White)
+            case 7:
+                text.Draw(screen, "Dissonant Whispers", fo, 448, 192, color.White)
+            case 8:
+                text.Draw(screen, "Faerie Fire", fo, 448, 192, color.White)
+            case 9:
+                text.Draw(screen, "Feather Fall", fo, 448, 192, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
+            case 11:
+                text.Draw(screen, "Heroism", fo, 448, 192, color.White)
+            case 12:
+                text.Draw(screen, "Identify", fo, 448, 192, color.White)
+            case 13:
+                text.Draw(screen, "Illusory Script", fo, 448, 192, color.White)
+            case 14:
+                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
+            case 15:
+                text.Draw(screen, "Silent Image", fo, 448, 192, color.White)
+            case 16:
+                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
+            case 17:
+                text.Draw(screen, "Speak with Animals", fo, 448, 192, color.White)
+            case 18:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
+            case 19:
+                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
+            case 20:
+                text.Draw(screen, "Unseen Servant", fo, 448, 192, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 224, color.White)
+            case 1:
+                text.Draw(screen, "Bane", fo, 448, 224, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 224, color.White)
+            case 3:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 224, color.White)
+            case 4:
+                text.Draw(screen, "Cure Wounds", fo, 448, 224, color.White)
+            case 5:
+                text.Draw(screen, "Detect Magic", fo, 448, 224, color.White)
+            case 6:
+                text.Draw(screen, "Disguise Self", fo, 448, 224, color.White)
+            case 7:
+                text.Draw(screen, "Dissonant Whispers", fo, 448, 224, color.White)
+            case 8:
+                text.Draw(screen, "Faerie Fire", fo, 448, 224, color.White)
+            case 9:
+                text.Draw(screen, "Feather Fall", fo, 448, 224, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 224, color.White)
+            case 11:
+                text.Draw(screen, "Heroism", fo, 448, 224, color.White)
+            case 12:
+                text.Draw(screen, "Identify", fo, 448, 224, color.White)
+            case 13:
+                text.Draw(screen, "Illusory Script", fo, 448, 224, color.White)
+            case 14:
+                text.Draw(screen, "Longstrider", fo, 448, 224, color.White)
+            case 15:
+                text.Draw(screen, "Silent Image", fo, 448, 224, color.White)
+            case 16:
+                text.Draw(screen, "Sleep", fo, 448, 224, color.White)
+            case 17:
+                text.Draw(screen, "Speak with Animals", fo, 448, 224, color.White)
+            case 18:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 224, color.White)
+            case 19:
+                text.Draw(screen, "Thunderwave", fo, 448, 224, color.White)
+            case 20:
+                text.Draw(screen, "Unseen Servant", fo, 448, 224, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 256, color.White)
+            case 1:
+                text.Draw(screen, "Bane", fo, 448, 256, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 256, color.White)
+            case 3:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 256, color.White)
+            case 4:
+                text.Draw(screen, "Cure Wounds", fo, 448, 256, color.White)
+            case 5:
+                text.Draw(screen, "Detect Magic", fo, 448, 256, color.White)
+            case 6:
+                text.Draw(screen, "Disguise Self", fo, 448, 256, color.White)
+            case 7:
+                text.Draw(screen, "Dissonant Whispers", fo, 448, 256, color.White)
+            case 8:
+                text.Draw(screen, "Faerie Fire", fo, 448, 256, color.White)
+            case 9:
+                text.Draw(screen, "Feather Fall", fo, 448, 256, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 256, color.White)
+            case 11:
+                text.Draw(screen, "Heroism", fo, 448, 256, color.White)
+            case 12:
+                text.Draw(screen, "Identify", fo, 448, 256, color.White)
+            case 13:
+                text.Draw(screen, "Illusory Script", fo, 448, 256, color.White)
+            case 14:
+                text.Draw(screen, "Longstrider", fo, 448, 256, color.White)
+            case 15:
+                text.Draw(screen, "Silent Image", fo, 448, 256, color.White)
+            case 16:
+                text.Draw(screen, "Sleep", fo, 448, 256, color.White)
+            case 17:
+                text.Draw(screen, "Speak with Animals", fo, 448, 256, color.White)
+            case 18:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 256, color.White)
+            case 19:
+                text.Draw(screen, "Thunderwave", fo, 448, 256, color.White)
+            case 20:
+                text.Draw(screen, "Unseen Servant", fo, 448, 256, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+        case 2:
+            text.Draw(screen, "Cantrips:", fo, 64, 64, color.White)
+            text.Draw(screen, "Spells:", fo, 64, 192, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 128, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 432, 256, color.White)
+            case 6:
+                text.Draw(screen, ">", fo, 432, 288, color.White)
+            case 7:
+                text.Draw(screen, ">", fo, 432, 320, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Guidance", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Light", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Mending", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Resistance", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Sacred Flame", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Spare the Dying", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Thaumaturgy", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Guidance", fo, 448, 96, color.White)
+            case 1:
+                text.Draw(screen, "Light", fo, 448, 96, color.White)
+            case 2:
+                text.Draw(screen, "Mending", fo, 448, 96, color.White)
+            case 3:
+                text.Draw(screen, "Resistance", fo, 448, 96, color.White)
+            case 4:
+                text.Draw(screen, "Sacred Flame", fo, 448, 96, color.White)
+            case 5:
+                text.Draw(screen, "Spare the Dying", fo, 448, 96, color.White)
+            case 6:
+                text.Draw(screen, "Thaumaturgy", fo, 448, 96, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Guidance", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Light", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Mending", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Resistance", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Sacred Flame", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Spare the Dying", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Thaumaturgy", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Bane", fo, 448, 192, color.White)
+            case 1:
+                text.Draw(screen, "Bless", fo, 448, 192, color.White)
+            case 2:
+                text.Draw(screen, "Command", fo, 448, 192, color.White)
+            case 3:
+                text.Draw(screen, "Create or Destroy Water", fo, 448, 192, color.White)
+            case 4:
+                text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
+            case 5:
+                text.Draw(screen, "Detect Evil and Good", fo, 448, 192, color.White)
+            case 6:
+                text.Draw(screen, "Detect Magic", fo, 448, 192, color.White)
+            case 7:
+                text.Draw(screen, "Detect Poison and Disease", fo, 448, 192, color.White)
+            case 8:
+                text.Draw(screen, "Guiding Bolt", fo, 448, 192, color.White)
+            case 9:
+                text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
+            case 10:
+                text.Draw(screen, "Inflict Wounds", fo, 448, 192, color.White)
+            case 11:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+            case 12:
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 192, color.White)
+            case 13:
+                text.Draw(screen, "Sanctuary", fo, 448, 192, color.White)
+            case 14:
+                text.Draw(screen, "Shield of Faith", fo, 448, 192, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            if wismod >= 1 {
+                switch option4 {
+                case 0:
+                    text.Draw(screen, "Bane", fo, 448, 224, color.White)
+                case 1:
+                    text.Draw(screen, "Bless", fo, 448, 224, color.White)
+                case 2:
+                    text.Draw(screen, "Command", fo, 448, 224, color.White)
+                case 3:
+                    text.Draw(screen, "Create or Destroy Water", fo, 448, 224, color.White)
+                case 4:
+                    text.Draw(screen, "Cure Wounds", fo, 448, 224, color.White)
+                case 5:
+                    text.Draw(screen, "Detect Evil and Good", fo, 448, 224, color.White)
+                case 6:
+                    text.Draw(screen, "Detect Magic", fo, 448, 224, color.White)
+                case 7:
+                    text.Draw(screen, "Detect Poison and Disease", fo, 448, 224, color.White)
+                case 8:
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 224, color.White)
+                case 9:
+                    text.Draw(screen, "Healing Word", fo, 448, 224, color.White)
+                case 10:
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 224, color.White)
+                case 11:
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 224, color.White)
+                case 12:
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 224, color.White)
+                case 13:
+                    text.Draw(screen, "Sanctuary", fo, 448, 224, color.White)
+                case 14:
+                    text.Draw(screen, "Shield of Faith", fo, 448, 224, color.White)
+                default:
+                    log.Fatal("Out of bounds ()")
+                }
+            }
+            if wismod >= 2 {
+                switch option5 {
+                case 0:
+                    text.Draw(screen, "Bane", fo, 448, 256, color.White)
+                case 1:
+                    text.Draw(screen, "Bless", fo, 448, 256, color.White)
+                case 2:
+                    text.Draw(screen, "Command", fo, 448, 256, color.White)
+                case 3:
+                    text.Draw(screen, "Create or Destroy Water", fo, 448, 256, color.White)
+                case 4:
+                    text.Draw(screen, "Cure Wounds", fo, 448, 256, color.White)
+                case 5:
+                    text.Draw(screen, "Detect Evil and Good", fo, 448, 256, color.White)
+                case 6:
+                    text.Draw(screen, "Detect Magic", fo, 448, 256, color.White)
+                case 7:
+                    text.Draw(screen, "Detect Poison and Disease", fo, 448, 256, color.White)
+                case 8:
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 256, color.White)
+                case 9:
+                    text.Draw(screen, "Healing Word", fo, 448, 256, color.White)
+                case 10:
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 256, color.White)
+                case 11:
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 256, color.White)
+                case 12:
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 256, color.White)
+                case 13:
+                    text.Draw(screen, "Sanctuary", fo, 448, 256, color.White)
+                case 14:
+                    text.Draw(screen, "Shield of Faith", fo, 448, 256, color.White)
+                default:
+                    log.Fatal("Out of bounds ()")
+                }
+            }
+            if wismod >= 3 {
+                switch option6 {
+                case 0:
+                    text.Draw(screen, "Bane", fo, 448, 288, color.White)
+                case 1:
+                    text.Draw(screen, "Bless", fo, 448, 288, color.White)
+                case 2:
+                    text.Draw(screen, "Command", fo, 448, 288, color.White)
+                case 3:
+                    text.Draw(screen, "Create or Destroy Water", fo, 448, 288, color.White)
+                case 4:
+                    text.Draw(screen, "Cure Wounds", fo, 448, 288, color.White)
+                case 5:
+                    text.Draw(screen, "Detect Evil and Good", fo, 448, 288, color.White)
+                case 6:
+                    text.Draw(screen, "Detect Magic", fo, 448, 288, color.White)
+                case 7:
+                    text.Draw(screen, "Detect Poison and Disease", fo, 448, 288, color.White)
+                case 8:
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 288, color.White)
+                case 9:
+                    text.Draw(screen, "Healing Word", fo, 448, 288, color.White)
+                case 10:
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 288, color.White)
+                case 11:
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 288, color.White)
+                case 12:
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 288, color.White)
+                case 13:
+                    text.Draw(screen, "Sanctuary", fo, 448, 288, color.White)
+                case 14:
+                    text.Draw(screen, "Shield of Faith", fo, 448, 288, color.White)
+                default:
+                    log.Fatal("Out of bounds ()")
+                }
+            }
+            if wismod == 4 {
+                switch option7 {
+                case 0:
+                    text.Draw(screen, "Bane", fo, 448, 320, color.White)
+                case 1:
+                    text.Draw(screen, "Bless", fo, 448, 320, color.White)
+                case 2:
+                    text.Draw(screen, "Command", fo, 448, 320, color.White)
+                case 3:
+                    text.Draw(screen, "Create or Destroy Water", fo, 448, 320, color.White)
+                case 4:
+                    text.Draw(screen, "Cure Wounds", fo, 448, 320, color.White)
+                case 5:
+                    text.Draw(screen, "Detect Evil and Good", fo, 448, 320, color.White)
+                case 6:
+                    text.Draw(screen, "Detect Magic", fo, 448, 320, color.White)
+                case 7:
+                    text.Draw(screen, "Detect Poison and Disease", fo, 448, 320, color.White)
+                case 8:
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 320, color.White)
+                case 9:
+                    text.Draw(screen, "Healing Word", fo, 448, 320, color.White)
+                case 10:
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 320, color.White)
+                case 11:
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 320, color.White)
+                case 12:
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 320, color.White)
+                case 13:
+                    text.Draw(screen, "Sanctuary", fo, 448, 320, color.White)
+                case 14:
+                    text.Draw(screen, "Shield of Faith", fo, 448, 320, color.White)
+                default:
+                    log.Fatal("Out of bounds ()")
+                }
+            }
+        case 3:
+            text.Draw(screen, "Cantrips:", fo, 64, 64, color.White)
+            text.Draw(screen, "Spells:", fo, 64, 192, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 432, 256, color.White)
+            case 6:
+                text.Draw(screen, ">", fo, 432, 288, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Druidcraft", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Guidance", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Mending", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Produce Flame", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Resistance", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Shillelagh", fo, 448, 64, color.White)
+            case 7:
+                text.Draw(screen, "Thorn Whip", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Druidcraft", fo, 448, 96, color.White)
+            case 1:
+                text.Draw(screen, "Guidance", fo, 448, 96, color.White)
+            case 2:
+                text.Draw(screen, "Mending", fo, 448, 96, color.White)
+            case 3:
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
+            case 4:
+                text.Draw(screen, "Produce Flame", fo, 448, 96, color.White)
+            case 5:
+                text.Draw(screen, "Resistance", fo, 448, 96, color.White)
+            case 6:
+                text.Draw(screen, "Shillelagh", fo, 448, 96, color.White)
+            case 7:
+                text.Draw(screen, "Thorn Whip", fo, 448, 96, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Create or Destroy Water", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Detect Magic", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Detect Poison and Disease", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+            case 7:
+                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+            case 8:
+                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+            case 9:
+                text.Draw(screen, "Goodberry", fo, 448, 128, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 128, color.White)
+            case 12:
+                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+            case 13:
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+            case 14:
+                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+            case 15:
+                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Create or Destroy Water", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Detect Magic", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Detect Poison and Disease", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+            case 7:
+                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+            case 8:
+                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+            case 9:
+                text.Draw(screen, "Goodberry", fo, 448, 128, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 128, color.White)
+            case 12:
+                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+            case 13:
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+            case 14:
+                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+            case 15:
+                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Create or Destroy Water", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Detect Magic", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Detect Poison and Disease", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+            case 7:
+                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+            case 8:
+                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+            case 9:
+                text.Draw(screen, "Goodberry", fo, 448, 128, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 128, color.White)
+            case 12:
+                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+            case 13:
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+            case 14:
+                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+            case 15:
+                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Create or Destroy Water", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Detect Magic", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Detect Poison and Disease", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+            case 7:
+                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+            case 8:
+                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+            case 9:
+                text.Draw(screen, "Goodberry", fo, 448, 128, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 128, color.White)
+            case 12:
+                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+            case 13:
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+            case 14:
+                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+            case 15:
+                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option6 {
+            case 0:
+                text.Draw(screen, "Animal Friendship", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Create or Destroy Water", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Detect Magic", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Detect Poison and Disease", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+            case 7:
+                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+            case 8:
+                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+            case 9:
+                text.Draw(screen, "Goodberry", fo, 448, 128, color.White)
+            case 10:
+                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 128, color.White)
+            case 12:
+                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+            case 13:
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+            case 14:
+                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+            case 15:
+                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+        case 9:
+            text.Draw(screen, "Cantrips:", fo, 64, 64, color.White)
+            text.Draw(screen, "Spells:", fo, 64, 224, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 128, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 160, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 432, 256, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Acid Splash", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Dancing Lights", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Fire Bolt", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Friends", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Light", fo, 448, 64, color.White)
+            case 7:
+                text.Draw(screen, "Mage Hand", fo, 448, 64, color.White)
+            case 8:
+                text.Draw(screen, "Mending", fo, 448, 64, color.White)
+            case 9:
+                text.Draw(screen, "Message", fo, 448, 64, color.White)
+            case 10:
+                text.Draw(screen, "Minor Illusion", fo, 448, 64, color.White)
+            case 11:
+                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+            case 12:
+                text.Draw(screen, "Prestidigitation", fo, 448, 64, color.White)
+            case 13:
+                text.Draw(screen, "Ray of Frost", fo, 448, 64, color.White)
+            case 14:
+                text.Draw(screen, "Shocking Grasp", fo, 448, 64, color.White)
+            case 15:
+                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Acid Splash", fo, 448, 96, color.White)
+            case 1:
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
+            case 2:
+                text.Draw(screen, "Chill Touch", fo, 448, 96, color.White)
+            case 3:
+                text.Draw(screen, "Dancing Lights", fo, 448, 96, color.White)
+            case 4:
+                text.Draw(screen, "Fire Bolt", fo, 448, 96, color.White)
+            case 5:
+                text.Draw(screen, "Friends", fo, 448, 96, color.White)
+            case 6:
+                text.Draw(screen, "Light", fo, 448, 96, color.White)
+            case 7:
+                text.Draw(screen, "Mage Hand", fo, 448, 96, color.White)
+            case 8:
+                text.Draw(screen, "Mending", fo, 448, 96, color.White)
+            case 9:
+                text.Draw(screen, "Message", fo, 448, 96, color.White)
+            case 10:
+                text.Draw(screen, "Minor Illusion", fo, 448, 96, color.White)
+            case 11:
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
+            case 12:
+                text.Draw(screen, "Prestidigitation", fo, 448, 96, color.White)
+            case 13:
+                text.Draw(screen, "Ray of Frost", fo, 448, 96, color.White)
+            case 14:
+                text.Draw(screen, "Shocking Grasp", fo, 448, 96, color.White)
+            case 15:
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Acid Splash", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Blade Ward", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Chill Touch", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Dancing Lights", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Fire Bolt", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Friends", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Light", fo, 448, 128, color.White)
+            case 7:
+                text.Draw(screen, "Mage Hand", fo, 448, 128, color.White)
+            case 8:
+                text.Draw(screen, "Mending", fo, 448, 128, color.White)
+            case 9:
+                text.Draw(screen, "Message", fo, 448, 128, color.White)
+            case 10:
+                text.Draw(screen, "Minor Illusion", fo, 448, 128, color.White)
+            case 11:
+                text.Draw(screen, "Poison Spray", fo, 448, 128, color.White)
+            case 12:
+                text.Draw(screen, "Prestidigitation", fo, 448, 128, color.White)
+            case 13:
+                text.Draw(screen, "Ray of Frost", fo, 448, 128, color.White)
+            case 14:
+                text.Draw(screen, "Shocking Grasp", fo, 448, 128, color.White)
+            case 15:
+                text.Draw(screen, "True Strike", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Acid Splash", fo, 448, 160, color.White)
+            case 1:
+                text.Draw(screen, "Blade Ward", fo, 448, 160, color.White)
+            case 2:
+                text.Draw(screen, "Chill Touch", fo, 448, 160, color.White)
+            case 3:
+                text.Draw(screen, "Dancing Lights", fo, 448, 160, color.White)
+            case 4:
+                text.Draw(screen, "Fire Bolt", fo, 448, 160, color.White)
+            case 5:
+                text.Draw(screen, "Friends", fo, 448, 160, color.White)
+            case 6:
+                text.Draw(screen, "Light", fo, 448, 160, color.White)
+            case 7:
+                text.Draw(screen, "Mage Hand", fo, 448, 160, color.White)
+            case 8:
+                text.Draw(screen, "Mending", fo, 448, 160, color.White)
+            case 9:
+                text.Draw(screen, "Message", fo, 448, 160, color.White)
+            case 10:
+                text.Draw(screen, "Minor Illusion", fo, 448, 160, color.White)
+            case 11:
+                text.Draw(screen, "Poison Spray", fo, 448, 160, color.White)
+            case 12:
+                text.Draw(screen, "Prestidigitation", fo, 448, 160, color.White)
+            case 13:
+                text.Draw(screen, "Ray of Frost", fo, 448, 160, color.White)
+            case 14:
+                text.Draw(screen, "Shocking Grasp", fo, 448, 160, color.White)
+            case 15:
+                text.Draw(screen, "True Strike", fo, 448, 160, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Burning Hands", fo, 448, 224, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 224, color.White)
+            case 2:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 224, color.White)
+            case 3:
+                text.Draw(screen, "Color Spray", fo, 448, 224, color.White)
+            case 4:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 224, color.White)
+            case 5:
+                text.Draw(screen, "Detect Magic", fo, 448, 224, color.White)
+            case 6:
+                text.Draw(screen, "Disguise Self", fo, 448, 224, color.White)
+            case 7:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 224, color.White)
+            case 8:
+                text.Draw(screen, "False Life", fo, 448, 224, color.White)
+            case 9:
+                text.Draw(screen, "Feather Fall", fo, 448, 224, color.White)
+            case 10:
+                text.Draw(screen, "Fog Cloud", fo, 448, 224, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 224, color.White)
+            case 12:
+                text.Draw(screen, "Mage Armor", fo, 448, 224, color.White)
+            case 13:
+                text.Draw(screen, "Magic Missile", fo, 448, 224, color.White)
+            case 14:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 224, color.White)
+            case 15:
+                text.Draw(screen, "Shield", fo, 448, 224, color.White)
+            case 16:
+                text.Draw(screen, "Silent Image", fo, 448, 224, color.White)
+            case 17:
+                text.Draw(screen, "Sleep", fo, 448, 224, color.White)
+            case 18:
+                text.Draw(screen, "Thunderwave", fo, 448, 224, color.White)
+            case 19:
+                text.Draw(screen, "Witch Bolt", fo, 448, 224, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Burning Hands", fo, 448, 256, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 256, color.White)
+            case 2:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 256, color.White)
+            case 3:
+                text.Draw(screen, "Color Spray", fo, 448, 256, color.White)
+            case 4:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 256, color.White)
+            case 5:
+                text.Draw(screen, "Detect Magic", fo, 448, 256, color.White)
+            case 6:
+                text.Draw(screen, "Disguise Self", fo, 448, 256, color.White)
+            case 7:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 256, color.White)
+            case 8:
+                text.Draw(screen, "False Life", fo, 448, 256, color.White)
+            case 9:
+                text.Draw(screen, "Feather Fall", fo, 448, 256, color.White)
+            case 10:
+                text.Draw(screen, "Fog Cloud", fo, 448, 256, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 256, color.White)
+            case 12:
+                text.Draw(screen, "Mage Armor", fo, 448, 256, color.White)
+            case 13:
+                text.Draw(screen, "Magic Missile", fo, 448, 256, color.White)
+            case 14:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 256, color.White)
+            case 15:
+                text.Draw(screen, "Shield", fo, 448, 256, color.White)
+            case 16:
+                text.Draw(screen, "Silent Image", fo, 448, 256, color.White)
+            case 17:
+                text.Draw(screen, "Sleep", fo, 448, 256, color.White)
+            case 18:
+                text.Draw(screen, "Thunderwave", fo, 448, 256, color.White)
+            case 19:
+                text.Draw(screen, "Witch Bolt", fo, 448, 256, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option6 {
+            case 0:
+                text.Draw(screen, "Burning Hands", fo, 448, 288, color.White)
+            case 1:
+                text.Draw(screen, "Charm Person", fo, 448, 288, color.White)
+            case 2:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 288, color.White)
+            case 3:
+                text.Draw(screen, "Color Spray", fo, 448, 288, color.White)
+            case 4:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 288, color.White)
+            case 5:
+                text.Draw(screen, "Detect Magic", fo, 448, 288, color.White)
+            case 6:
+                text.Draw(screen, "Disguise Self", fo, 448, 288, color.White)
+            case 7:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 288, color.White)
+            case 8:
+                text.Draw(screen, "False Life", fo, 448, 288, color.White)
+            case 9:
+                text.Draw(screen, "Feather Fall", fo, 448, 288, color.White)
+            case 10:
+                text.Draw(screen, "Fog Cloud", fo, 448, 288, color.White)
+            case 11:
+                text.Draw(screen, "Jump", fo, 448, 288, color.White)
+            case 12:
+                text.Draw(screen, "Mage Armor", fo, 448, 288, color.White)
+            case 13:
+                text.Draw(screen, "Magic Missile", fo, 448, 288, color.White)
+            case 14:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 288, color.White)
+            case 15:
+                text.Draw(screen, "Shield", fo, 448, 288, color.White)
+            case 16:
+                text.Draw(screen, "Silent Image", fo, 448, 288, color.White)
+            case 17:
+                text.Draw(screen, "Sleep", fo, 448, 288, color.White)
+            case 18:
+                text.Draw(screen, "Thunderwave", fo, 448, 288, color.White)
+            case 19:
+                text.Draw(screen, "Witch Bolt", fo, 448, 288, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+        case 10:
+            text.Draw(screen, "Cantrips:", fo, 64, 64, color.White)
+            text.Draw(screen, "Spells:", fo, 64, 160, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 160, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Eldritch Blast", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Friends", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Mage Hand", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Minor Illusion", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+            case 7:
+                text.Draw(screen, "Prestidigitation", fo, 448, 64, color.White)
+            case 8:
+                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
+            case 1:
+                text.Draw(screen, "Chill Touch", fo, 448, 96, color.White)
+            case 2:
+                text.Draw(screen, "Eldritch Blast", fo, 448, 96, color.White)
+            case 3:
+                text.Draw(screen, "Friends", fo, 448, 96, color.White)
+            case 4:
+                text.Draw(screen, "Mage Hand", fo, 448, 96, color.White)
+            case 5:
+                text.Draw(screen, "Minor Illusion", fo, 448, 96, color.White)
+            case 6:
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
+            case 7:
+                text.Draw(screen, "Prestidigitation", fo, 448, 96, color.White)
+            case 8:
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Armor of Agathys", fo, 448, 160, color.White)
+            case 1:
+                text.Draw(screen, "Arms of Hadar", fo, 448, 160, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 160, color.White)
+            case 3:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 160, color.White)
+            case 4:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 160, color.White)
+            case 5:
+                text.Draw(screen, "Hellish Rebuke", fo, 448, 160, color.White)
+            case 6:
+                text.Draw(screen, "Hex", fo, 448, 160, color.White)
+            case 7:
+                text.Draw(screen, "Illusory Script", fo, 448, 160, color.White)
+            case 8:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 160, color.White)
+            case 9:
+                text.Draw(screen, "Unseen Servant", fo, 448, 160, color.White)
+            case 10:
+                text.Draw(screen, "Witch Bolt", fo, 448, 160, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Armor of Agathys", fo, 448, 192, color.White)
+            case 1:
+                text.Draw(screen, "Arms of Hadar", fo, 448, 192, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 192, color.White)
+            case 3:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+            case 4:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
+            case 5:
+                text.Draw(screen, "Hellish Rebuke", fo, 448, 192, color.White)
+            case 6:
+                text.Draw(screen, "Hex", fo, 448, 192, color.White)
+            case 7:
+                text.Draw(screen, "Illusory Script", fo, 448, 192, color.White)
+            case 8:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+            case 9:
+                text.Draw(screen, "Unseen Servant", fo, 448, 192, color.White)
+            case 10:
+                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+        case 11:
+            text.Draw(screen, "Cantrips:", fo, 64, 64, color.White)
+            text.Draw(screen, "Spells:", fo, 64, 192, color.White)
+            switch creationsel {
+            case 0:
+                text.Draw(screen, ">", fo, 432, 64, color.White)
+            case 1:
+                text.Draw(screen, ">", fo, 432, 96, color.White)
+            case 2:
+                text.Draw(screen, ">", fo, 432, 128, color.White)
+            case 3:
+                text.Draw(screen, ">", fo, 432, 192, color.White)
+            case 4:
+                text.Draw(screen, ">", fo, 432, 224, color.White)
+            case 5:
+                text.Draw(screen, ">", fo, 432, 256, color.White)
+            case 6:
+                text.Draw(screen, ">", fo, 432, 288, color.White)
+            case 7:
+                text.Draw(screen, ">", fo, 432, 320, color.White)
+            case 8:
+                text.Draw(screen, ">", fo, 432, 352, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option0 {
+            case 0:
+                text.Draw(screen, "Acid Splash", fo, 448, 64, color.White)
+            case 1:
+                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+            case 2:
+                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+            case 3:
+                text.Draw(screen, "Dancing Lights", fo, 448, 64, color.White)
+            case 4:
+                text.Draw(screen, "Fire Bolt", fo, 448, 64, color.White)
+            case 5:
+                text.Draw(screen, "Friends", fo, 448, 64, color.White)
+            case 6:
+                text.Draw(screen, "Light", fo, 448, 64, color.White)
+            case 7:
+                text.Draw(screen, "Mage Hand", fo, 448, 64, color.White)
+            case 8:
+                text.Draw(screen, "Mending", fo, 448, 64, color.White)
+            case 9:
+                text.Draw(screen, "Message", fo, 448, 64, color.White)
+            case 10:
+                text.Draw(screen, "Minor Illusion", fo, 448, 64, color.White)
+            case 11:
+                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+            case 12:
+                text.Draw(screen, "Prestidigitation", fo, 448, 64, color.White)
+            case 13:
+                text.Draw(screen, "Ray of Frost", fo, 448, 64, color.White)
+            case 14:
+                text.Draw(screen, "Shocking Grasp", fo, 448, 64, color.White)
+            case 15:
+                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option1 {
+            case 0:
+                text.Draw(screen, "Acid Splash", fo, 448, 96, color.White)
+            case 1:
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
+            case 2:
+                text.Draw(screen, "Chill Touch", fo, 448, 96, color.White)
+            case 3:
+                text.Draw(screen, "Dancing Lights", fo, 448, 96, color.White)
+            case 4:
+                text.Draw(screen, "Fire Bolt", fo, 448, 96, color.White)
+            case 5:
+                text.Draw(screen, "Friends", fo, 448, 96, color.White)
+            case 6:
+                text.Draw(screen, "Light", fo, 448, 96, color.White)
+            case 7:
+                text.Draw(screen, "Mage Hand", fo, 448, 96, color.White)
+            case 8:
+                text.Draw(screen, "Mending", fo, 448, 96, color.White)
+            case 9:
+                text.Draw(screen, "Message", fo, 448, 96, color.White)
+            case 10:
+                text.Draw(screen, "Minor Illusion", fo, 448, 96, color.White)
+            case 11:
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
+            case 12:
+                text.Draw(screen, "Prestidigitation", fo, 448, 96, color.White)
+            case 13:
+                text.Draw(screen, "Ray of Frost", fo, 448, 96, color.White)
+            case 14:
+                text.Draw(screen, "Shocking Grasp", fo, 448, 96, color.White)
+            case 15:
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option2 {
+            case 0:
+                text.Draw(screen, "Acid Splash", fo, 448, 128, color.White)
+            case 1:
+                text.Draw(screen, "Blade Ward", fo, 448, 128, color.White)
+            case 2:
+                text.Draw(screen, "Chill Touch", fo, 448, 128, color.White)
+            case 3:
+                text.Draw(screen, "Dancing Lights", fo, 448, 128, color.White)
+            case 4:
+                text.Draw(screen, "Fire Bolt", fo, 448, 128, color.White)
+            case 5:
+                text.Draw(screen, "Friends", fo, 448, 128, color.White)
+            case 6:
+                text.Draw(screen, "Light", fo, 448, 128, color.White)
+            case 7:
+                text.Draw(screen, "Mage Hand", fo, 448, 128, color.White)
+            case 8:
+                text.Draw(screen, "Mending", fo, 448, 128, color.White)
+            case 9:
+                text.Draw(screen, "Message", fo, 448, 128, color.White)
+            case 10:
+                text.Draw(screen, "Minor Illusion", fo, 448, 128, color.White)
+            case 11:
+                text.Draw(screen, "Poison Spray", fo, 448, 128, color.White)
+            case 12:
+                text.Draw(screen, "Prestidigitation", fo, 448, 128, color.White)
+            case 13:
+                text.Draw(screen, "Ray of Frost", fo, 448, 128, color.White)
+            case 14:
+                text.Draw(screen, "Shocking Grasp", fo, 448, 128, color.White)
+            case 15:
+                text.Draw(screen, "True Strike", fo, 448, 128, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option3 {
+            case 0:
+                text.Draw(screen, "Alarm", fo, 448, 192, color.White)
+            case 1:
+                text.Draw(screen, "Burning Hands", fo, 448, 192, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 192, color.White)
+            case 3:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 192, color.White)
+            case 4:
+                text.Draw(screen, "Color Spray", fo, 448, 192, color.White)
+            case 5:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+            case 6:
+                text.Draw(screen, "Detect Magic", fo, 448, 192, color.White)
+            case 7:
+                text.Draw(screen, "Disguise Self", fo, 448, 192, color.White)
+            case 8:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
+            case 9:
+                text.Draw(screen, "False Life", fo, 448, 192, color.White)
+            case 10:
+                text.Draw(screen, "Feather Fall", fo, 448, 192, color.White)
+            case 11:
+                text.Draw(screen, "Find Familiar", fo, 448, 192, color.White)
+            case 12:
+                text.Draw(screen, "Fog Cloud", fo, 448, 192, color.White)
+            case 13:
+                text.Draw(screen, "Grease", fo, 448, 192, color.White)
+            case 14:
+                text.Draw(screen, "Identify", fo, 448, 192, color.White)
+            case 15:
+                text.Draw(screen, "Illusory Script", fo, 448, 192, color.White)
+            case 16:
+                text.Draw(screen, "Jump", fo, 448, 192, color.White)
+            case 17:
+                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
+            case 18:
+                text.Draw(screen, "Mage Armor", fo, 448, 192, color.White)
+            case 19:
+                text.Draw(screen, "Magic Missile", fo, 448, 192, color.White)
+            case 20:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+            case 21:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 192, color.White)
+            case 22:
+                text.Draw(screen, "Shield", fo, 448, 192, color.White)
+            case 23:
+                text.Draw(screen, "Silent Image", fo, 448, 192, color.White)
+            case 24:
+                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
+            case 25:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
+            case 26:
+                text.Draw(screen, "Tenser's Floating Disk", fo, 448, 192, color.White)
+            case 27:
+                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
+            case 28:
+                text.Draw(screen, "Unseen Servant", fo, 448, 192, color.White)
+            case 29:
+                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option4 {
+            case 0:
+                text.Draw(screen, "Alarm", fo, 448, 224, color.White)
+            case 1:
+                text.Draw(screen, "Burning Hands", fo, 448, 224, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 224, color.White)
+            case 3:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 224, color.White)
+            case 4:
+                text.Draw(screen, "Color Spray", fo, 448, 224, color.White)
+            case 5:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 224, color.White)
+            case 6:
+                text.Draw(screen, "Detect Magic", fo, 448, 224, color.White)
+            case 7:
+                text.Draw(screen, "Disguise Self", fo, 448, 224, color.White)
+            case 8:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 224, color.White)
+            case 9:
+                text.Draw(screen, "False Life", fo, 448, 224, color.White)
+            case 10:
+                text.Draw(screen, "Feather Fall", fo, 448, 224, color.White)
+            case 11:
+                text.Draw(screen, "Find Familiar", fo, 448, 224, color.White)
+            case 12:
+                text.Draw(screen, "Fog Cloud", fo, 448, 224, color.White)
+            case 13:
+                text.Draw(screen, "Grease", fo, 448, 224, color.White)
+            case 14:
+                text.Draw(screen, "Identify", fo, 448, 224, color.White)
+            case 15:
+                text.Draw(screen, "Illusory Script", fo, 448, 224, color.White)
+            case 16:
+                text.Draw(screen, "Jump", fo, 448, 224, color.White)
+            case 17:
+                text.Draw(screen, "Longstrider", fo, 448, 224, color.White)
+            case 18:
+                text.Draw(screen, "Mage Armor", fo, 448, 224, color.White)
+            case 19:
+                text.Draw(screen, "Magic Missile", fo, 448, 224, color.White)
+            case 20:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 224, color.White)
+            case 21:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 224, color.White)
+            case 22:
+                text.Draw(screen, "Shield", fo, 448, 224, color.White)
+            case 23:
+                text.Draw(screen, "Silent Image", fo, 448, 224, color.White)
+            case 24:
+                text.Draw(screen, "Sleep", fo, 448, 224, color.White)
+            case 25:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 224, color.White)
+            case 26:
+                text.Draw(screen, "Tenser's Floating Disk", fo, 448, 224, color.White)
+            case 27:
+                text.Draw(screen, "Thunderwave", fo, 448, 224, color.White)
+            case 28:
+                text.Draw(screen, "Unseen Servant", fo, 448, 224, color.White)
+            case 29:
+                text.Draw(screen, "Witch Bolt", fo, 448, 224, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option5 {
+            case 0:
+                text.Draw(screen, "Alarm", fo, 448, 256, color.White)
+            case 1:
+                text.Draw(screen, "Burning Hands", fo, 448, 256, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 256, color.White)
+            case 3:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 256, color.White)
+            case 4:
+                text.Draw(screen, "Color Spray", fo, 448, 256, color.White)
+            case 5:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 256, color.White)
+            case 6:
+                text.Draw(screen, "Detect Magic", fo, 448, 256, color.White)
+            case 7:
+                text.Draw(screen, "Disguise Self", fo, 448, 256, color.White)
+            case 8:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 256, color.White)
+            case 9:
+                text.Draw(screen, "False Life", fo, 448, 256, color.White)
+            case 10:
+                text.Draw(screen, "Feather Fall", fo, 448, 256, color.White)
+            case 11:
+                text.Draw(screen, "Find Familiar", fo, 448, 256, color.White)
+            case 12:
+                text.Draw(screen, "Fog Cloud", fo, 448, 256, color.White)
+            case 13:
+                text.Draw(screen, "Grease", fo, 448, 256, color.White)
+            case 14:
+                text.Draw(screen, "Identify", fo, 448, 256, color.White)
+            case 15:
+                text.Draw(screen, "Illusory Script", fo, 448, 256, color.White)
+            case 16:
+                text.Draw(screen, "Jump", fo, 448, 256, color.White)
+            case 17:
+                text.Draw(screen, "Longstrider", fo, 448, 256, color.White)
+            case 18:
+                text.Draw(screen, "Mage Armor", fo, 448, 256, color.White)
+            case 19:
+                text.Draw(screen, "Magic Missile", fo, 448, 256, color.White)
+            case 20:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 256, color.White)
+            case 21:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 256, color.White)
+            case 22:
+                text.Draw(screen, "Shield", fo, 448, 256, color.White)
+            case 23:
+                text.Draw(screen, "Silent Image", fo, 448, 256, color.White)
+            case 24:
+                text.Draw(screen, "Sleep", fo, 448, 256, color.White)
+            case 25:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 256, color.White)
+            case 26:
+                text.Draw(screen, "Tenser's Floating Disk", fo, 448, 256, color.White)
+            case 27:
+                text.Draw(screen, "Thunderwave", fo, 448, 256, color.White)
+            case 28:
+                text.Draw(screen, "Unseen Servant", fo, 448, 256, color.White)
+            case 29:
+                text.Draw(screen, "Witch Bolt", fo, 448, 256, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option6 {
+            case 0:
+                text.Draw(screen, "Alarm", fo, 448, 288, color.White)
+            case 1:
+                text.Draw(screen, "Burning Hands", fo, 448, 288, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 288, color.White)
+            case 3:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 288, color.White)
+            case 4:
+                text.Draw(screen, "Color Spray", fo, 448, 288, color.White)
+            case 5:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 288, color.White)
+            case 6:
+                text.Draw(screen, "Detect Magic", fo, 448, 288, color.White)
+            case 7:
+                text.Draw(screen, "Disguise Self", fo, 448, 288, color.White)
+            case 8:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 288, color.White)
+            case 9:
+                text.Draw(screen, "False Life", fo, 448, 288, color.White)
+            case 10:
+                text.Draw(screen, "Feather Fall", fo, 448, 288, color.White)
+            case 11:
+                text.Draw(screen, "Find Familiar", fo, 448, 288, color.White)
+            case 12:
+                text.Draw(screen, "Fog Cloud", fo, 448, 288, color.White)
+            case 13:
+                text.Draw(screen, "Grease", fo, 448, 288, color.White)
+            case 14:
+                text.Draw(screen, "Identify", fo, 448, 288, color.White)
+            case 15:
+                text.Draw(screen, "Illusory Script", fo, 448, 288, color.White)
+            case 16:
+                text.Draw(screen, "Jump", fo, 448, 288, color.White)
+            case 17:
+                text.Draw(screen, "Longstrider", fo, 448, 288, color.White)
+            case 18:
+                text.Draw(screen, "Mage Armor", fo, 448, 288, color.White)
+            case 19:
+                text.Draw(screen, "Magic Missile", fo, 448, 288, color.White)
+            case 20:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 288, color.White)
+            case 21:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 288, color.White)
+            case 22:
+                text.Draw(screen, "Shield", fo, 448, 288, color.White)
+            case 23:
+                text.Draw(screen, "Silent Image", fo, 448, 288, color.White)
+            case 24:
+                text.Draw(screen, "Sleep", fo, 448, 288, color.White)
+            case 25:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 288, color.White)
+            case 26:
+                text.Draw(screen, "Tenser's Floating Disk", fo, 448, 288, color.White)
+            case 27:
+                text.Draw(screen, "Thunderwave", fo, 448, 288, color.White)
+            case 28:
+                text.Draw(screen, "Unseen Servant", fo, 448, 288, color.White)
+            case 29:
+                text.Draw(screen, "Witch Bolt", fo, 448, 288, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option7 {
+            case 0:
+                text.Draw(screen, "Alarm", fo, 448, 320, color.White)
+            case 1:
+                text.Draw(screen, "Burning Hands", fo, 448, 320, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 320, color.White)
+            case 3:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 320, color.White)
+            case 4:
+                text.Draw(screen, "Color Spray", fo, 448, 320, color.White)
+            case 5:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 320, color.White)
+            case 6:
+                text.Draw(screen, "Detect Magic", fo, 448, 320, color.White)
+            case 7:
+                text.Draw(screen, "Disguise Self", fo, 448, 320, color.White)
+            case 8:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 320, color.White)
+            case 9:
+                text.Draw(screen, "False Life", fo, 448, 320, color.White)
+            case 10:
+                text.Draw(screen, "Feather Fall", fo, 448, 320, color.White)
+            case 11:
+                text.Draw(screen, "Find Familiar", fo, 448, 320, color.White)
+            case 12:
+                text.Draw(screen, "Fog Cloud", fo, 448, 320, color.White)
+            case 13:
+                text.Draw(screen, "Grease", fo, 448, 320, color.White)
+            case 14:
+                text.Draw(screen, "Identify", fo, 448, 320, color.White)
+            case 15:
+                text.Draw(screen, "Illusory Script", fo, 448, 320, color.White)
+            case 16:
+                text.Draw(screen, "Jump", fo, 448, 320, color.White)
+            case 17:
+                text.Draw(screen, "Longstrider", fo, 448, 320, color.White)
+            case 18:
+                text.Draw(screen, "Mage Armor", fo, 448, 320, color.White)
+            case 19:
+                text.Draw(screen, "Magic Missile", fo, 448, 320, color.White)
+            case 20:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 320, color.White)
+            case 21:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 320, color.White)
+            case 22:
+                text.Draw(screen, "Shield", fo, 448, 320, color.White)
+            case 23:
+                text.Draw(screen, "Silent Image", fo, 448, 320, color.White)
+            case 24:
+                text.Draw(screen, "Sleep", fo, 448, 320, color.White)
+            case 25:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 320, color.White)
+            case 26:
+                text.Draw(screen, "Tenser's Floating Disk", fo, 448, 320, color.White)
+            case 27:
+                text.Draw(screen, "Thunderwave", fo, 448, 320, color.White)
+            case 28:
+                text.Draw(screen, "Unseen Servant", fo, 448, 320, color.White)
+            case 29:
+                text.Draw(screen, "Witch Bolt", fo, 448, 320, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+            switch option8 {
+            case 0:
+                text.Draw(screen, "Alarm", fo, 448, 352, color.White)
+            case 1:
+                text.Draw(screen, "Burning Hands", fo, 448, 352, color.White)
+            case 2:
+                text.Draw(screen, "Charm Person", fo, 448, 352, color.White)
+            case 3:
+                text.Draw(screen, "Chromatic Orb", fo, 448, 352, color.White)
+            case 4:
+                text.Draw(screen, "Color Spray", fo, 448, 352, color.White)
+            case 5:
+                text.Draw(screen, "Comprehend Languages", fo, 448, 352, color.White)
+            case 6:
+                text.Draw(screen, "Detect Magic", fo, 448, 352, color.White)
+            case 7:
+                text.Draw(screen, "Disguise Self", fo, 448, 352, color.White)
+            case 8:
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 352, color.White)
+            case 9:
+                text.Draw(screen, "False Life", fo, 448, 352, color.White)
+            case 10:
+                text.Draw(screen, "Feather Fall", fo, 448, 352, color.White)
+            case 11:
+                text.Draw(screen, "Find Familiar", fo, 448, 352, color.White)
+            case 12:
+                text.Draw(screen, "Fog Cloud", fo, 448, 352, color.White)
+            case 13:
+                text.Draw(screen, "Grease", fo, 448, 352, color.White)
+            case 14:
+                text.Draw(screen, "Identify", fo, 448, 352, color.White)
+            case 15:
+                text.Draw(screen, "Illusory Script", fo, 448, 352, color.White)
+            case 16:
+                text.Draw(screen, "Jump", fo, 448, 352, color.White)
+            case 17:
+                text.Draw(screen, "Longstrider", fo, 448, 352, color.White)
+            case 18:
+                text.Draw(screen, "Mage Armor", fo, 448, 352, color.White)
+            case 19:
+                text.Draw(screen, "Magic Missile", fo, 448, 352, color.White)
+            case 20:
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 352, color.White)
+            case 21:
+                text.Draw(screen, "Ray of Sickness", fo, 448, 352, color.White)
+            case 22:
+                text.Draw(screen, "Shield", fo, 448, 352, color.White)
+            case 23:
+                text.Draw(screen, "Silent Image", fo, 448, 352, color.White)
+            case 24:
+                text.Draw(screen, "Sleep", fo, 448, 352, color.White)
+            case 25:
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 352, color.White)
+            case 26:
+                text.Draw(screen, "Tenser's Floating Disk", fo, 448, 352, color.White)
+            case 27:
+                text.Draw(screen, "Thunderwave", fo, 448, 352, color.White)
+            case 28:
+                text.Draw(screen, "Unseen Servant", fo, 448, 352, color.White)
+            case 29:
+                text.Draw(screen, "Witch Bolt", fo, 448, 352, color.White)
+            default:
+                log.Fatal("Out of bounds ()")
+            }
+        default:
+            log.Fatal("Invalid value for classsel (Draw spells)")
         }
     } else if l != nil {
         lgm := ebiten.GeoM{}
