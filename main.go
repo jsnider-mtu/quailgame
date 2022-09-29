@@ -28,6 +28,7 @@ import (
     "github.com/jsnider-mtu/quailgame/levels"
     "github.com/jsnider-mtu/quailgame/player"
     "github.com/jsnider-mtu/quailgame/player/pcimages"
+    "github.com/jsnider-mtu/quailgame/spells"
     "github.com/jsnider-mtu/quailgame/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
@@ -8012,7 +8013,15 @@ func (g *Game) Update() error {
                 var statsstr string = p.Stats.Save()
                 fmt.Println(statsstr)
                 var equipmentstr string = p.Equipment.Save()
-                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Race, p.Class, p.Level, p.XP, equipmentstr)
+                var spellsstr string = p.Spells.Save()
+//                for sind, spell := range spellsslice {
+//                    if sind == len(spellsslice) - 1 {
+//                        spellsstr += spell
+//                    } else {
+//                        spellsstr += spell + ","
+//                    }
+//                }
+                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Race, p.Class, p.Level, p.XP, equipmentstr, spellsstr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -8045,8 +8054,9 @@ func (g *Game) Update() error {
                 var playerlvl int
                 var playerxp int
                 var equipmentstr string
+                var spellsstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &racestr, &classstr, &playerlvl, &playerxp, &equipmentstr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &racestr, &classstr, &playerlvl, &playerxp, &equipmentstr, &spellsstr)
                 }
                 err = rows.Err()
                 if err != nil {
@@ -8436,6 +8446,8 @@ func (g *Game) Update() error {
                         return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
                 }
+//                spellsslice = strings.Split(spellsstr, ",")
+                p.Spells.Add(strings.Split(spellsstr, ","))
                 l = levels.LoadLvl(levelname, 0, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
                 load = false
@@ -12900,7 +12912,7 @@ func init() {
     classmap[10] = "Warlock"
     classmap[11] = "Wizard"
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "race,TEXT,0,null,0", "class,TEXT,0,null,0", "playerlevel,INT,0,null,0", "xp,INT,0,null,0", "equipment,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "race,TEXT,0,null,0", "class,TEXT,0,null,0", "playerlevel,INT,0,null,0", "xp,INT,0,null,0", "equipment,TEXT,0,null,0", "spells,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)

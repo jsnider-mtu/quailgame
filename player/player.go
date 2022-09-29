@@ -1,12 +1,14 @@
 package player
 
 import (
+    "errors"
     "fmt"
     "log"
     "strconv"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/quailgame/inventory"
+    "github.com/jsnider-mtu/quailgame/spells"
 )
 
 type Stats struct {
@@ -66,6 +68,10 @@ type Equipment struct {
     Clothes inventory.Item
 }
 
+type Spells struct {
+    Spells []spells.Spell
+}
+
 type Player struct {
     Name string
     Pos [2]int
@@ -77,6 +83,32 @@ type Player struct {
     Level int
     XP int
     Equipment *Equipment
+    Spells *Spells
+}
+
+func (s *Spells) Add(spellsslice []string) error {
+    for _, spell := range spellsslice {
+        switch spell {
+        case "Acid Splash":
+            var acidsplash spells.AcidSplash
+            s.Spells = append(s.Spells, acidsplash)
+        default:
+            return errors.New(fmt.Sprintf("%s is not a valid spell", spell))
+        }
+    }
+    return nil
+}
+
+func (s *Spells) Save() string {
+    var spellsstr string
+    for sind, spell := range s.Spells {
+        if sind == len(s.Spells) - 1 {
+            spellsstr += spell
+        } else {
+            spellsstr += spell + ","
+        }
+    }
+    return spellsstr
 }
 
 func (s *Stats) Check() error {
