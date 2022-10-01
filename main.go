@@ -171,7 +171,6 @@ var savingthrows = make(map[string]int)
 var languages = make([]string, 0)
 var proficiencies = make([]string, 0)
 var resistances = make([]string, 0)
-var cantrips = make([]string, 0)
 var spellsslice = make([]string, 0)
 
 type Game struct {}
@@ -6430,53 +6429,53 @@ func (g *Game) Update() error {
             case 1:
                 switch option0 {
                 case 0:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 1:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 2:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 3:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 4:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 5:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 6:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 7:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 8:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 9:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 case 10:
-                    cantrips = append(cantrips, "Vicious Mockery")
+                    spellsslice = append(spellsslice, "Vicious Mockery")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option1 {
                 case 0:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 1:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 2:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 3:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 4:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 5:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 6:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 7:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 8:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 9:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 case 10:
-                    cantrips = append(cantrips, "Vicious Mockery")
+                    spellsslice = append(spellsslice, "Vicious Mockery")
                 default:
                     return errors.New("Out of bounds ()")
                 }
@@ -6667,55 +6666,55 @@ func (g *Game) Update() error {
             case 2:
                 switch option0 {
                 case 0:
-                    cantrips = append(cantrips, "Guidance")
+                    spellsslice = append(spellsslice, "Guidance")
                 case 1:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 2:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 3:
-                    cantrips = append(cantrips, "Resistance")
+                    spellsslice = append(spellsslice, "Resistance")
                 case 4:
-                    cantrips = append(cantrips, "Sacred Flame")
+                    spellsslice = append(spellsslice, "Sacred Flame")
                 case 5:
-                    cantrips = append(cantrips, "Spare the Dying")
+                    spellsslice = append(spellsslice, "Spare the Dying")
                 case 6:
-                    cantrips = append(cantrips, "Thaumaturgy")
+                    spellsslice = append(spellsslice, "Thaumaturgy")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option1 {
                 case 0:
-                    cantrips = append(cantrips, "Guidance")
+                    spellsslice = append(spellsslice, "Guidance")
                 case 1:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 2:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 3:
-                    cantrips = append(cantrips, "Resistance")
+                    spellsslice = append(spellsslice, "Resistance")
                 case 4:
-                    cantrips = append(cantrips, "Sacred Flame")
+                    spellsslice = append(spellsslice, "Sacred Flame")
                 case 5:
-                    cantrips = append(cantrips, "Spare the Dying")
+                    spellsslice = append(spellsslice, "Spare the Dying")
                 case 6:
-                    cantrips = append(cantrips, "Thaumaturgy")
+                    spellsslice = append(spellsslice, "Thaumaturgy")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option2 {
                 case 0:
-                    cantrips = append(cantrips, "Guidance")
+                    spellsslice = append(spellsslice, "Guidance")
                 case 1:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 2:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 3:
-                    cantrips = append(cantrips, "Resistance")
+                    spellsslice = append(spellsslice, "Resistance")
                 case 4:
-                    cantrips = append(cantrips, "Sacred Flame")
+                    spellsslice = append(spellsslice, "Sacred Flame")
                 case 5:
-                    cantrips = append(cantrips, "Spare the Dying")
+                    spellsslice = append(spellsslice, "Spare the Dying")
                 case 6:
-                    cantrips = append(cantrips, "Thaumaturgy")
+                    spellsslice = append(spellsslice, "Thaumaturgy")
                 default:
                     return errors.New("Out of bounds ()")
                 }
@@ -6892,41 +6891,41 @@ func (g *Game) Update() error {
             case 3:
                 switch option0 {
                 case 0:
-                    cantrips = append(cantrips, "Druidcraft")
+                    spellsslice = append(spellsslice, "Druidcraft")
                 case 1:
-                    cantrips = append(cantrips, "Guidance")
+                    spellsslice = append(spellsslice, "Guidance")
                 case 2:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 3:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 4:
-                    cantrips = append(cantrips, "Produce Flame")
+                    spellsslice = append(spellsslice, "Produce Flame")
                 case 5:
-                    cantrips = append(cantrips, "Resistance")
+                    spellsslice = append(spellsslice, "Resistance")
                 case 6:
-                    cantrips = append(cantrips, "Shillelagh")
+                    spellsslice = append(spellsslice, "Shillelagh")
                 case 7:
-                    cantrips = append(cantrips, "Thorn Whip")
+                    spellsslice = append(spellsslice, "Thorn Whip")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option1 {
                 case 0:
-                    cantrips = append(cantrips, "Druidcraft")
+                    spellsslice = append(spellsslice, "Druidcraft")
                 case 1:
-                    cantrips = append(cantrips, "Guidance")
+                    spellsslice = append(spellsslice, "Guidance")
                 case 2:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 3:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 4:
-                    cantrips = append(cantrips, "Produce Flame")
+                    spellsslice = append(spellsslice, "Produce Flame")
                 case 5:
-                    cantrips = append(cantrips, "Resistance")
+                    spellsslice = append(spellsslice, "Resistance")
                 case 6:
-                    cantrips = append(cantrips, "Shillelagh")
+                    spellsslice = append(spellsslice, "Shillelagh")
                 case 7:
-                    cantrips = append(cantrips, "Thorn Whip")
+                    spellsslice = append(spellsslice, "Thorn Whip")
                 default:
                     return errors.New("Out of bounds ()")
                 }
@@ -7113,145 +7112,145 @@ func (g *Game) Update() error {
             case 9:
                 switch option0 {
                 case 0:
-                    cantrips = append(cantrips, "Acid Splash")
+                    spellsslice = append(spellsslice, "Acid Splash")
                 case 1:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 2:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 3:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 4:
-                    cantrips = append(cantrips, "Fire Bolt")
+                    spellsslice = append(spellsslice, "Fire Bolt")
                 case 5:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 6:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 7:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 8:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 9:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 10:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 11:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 12:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 13:
-                    cantrips = append(cantrips, "Ray of Frost")
+                    spellsslice = append(spellsslice, "Ray of Frost")
                 case 14:
-                    cantrips = append(cantrips, "Shocking Grasp")
+                    spellsslice = append(spellsslice, "Shocking Grasp")
                 case 15:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option1 {
                 case 0:
-                    cantrips = append(cantrips, "Acid Splash")
+                    spellsslice = append(spellsslice, "Acid Splash")
                 case 1:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 2:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 3:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 4:
-                    cantrips = append(cantrips, "Fire Bolt")
+                    spellsslice = append(spellsslice, "Fire Bolt")
                 case 5:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 6:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 7:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 8:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 9:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 10:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 11:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 12:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 13:
-                    cantrips = append(cantrips, "Ray of Frost")
+                    spellsslice = append(spellsslice, "Ray of Frost")
                 case 14:
-                    cantrips = append(cantrips, "Shocking Grasp")
+                    spellsslice = append(spellsslice, "Shocking Grasp")
                 case 15:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option2 {
                 case 0:
-                    cantrips = append(cantrips, "Acid Splash")
+                    spellsslice = append(spellsslice, "Acid Splash")
                 case 1:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 2:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 3:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 4:
-                    cantrips = append(cantrips, "Fire Bolt")
+                    spellsslice = append(spellsslice, "Fire Bolt")
                 case 5:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 6:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 7:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 8:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 9:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 10:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 11:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 12:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 13:
-                    cantrips = append(cantrips, "Ray of Frost")
+                    spellsslice = append(spellsslice, "Ray of Frost")
                 case 14:
-                    cantrips = append(cantrips, "Shocking Grasp")
+                    spellsslice = append(spellsslice, "Shocking Grasp")
                 case 15:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option3 {
                 case 0:
-                    cantrips = append(cantrips, "Acid Splash")
+                    spellsslice = append(spellsslice, "Acid Splash")
                 case 1:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 2:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 3:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 4:
-                    cantrips = append(cantrips, "Fire Bolt")
+                    spellsslice = append(spellsslice, "Fire Bolt")
                 case 5:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 6:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 7:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 8:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 9:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 10:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 11:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 12:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 13:
-                    cantrips = append(cantrips, "Ray of Frost")
+                    spellsslice = append(spellsslice, "Ray of Frost")
                 case 14:
-                    cantrips = append(cantrips, "Shocking Grasp")
+                    spellsslice = append(spellsslice, "Shocking Grasp")
                 case 15:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
@@ -7346,45 +7345,45 @@ func (g *Game) Update() error {
             case 10:
                 switch option0 {
                 case 0:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 1:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 2:
-                    cantrips = append(cantrips, "Eldritch Blast")
+                    spellsslice = append(spellsslice, "Eldritch Blast")
                 case 3:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 4:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 5:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 6:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 7:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 8:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option1 {
                 case 0:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 1:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 2:
-                    cantrips = append(cantrips, "Eldritch Blast")
+                    spellsslice = append(spellsslice, "Eldritch Blast")
                 case 3:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 4:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 5:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 6:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 7:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 8:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
@@ -7443,109 +7442,109 @@ func (g *Game) Update() error {
             case 11:
                 switch option0 {
                 case 0:
-                    cantrips = append(cantrips, "Acid Splash")
+                    spellsslice = append(spellsslice, "Acid Splash")
                 case 1:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 2:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 3:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 4:
-                    cantrips = append(cantrips, "Fire Bolt")
+                    spellsslice = append(spellsslice, "Fire Bolt")
                 case 5:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 6:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 7:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 8:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 9:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 10:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 11:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 12:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 13:
-                    cantrips = append(cantrips, "Ray of Frost")
+                    spellsslice = append(spellsslice, "Ray of Frost")
                 case 14:
-                    cantrips = append(cantrips, "Shocking Grasp")
+                    spellsslice = append(spellsslice, "Shocking Grasp")
                 case 15:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option1 {
                 case 0:
-                    cantrips = append(cantrips, "Acid Splash")
+                    spellsslice = append(spellsslice, "Acid Splash")
                 case 1:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 2:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 3:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 4:
-                    cantrips = append(cantrips, "Fire Bolt")
+                    spellsslice = append(spellsslice, "Fire Bolt")
                 case 5:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 6:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 7:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 8:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 9:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 10:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 11:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 12:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 13:
-                    cantrips = append(cantrips, "Ray of Frost")
+                    spellsslice = append(spellsslice, "Ray of Frost")
                 case 14:
-                    cantrips = append(cantrips, "Shocking Grasp")
+                    spellsslice = append(spellsslice, "Shocking Grasp")
                 case 15:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
                 switch option2 {
                 case 0:
-                    cantrips = append(cantrips, "Acid Splash")
+                    spellsslice = append(spellsslice, "Acid Splash")
                 case 1:
-                    cantrips = append(cantrips, "Blade Ward")
+                    spellsslice = append(spellsslice, "Blade Ward")
                 case 2:
-                    cantrips = append(cantrips, "Chill Touch")
+                    spellsslice = append(spellsslice, "Chill Touch")
                 case 3:
-                    cantrips = append(cantrips, "Dancing Lights")
+                    spellsslice = append(spellsslice, "Dancing Lights")
                 case 4:
-                    cantrips = append(cantrips, "Fire Bolt")
+                    spellsslice = append(spellsslice, "Fire Bolt")
                 case 5:
-                    cantrips = append(cantrips, "Friends")
+                    spellsslice = append(spellsslice, "Friends")
                 case 6:
-                    cantrips = append(cantrips, "Light")
+                    spellsslice = append(spellsslice, "Light")
                 case 7:
-                    cantrips = append(cantrips, "Mage Hand")
+                    spellsslice = append(spellsslice, "Mage Hand")
                 case 8:
-                    cantrips = append(cantrips, "Mending")
+                    spellsslice = append(spellsslice, "Mending")
                 case 9:
-                    cantrips = append(cantrips, "Message")
+                    spellsslice = append(spellsslice, "Message")
                 case 10:
-                    cantrips = append(cantrips, "Minor Illusion")
+                    spellsslice = append(spellsslice, "Minor Illusion")
                 case 11:
-                    cantrips = append(cantrips, "Poison Spray")
+                    spellsslice = append(spellsslice, "Poison Spray")
                 case 12:
-                    cantrips = append(cantrips, "Prestidigitation")
+                    spellsslice = append(spellsslice, "Prestidigitation")
                 case 13:
-                    cantrips = append(cantrips, "Ray of Frost")
+                    spellsslice = append(spellsslice, "Ray of Frost")
                 case 14:
-                    cantrips = append(cantrips, "Shocking Grasp")
+                    spellsslice = append(spellsslice, "Shocking Grasp")
                 case 15:
-                    cantrips = append(cantrips, "True Strike")
+                    spellsslice = append(spellsslice, "True Strike")
                 default:
                     return errors.New("Out of bounds ()")
                 }
