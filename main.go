@@ -161,6 +161,7 @@ var (
     nimbleness bool = false
     brave bool = false
     ancestry string
+    targeted int = -1
 )
 
 var racemap = make(map[int]string)
@@ -8541,6 +8542,13 @@ func (g *Game) Update() error {
                         }
                     }
                 }
+            } else if inpututil.IsKeyJustPressed(ebiten.KeyTab) {
+                targeted++
+                if len(l.NPCs) == 0 {
+                    targeted = -1
+                } else if targeted == len(l.NPCs) {
+                    targeted = 0
+                }
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyDigit1) {
                 for _, npc := range l.NPCs {
@@ -12456,7 +12464,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         lgm := ebiten.GeoM{}
         lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
         screen.DrawImage(l.Image, &ebiten.DrawImageOptions{GeoM: lgm})
-        for _, npc := range l.NPCs {
+        for npcind, npc := range l.NPCs {
             if npc.PC.Pos[0] == p.Pos[0] && npc.PC.Pos[1] == p.Pos[1] + 24 {
                 drawmc(screen, w, h)
                 mcdrawn = true
@@ -12533,6 +12541,22 @@ func (g *Game) Draw(screen *ebiten.Image) {
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 }
+            }
+            if npcind == targeted {
+                targetedBoxVert := ebiten.NewImage(2, 48)
+                targetedBoxHoriz := ebiten.NewImage(48, 2)
+                targetedBoxVert.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+                targetedBoxHoriz.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+                tbvgm := ebiten.GeoM{}
+                tbvgm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
+                screen.DrawImage(targetedBoxVert, &ebiten.DrawImageOptions{GeoM: tbvgm})
+                tbvgm.Translate(float64(46), float64(0))
+                screen.DrawImage(targetedBoxVert, &ebiten.DrawImageOptions{GeoM: tbvgm})
+                tbhgm := ebiten.GeoM{}
+                tbhgm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
+                screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
+                tbhgm.Translate(float64(0), float64(46))
+                screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
             }
         }
         if !mcdrawn && !start && !cutscene {
