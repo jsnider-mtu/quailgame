@@ -367,9 +367,9 @@ func (s *Spells) Save() string {
     var spellsstr string
     for sind, spell := range s.Spells {
         if sind == len(s.Spells) - 1 {
-            spellsstr += spell
+            spellsstr += spell.PrettyPrint()
         } else {
-            spellsstr += spell + ","
+            spellsstr += spell.PrettyPrint() + ","
         }
     }
     return spellsstr

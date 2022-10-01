@@ -5,3 +5,7 @@ type Light struct {}
 func (l Light) Cast(target string) bool {
     log.Println("The spell Light is not implemented yet")
 }
+
+func (l Light) PrettyPrint() string {
+    return "Light"
+}
