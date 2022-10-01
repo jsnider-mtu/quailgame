@@ -12,6 +12,10 @@ func (d DissonantWhispers) PrettyPrint() string {
     return "Dissonant Whispers"
 }
 
+func (d DissonantWhispers) GetLevel() int {
+    return 0
+}
+
 func (a DissonantWhispers) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Dissonant Whispers is not implemented yet")
 }

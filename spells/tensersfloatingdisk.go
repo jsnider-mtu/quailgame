@@ -12,6 +12,10 @@ func (t TensersFloatingDisk) PrettyPrint() string {
     return "Tenser's Floating Disk"
 }
 
+func (t TensersFloatingDisk) GetLevel() int {
+    return 0
+}
+
 func (a TensersFloatingDisk) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Tenser's Floating Disk is not implemented yet")
 }

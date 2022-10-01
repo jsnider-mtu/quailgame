@@ -12,6 +12,10 @@ func (f FaerieFire) PrettyPrint() string {
     return "Faerie Fire"
 }
 
+func (f FaerieFire) GetLevel() int {
+    return 0
+}
+
 func (a FaerieFire) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Faerie Fire is not implemented yet")
 }

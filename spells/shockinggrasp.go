@@ -12,6 +12,10 @@ func (s ShockingGrasp) PrettyPrint() string {
     return "Shocking Grasp"
 }
 
+func (s ShockingGrasp) GetLevel() int {
+    return 0
+}
+
 func (a ShockingGrasp) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Shocking Grasp is not implemented yet")
 }

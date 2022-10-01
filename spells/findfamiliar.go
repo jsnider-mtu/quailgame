@@ -12,6 +12,10 @@ func (f FindFamiliar) PrettyPrint() string {
     return "Find Familiar"
 }
 
+func (f FindFamiliar) GetLevel() int {
+    return 0
+}
+
 func (a FindFamiliar) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Find Familiar is not implemented yet")
 }

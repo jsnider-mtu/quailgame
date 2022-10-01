@@ -6,5 +6,6 @@ import (
 
 type Spell interface {
     PrettyPrint() string
+    GetLevel() int
     Animate(*ebiten.Image, [2]int)
 }

@@ -12,6 +12,10 @@ func (f FalseLife) PrettyPrint() string {
     return "False Life"
 }
 
+func (f FalseLife) GetLevel() int {
+    return 0
+}
+
 func (a FalseLife) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell False Life is not implemented yet")
 }

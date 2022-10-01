@@ -12,6 +12,10 @@ func (e Entangle) PrettyPrint() string {
     return "Entangle"
 }
 
+func (e Entangle) GetLevel() int {
+    return 0
+}
+
 func (a Entangle) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Entangle is not implemented yet")
 }

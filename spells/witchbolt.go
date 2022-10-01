@@ -12,6 +12,10 @@ func (w WitchBolt) PrettyPrint() string {
     return "Witch Bolt"
 }
 
+func (w WitchBolt) GetLevel() int {
+    return 0
+}
+
 func (a WitchBolt) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Witch Bolt is not implemented yet")
 }

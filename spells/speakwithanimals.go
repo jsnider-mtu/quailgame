@@ -12,6 +12,10 @@ func (s SpeakWithAnimals) PrettyPrint() string {
     return "Speak with Animals"
 }
 
+func (s SpeakWithAnimals) GetLevel() int {
+    return 0
+}
+
 func (a SpeakWithAnimals) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Speak with Animals is not implemented yet")
 }

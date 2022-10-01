@@ -12,6 +12,10 @@ func (d DisguiseSelf) PrettyPrint() string {
     return "Disguise Self"
 }
 
+func (d DisguiseSelf) GetLevel() int {
+    return 0
+}
+
 func (a DisguiseSelf) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Disguise Self is not implemented yet")
 }

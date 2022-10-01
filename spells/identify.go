@@ -12,6 +12,10 @@ func (i Identify) PrettyPrint() string {
     return "Identify"
 }
 
+func (i Identify) GetLevel() int {
+    return 0
+}
+
 func (a Identify) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Identify is not implemented yet")
 }

@@ -12,6 +12,10 @@ func (u UnseenServant) PrettyPrint() string {
     return "Unseen Servant"
 }
 
+func (u UnseenServant) GetLevel() int {
+    return 0
+}
+
 func (a UnseenServant) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Unseen Servant is not implemented yet")
 }

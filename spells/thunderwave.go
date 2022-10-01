@@ -12,6 +12,10 @@ func (t Thunderwave) PrettyPrint() string {
     return "Thunderwave"
 }
 
+func (t Thunderwave) GetLevel() int {
+    return 0
+}
+
 func (a Thunderwave) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Thunderwave is not implemented yet")
 }

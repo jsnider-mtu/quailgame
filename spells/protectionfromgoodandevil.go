@@ -12,6 +12,10 @@ func (p ProtectionFromGoodAndEvil) PrettyPrint() string {
     return "Protection from Good and Evil"
 }
 
+func (p ProtectionFromGoodAndEvil) GetLevel() int {
+    return 0
+}
+
 func (a ProtectionFromGoodAndEvil) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Protection from Good and Evil is not implemented yet")
 }

@@ -12,6 +12,10 @@ func (a AnimalFriendship) PrettyPrint() string {
     return "Animal Friendship"
 }
 
+func (a AnimalFriendship) GetLevel() int {
+    return 0
+}
+
 func (a AnimalFriendship) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Animal Friendship is not implemented yet")
 }

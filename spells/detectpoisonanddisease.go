@@ -12,6 +12,10 @@ func (d DetectPoisonAndDisease) PrettyPrint() string {
     return "Detect Poison and Disease"
 }
 
+func (d DetectPoisonAndDisease) GetLevel() int {
+    return 0
+}
+
 func (a DetectPoisonAndDisease) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Detect Poison and Disease is not implemented yet")
 }

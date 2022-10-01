@@ -12,6 +12,10 @@ func (r RayOfSickness) PrettyPrint() string {
     return "Ray of Sickness"
 }
 
+func (r RayOfSickness) GetLevel() int {
+    return 0
+}
+
 func (a RayOfSickness) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Ray of Sickness is not implemented yet")
 }

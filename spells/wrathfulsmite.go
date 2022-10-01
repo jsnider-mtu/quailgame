@@ -12,6 +12,10 @@ func (w WrathfulSmite) PrettyPrint() string {
     return "Wrathful Smite"
 }
 
+func (w WrathfulSmite) GetLevel() int {
+    return 0
+}
+
 func (a WrathfulSmite) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Wrathful Smite is not implemented yet")
 }

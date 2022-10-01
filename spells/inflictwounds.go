@@ -12,6 +12,10 @@ func (i InflictWounds) PrettyPrint() string {
     return "Inflict Wounds"
 }
 
+func (i InflictWounds) GetLevel() int {
+    return 0
+}
+
 func (a InflictWounds) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Inflict Wounds is not implemented yet")
 }
