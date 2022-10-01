@@ -13,7 +13,7 @@ func (e Entangle) PrettyPrint() string {
 }
 
 func (e Entangle) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Entangle) Animate(screen *ebiten.Image, targetpos [2]int) {

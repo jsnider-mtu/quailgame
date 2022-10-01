@@ -13,7 +13,7 @@ func (f FindFamiliar) PrettyPrint() string {
 }
 
 func (f FindFamiliar) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a FindFamiliar) Animate(screen *ebiten.Image, targetpos [2]int) {

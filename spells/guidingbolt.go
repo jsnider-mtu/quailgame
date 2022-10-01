@@ -13,7 +13,7 @@ func (g GuidingBolt) PrettyPrint() string {
 }
 
 func (g GuidingBolt) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a GuidingBolt) Animate(screen *ebiten.Image, targetpos [2]int) {

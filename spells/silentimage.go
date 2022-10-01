@@ -13,7 +13,7 @@ func (s SilentImage) PrettyPrint() string {
 }
 
 func (s SilentImage) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a SilentImage) Animate(screen *ebiten.Image, targetpos [2]int) {

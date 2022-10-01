@@ -13,7 +13,7 @@ func (c Command) PrettyPrint() string {
 }
 
 func (c Command) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Command) Animate(screen *ebiten.Image, targetpos [2]int) {

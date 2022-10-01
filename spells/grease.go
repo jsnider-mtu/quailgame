@@ -13,7 +13,7 @@ func (g Grease) PrettyPrint() string {
 }
 
 func (g Grease) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Grease) Animate(screen *ebiten.Image, targetpos [2]int) {

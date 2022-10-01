@@ -13,7 +13,7 @@ func (b BurningHands) PrettyPrint() string {
 }
 
 func (b BurningHands) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a BurningHands) Animate(screen *ebiten.Image, targetpos [2]int) {

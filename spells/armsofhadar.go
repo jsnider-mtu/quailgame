@@ -13,7 +13,7 @@ func (a ArmsOfHadar) PrettyPrint() string {
 }
 
 func (a ArmsOfHadar) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ArmsOfHadar) Animate(screen *ebiten.Image, targetpos [2]int) {

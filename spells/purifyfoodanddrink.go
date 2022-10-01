@@ -13,7 +13,7 @@ func (p PurifyFoodAndDrink) PrettyPrint() string {
 }
 
 func (p PurifyFoodAndDrink) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a PurifyFoodAndDrink) Animate(screen *ebiten.Image, targetpos [2]int) {

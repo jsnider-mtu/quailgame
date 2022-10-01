@@ -13,7 +13,7 @@ func (c CompelledDuel) PrettyPrint() string {
 }
 
 func (c CompelledDuel) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a CompelledDuel) Animate(screen *ebiten.Image, targetpos [2]int) {

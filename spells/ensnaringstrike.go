@@ -13,7 +13,7 @@ func (e EnsnaringStrike) PrettyPrint() string {
 }
 
 func (e EnsnaringStrike) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a EnsnaringStrike) Animate(screen *ebiten.Image, targetpos [2]int) {

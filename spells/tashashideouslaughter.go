@@ -13,7 +13,7 @@ func (t TashasHideousLaughter) PrettyPrint() string {
 }
 
 func (t TashasHideousLaughter) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a TashasHideousLaughter) Animate(screen *ebiten.Image, targetpos [2]int) {

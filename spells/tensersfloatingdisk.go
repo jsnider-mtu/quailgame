@@ -13,7 +13,7 @@ func (t TensersFloatingDisk) PrettyPrint() string {
 }
 
 func (t TensersFloatingDisk) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a TensersFloatingDisk) Animate(screen *ebiten.Image, targetpos [2]int) {

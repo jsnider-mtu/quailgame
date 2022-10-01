@@ -13,7 +13,7 @@ func (s ShieldOfFaith) PrettyPrint() string {
 }
 
 func (s ShieldOfFaith) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ShieldOfFaith) Animate(screen *ebiten.Image, targetpos [2]int) {

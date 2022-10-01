@@ -13,7 +13,7 @@ func (t ThunderousSmite) PrettyPrint() string {
 }
 
 func (t ThunderousSmite) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ThunderousSmite) Animate(screen *ebiten.Image, targetpos [2]int) {

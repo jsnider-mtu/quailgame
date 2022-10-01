@@ -13,7 +13,7 @@ func (s Sleep) PrettyPrint() string {
 }
 
 func (s Sleep) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Sleep) Animate(screen *ebiten.Image, targetpos [2]int) {

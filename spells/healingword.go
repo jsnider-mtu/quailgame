@@ -13,7 +13,7 @@ func (h HealingWord) PrettyPrint() string {
 }
 
 func (h HealingWord) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a HealingWord) Animate(screen *ebiten.Image, targetpos [2]int) {

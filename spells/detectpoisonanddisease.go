@@ -13,7 +13,7 @@ func (d DetectPoisonAndDisease) PrettyPrint() string {
 }
 
 func (d DetectPoisonAndDisease) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a DetectPoisonAndDisease) Animate(screen *ebiten.Image, targetpos [2]int) {

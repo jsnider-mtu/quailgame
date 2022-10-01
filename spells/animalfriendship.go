@@ -13,7 +13,7 @@ func (a AnimalFriendship) PrettyPrint() string {
 }
 
 func (a AnimalFriendship) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a AnimalFriendship) Animate(screen *ebiten.Image, targetpos [2]int) {

@@ -13,7 +13,7 @@ func (p ProtectionFromGoodAndEvil) PrettyPrint() string {
 }
 
 func (p ProtectionFromGoodAndEvil) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ProtectionFromGoodAndEvil) Animate(screen *ebiten.Image, targetpos [2]int) {

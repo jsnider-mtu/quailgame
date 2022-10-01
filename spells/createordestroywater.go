@@ -13,7 +13,7 @@ func (c CreateOrDestroyWater) PrettyPrint() string {
 }
 
 func (c CreateOrDestroyWater) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a CreateOrDestroyWater) Animate(screen *ebiten.Image, targetpos [2]int) {

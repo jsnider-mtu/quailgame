@@ -13,7 +13,7 @@ func (l Longstrider) PrettyPrint() string {
 }
 
 func (l Longstrider) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Longstrider) Animate(screen *ebiten.Image, targetpos [2]int) {

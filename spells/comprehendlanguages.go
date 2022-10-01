@@ -13,7 +13,7 @@ func (c ComprehendLanguages) PrettyPrint() string {
 }
 
 func (c ComprehendLanguages) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ComprehendLanguages) Animate(screen *ebiten.Image, targetpos [2]int) {

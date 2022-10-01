@@ -13,7 +13,7 @@ func (w WrathfulSmite) PrettyPrint() string {
 }
 
 func (w WrathfulSmite) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a WrathfulSmite) Animate(screen *ebiten.Image, targetpos [2]int) {

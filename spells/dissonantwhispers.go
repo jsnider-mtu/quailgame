@@ -13,7 +13,7 @@ func (d DissonantWhispers) PrettyPrint() string {
 }
 
 func (d DissonantWhispers) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a DissonantWhispers) Animate(screen *ebiten.Image, targetpos [2]int) {

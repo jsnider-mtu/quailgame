@@ -13,7 +13,7 @@ func (b Bane) PrettyPrint() string {
 }
 
 func (b Bane) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Bane) Animate(screen *ebiten.Image, targetpos [2]int) {

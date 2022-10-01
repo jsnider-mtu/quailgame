@@ -13,7 +13,7 @@ func (m MageArmor) PrettyPrint() string {
 }
 
 func (m MageArmor) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a MageArmor) Animate(screen *ebiten.Image, targetpos [2]int) {

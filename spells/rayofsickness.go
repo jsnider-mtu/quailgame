@@ -13,7 +13,7 @@ func (r RayOfSickness) PrettyPrint() string {
 }
 
 func (r RayOfSickness) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a RayOfSickness) Animate(screen *ebiten.Image, targetpos [2]int) {

@@ -13,7 +13,7 @@ func (h Heroism) PrettyPrint() string {
 }
 
 func (h Heroism) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Heroism) Animate(screen *ebiten.Image, targetpos [2]int) {

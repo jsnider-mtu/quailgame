@@ -13,7 +13,7 @@ func (f FogCloud) PrettyPrint() string {
 }
 
 func (f FogCloud) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a FogCloud) Animate(screen *ebiten.Image, targetpos [2]int) {

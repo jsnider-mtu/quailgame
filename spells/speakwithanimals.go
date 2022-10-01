@@ -13,7 +13,7 @@ func (s SpeakWithAnimals) PrettyPrint() string {
 }
 
 func (s SpeakWithAnimals) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a SpeakWithAnimals) Animate(screen *ebiten.Image, targetpos [2]int) {

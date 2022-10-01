@@ -13,7 +13,7 @@ func (u UnseenServant) PrettyPrint() string {
 }
 
 func (u UnseenServant) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a UnseenServant) Animate(screen *ebiten.Image, targetpos [2]int) {

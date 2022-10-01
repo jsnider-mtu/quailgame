@@ -13,7 +13,7 @@ func (t Thunderwave) PrettyPrint() string {
 }
 
 func (t Thunderwave) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Thunderwave) Animate(screen *ebiten.Image, targetpos [2]int) {

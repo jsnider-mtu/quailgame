@@ -13,7 +13,7 @@ func (c ChromaticOrb) PrettyPrint() string {
 }
 
 func (c ChromaticOrb) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ChromaticOrb) Animate(screen *ebiten.Image, targetpos [2]int) {

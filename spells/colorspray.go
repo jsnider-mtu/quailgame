@@ -13,7 +13,7 @@ func (c ColorSpray) PrettyPrint() string {
 }
 
 func (c ColorSpray) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ColorSpray) Animate(screen *ebiten.Image, targetpos [2]int) {

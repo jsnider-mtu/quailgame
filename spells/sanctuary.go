@@ -13,7 +13,7 @@ func (s Sanctuary) PrettyPrint() string {
 }
 
 func (s Sanctuary) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Sanctuary) Animate(screen *ebiten.Image, targetpos [2]int) {

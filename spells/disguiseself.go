@@ -13,7 +13,7 @@ func (d DisguiseSelf) PrettyPrint() string {
 }
 
 func (d DisguiseSelf) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a DisguiseSelf) Animate(screen *ebiten.Image, targetpos [2]int) {

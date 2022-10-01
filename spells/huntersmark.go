@@ -13,7 +13,7 @@ func (h HuntersMark) PrettyPrint() string {
 }
 
 func (h HuntersMark) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a HuntersMark) Animate(screen *ebiten.Image, targetpos [2]int) {

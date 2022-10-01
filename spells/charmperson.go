@@ -13,7 +13,7 @@ func (c CharmPerson) PrettyPrint() string {
 }
 
 func (c CharmPerson) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a CharmPerson) Animate(screen *ebiten.Image, targetpos [2]int) {

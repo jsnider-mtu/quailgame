@@ -13,7 +13,7 @@ func (f FeatherFall) PrettyPrint() string {
 }
 
 func (f FeatherFall) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a FeatherFall) Animate(screen *ebiten.Image, targetpos [2]int) {

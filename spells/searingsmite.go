@@ -13,7 +13,7 @@ func (s SearingSmite) PrettyPrint() string {
 }
 
 func (s SearingSmite) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a SearingSmite) Animate(screen *ebiten.Image, targetpos [2]int) {

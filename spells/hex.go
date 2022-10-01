@@ -13,7 +13,7 @@ func (h Hex) PrettyPrint() string {
 }
 
 func (h Hex) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Hex) Animate(screen *ebiten.Image, targetpos [2]int) {

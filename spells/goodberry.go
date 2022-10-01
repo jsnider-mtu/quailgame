@@ -13,7 +13,7 @@ func (g Goodberry) PrettyPrint() string {
 }
 
 func (g Goodberry) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a Goodberry) Animate(screen *ebiten.Image, targetpos [2]int) {

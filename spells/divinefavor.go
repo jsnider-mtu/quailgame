@@ -13,7 +13,7 @@ func (d DivineFavor) PrettyPrint() string {
 }
 
 func (d DivineFavor) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a DivineFavor) Animate(screen *ebiten.Image, targetpos [2]int) {

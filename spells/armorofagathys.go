@@ -13,7 +13,7 @@ func (a ArmorOfAgathys) PrettyPrint() string {
 }
 
 func (a ArmorOfAgathys) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ArmorOfAgathys) Animate(screen *ebiten.Image, targetpos [2]int) {

@@ -13,7 +13,7 @@ func (h HailOfThorns) PrettyPrint() string {
 }
 
 func (h HailOfThorns) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a HailOfThorns) Animate(screen *ebiten.Image, targetpos [2]int) {

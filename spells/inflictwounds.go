@@ -13,7 +13,7 @@ func (i InflictWounds) PrettyPrint() string {
 }
 
 func (i InflictWounds) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a InflictWounds) Animate(screen *ebiten.Image, targetpos [2]int) {

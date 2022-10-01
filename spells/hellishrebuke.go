@@ -13,7 +13,7 @@ func (h HellishRebuke) PrettyPrint() string {
 }
 
 func (h HellishRebuke) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a HellishRebuke) Animate(screen *ebiten.Image, targetpos [2]int) {

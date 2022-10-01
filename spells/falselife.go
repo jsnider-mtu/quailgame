@@ -13,7 +13,7 @@ func (f FalseLife) PrettyPrint() string {
 }
 
 func (f FalseLife) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a FalseLife) Animate(screen *ebiten.Image, targetpos [2]int) {

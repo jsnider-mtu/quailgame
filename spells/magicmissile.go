@@ -13,7 +13,7 @@ func (m MagicMissile) PrettyPrint() string {
 }
 
 func (m MagicMissile) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a MagicMissile) Animate(screen *ebiten.Image, targetpos [2]int) {

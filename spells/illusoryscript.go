@@ -13,7 +13,7 @@ func (i IllusoryScript) PrettyPrint() string {
 }
 
 func (i IllusoryScript) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a IllusoryScript) Animate(screen *ebiten.Image, targetpos [2]int) {

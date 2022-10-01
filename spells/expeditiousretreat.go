@@ -13,7 +13,7 @@ func (e ExpeditiousRetreat) PrettyPrint() string {
 }
 
 func (e ExpeditiousRetreat) GetLevel() int {
-    return 0
+    return 1
 }
 
 func (a ExpeditiousRetreat) Animate(screen *ebiten.Image, targetpos [2]int) {
