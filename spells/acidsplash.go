@@ -1,8 +1,10 @@
 package spells
 
+import "github.com/jsnider-mtu/quailgame/npcs"
+
 type AcidSplash struct {}
 
-func (a AcidSplash) Cast(target string) bool {
+func (a AcidSplash) Cast(target *npcs.NPC) bool {
     log.Println("The spell Acid Splash is not implemented yet")
 }
 

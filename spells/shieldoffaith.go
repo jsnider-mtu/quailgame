@@ -1,8 +1,10 @@
 package spells
 
+import "github.com/jsnider-mtu/quailgame/npcs"
+
 type ShieldOfFaith struct {}
 
-func (s ShieldOfFaith) Cast(target string) bool {
+func (s ShieldOfFaith) Cast(target *npcs.NPC) bool {
     log.Println("The spell Shield of Faith is not implemented yet")
 }
 

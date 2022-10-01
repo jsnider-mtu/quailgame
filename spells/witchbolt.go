@@ -1,8 +1,10 @@
 package spells
 
+import "github.com/jsnider-mtu/quailgame/npcs"
+
 type WitchBolt struct {}
 
-func (w WitchBolt) Cast(target string) bool {
+func (w WitchBolt) Cast(target *npcs.NPC) bool {
     log.Println("The spell Witch Bolt is not implemented yet")
 }
 

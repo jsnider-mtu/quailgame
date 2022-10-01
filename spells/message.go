@@ -1,8 +1,10 @@
 package spells
 
+import "github.com/jsnider-mtu/quailgame/npcs"
+
 type Message struct {}
 
-func (m Message) Cast(target string) bool {
+func (m Message) Cast(target *npcs.NPC) bool {
     log.Println("The spell Message is not implemented yet")
 }
 

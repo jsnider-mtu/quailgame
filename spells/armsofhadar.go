@@ -1,8 +1,10 @@
 package spells
 
+import "github.com/jsnider-mtu/quailgame/npcs"
+
 type ArmsOfHadar struct {}
 
-func (a ArmsOfHadar) Cast(target string) bool {
+func (a ArmsOfHadar) Cast(target *npcs.NPC) bool {
     log.Println("The spell Arms of Hadar is not implemented yet")
 }
 

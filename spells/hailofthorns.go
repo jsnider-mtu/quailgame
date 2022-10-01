@@ -1,8 +1,10 @@
 package spells
 
+import "github.com/jsnider-mtu/quailgame/npcs"
+
 type HailOfThorns struct {}
 
-func (h HailOfThorns) Cast(target string) bool {
+func (h HailOfThorns) Cast(target *npcs.NPC) bool {
     log.Println("The spell Hail of Thorns is not implemented yet")
 }
 

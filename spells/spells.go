@@ -1,6 +1,8 @@
 package spells
 
+import "github.com/jsnider-mtu/quailgame/npcs"
+
 type Spell interface {
-    Cast(string) bool
+    Cast(*npcs.NPC) bool
     PrettyPrint() string
 }
