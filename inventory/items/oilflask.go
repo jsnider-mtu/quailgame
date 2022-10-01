@@ -20,6 +20,6 @@ func (o OilFlask) Save() string {
     return "Oil Flask," + strconv.Itoa(o.Quantity)
 }
 
-func (o Oilflask) PrettyPrint() string {
-    return fmt.Sprintf("Oilflask%14s", "Quantity: " + strconv.Itoa(o.Quantity))
+func (o OilFlask) PrettyPrint() string {
+    return fmt.Sprintf("Oil Flask%14s", "Quantity: " + strconv.Itoa(o.Quantity))
 }

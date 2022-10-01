@@ -2915,10 +2915,10 @@ func (g *Game) Update() error {
                 switch option7 {
                 case 0:
                     var clothes = items.Clothes{Quality: "Fine"}
-                    var inkbottle items.Inkbottle
-                    var inkpen items.Inkpen
+                    var inkbottle items.InkBottle
+                    var inkpen items.InkPen
                     var lamp items.Lamp
-                    var oilflask = items.Oilflask{Quantity: 2}
+                    var oilflask = items.OilFlask{Quantity: 2}
                     var paper = items.Paper{Quantity: 5}
                     var perfume items.Perfume
                     var sealingwax items.SealingWax
@@ -3022,7 +3022,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add horn to inv")
                     }
                 case 7:
-                    var panflute items.Panflute
+                    var panflute items.PanFlute
                     err = p.Inv.Add(panflute)
                     if err != nil {
                         return errors.New("Failed to add panflute to inv")
@@ -4901,7 +4901,7 @@ func (g *Game) Update() error {
                 switch option6 {
                 case 0:
                     var candles = items.Candles{Quantity: 5}
-                    var oilflasks = items.Oilflask{Quantity: 2}
+                    var oilflasks = items.OilFlask{Quantity: 2}
                     var tinderbox items.Tinderbox
                     var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(candles)
@@ -5301,8 +5301,8 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var inkbottle items.Inkbottle
-                    var inkpen items.Inkpen
+                    var inkbottle items.InkBottle
+                    var inkpen items.InkPen
                     var papers = items.Paper{Quantity: 10}
                     err = p.Inv.Add(inkbottle)
                     if err != nil {
@@ -5318,7 +5318,7 @@ func (g *Game) Update() error {
                     }
                 case 1:
                     var candles = items.Candles{Quantity: 5}
-                    var oilflasks = items.Oilflask{Quantity: 2}
+                    var oilflasks = items.OilFlask{Quantity: 2}
                     var tinderbox items.Tinderbox
                     var rope = items.Rope{Length: 50}
                     err = p.Inv.Add(candles)
@@ -5422,8 +5422,8 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var inkbottle items.Inkbottle
-                    var inkpen items.Inkpen
+                    var inkbottle items.InkBottle
+                    var inkpen items.InkPen
                     var papers = items.Paper{Quantity: 10}
                     err = p.Inv.Add(inkbottle)
                     if err != nil {

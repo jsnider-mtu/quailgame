@@ -1,19 +1,19 @@
 package items
 
-type Inkpen struct {
+type InkPen struct {
 }
 
-func (i Inkpen) Slot() string {
+func (i InkPen) Slot() string {
     return "RightHand"
 }
 
-func (i Inkpen) Use() {
+func (i InkPen) Use() {
 }
 
-func (i Inkpen) Save() string {
-    return "Inkpen"
+func (i InkPen) Save() string {
+    return "InkPen"
 }
 
-func (i Inkpen) PrettyPrint() string {
-    return "Inkpen"
+func (i InkPen) PrettyPrint() string {
+    return "InkPen"
 }

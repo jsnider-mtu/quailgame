@@ -1,6 +1,6 @@
 package items
 
-type Panflute struct {
+type PanFlute struct {
 }
 
 func (p PanFlute) Slot() string {

@@ -10,8 +10,8 @@ import (
 
 func LoadItem(name string, quaity interface{}) inventory.Item {
     switch name {
-    case "Arcanefocus":
-        return Arcanefocus{}
+    case "ArcaneFocus":
+        return ArcaneFocus{}
     case "Bagpipes":
         return Bagpipes{}
     case "Battleaxe":
@@ -30,8 +30,8 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Clothes{Quality: quaity.(string)}
     case "Club":
         return Club{}
-    case "Componentpouch":
-        return Componentpouch{}
+    case "ComponentPouch":
+        return ComponentPouch{}
     case "Dagger":
         return Dagger{}
     case "Darts":
@@ -40,8 +40,8 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
             log.Fatal("quaity is not an integer")
         }
         return Darts{Quantity: quaityint}
-    case "Disguisekit":
-        return Disguisekit{}
+    case "DisguiseKit":
+        return DisguiseKit{}
     case "Drum":
         return Drum{}
     case "Dulcimer":
@@ -63,15 +63,15 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
     case "Handaxe":
         return Handaxe{}
     case "Handcrossbow":
-        return Handcrossbow{}
+        return HandCrossbow{}
     case "Heavycrossbow":
-        return Heavycrossbow{}
+        return HeavyCrossbow{}
     case "Horn":
         return Horn{}
-    case "Inkbottle":
-        return Inkbottle{}
-    case "Inkpen":
-        return Inkpen{}
+    case "InkBottle":
+        return InkBottle{}
+    case "InkPen":
+        return InkPen{}
     case "Javelin":
         return Javelin{}
     case "Lamp":
@@ -79,11 +79,11 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
     case "Lance":
         return Lance{}
     case "Leatherarmor":
-        return Leatherarmor{}
+        return LeatherArmor{}
     case "Lightcrossbow":
-        return Lightcrossbow{}
+        return LightCrossbow{}
     case "Lighthammer":
-        return Lighthammer{}
+        return LightHammer{}
     case "Longbow":
         return Longbow{}
     case "Longsword":
@@ -105,9 +105,9 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return Oilflask{Quantity: quaityint}
-    case "Panflute":
-        return Panflute{}
+        return OilFlask{Quantity: quaityint}
+    case "PanFlute":
+        return PanFlute{}
     case "Paper":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
@@ -138,8 +138,8 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Scalemail{}
     case "Scimitar":
         return Scimitar{}
-    case "Sealingwax":
-        return Sealingwax{}
+    case "SealingWax":
+        return SealingWax{}
     case "Shawm":
         return Shawm{}
     case "Shield":
@@ -156,8 +156,8 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Soap{}
     case "Spear":
         return Spear{}
-    case "Thievestools":
-        return Thievestools{}
+    case "ThievesTools":
+        return ThievesTools{}
     case "Tinderbox":
         return Tinderbox{}
     case "Torches":
@@ -172,8 +172,8 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Viol{}
     case "Warhammer":
         return Warhammer{}
-    case "Warpick":
-        return Warpick{}
+    case "WarPick":
+        return WarPick{}
     case "Whip":
         return Whip{}
     default:
