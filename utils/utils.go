@@ -129,3 +129,53 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
     }
 }
 
+func LineOfSight(p, target *player.Player, l *levels.Level) (bool, bool, float64) {
+    var slope float64
+    var slopevert bool = false
+    if target.Pos[0] > p.Pos[0] {
+        slope = float64((target.Pos[1] + 24) - (p.Pos[1] + 24)) / float64((target.Pos[0] + 24) - (p.Pos[0] + 24))
+    } else if target.Pos[0] < p.Pos[0] {
+        slope = float64((p.Pos[1] + 24) - (target.Pos[1] + 24)) / float64((p.Pos[0] + 24) - (target.Pos[0] + 24))
+    } else {
+        slopevert = true
+    }
+    if slopevert {
+        if target.Pos[1] > p.Pos[1] {
+            for _, box := range l.Boxes {
+                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[0] + 48 && p.Pos[1] + 24 < box[1] && target.Pos[1] + 24 > box[1] {
+                    return false, true, slope
+                }
+            }
+            return true, true, slope
+        } else {
+            for _, box := range l.Boxes {
+                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[0] + 48 && p.Pos[1] + 24 > box[1] && target.Pos[1] + 24 < box[1] {
+                    return false, true, slope
+                }
+            }
+            return true, true, slope
+        }
+    } else {
+        if target.Pos[0] > p.Pos[0] {
+            for x := p.Pos[0] + 25; x <= target.Pos[0] + 24; x++ {
+                y := int((float64(x - (p.Pos[0] + 24)) * slope) + float64(p.Pos[1] + 24))
+                for _, box := range l.Boxes {
+                    if x > box[0] && x < box[0] + 48 && y > box[1] && y < box[1] + 48 {
+                        return false, false, slope
+                    }
+                }
+            }
+            return true, false, slope
+        } else {
+            for x := target.Pos[0] + 25; x <= p.Pos[0] + 24; x++ {
+                y := int((float64(x - (target.Pos[0] + 24)) * slope) + float64(target.Pos[1] + 24))
+                for _, box := range l.Boxes {
+                    if x > box[0] && x < box[0] + 48 && y > box[1] && y < box[1] + 48 {
+                        return false, false, slope
+                    }
+                }
+            }
+            return true, false, slope
+        }
+    }
+}

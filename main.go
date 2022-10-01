@@ -507,6 +507,7 @@ func (g *Game) Update() error {
                         }
                         sb.Reset()
                         l = levels.LoadLvl("One", 0)
+                        targeted = -1
                         p.Name = name
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
@@ -552,6 +553,7 @@ func (g *Game) Update() error {
                     case 0:
                         if l == nil {
                             l = levels.LoadLvl("One", 0)
+                            targeted = -1
                             p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage, Spells: &player.Spells{}}
                         }
                         firstsave = true
@@ -8444,6 +8446,7 @@ func (g *Game) Update() error {
                 }
                 p.Spells.Add(strings.Split(spellsstr, ","))
                 l = levels.LoadLvl(levelname, 0, x, y)
+                targeted = -1
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
                 load = false
             }
@@ -12557,6 +12560,120 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
                 tbhgm.Translate(float64(0), float64(46))
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
+                lineofsight, losvert, slope := utils.LineOfSight(p, npc.PC, l)
+                if lineofsight {
+                    if losvert {
+                        dist := p.Pos[1] - npc.PC.Pos[1]
+                        if dist < 0 {
+                            dist = -dist
+                        }
+                        losline := ebiten.NewImage(2, dist)
+                        losline.Fill(color.RGBA{0x0, 0xff, 0x0, 0xff})
+                        loslinegm := ebiten.GeoM{}
+                        if p.Pos[1] > npc.PC.Pos[1] {
+                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                        } else {
+                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + p.Pos[0] + 24), float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
+                        }
+                        screen.DrawImage(losline, &ebiten.DrawImageOptions{GeoM: loslinegm})
+                    } else {
+                        if p.Pos[0] > npc.PC.Pos[0] {
+                            for linex := (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex++ {
+                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                                screen.Set(linex, liney, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                if slope > 2.0 {
+                                    for step := int(slope); step > 0; step-- {
+                                        screen.Set(linex, liney + step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney + step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                    }
+                                } else if slope < -2.0 {
+                                    for step := int(slope); step < 0; step++ {
+                                        screen.Set(linex, liney - step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney - step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                    }
+                                } else {
+                                    screen.Set(linex, liney + 1, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                    screen.Set(linex + 1, liney + 1, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                }
+                            }
+                        } else {
+                            for linex := (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex++ {
+                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + p.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
+                                screen.Set(linex, liney, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                if slope > 2.0 {
+                                    for step := int(slope); step > 0; step-- {
+                                        screen.Set(linex, liney + step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney + step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                    }
+                                } else if slope < -2.0 {
+                                    for step := int(slope); step < 0; step++ {
+                                        screen.Set(linex, liney - step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney - step, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                    }
+                                } else {
+                                    screen.Set(linex, liney + 1, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                    screen.Set(linex + 1, liney + 1, color.RGBA{0x0, 0xff, 0x0, 0xff})
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if losvert {
+                        dist := p.Pos[1] - npc.PC.Pos[1]
+                        if dist < 0 {
+                            dist = -dist
+                        }
+                        losline := ebiten.NewImage(2, dist)
+                        losline.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+                        loslinegm := ebiten.GeoM{}
+                        if p.Pos[1] > npc.PC.Pos[1] {
+                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                        } else {
+                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + p.Pos[0] + 24), float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
+                        }
+                        screen.DrawImage(losline, &ebiten.DrawImageOptions{GeoM: loslinegm})
+                    } else {
+                        if p.Pos[0] > npc.PC.Pos[0] {
+                            for linex := (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex++ {
+                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                                screen.Set(linex, liney, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                if slope > 2.0 {
+                                    for step := int(slope); step > 0; step-- {
+                                        screen.Set(linex, liney + step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney + step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                    }
+                                } else if slope < -2.0 {
+                                    for step := int(slope); step < 0; step++ {
+                                        screen.Set(linex, liney - step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney - step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                    }
+                                } else {
+                                    screen.Set(linex, liney + 1, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                    screen.Set(linex + 1, liney + 1, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                }
+                            }
+                        } else {
+                            for linex := (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex++ {
+                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + p.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
+                                screen.Set(linex, liney, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                if slope > 2.0 {
+                                    for step := int(slope); step > 0; step-- {
+                                        screen.Set(linex, liney + step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney + step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                    }
+                                } else if slope < -2.0 {
+                                    for step := int(slope); step < 0; step++ {
+                                        screen.Set(linex, liney - step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                        screen.Set(linex + 1, liney - step, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                    }
+                                } else {
+                                    screen.Set(linex, liney + 1, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                    screen.Set(linex + 1, liney + 1, color.RGBA{0xff, 0x0, 0x0, 0xff})
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         if !mcdrawn && !start && !cutscene {
@@ -12749,6 +12866,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             f = 0
             lvlchange = false
             l = levels.LoadLvl(newlvl...)
+            targeted = -1
             p.Pos[0] = -l.Pos[0]
             p.Pos[1] = -l.Pos[1]
             if l.Cutscene > 0 {
