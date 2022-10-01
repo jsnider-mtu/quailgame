@@ -15,5 +15,5 @@ func (i InkPen) Save() string {
 }
 
 func (i InkPen) PrettyPrint() string {
-    return "InkPen"
+    return "Ink Pen"
 }
