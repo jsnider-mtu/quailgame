@@ -247,7 +247,7 @@ func (g *Game) Update() error {
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
                     name = loads[loadsel][0]
-                    p = &player.Player{Pos: [2]int{0, 0}, Inv: &inventory.Inv{}, Image: pcImage}
+                    p = &player.Player{Pos: [2]int{0, 0}, Inv: &inventory.Inv{}, Image: pcImage, Spells: &player.Spells{}}
                     load = true
                     selload = false
                     start = false
@@ -268,6 +268,7 @@ func (g *Game) Update() error {
                         firstsave = false
                         start = false
                         save = true
+                        creationsel = 0
                         creation = true
                         overwritewarning = false
                     } else {
@@ -518,6 +519,7 @@ func (g *Game) Update() error {
                         save = true
                         curCS = 0
                         cutscene = false
+                        creationsel = 0
                         creation = true
                     }
                 }
@@ -549,7 +551,7 @@ func (g *Game) Update() error {
                     case 0:
                         if l == nil {
                             l = levels.LoadLvl("One", 0)
-                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage}
+                            p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage, Spells: &player.Spells{}}
                         }
                         firstsave = true
                     case 1:
@@ -8439,7 +8441,6 @@ func (g *Game) Update() error {
                         return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
                 }
-                p.Spells = &player.Spells{}
                 p.Spells.Add(strings.Split(spellsstr, ","))
                 l = levels.LoadLvl(levelname, 0, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
