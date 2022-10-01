@@ -9,6 +9,7 @@ type Item interface {
     Slot() string
     Use()
     Save() string
+    PrettyPrint() string
 }
 
 type Inv struct {
@@ -39,6 +40,11 @@ func (i *Inv) Drop(item Item) {
     return
 }
 
+func (i *Inv) Clear() {
+    i.items = make([]Item, 0)
+    return
+}
+
 func (i *Inv) AddSeeds(amount int) {
     i.seeds += amount
     return
@@ -50,4 +56,12 @@ func (i *Inv) SubtractSeeds(amount int) error {
     }
     i.seeds -= amount
     return nil
+}
+
+func (i *Inv) Save() string {
+    var result string
+    for _, val := range i.items {
+        result += val.Save() + ";"
+    }
+    return result
 }
