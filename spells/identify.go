@@ -1,6 +1,10 @@
 package spells
 
-import "github.com/jsnider-mtu/quailgame/npcs"
+import (
+    "github.com/hajimehoshi/ebiten/v2"
+
+    "github.com/jsnider-mtu/quailgame/npcs"
+)
 
 type Identify struct {}
 
@@ -10,4 +14,8 @@ func (i Identify) Cast(target *npcs.NPC) bool {
 
 func (i Identify) PrettyPrint() string {
     return "Identify"
+}
+
+func (a Identify) Animate(screen *ebiten.Image, target *npcs.NPC) {
+    log.Println("The animation for the spell Identify is not implemented yet")
 }

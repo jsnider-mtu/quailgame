@@ -1,6 +1,10 @@
 package spells
 
-import "github.com/jsnider-mtu/quailgame/npcs"
+import (
+    "github.com/hajimehoshi/ebiten/v2"
+
+    "github.com/jsnider-mtu/quailgame/npcs"
+)
 
 type Goodberry struct {}
 
@@ -10,4 +14,8 @@ func (g Goodberry) Cast(target *npcs.NPC) bool {
 
 func (g Goodberry) PrettyPrint() string {
     return "Goodberry"
+}
+
+func (a Goodberry) Animate(screen *ebiten.Image, target *npcs.NPC) {
+    log.Println("The animation for the spell Goodberry is not implemented yet")
 }

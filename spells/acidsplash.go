@@ -1,6 +1,10 @@
 package spells
 
-import "github.com/jsnider-mtu/quailgame/npcs"
+import (
+    "github.com/hajimehoshi/ebiten/v2"
+
+    "github.com/jsnider-mtu/quailgame/npcs"
+)
 
 type AcidSplash struct {}
 
@@ -10,4 +14,8 @@ func (a AcidSplash) Cast(target *npcs.NPC) bool {
 
 func (a AcidSplash) PrettyPrint() string {
     return "Acid Splash"
+}
+
+func (a AcidSplash) Animate(screen *ebiten.Image, target *npcs.NPC) {
+    log.Println("The animation for the spell Acid Splash is not implemented yet")
 }

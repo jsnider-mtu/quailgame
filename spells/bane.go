@@ -1,6 +1,10 @@
 package spells
 
-import "github.com/jsnider-mtu/quailgame/npcs"
+import (
+    "github.com/hajimehoshi/ebiten/v2"
+
+    "github.com/jsnider-mtu/quailgame/npcs"
+)
 
 type Bane struct {}
 
@@ -10,4 +14,8 @@ func (b Bane) Cast(target *npcs.NPC) bool {
 
 func (b Bane) PrettyPrint() string {
     return "Bane"
+}
+
+func (a Bane) Animate(screen *ebiten.Image, target *npcs.NPC) {
+    log.Println("The animation for the spell Bane is not implemented yet")
 }

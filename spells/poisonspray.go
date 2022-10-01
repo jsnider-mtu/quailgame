@@ -1,6 +1,10 @@
 package spells
 
-import "github.com/jsnider-mtu/quailgame/npcs"
+import (
+    "github.com/hajimehoshi/ebiten/v2"
+
+    "github.com/jsnider-mtu/quailgame/npcs"
+)
 
 type PoisonSpray struct {}
 
@@ -10,4 +14,8 @@ func (p PoisonSpray) Cast(target *npcs.NPC) bool {
 
 func (p PoisonSpray) PrettyPrint() string {
     return "Poison Spray"
+}
+
+func (a PoisonSpray) Animate(screen *ebiten.Image, target *npcs.NPC) {
+    log.Println("The animation for the spell Poison Spray is not implemented yet")
 }
