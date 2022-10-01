@@ -4,7 +4,7 @@ type Lyre struct {
 }
 
 func (l Lyre) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (l Lyre) Use() {

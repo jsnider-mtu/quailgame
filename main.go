@@ -2471,7 +2471,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 15:
-                    var warpick items.Warpick
+                    var warpick items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
@@ -2528,7 +2528,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 5:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -2558,7 +2558,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 10:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -2856,7 +2856,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 7:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -2886,7 +2886,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 12:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -2921,7 +2921,7 @@ func (g *Game) Update() error {
                     var oilflask = items.Oilflask{Quantity: 2}
                     var paper = items.Paper{Quantity: 5}
                     var perfume items.Perfume
-                    var sealingwax items.Sealingwax
+                    var sealingwax items.SealingWax
                     var soap items.Soap
                     err = p.Inv.Add(clothes)
                     if err != nil {
@@ -2962,7 +2962,7 @@ func (g *Game) Update() error {
                 case 1:
                     var clothes = items.Clothes{Quality: "Costume"}
                     var candles = items.Candles{Quantity: 5}
-                    var disguisekit items.Disguisekit
+                    var disguisekit items.DisguiseKit
                     err = p.Inv.Add(clothes)
                     if err != nil {
                         return errors.New("Failed to add clothes to inv")
@@ -3042,7 +3042,7 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option8 (case 1)")
                 }
-                var leatherarmor items.Leatherarmor
+                var leatherarmor items.LeatherArmor
                 var dagger items.Dagger
                 err = p.Inv.Add(leatherarmor)
                 if err != nil {
@@ -3105,7 +3105,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add scalemail to inv")
                     }
                 case 1:
-                    var leatherarmor items.Leatherarmor
+                    var leatherarmor items.LeatherArmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
@@ -3121,7 +3121,7 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -3157,7 +3157,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -3324,7 +3324,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -3354,7 +3354,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -3418,7 +3418,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -3450,7 +3450,7 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option3 (case 3)")
                 }
-                var leatherarmor items.Leatherarmor
+                var leatherarmor items.LeatherArmor
                 err = p.Inv.Add(leatherarmor)
                 if err != nil {
                     return errors.New("Failed to add leatherarmor to inv")
@@ -3519,7 +3519,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add chainmail to inv")
                     }
                 case 1:
-                    var leatherarmor items.Leatherarmor
+                    var leatherarmor items.LeatherArmor
                     var longbow items.Longbow
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
@@ -3624,7 +3624,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 15:
-                    var warpick items.Warpick
+                    var warpick items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
@@ -3648,13 +3648,13 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 19:
-                    var handcrossbow items.Handcrossbow
+                    var handcrossbow items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 20:
-                    var heavycrossbow items.Heavycrossbow
+                    var heavycrossbow items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
@@ -3773,7 +3773,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 16:
-                    var warpick items.Warpick
+                    var warpick items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
@@ -3797,13 +3797,13 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 20:
-                    var handcrossbow items.Handcrossbow
+                    var handcrossbow items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 21:
-                    var heavycrossbow items.Heavycrossbow
+                    var heavycrossbow items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
@@ -3825,7 +3825,7 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -3951,7 +3951,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -3981,7 +3981,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -4173,7 +4173,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 15:
-                    var warpick items.Warpick
+                    var warpick items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
@@ -4197,13 +4197,13 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 19:
-                    var handcrossbow items.Handcrossbow
+                    var handcrossbow items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 20:
-                    var heavycrossbow items.Heavycrossbow
+                    var heavycrossbow items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
@@ -4322,7 +4322,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 16:
-                    var warpick items.Warpick
+                    var warpick items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
@@ -4346,13 +4346,13 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 20:
-                    var handcrossbow items.Handcrossbow
+                    var handcrossbow items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 21:
-                    var heavycrossbow items.Heavycrossbow
+                    var heavycrossbow items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
@@ -4430,7 +4430,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -4567,7 +4567,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add scalemail to inv")
                     }
                 case 1:
-                    var leatherarmor items.Leatherarmor
+                    var leatherarmor items.LeatherArmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
@@ -4613,7 +4613,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -4683,7 +4683,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -4955,10 +4955,10 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option6 (case 8)")
                 }
-                var leatherarmor items.Leatherarmor
+                var leatherarmor items.LeatherArmor
                 var dagger0 items.Dagger
                 var dagger1 items.Dagger
-                var thievestools items.Thievestools
+                var thievestools items.ThievesTools
                 err = p.Inv.Add(leatherarmor)
                 if err != nil {
                     return errors.New("Failed to add leatherarmor to inv")
@@ -5010,7 +5010,7 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -5046,7 +5046,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -5098,13 +5098,13 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var componentpouch items.Componentpouch
+                    var componentpouch items.ComponentPouch
                     err = p.Inv.Add(componentpouch)
                     if err != nil {
                         return errors.New("Failed to add componentpouch to inv")
                     }
                 case 1:
-                    var arcanefocus items.Arcanefocus
+                    var arcanefocus items.ArcaneFocus
                     err = p.Inv.Add(arcanefocus)
                     if err != nil {
                         return errors.New("Failed to add arcanefocus to inv")
@@ -5197,7 +5197,7 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var lightcrossbow items.Lightcrossbow
+                    var lightcrossbow items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
@@ -5233,7 +5233,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.Lighthammer
+                    var lighthammer items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
@@ -5285,13 +5285,13 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var componentpouch items.Componentpouch
+                    var componentpouch items.ComponentPouch
                     err = p.Inv.Add(componentpouch)
                     if err != nil {
                         return errors.New("Failed to add componentpouch to inv")
                     }
                 case 1:
-                    var arcanefocus items.Arcanefocus
+                    var arcanefocus items.ArcaneFocus
                     err = p.Inv.Add(arcanefocus)
                     if err != nil {
                         return errors.New("Failed to add arcanefocus to inv")
@@ -5340,7 +5340,7 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option4 (case 10)")
                 }
-                var leatherarmor items.Leatherarmor
+                var leatherarmor items.LeatherArmor
                 var dagger0 items.Dagger
                 var dagger1 items.Dagger
                 err = p.Inv.Add(leatherarmor)
@@ -5406,13 +5406,13 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var componentpouch items.Componentpouch
+                    var componentpouch items.ComponentPouch
                     err = p.Inv.Add(componentpouch)
                     if err != nil {
                         return errors.New("Failed to add componentpouch to inv")
                     }
                 case 1:
-                    var arcanefocus items.Arcanefocus
+                    var arcanefocus items.ArcaneFocus
                     err = p.Inv.Add(arcanefocus)
                     if err != nil {
                         return errors.New("Failed to add arcanefocus to inv")
@@ -5518,7 +5518,7 @@ func (g *Game) Update() error {
                         } else {
                             ac = 16 + dexmod
                         }
-                    case "Leatherarmor":
+                    case "Leather Armor":
                         ac = 13 + dexmod
                     case "Chainmail":
                         ac = 18
@@ -5547,7 +5547,7 @@ func (g *Game) Update() error {
                 for _, item := range p.Inv.GetItems() {
                     itemname := item.PrettyPrint()
                     switch itemname {
-                    case "Leatherarmor":
+                    case "Leather Armor":
                         ac = 11 + dexmod
                     case "Chainmail":
                         ac = 16
@@ -5595,7 +5595,7 @@ func (g *Game) Update() error {
                 for _, item := range p.Inv.GetItems() {
                     itemname := item.PrettyPrint()
                     switch itemname {
-                    case "Leatherarmor":
+                    case "Leather Armor":
                         ac = 11 + dexmod
                     case "Scalemail":
                         ac = 16

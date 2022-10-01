@@ -4,7 +4,7 @@ type Dulcimer struct {
 }
 
 func (d Dulcimer) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (d Dulcimer) Use() {

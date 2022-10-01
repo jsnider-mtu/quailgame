@@ -4,7 +4,7 @@ type Lamp struct {
 }
 
 func (l Lamp) Slot() string {
-    return ""
+    return "LeftHand"
 }
 
 func (l Lamp) Use() {

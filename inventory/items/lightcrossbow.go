@@ -1,20 +1,20 @@
 package items
 
-type Lightcrossbow struct {
+type LightCrossbow struct {
 }
 
-func (l Lightcrossbow) Slot() string {
-    return "RightHand"
+func (l LightCrossbow) Slot() string {
+    return "BothHands"
 }
 
-func (l Lightcrossbow) Use() {
+func (l LightCrossbow) Use() {
     // must be equipped to use
 }
 
-func (l Lightcrossbow) Save() string {
-    return "Lightcrossbow"
+func (l LightCrossbow) Save() string {
+    return "LightCrossbow"
 }
 
-func (l Lightcrossbow) PrettyPrint() string {
-    return "Lightcrossbow"
+func (l LightCrossbow) PrettyPrint() string {
+    return "Light Crossbow"
 }

@@ -1,20 +1,20 @@
 package items
 
-type Lighthammer struct {
+type LightHammer struct {
 }
 
-func (l Lighthammer) Slot() string {
+func (l LightHammer) Slot() string {
     return "RightHand"
 }
 
-func (l Lighthammer) Use() {
+func (l LightHammer) Use() {
     // must be equipped to use
 }
 
-func (l Lighthammer) Save() string {
-    return "Lighthammer"
+func (l LightHammer) Save() string {
+    return "LightHammer"
 }
 
-func (l Lighthammer) PrettyPrint() string {
-    return "Lighthammer"
+func (l LightHammer) PrettyPrint() string {
+    return "Light Hammer"
 }

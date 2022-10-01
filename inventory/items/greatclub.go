@@ -4,7 +4,7 @@ type Greatclub struct {
 }
 
 func (g Greatclub) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (g Greatclub) Use() {

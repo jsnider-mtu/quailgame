@@ -4,7 +4,7 @@ type Bagpipes struct {
 }
 
 func (b Bagpipes) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (b Bagpipes) Use() {

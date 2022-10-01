@@ -1,19 +1,19 @@
 package items
 
-type Sealingwax struct {
+type SealingWax struct {
 }
 
-func (s Sealingwax) Slot() string {
+func (s SealingWax) Slot() string {
     return ""
 }
 
-func (s Sealingwax) Use() {
+func (s SealingWax) Use() {
 }
 
-func (s Sealingwax) Save() string {
-    return "Sealingwax"
+func (s SealingWax) Save() string {
+    return "SealingWax"
 }
 
-func (s Sealingwax) PrettyPrint() string {
-    return "Sealingwax"
+func (s SealingWax) PrettyPrint() string {
+    return "Sealing Wax"
 }

@@ -1,19 +1,19 @@
 package items
 
-type Componentpouch struct {
+type ComponentPouch struct {
 }
 
-func (c Componentpouch) Slot() string {
-    return ""
+func (c ComponentPouch) Slot() string {
+    return "LeftHand"
 }
 
-func (c Componentpouch) Use() {
+func (c ComponentPouch) Use() {
 }
 
-func (c Componentpouch) Save() string {
-    return "Componentpouch"
+func (c ComponentPouch) Save() string {
+    return "ComponentPouch"
 }
 
-func (c Componentpouch) PrettyPrint() string {
-    return "Componentpouch"
+func (c ComponentPouch) PrettyPrint() string {
+    return "Component Pouch"
 }

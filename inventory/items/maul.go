@@ -4,7 +4,7 @@ type Maul struct {
 }
 
 func (m Maul) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (m Maul) Use() {

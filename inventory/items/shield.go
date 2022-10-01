@@ -4,7 +4,7 @@ type Shield struct {
 }
 
 func (s Shield) Slot() string {
-    return ""
+    return "LeftHand"
 }
 
 func (s Shield) Use() {

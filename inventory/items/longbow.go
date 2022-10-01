@@ -4,7 +4,7 @@ type Longbow struct {
 }
 
 func (l Longbow) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (l Longbow) Use() {

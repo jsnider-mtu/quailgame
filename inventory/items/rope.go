@@ -10,7 +10,7 @@ type Rope struct {
 }
 
 func (r Rope) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (r Rope) Use() {

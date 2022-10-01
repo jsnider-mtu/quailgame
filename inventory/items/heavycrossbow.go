@@ -1,20 +1,20 @@
 package items
 
-type Heavycrossbow struct {
+type HeavyCrossbow struct {
 }
 
-func (h Heavycrossbow) Slot() string {
-    return "RightHand"
+func (h HeavyCrossbow) Slot() string {
+    return "BothHands"
 }
 
-func (h Heavycrossbow) Use() {
+func (h HeavyCrossbow) Use() {
     // must be equipped to use
 }
 
-func (h Heavycrossbow) Save() string {
-    return "Heavycrossbow"
+func (h HeavyCrossbow) Save() string {
+    return "HeavyCrossbow"
 }
 
-func (h Heavycrossbow) PrettyPrint() string {
-    return "Heavycrossbow"
+func (h HeavyCrossbow) PrettyPrint() string {
+    return "Heavy Crossbow"
 }

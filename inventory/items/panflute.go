@@ -3,17 +3,17 @@ package items
 type Panflute struct {
 }
 
-func (p Panflute) Slot() string {
-    return ""
+func (p PanFlute) Slot() string {
+    return "BothHands"
 }
 
-func (p Panflute) Use() {
+func (p PanFlute) Use() {
 }
 
-func (p Panflute) Save() string {
-    return "Panflute"
+func (p PanFlute) Save() string {
+    return "PanFlute"
 }
 
-func (p Panflute) PrettyPrint() string {
-    return "Panflute"
+func (p PanFlute) PrettyPrint() string {
+    return "Pan Flute"
 }

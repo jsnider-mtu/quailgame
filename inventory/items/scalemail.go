@@ -4,7 +4,7 @@ type Scalemail struct {
 }
 
 func (s Scalemail) Slot() string {
-    return ""
+    return "Armor"
 }
 
 func (s Scalemail) Use() {

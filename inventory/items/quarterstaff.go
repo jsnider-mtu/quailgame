@@ -4,7 +4,7 @@ type Quarterstaff struct {
 }
 
 func (q Quarterstaff) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (q Quarterstaff) Use() {

@@ -4,7 +4,7 @@ type Spear struct {
 }
 
 func (s Spear) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (s Spear) Use() {

@@ -1,19 +1,19 @@
 package items
 
-type Leatherarmor struct {
+type LeatherArmor struct {
 }
 
-func (l Leatherarmor) Slot() string {
-    return ""
+func (l LeatherArmor) Slot() string {
+    return "Armor"
 }
 
-func (l Leatherarmor) Use() {
+func (l LeatherArmor) Use() {
 }
 
-func (l Leatherarmor) Save() string {
-    return "Leatherarmor"
+func (l LeatherArmor) Save() string {
+    return "LeatherArmor"
 }
 
-func (l Leatherarmor) PrettyPrint() string {
-    return "Leatherarmor"
+func (l LeatherArmor) PrettyPrint() string {
+    return "Leather Armor"
 }

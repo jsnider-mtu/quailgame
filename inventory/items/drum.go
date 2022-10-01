@@ -4,7 +4,7 @@ type Drum struct {
 }
 
 func (d Drum) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (d Drum) Use() {

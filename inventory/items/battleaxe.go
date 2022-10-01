@@ -4,7 +4,7 @@ type Battleaxe struct {
 }
 
 func (b Battleaxe) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (b Battleaxe) Use() {

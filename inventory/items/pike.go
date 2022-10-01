@@ -4,7 +4,7 @@ type Pike struct {
 }
 
 func (p Pike) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (p Pike) Use() {

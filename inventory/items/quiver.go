@@ -10,7 +10,7 @@ type Quiver struct {
 }
 
 func (q Quiver) Slot() string {
-    return ""
+    return "Torso"
 }
 
 func (q Quiver) Use() {

@@ -4,7 +4,7 @@ type Greatsword struct {
 }
 
 func (g Greatsword) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (g Greatsword) Use() {

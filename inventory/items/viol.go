@@ -4,7 +4,7 @@ type Viol struct {
 }
 
 func (v Viol) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (v Viol) Use() {

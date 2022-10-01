@@ -1,19 +1,19 @@
 package items
 
-type Thievestools struct {
+type ThievesTools struct {
 }
 
-func (t Thievestools) Slot() string {
+func (t ThievesTools) Slot() string {
     return ""
 }
 
-func (t Thievestools) Use() {
+func (t ThievesTools) Use() {
 }
 
-func (t Thievestools) Save() string {
-    return "Thievestools"
+func (t ThievesTools) Save() string {
+    return "ThievesTools"
 }
 
-func (t Thievestools) PrettyPrint() string {
-    return "Thievestools"
+func (t ThievesTools) PrettyPrint() string {
+    return "Thieves Tools"
 }

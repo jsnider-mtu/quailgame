@@ -4,7 +4,7 @@ type Shortbow struct {
 }
 
 func (s Shortbow) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (s Shortbow) Use() {

@@ -4,7 +4,7 @@ type Halberd struct {
 }
 
 func (h Halberd) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (h Halberd) Use() {

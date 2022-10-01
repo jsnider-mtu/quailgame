@@ -4,7 +4,7 @@ type Warhammer struct {
 }
 
 func (w Warhammer) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (w Warhammer) Use() {

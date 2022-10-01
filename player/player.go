@@ -49,12 +49,14 @@ type Stats struct {
 }
 
 type Equipment struct {
+    Armor inventory.Item
     Head inventory.Item
     Torso inventory.Item
     Legs inventory.Item
     Feet inventory.Item
     LeftHand inventory.Item
     RightHand inventory.Item
+    BothHands inventory.Item
     LeftPinky inventory.Item
     LeftRing inventory.Item
     LeftMid inventory.Item

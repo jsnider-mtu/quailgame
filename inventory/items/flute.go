@@ -4,7 +4,7 @@ type Flute struct {
 }
 
 func (f Flute) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (f Flute) Use() {

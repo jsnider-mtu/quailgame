@@ -1,19 +1,19 @@
 package items
 
-type Disguisekit struct {
+type DisguiseKit struct {
 }
 
-func (d Disguisekit) Slot() string {
+func (d DisguiseKit) Slot() string {
     return ""
 }
 
-func (d Disguisekit) Use() {
+func (d DisguiseKit) Use() {
 }
 
-func (d Disguisekit) Save() string {
-    return "Disguisekit"
+func (d DisguiseKit) Save() string {
+    return "DisguiseKit"
 }
 
-func (d Disguisekit) PrettyPrint() string {
-    return "Disguisekit"
+func (d DisguiseKit) PrettyPrint() string {
+    return "Disguise Kit"
 }

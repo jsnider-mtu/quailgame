@@ -4,7 +4,7 @@ type Trident struct {
 }
 
 func (t Trident) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (t Trident) Use() {

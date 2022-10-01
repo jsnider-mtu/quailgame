@@ -4,7 +4,7 @@ type Horn struct {
 }
 
 func (h Horn) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (h Horn) Use() {

@@ -4,7 +4,7 @@ type Chainmail struct {
 }
 
 func (c Chainmail) Slot() string {
-    return ""
+    return "Armor"
 }
 
 func (c Chainmail) Use() {

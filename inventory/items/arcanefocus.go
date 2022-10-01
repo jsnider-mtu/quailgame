@@ -1,19 +1,19 @@
 package items
 
-type Arcanefocus struct {
+type ArcaneFocus struct {
 }
 
-func (a Arcanefocus) Slot() string {
-    return ""
+func (a ArcaneFocus) Slot() string {
+    return "LeftHand"
 }
 
-func (a Arcanefocus) Use() {
+func (a ArcaneFocus) Use() {
 }
 
-func (a Arcanefocus) Save() string {
-    return "Arcanefocus"
+func (a ArcaneFocus) Save() string {
+    return "ArcaneFocus"
 }
 
-func (a Arcanefocus) PrettyPrint() string {
-    return "Arcanefocus" 
+func (a ArcaneFocus) PrettyPrint() string {
+    return "Arcane Focus" 
 }

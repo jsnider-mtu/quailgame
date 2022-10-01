@@ -4,7 +4,7 @@ type Glaive struct {
 }
 
 func (g Glaive) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (g Glaive) Use() {

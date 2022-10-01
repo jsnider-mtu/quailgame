@@ -4,7 +4,7 @@ type Shawm struct {
 }
 
 func (s Shawm) Slot() string {
-    return ""
+    return "BothHands"
 }
 
 func (s Shawm) Use() {

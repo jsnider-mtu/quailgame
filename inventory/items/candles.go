@@ -10,7 +10,7 @@ type Candles struct {
 }
 
 func (c Candles) Slot() string {
-    return ""
+    return "LeftHand"
 }
 
 func (c Candles) Use() {

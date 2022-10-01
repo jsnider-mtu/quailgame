@@ -4,7 +4,7 @@ type Greataxe struct {
 }
 
 func (g Greataxe) Slot() string {
-    return "RightHand"
+    return "BothHands"
 }
 
 func (g Greataxe) Use() {

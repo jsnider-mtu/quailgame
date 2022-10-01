@@ -10,7 +10,7 @@ type Torches struct {
 }
 
 func (t Torches) Slot() string {
-    return ""
+    return "LeftHand"
 }
 
 func (t Torches) Use() {
