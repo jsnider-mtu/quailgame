@@ -1,11 +1,6 @@
 package npcs
 
-import (
-//    "github.com/hajimehoshi/ebiten/v2"
-    "github.com/jsnider-mtu/quailgame/player"
-//    "github.com/jsnider-mtu/quailgame/levels"
-//    "github.com/jsnider-mtu/quailgame/utils"
-)
+import "github.com/jsnider-mtu/quailgame/player"
 
 type NPC struct {
     Msgs [][]string

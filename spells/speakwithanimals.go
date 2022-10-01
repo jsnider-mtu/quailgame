@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type SpeakWithAnimals struct {}
-
-func (s SpeakWithAnimals) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Speak with Animals is not implemented yet")
-}
 
 func (s SpeakWithAnimals) PrettyPrint() string {
     return "Speak with Animals"
 }
 
-func (a SpeakWithAnimals) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a SpeakWithAnimals) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Speak with Animals is not implemented yet")
 }

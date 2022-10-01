@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type UnseenServant struct {}
-
-func (u UnseenServant) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Unseen Servant is not implemented yet")
-}
 
 func (u UnseenServant) PrettyPrint() string {
     return "Unseen Servant"
 }
 
-func (a UnseenServant) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a UnseenServant) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Unseen Servant is not implemented yet")
 }

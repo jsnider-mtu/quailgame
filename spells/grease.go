@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type Grease struct {}
-
-func (g Grease) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Grease is not implemented yet")
-}
 
 func (g Grease) PrettyPrint() string {
     return "Grease"
 }
 
-func (a Grease) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a Grease) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Grease is not implemented yet")
 }

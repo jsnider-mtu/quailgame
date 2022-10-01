@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type Prestidigitation struct {}
-
-func (p Prestidigitation) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Prestidigitation is not implemented yet")
-}
 
 func (p Prestidigitation) PrettyPrint() string {
     return "Prestidigitation"
 }
 
-func (a Prestidigitation) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a Prestidigitation) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Prestidigitation is not implemented yet")
 }

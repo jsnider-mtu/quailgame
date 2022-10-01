@@ -90,271 +90,271 @@ func (s *Spells) Add(spellsslice []string) error {
     for _, spell := range spellsslice {
         switch spell {
         case "Acid Splash":
-            var acidsplash spells.AcidSplash
+            var acidsplash = spells.AcidSplash{}
             s.Spells = append(s.Spells, acidsplash)
         case "Alarm":
-            var alarm spells.Alarm
+            var alarm = spells.Alarm{}
             s.Spells = append(s.Spells, alarm)
         case "Animal Friendship":
-            var animalfriendship spells.AnimalFriendship
+            var animalfriendship = spells.AnimalFriendship{}
             s.Spells = append(s.Spells, animalfriendship)
         case "Armor of Agathys":
-            var armorofagathys spells.ArmorOfAgathys
+            var armorofagathys = spells.ArmorOfAgathys{}
             s.Spells = append(s.Spells, armorofagathys)
         case "Arms of Hadar":
-            var armsofhadar spells.ArmsOfHadar
+            var armsofhadar = spells.ArmsOfHadar{}
             s.Spells = append(s.Spells, armsofhadar)
         case "Bane":
-            var bane spells.Bane
+            var bane = spells.Bane{}
             s.Spells = append(s.Spells, bane)
         case "Blade Ward":
-            var bladeward spells.BladeWard
+            var bladeward = spells.BladeWard{}
             s.Spells = append(s.Spells, bladeward)
         case "Bless":
-            var bless spells.Bless
+            var bless = spells.Bless{}
             s.Spells = append(s.Spells, bless)
         case "Burning Hands":
-            var burninghands spells.BurningHands
+            var burninghands = spells.BurningHands{}
             s.Spells = append(s.Spells, burninghands)
         case "Charm Person":
-            var charmperson spells.CharmPerson
+            var charmperson = spells.CharmPerson{}
             s.Spells = append(s.Spells, charmperson)
         case "Chill Touch":
-            var chilltouch spells.ChillTouch
+            var chilltouch = spells.ChillTouch{}
             s.Spells = append(s.Spells, chilltouch)
         case "Chromatic Orb":
-            var chromaticorb spells.ChromaticOrb
+            var chromaticorb = spells.ChromaticOrb{}
             s.Spells = append(s.Spells, chromaticorb)
         case "Color Spray":
-            var colorspray spells.ColorSpray
+            var colorspray = spells.ColorSpray{}
             s.Spells = append(s.Spells, colorspray)
         case "Command":
-            var command spells.Command
+            var command = spells.Command{}
             s.Spells = append(s.Spells, command)
         case "Compelled Duel":
-            var compelledduel spells.CompelledDuel
+            var compelledduel = spells.CompelledDuel{}
             s.Spells = append(s.Spells, compelledduel)
         case "Comprehend Languages":
-            var comprehendlanguages spells.ComprehendLanguages
+            var comprehendlanguages = spells.ComprehendLanguages{}
             s.Spells = append(s.Spells, comprehendlanguages)
         case "Create or Destroy Water":
-            var createordestroywater spells.CreateOrDestroyWater
+            var createordestroywater = spells.CreateOrDestroyWater{}
             s.Spells = append(s.Spells, createordestroywater)
         case "Cure Wounds":
-            var curewounds spells.CureWounds
+            var curewounds = spells.CureWounds{}
             s.Spells = append(s.Spells, curewounds)
         case "Dancing Lights":
-            var dancinglights spells.DancingLights
+            var dancinglights = spells.DancingLights{}
             s.Spells = append(s.Spells, dancinglights)
         case "Detect Evil and Good":
-            var detectevilandgood spells.DetectEvilAndGood
+            var detectevilandgood = spells.DetectEvilAndGood{}
             s.Spells = append(s.Spells, detectevilandgood)
         case "Detect Magic":
-            var detectmagic spells.DetectMagic
+            var detectmagic = spells.DetectMagic{}
             s.Spells = append(s.Spells, detectmagic)
         case "Detect Poison and Disease":
-            var detectpoisonanddisease spells.DetectPoisonAndDisease
+            var detectpoisonanddisease = spells.DetectPoisonAndDisease{}
             s.Spells = append(s.Spells, detectpoisonanddisease)
         case "Disguise Self":
-            var disguiseself spells.DisguiseSelf
+            var disguiseself = spells.DisguiseSelf{}
             s.Spells = append(s.Spells, disguiseself)
         case "Dissonant Whispers":
-            var dissonantwhispers spells.DissonantWhispers
+            var dissonantwhispers = spells.DissonantWhispers{}
             s.Spells = append(s.Spells, dissonantwhispers)
         case "Divine Favor":
-            var divinefavor spells.DivineFavor
+            var divinefavor = spells.DivineFavor{}
             s.Spells = append(s.Spells, divinefavor)
         case "Druidcraft":
-            var druidcraft spells.Druidcraft
+            var druidcraft = spells.Druidcraft{}
             s.Spells = append(s.Spells, druidcraft)
         case "Eldritch Blast":
-            var eldritchblast spells.EldritchBlast
+            var eldritchblast = spells.EldritchBlast{}
             s.Spells = append(s.Spells, eldritchblast)
         case "Ensnaring Strike":
-            var ensnaringstrike spells.EnsnaringStrike
+            var ensnaringstrike = spells.EnsnaringStrike{}
             s.Spells = append(s.Spells, ensnaringstrike)
         case "Entangle":
-            var entangle spells.Entangle
+            var entangle = spells.Entangle{}
             s.Spells = append(s.Spells, entangle)
         case "Expeditious Retreat":
-            var expeditiousretreat spells.ExpeditiousRetreat
+            var expeditiousretreat = spells.ExpeditiousRetreat{}
             s.Spells = append(s.Spells, expeditiousretreat)
         case "Faerie Fire":
-            var faeriefire spells.FaerieFire
+            var faeriefire = spells.FaerieFire{}
             s.Spells = append(s.Spells, faeriefire)
         case "False Life":
-            var falselife spells.FalseLife
+            var falselife = spells.FalseLife{}
             s.Spells = append(s.Spells, falselife)
         case "Feather Fall":
-            var featherfall spells.FeatherFall
+            var featherfall = spells.FeatherFall{}
             s.Spells = append(s.Spells, featherfall)
         case "Find Familiar":
-            var findfamiliar spells.FindFamiliar
+            var findfamiliar = spells.FindFamiliar{}
             s.Spells = append(s.Spells, findfamiliar)
         case "Fire Bolt":
-            var firebolt spells.FireBolt
+            var firebolt = spells.FireBolt{}
             s.Spells = append(s.Spells, firebolt)
         case "Fog Cloud":
-            var fogcloud spells.FogCloud
+            var fogcloud = spells.FogCloud{}
             s.Spells = append(s.Spells, fogcloud)
         case "Friends":
-            var friends spells.Friends
+            var friends = spells.Friends{}
             s.Spells = append(s.Spells, friends)
         case "Goodberry":
-            var goodberry spells.Goodberry
+            var goodberry = spells.Goodberry{}
             s.Spells = append(s.Spells, goodberry)
         case "Grease":
-            var grease spells.Grease
+            var grease = spells.Grease{}
             s.Spells = append(s.Spells, grease)
         case "Guidance":
-            var guidance spells.Guidance
+            var guidance = spells.Guidance{}
             s.Spells = append(s.Spells, guidance)
         case "Guiding Bolt":
-            var guidingbolt spells.GuidingBolt
+            var guidingbolt = spells.GuidingBolt{}
             s.Spells = append(s.Spells, guidingbolt)
         case "Hail of Thorns":
-            var hailofthorns spells.HailOfThorns
+            var hailofthorns = spells.HailOfThorns{}
             s.Spells = append(s.Spells, hailofthorns)
         case "Healing Word":
-            var healingword spells.HealingWord
+            var healingword = spells.HealingWord{}
             s.Spells = append(s.Spells, healingword)
         case "Hellish Rebuke":
-            var hellishrebuke spells.HellishRebuke
+            var hellishrebuke = spells.HellishRebuke{}
             s.Spells = append(s.Spells, hellishrebuke)
         case "Heroism":
-            var heroism spells.Heroism
+            var heroism = spells.Heroism{}
             s.Spells = append(s.Spells, heroism)
         case "Hex":
-            var hex spells.Hex
+            var hex = spells.Hex{}
             s.Spells = append(s.Spells, hex)
         case "Hunter's Mark":
-            var huntersmark spells.HuntersMark
+            var huntersmark = spells.HuntersMark{}
             s.Spells = append(s.Spells, huntersmark)
         case "Identify":
-            var identify spells.Identify
+            var identify = spells.Identify{}
             s.Spells = append(s.Spells, identify)
         case "Illusory Script":
-            var illusoryscript spells.IllusoryScript
+            var illusoryscript = spells.IllusoryScript{}
             s.Spells = append(s.Spells, illusoryscript)
         case "Inflict Wounds":
-            var inflictwounds spells.InflictWounds
+            var inflictwounds = spells.InflictWounds{}
             s.Spells = append(s.Spells, inflictwounds)
         case "Jump":
-            var jump spells.Jump
+            var jump = spells.Jump{}
             s.Spells = append(s.Spells, jump)
         case "Light":
-            var light spells.Light
+            var light = spells.Light{}
             s.Spells = append(s.Spells, light)
         case "Longstrider":
-            var longstrider spells.Longstrider
+            var longstrider = spells.Longstrider{}
             s.Spells = append(s.Spells, longstrider)
         case "Mage Armor":
-            var magearmor spells.MageArmor
+            var magearmor = spells.MageArmor{}
             s.Spells = append(s.Spells, magearmor)
         case "Mage Hand":
-            var magehand spells.MageHand
+            var magehand = spells.MageHand{}
             s.Spells = append(s.Spells, magehand)
         case "Magic Missile":
-            var magicmissile spells.MagicMissile
+            var magicmissile = spells.MagicMissile{}
             s.Spells = append(s.Spells, magicmissile)
         case "Mending":
-            var mending spells.Mending
+            var mending = spells.Mending{}
             s.Spells = append(s.Spells, mending)
         case "Message":
-            var message spells.Message
+            var message = spells.Message{}
             s.Spells = append(s.Spells, message)
         case "Minor Illusion":
-            var minorillusion spells.MinorIllusion
+            var minorillusion = spells.MinorIllusion{}
             s.Spells = append(s.Spells, minorillusion)
         case "Poison Spray":
-            var poisonspray spells.PoisonSpray
+            var poisonspray = spells.PoisonSpray{}
             s.Spells = append(s.Spells, poisonspray)
         case "Prestidigitation":
-            var prestidigitation spells.Prestidigitation
+            var prestidigitation = spells.Prestidigitation{}
             s.Spells = append(s.Spells, prestidigitation)
         case "Produce Flame":
-            var produceflame spells.ProduceFlame
+            var produceflame = spells.ProduceFlame{}
             s.Spells = append(s.Spells, produceflame)
         case "Protection from Good and Evil":
-            var protectionfromgoodandevil spells.ProtectionFromGoodAndEvil
+            var protectionfromgoodandevil = spells.ProtectionFromGoodAndEvil{}
             s.Spells = append(s.Spells, protectionfromgoodandevil)
         case "Purify Food and Drink":
-            var purifyfoodanddrink spells.PurifyFoodAndDrink
+            var purifyfoodanddrink = spells.PurifyFoodAndDrink{}
             s.Spells = append(s.Spells, purifyfoodanddrink)
         case "Ray of Frost":
-            var rayoffrost spells.RayOfFrost
+            var rayoffrost = spells.RayOfFrost{}
             s.Spells = append(s.Spells, rayoffrost)
         case "Ray of Sickness":
-            var rayofsickness spells.RayOfSickness
+            var rayofsickness = spells.RayOfSickness{}
             s.Spells = append(s.Spells, rayofsickness)
         case "Resistance":
-            var resistance spells.Resistance
+            var resistance = spells.Resistance{}
             s.Spells = append(s.Spells, resistance)
         case "Sacred Flame":
-            var sacredflame spells.SacredFlame
+            var sacredflame = spells.SacredFlame{}
             s.Spells = append(s.Spells, sacredflame)
         case "Sanctuary":
-            var sanctuary spells.Sanctuary
+            var sanctuary = spells.Sanctuary{}
             s.Spells = append(s.Spells, sanctuary)
         case "Searing Smite":
-            var searingsmite spells.SearingSmite
+            var searingsmite = spells.SearingSmite{}
             s.Spells = append(s.Spells, searingsmite)
         case "Shield":
-            var shield spells.Shield
+            var shield = spells.Shield{}
             s.Spells = append(s.Spells, shield)
         case "Shield of Faith":
-            var shieldoffaith spells.ShieldOfFaith
+            var shieldoffaith = spells.ShieldOfFaith{}
             s.Spells = append(s.Spells, shieldoffaith)
         case "Shillelagh":
-            var shillelagh spells.Shillelagh
+            var shillelagh = spells.Shillelagh{}
             s.Spells = append(s.Spells, shillelagh)
         case "Shocking Grasp":
-            var shockinggrasp spells.ShockingGrasp
+            var shockinggrasp = spells.ShockingGrasp{}
             s.Spells = append(s.Spells, shockinggrasp)
         case "Silent Image":
-            var silentimage spells.SilentImage
+            var silentimage = spells.SilentImage{}
             s.Spells = append(s.Spells, silentimage)
         case "Sleep":
-            var sleep spells.Sleep
+            var sleep = spells.Sleep{}
             s.Spells = append(s.Spells, sleep)
         case "Spare the Dying":
-            var sparethedying spells.SpareTheDying
+            var sparethedying = spells.SpareTheDying{}
             s.Spells = append(s.Spells, sparethedying)
         case "Speak with Animals":
-            var speakwithanimals spells.SpeakWithAnimals
+            var speakwithanimals = spells.SpeakWithAnimals{}
             s.Spells = append(s.Spells, speakwithanimals)
         case "Tasha's Hideous Laughter":
-            var tashashideouslaughter spells.TashasHideousLaughter
+            var tashashideouslaughter = spells.TashasHideousLaughter{}
             s.Spells = append(s.Spells, tashashideouslaughter)
         case "Tenser's Floating Disk":
-            var tensersfloatingdisk spells.TensersFloatingDisk
+            var tensersfloatingdisk = spells.TensersFloatingDisk{}
             s.Spells = append(s.Spells, tensersfloatingdisk)
         case "Thaumaturgy":
-            var thaumaturgy spells.Thaumaturgy
+            var thaumaturgy = spells.Thaumaturgy{}
             s.Spells = append(s.Spells, thaumaturgy)
         case "Thorn Whip":
-            var thornwhip spells.ThornWhip
+            var thornwhip = spells.ThornWhip{}
             s.Spells = append(s.Spells, thornwhip)
         case "Thunderous Smite":
-            var thunderoussmite spells.ThunderousSmite
+            var thunderoussmite = spells.ThunderousSmite{}
             s.Spells = append(s.Spells, thunderoussmite)
         case "Thunderwave":
-            var thunderwave spells.Thunderwave
+            var thunderwave = spells.Thunderwave{}
             s.Spells = append(s.Spells, thunderwave)
         case "True Strike":
-            var truestrike spells.TrueStrike
+            var truestrike = spells.TrueStrike{}
             s.Spells = append(s.Spells, truestrike)
         case "Unseen Servant":
-            var unseenservant spells.UnseenServant
+            var unseenservant = spells.UnseenServant{}
             s.Spells = append(s.Spells, unseenservant)
         case "Vicious Mockery":
-            var viciousmockery spells.ViciousMockery
+            var viciousmockery = spells.ViciousMockery{}
             s.Spells = append(s.Spells, viciousmockery)
         case "Witch Bolt":
-            var witchbolt spells.WitchBolt
+            var witchbolt = spells.WitchBolt{}
             s.Spells = append(s.Spells, witchbolt)
         case "Wrathful Smite":
-            var wrathfulsmite spells.WrathfulSmite
+            var wrathfulsmite = spells.WrathfulSmite{}
             s.Spells = append(s.Spells, wrathfulsmite)
         default:
             return errors.New(fmt.Sprintf("%s is not a valid spell", spell))
@@ -450,6 +450,14 @@ func (s *Stats) Save() string {
 
 func (e *Equipment) Save() string {
     return ""
+}
+
+func (p *Player) GetName() string {
+    return p.Name
+}
+
+func (p *Player) CastSpell(spell spells.Spell, target *Player) {
+    log.Println(fmt.Sprintf("Casting spell %s, target is %s", spell.PrettyPrint(), target.GetName()))
 }
 
 func (p *Player) Unequip(slot string) {

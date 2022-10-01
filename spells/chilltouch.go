@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type ChillTouch struct {}
-
-func (c ChillTouch) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Chill Touch is not implemented yet")
-}
 
 func (c ChillTouch) PrettyPrint() string {
     return "Chill Touch"
 }
 
-func (a ChillTouch) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a ChillTouch) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Chill Touch is not implemented yet")
 }

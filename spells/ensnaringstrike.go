@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type EnsnaringStrike struct {}
-
-func (e EnsnaringStrike) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Ensnaring Strike is not implemented yet")
-}
 
 func (e EnsnaringStrike) PrettyPrint() string {
     return "Ensnaring Strike"
 }
 
-func (a EnsnaringStrike) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a EnsnaringStrike) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Ensnaring Strike is not implemented yet")
 }

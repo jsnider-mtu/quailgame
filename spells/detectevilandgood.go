@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type DetectEvilAndGood struct {}
-
-func (d DetectEvilAndGood) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Detect Evil and Good is not implemented yet")
-}
 
 func (d DetectEvilAndGood) PrettyPrint() string {
     return "Detect Evil and Good"
 }
 
-func (a DetectEvilAndGood) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a DetectEvilAndGood) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Detect Evil and Good is not implemented yet")
 }

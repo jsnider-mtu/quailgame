@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type Sleep struct {}
-
-func (s Sleep) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Sleep is not implemented yet")
-}
 
 func (s Sleep) PrettyPrint() string {
     return "Sleep"
 }
 
-func (a Sleep) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a Sleep) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Sleep is not implemented yet")
 }

@@ -28,7 +28,6 @@ import (
     "github.com/jsnider-mtu/quailgame/levels"
     "github.com/jsnider-mtu/quailgame/player"
     "github.com/jsnider-mtu/quailgame/player/pcimages"
-    "github.com/jsnider-mtu/quailgame/spells"
     "github.com/jsnider-mtu/quailgame/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
@@ -123,7 +122,7 @@ var (
     equipmentsel int = 0
     choices bool = false
     racechoices bool = false
-    spells bool = false
+    spellschoices bool = false
     dupwarning bool = false
     option0 int = 0
     option1 int = 0
@@ -510,6 +509,7 @@ func (g *Game) Update() error {
                         p.Name = name
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
+                        p.Spells = &player.Spells{}
                         down = true
                         up = false
                         left = false
@@ -669,7 +669,7 @@ func (g *Game) Update() error {
                 proficiencies = append(proficiencies,
                     "light armor", "simple weapons", "hand crossbows",
                     "longswords", "rapiers", "shortswords") // 3 instruments
-                spells = true
+                spellschoices = true
             case 2:
                 wis = abilities[0]
                 con = abilities[1]
@@ -682,7 +682,7 @@ func (g *Game) Update() error {
                 proficiencies = append(proficiencies,
                     "light armor", "medium armor", "shields",
                     "simple weapons")
-                spells = true
+                spellschoices = true
             case 3:
                 wis = abilities[0]
                 con = abilities[1]
@@ -697,7 +697,7 @@ func (g *Game) Update() error {
                     "clubs", "daggers", "darts", "javelins", "maces",
                     "quarterstaffs", "scimitars", "sickles", "slings",
                     "spears", "herbalism kit")
-                spells = true
+                spellschoices = true
             case 4:
                 str = abilities[0]
                 con = abilities[1]
@@ -767,7 +767,7 @@ func (g *Game) Update() error {
                 proficiencies = append(proficiencies,
                     "daggers", "darts", "slings", "quarterstaffs",
                     "light crossbows")
-                spells = true
+                spellschoices = true
             case 10:
                 cha = abilities[0]
                 con = abilities[1]
@@ -779,7 +779,7 @@ func (g *Game) Update() error {
                 hd = "1d8"
                 proficiencies = append(proficiencies,
                     "light armor", "simple weapons")
-                spells = true
+                spellschoices = true
             case 11:
                 intel = abilities[0]
                 con = abilities[1]
@@ -791,7 +791,7 @@ func (g *Game) Update() error {
                 hd = "1d6"
                 proficiencies = append(proficiencies,
                     "daggers", "darts", "slings", "quarterstaffs", "light crossbows")
-                spells = true
+                spellschoices = true
             default:
                 return errors.New("Invalid value for classsel")
             }
@@ -5761,17 +5761,17 @@ func (g *Game) Update() error {
                 option6 = 0
                 option7 = 0
                 option8 = 0
-                spells = true
+                spellschoices = true
                 return nil
             default:
                 return errors.New(fmt.Sprintf("Class %s does not get spells at level 1", classmap[classsel]))
             }
-            if !spells {
+            if !spellschoices {
                 cutscene = true
                 return nil
             }
         }
-    } else if spells {
+    } else if spellschoices {
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             proficiencies = make([]string, 0)
             resistances = make([]string, 0)
@@ -5789,7 +5789,7 @@ func (g *Game) Update() error {
             option6 = 0
             option7 = 0
             option8 = 0
-            spells = false
+            spellschoices = false
             creation = true
         }
         switch classsel {
@@ -7936,7 +7936,8 @@ func (g *Game) Update() error {
             default:
                 return errors.New("Invalid value for classsel (spells2)")
             }
-            spells = false
+            p.Spells.Add(spellsslice)
+            spellschoices = false
             cutscene = true
         }
     } else {
@@ -8014,13 +8015,6 @@ func (g *Game) Update() error {
                 fmt.Println(statsstr)
                 var equipmentstr string = p.Equipment.Save()
                 var spellsstr string = p.Spells.Save()
-//                for sind, spell := range spellsslice {
-//                    if sind == len(spellsslice) - 1 {
-//                        spellsstr += spell
-//                    } else {
-//                        spellsstr += spell + ","
-//                    }
-//                }
                 _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Race, p.Class, p.Level, p.XP, equipmentstr, spellsstr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
@@ -8446,7 +8440,7 @@ func (g *Game) Update() error {
                         return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
                 }
-//                spellsslice = strings.Split(spellsstr, ",")
+                p.Spells = &player.Spells{}
                 p.Spells.Add(strings.Split(spellsstr, ","))
                 l = levels.LoadLvl(levelname, 0, x, y)
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
@@ -8544,6 +8538,15 @@ func (g *Game) Update() error {
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
                             }
+                        }
+                    }
+                }
+            }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDigit1) {
+                for _, npc := range l.NPCs {
+                    if npc.PC.GetName() == "Jane Doe" {
+                        for _, spell := range p.Spells.Spells {
+                            p.CastSpell(spell, npc.PC)
                         }
                     }
                 }
@@ -10766,7 +10769,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         default:
             log.Fatal("Out of bounds (Draw choices)")
         }
-    } else if spells {
+    } else if spellschoices {
         text.Draw(screen, fmt.Sprintf("Class: %s", classmap[classsel]), fo, 64, 32, color.White)
         if dupwarning {
             text.Draw(screen, "No duplicates allowed", fo, 256, 512, color.RGBA{0xff, 0x0, 0x0, 0xff})

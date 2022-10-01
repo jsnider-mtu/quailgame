@@ -1,21 +1,17 @@
 package spells
 
 import (
-    "github.com/hajimehoshi/ebiten/v2"
+    "log"
 
-    "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/hajimehoshi/ebiten/v2"
 )
 
 type SpareTheDying struct {}
-
-func (s SpareTheDying) Cast(target *npcs.NPC) bool {
-    log.Println("The spell Spare the Dying is not implemented yet")
-}
 
 func (s SpareTheDying) PrettyPrint() string {
     return "Spare the Dying"
 }
 
-func (a SpareTheDying) Animate(screen *ebiten.Image, target *npcs.NPC) {
+func (a SpareTheDying) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Spare the Dying is not implemented yet")
 }
