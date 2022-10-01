@@ -7,16 +7,21 @@ import (
 //    _ "image/jpeg"
     _ "image/png"
     "log"
-//    "math/rand"
+    "math/rand"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/quailgame/levels/lvlimages"
     "github.com/jsnider-mtu/quailgame/npcs"
-//    "github.com/jsnider-mtu/quailgame/npcs/npcimages"
-//    "github.com/jsnider-mtu/quailgame/player"
+    "github.com/jsnider-mtu/quailgame/npcs/npcimages"
+    "github.com/jsnider-mtu/quailgame/player"
 )
 
 func lvlTwo(entrance int) *Level {
+    npcgirlimage, _, err := image.Decode(bytes.NewReader(npcimages.NPCGirl_PNG))
+    if err != nil {
+        log.Fatal(err)
+    }
+    npcGirlImage := ebiten.NewImageFromImage(npcgirlimage)
     lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.Two_PNG))
     if err != nil {
         log.Fatal(err)
@@ -27,6 +32,13 @@ func lvlTwo(entrance int) *Level {
         &Door{coords: [2]int{48, 96}, NewLvl: []interface{}{"One", 1}},
         &Door{coords: [2]int{144, 0}, NewLvl: []interface{}{"VerticalWall", 1}},
         &Door{coords: [2]int{240, 96}, NewLvl: []interface{}{"One", 1}}}
+
+    NPCs := []*npcs.NPC{npcs.NewNPC(
+        "down", [][]string{
+            {"Hello there,", "ObiWan Kenobi."},
+            {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
+        240, rand.Intn(60) + 60, &player.Player{
+            Name: "Jane Doe", Pos: [2]int{144, 48}, Image: npcGirlImage, Spells: &player.Spells{}})}
 
     var pos [2]int
 
@@ -49,5 +61,5 @@ func lvlTwo(entrance int) *Level {
             {192, 0, 336, 96},
             {192, 96, 240, 144},
             {288, 96, 336, 240},
-            {192, 192, 288, 240}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg, Anim: func(a *ebiten.Image, l *Level, b, c, d int) {}}
+            {192, 192, 288, 240}}, Doors: lvldoors, NPCs: NPCs, Image: lvlImg, Anim: func(a *ebiten.Image, l *Level, b, c, d int) {}}
 }
