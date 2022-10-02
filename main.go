@@ -5751,6 +5751,276 @@ func (g *Game) Update() error {
             p.Level = 1
             p.XP = 0
             p.Equipment = &player.Equipment{}
+            equipmap := make(map[string][]inventory.Item)
+            equipmap["Armor"] = make([]inventory.Item, 0)
+            equipmap["Head"] = make([]inventory.Item, 0)
+            equipmap["Torso"] = make([]inventory.Item, 0)
+            equipmap["Legs"] = make([]inventory.Item, 0)
+            equipmap["Feet"] = make([]inventory.Item, 0)
+            equipmap["LeftPinky"] = make([]inventory.Item, 0)
+            equipmap["LeftRing"] = make([]inventory.Item, 0)
+            equipmap["LeftMid"] = make([]inventory.Item, 0)
+            equipmap["LeftInd"] = make([]inventory.Item, 0)
+            equipmap["LeftThumb"] = make([]inventory.Item, 0)
+            equipmap["RightPinky"] = make([]inventory.Item, 0)
+            equipmap["RightRing"] = make([]inventory.Item, 0)
+            equipmap["RightMid"] = make([]inventory.Item, 0)
+            equipmap["RightInd"] = make([]inventory.Item, 0)
+            equipmap["RightThumb"] = make([]inventory.Item, 0)
+            equipmap["LeftHand"] = make([]inventory.Item, 0)
+            equipmap["RightHand"] = make([]inventory.Item, 0)
+            equipmap["BothHands"] = make([]inventory.Item, 0)
+            equipmap["Clothes"] = make([]inventory.Item, 0)
+            for _, item := range p.Inv.GetItems() {
+                switch item.PrettyPrint() {
+                case "Arcane Focus":
+                    var arcanefocus items.ArcaneFocus
+                    equipmap[arcanefocus.Slot()] = append(equipmap[arcanefocus.Slot()], arcanefocus)
+                case "Bagpipes":
+                    var bagpipes items.Bagpipes
+                    equipmap[bagpipes.Slot()] = append(equipmap[bagpipes.Slot()], bagpipes)
+                case "Battleaxe":
+                    var battleaxe items.Battleaxe
+                    equipmap[battleaxe.Slot()] = append(equipmap[battleaxe.Slot()], battleaxe)
+                case "Blowgun":
+                    var blowgun items.Blowgun
+                    equipmap[blowgun.Slot()] = append(equipmap[blowgun.Slot()], blowgun)
+                case "Candles":
+                    var candles items.Candles
+                    equipmap[candles.Slot()] = append(equipmap[candles.Slot()], candles)
+                case "Chainmail":
+                    var chainmail items.Chainmail
+                    equipmap[chainmail.Slot()] = append(equipmap[chainmail.Slot()], chainmail)
+                case "Clothes":
+                    var clothes items.Clothes
+                    equipmap[clothes.Slot()] = append(equipmap[clothes.Slot()], clothes)
+                case "Club":
+                    var club items.Club
+                    equipmap[club.Slot()] = append(equipmap[club.Slot()], club)
+                case "Component Pouch":
+                    var componentpouch items.ComponentPouch
+                    equipmap[componentpouch.Slot()] = append(equipmap[componentpouch.Slot()], componentpouch)
+                case "Dagger":
+                    var dagger items.Dagger
+                    equipmap[dagger.Slot()] = append(equipmap[dagger.Slot()], dagger)
+                case "Darts":
+                    var darts items.Darts
+                    equipmap[darts.Slot()] = append(equipmap[darts.Slot()], darts)
+                case "Drum":
+                    var drum items.Drum
+                    equipmap[drum.Slot()] = append(equipmap[drum.Slot()], drum)
+                case "Dulcimer":
+                    var dulcimer items.Dulcimer
+                    equipmap[dulcimer.Slot()] = append(equipmap[dulcimer.Slot()], dulcimer)
+                case "Flail":
+                    var flail items.Flail
+                    equipmap[flail.Slot()] = append(equipmap[flail.Slot()], flail)
+                case "Flute":
+                    var flute items.Flute
+                    equipmap[flute.Slot()] = append(equipmap[flute.Slot()], flute)
+                case "Glaive":
+                    var glaive items.Glaive
+                    equipmap[glaive.Slot()] = append(equipmap[glaive.Slot()], glaive)
+                case "Greataxe":
+                    var greataxe items.Greataxe
+                    equipmap[greataxe.Slot()] = append(equipmap[greataxe.Slot()], greataxe)
+                case "Greatclub":
+                    var greatclub items.Greatclub
+                    equipmap[greatclub.Slot()] = append(equipmap[greatclub.Slot()], greatclub)
+                case "Greatsword":
+                    var greatsword items.Greatsword
+                    equipmap[greatsword.Slot()] = append(equipmap[greatsword.Slot()], greatsword)
+                case "Halberd":
+                    var halberd items.Halberd
+                    equipmap[halberd.Slot()] = append(equipmap[halberd.Slot()], halberd)
+                case "Handaxe":
+                    var handaxe items.Handaxe
+                    equipmap[handaxe.Slot()] = append(equipmap[handaxe.Slot()], handaxe)
+                case "Hand Crossbow":
+                    var handcrossbow items.HandCrossbow
+                    equipmap[handcrossbow.Slot()] = append(equipmap[handcrossbow.Slot()], handcrossbow)
+                case "Heavy Crossbow":
+                    var heavycrossbow items.HeavyCrossbow
+                    equipmap[heavycrossbow.Slot()] = append(equipmap[heavycrossbow.Slot()], heavycrossbow)
+                case "Horn":
+                    var horn items.Horn
+                    equipmap[horn.Slot()] = append(equipmap[horn.Slot()], horn)
+                case "Ink Pen":
+                    var inkpen items.InkPen
+                    equipmap[inkpen.Slot()] = append(equipmap[inkpen.Slot()], inkpen)
+                case "Javelin":
+                    var javelin items.Javelin
+                    equipmap[javelin.Slot()] = append(equipmap[javelin.Slot()], javelin)
+                case "Lamp":
+                    var lamp items.Lamp
+                    equipmap[lamp.Slot()] = append(equipmap[lamp.Slot()], lamp)
+                case "Lance":
+                    var lance items.Lance
+                    equipmap[lance.Slot()] = append(equipmap[lance.Slot()], lance)
+                case "Leather Armor":
+                    var leatherarmor items.LeatherArmor
+                    equipmap[leatherarmor.Slot()] = append(equipmap[leatherarmor.Slot()], leatherarmor)
+                case "Light Crossbow":
+                    var lightcrossbow items.LightCrossbow
+                    equipmap[lightcrossbow.Slot()] = append(equipmap[lightcrossbow.Slot()], lightcrossbow)
+                case "Light Hammer":
+                    var lighthammer items.LightHammer
+                    equipmap[lighthammer.Slot()] = append(equipmap[lighthammer.Slot()], lighthammer)
+                case "Longbow":
+                    var longbow items.Longbow
+                    equipmap[longbow.Slot()] = append(equipmap[longbow.Slot()], longbow)
+                case "Longsword":
+                    var longsword items.Longsword
+                    equipmap[longsword.Slot()] = append(equipmap[longsword.Slot()], longsword)
+                case "Lute":
+                    var lute items.Lute
+                    equipmap[lute.Slot()] = append(equipmap[lute.Slot()], lute)
+                case "Lyre":
+                    var lyre items.Lyre
+                    equipmap[lyre.Slot()] = append(equipmap[lyre.Slot()], lyre)
+                case "Mace":
+                    var mace items.Mace
+                    equipmap[mace.Slot()] = append(equipmap[mace.Slot()], mace)
+                case "Maul":
+                    var maul items.Maul
+                    equipmap[maul.Slot()] = append(equipmap[maul.Slot()], maul)
+                case "Morningstar":
+                    var morningstar items.Morningstar
+                    equipmap[morningstar.Slot()] = append(equipmap[morningstar.Slot()], morningstar)
+                case "Net":
+                    var net items.Net
+                    equipmap[net.Slot()] = append(equipmap[net.Slot()], net)
+                case "Oil Flask":
+                    var oilflask items.OilFlask
+                    equipmap[oilflask.Slot()] = append(equipmap[oilflask.Slot()], oilflask)
+                case "Pan Flute":
+                    var panflute items.PanFlute
+                    equipmap[panflute.Slot()] = append(equipmap[panflute.Slot()], panflute)
+                case "Pike":
+                    var pike items.Pike
+                    equipmap[pike.Slot()] = append(equipmap[pike.Slot()], pike)
+                case "Quarterstaff":
+                    var quarterstaff items.Quarterstaff
+                    equipmap[quarterstaff.Slot()] = append(equipmap[quarterstaff.Slot()], quarterstaff)
+                case "Quiver":
+                    var quiver items.Quiver
+                    equipmap[quiver.Slot()] = append(equipmap[quiver.Slot()], quiver)
+                case "Rapier":
+                    var rapier items.Rapier
+                    equipmap[rapier.Slot()] = append(equipmap[rapier.Slot()], rapier)
+                case fmt.Sprintf("Rope%18s", "Length: 50"):
+                    var rope items.Rope
+                    equipmap[rope.Slot()] = append(equipmap[rope.Slot()], rope)
+                case "Scalemail":
+                    var scalemail items.Scalemail
+                    equipmap[scalemail.Slot()] = append(equipmap[scalemail.Slot()], scalemail)
+                case "Scimitar":
+                    var scimitar items.Scimitar
+                    equipmap[scimitar.Slot()] = append(equipmap[scimitar.Slot()], scimitar)
+                case "Shawm":
+                    var shawm items.Shawm
+                    equipmap[shawm.Slot()] = append(equipmap[shawm.Slot()], shawm)
+                case "Shield":
+                    var shield items.Shield
+                    equipmap[shield.Slot()] = append(equipmap[shield.Slot()], shield)
+                case "Shortbow":
+                    var shortbow items.Shortbow
+                    equipmap[shortbow.Slot()] = append(equipmap[shortbow.Slot()], shortbow)
+                case "Shortsword":
+                    var shortsword items.Shortsword
+                    equipmap[shortsword.Slot()] = append(equipmap[shortsword.Slot()], shortsword)
+                case "Sickle":
+                    var sickle items.Sickle
+                    equipmap[sickle.Slot()] = append(equipmap[sickle.Slot()], sickle)
+                case "Sling":
+                    var sling items.Sling
+                    equipmap[sling.Slot()] = append(equipmap[sling.Slot()], sling)
+                case "Spear":
+                    var spear items.Spear
+                    equipmap[spear.Slot()] = append(equipmap[spear.Slot()], spear)
+                case fmt.Sprintf("Torches%15s", "Quantity: 10"):
+                    var torches items.Torches
+                    equipmap[torches.Slot()] = append(equipmap[torches.Slot()], torches)
+                case "Trident":
+                    var trident items.Trident
+                    equipmap[trident.Slot()] = append(equipmap[trident.Slot()], trident)
+                case "Viol":
+                    var viol items.Viol
+                    equipmap[viol.Slot()] = append(equipmap[viol.Slot()], viol)
+                case "Warhammer":
+                    var warhammer items.Warhammer
+                    equipmap[warhammer.Slot()] = append(equipmap[warhammer.Slot()], warhammer)
+                case "War Pick":
+                    var warpick items.WarPick
+                    equipmap[warpick.Slot()] = append(equipmap[warpick.Slot()], warpick)
+                case "Whip":
+                    var whip items.Whip
+                    equipmap[whip.Slot()] = append(equipmap[whip.Slot()], whip)
+                default:
+                    log.Println(fmt.Sprintf("%s cannot be equipped", item.PrettyPrint()))
+                }
+                if len(equipmap["Armor"]) == 1 {
+                    p.Equip(equipmap["Armor"][0])
+                }
+                if len(equipmap["Head"]) == 1 {
+                    p.Equip(equipmap["Head"][0])
+                }
+                if len(equipmap["Torso"]) == 1 {
+                    p.Equip(equipmap["Torso"][0])
+                }
+                if len(equipmap["Legs"]) == 1 {
+                    p.Equip(equipmap["Legs"][0])
+                }
+                if len(equipmap["Feet"]) == 1 {
+                    p.Equip(equipmap["Feet"][0])
+                }
+                if len(equipmap["LeftPinky"]) == 1 {
+                    p.Equip(equipmap["LeftPinky"][0])
+                }
+                if len(equipmap["LeftRing"]) == 1 {
+                    p.Equip(equipmap["LeftRing"][0])
+                }
+                if len(equipmap["LeftMid"]) == 1 {
+                    p.Equip(equipmap["LeftMid"][0])
+                }
+                if len(equipmap["LeftInd"]) == 1 {
+                    p.Equip(equipmap["LeftInd"][0])
+                }
+                if len(equipmap["LeftThumb"]) == 1 {
+                    p.Equip(equipmap["LeftThumb"][0])
+                }
+                if len(equipmap["RightPinky"]) == 1 {
+                    p.Equip(equipmap["RightPinky"][0])
+                }
+                if len(equipmap["RightRing"]) == 1 {
+                    p.Equip(equipmap["RightRing"][0])
+                }
+                if len(equipmap["RightMid"]) == 1 {
+                    p.Equip(equipmap["RightMid"][0])
+                }
+                if len(equipmap["RightInd"]) == 1 {
+                    p.Equip(equipmap["RightInd"][0])
+                }
+                if len(equipmap["RightThumb"]) == 1 {
+                    p.Equip(equipmap["RightThumb"][0])
+                }
+                if len(equipmap["LeftHand"]) == 1 {
+                    p.Equip(equipmap["LeftHand"][0])
+                }
+                if len(equipmap["RightHand"]) == 1 {
+                    p.Equip(equipmap["RightHand"][0])
+                }
+                if len(equipmap["BothHands"]) == 1 {
+                    p.Equip(equipmap["BothHands"][0])
+                }
+                if len(equipmap["Clothes"]) == 1 {
+                    p.Equip(equipmap["Clothes"][0])
+                }
+            }
+            for emkey, emval := range equipmap {
+                log.Println(fmt.Sprintf("%d items using %s slot", len(emval), emkey))
+            }
+            log.Println(p.Equipment.Save())
             choices = false
             creation = false
             switch classsel {
@@ -5768,7 +6038,8 @@ func (g *Game) Update() error {
                 spellschoices = true
                 return nil
             default:
-                return errors.New(fmt.Sprintf("Class %s does not get spells at level 1", classmap[classsel]))
+                log.Println(fmt.Sprintf("Class %s does not get spells at level 1", classmap[classsel]))
+                return nil
             }
             if !spellschoices {
                 cutscene = true
