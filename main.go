@@ -6007,10 +6007,10 @@ func (g *Game) Update() error {
             if len(equipmap["RightThumb"]) == 1 {
                 p.Equip(equipmap["RightThumb"][0])
             }
-            if len(equipmap["LeftHand"]) == 1 {
+            if len(equipmap["LeftHand"]) == 1 && len(equipmap["BothHands"]) != 1 {
                 p.Equip(equipmap["LeftHand"][0])
             }
-            if len(equipmap["RightHand"]) == 1 {
+            if len(equipmap["RightHand"]) == 1 && len(equipmap["BothHands"]) != 1 {
                 p.Equip(equipmap["RightHand"][0])
             }
             if len(equipmap["BothHands"]) == 1 {
