@@ -7030,141 +7030,149 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Out of bounds ()")
                 }
-                switch option4 {
-                case 0:
-                    spellsslice = append(spellsslice, "Bane")
-                case 1:
-                    spellsslice = append(spellsslice, "Bless")
-                case 2:
-                    spellsslice = append(spellsslice, "Command")
-                case 3:
-                    spellsslice = append(spellsslice, "Create or Destroy Water")
-                case 4:
-                    spellsslice = append(spellsslice, "Cure Wounds")
-                case 5:
-                    spellsslice = append(spellsslice, "Detect Evil and Good")
-                case 6:
-                    spellsslice = append(spellsslice, "Detect Magic")
-                case 7:
-                    spellsslice = append(spellsslice, "Detect Poison and Disease")
-                case 8:
-                    spellsslice = append(spellsslice, "Guiding Bolt")
-                case 9:
-                    spellsslice = append(spellsslice, "Healing Word")
-                case 10:
-                    spellsslice = append(spellsslice, "Inflict Wounds")
-                case 11:
-                    spellsslice = append(spellsslice, "Protection from Evil and Good")
-                case 12:
-                    spellsslice = append(spellsslice, "Purify Food and Drink")
-                case 13:
-                    spellsslice = append(spellsslice, "Sanctuary")
-                case 14:
-                    spellsslice = append(spellsslice, "Shield of Faith")
-                default:
-                    return errors.New("Out of bounds ()")
+                if wismod > 0 {
+                    switch option4 {
+                    case 0:
+                        spellsslice = append(spellsslice, "Bane")
+                    case 1:
+                        spellsslice = append(spellsslice, "Bless")
+                    case 2:
+                        spellsslice = append(spellsslice, "Command")
+                    case 3:
+                        spellsslice = append(spellsslice, "Create or Destroy Water")
+                    case 4:
+                        spellsslice = append(spellsslice, "Cure Wounds")
+                    case 5:
+                        spellsslice = append(spellsslice, "Detect Evil and Good")
+                    case 6:
+                        spellsslice = append(spellsslice, "Detect Magic")
+                    case 7:
+                        spellsslice = append(spellsslice, "Detect Poison and Disease")
+                    case 8:
+                        spellsslice = append(spellsslice, "Guiding Bolt")
+                    case 9:
+                        spellsslice = append(spellsslice, "Healing Word")
+                    case 10:
+                        spellsslice = append(spellsslice, "Inflict Wounds")
+                    case 11:
+                        spellsslice = append(spellsslice, "Protection from Evil and Good")
+                    case 12:
+                        spellsslice = append(spellsslice, "Purify Food and Drink")
+                    case 13:
+                        spellsslice = append(spellsslice, "Sanctuary")
+                    case 14:
+                        spellsslice = append(spellsslice, "Shield of Faith")
+                    default:
+                        return errors.New("Out of bounds ()")
+                    }
                 }
-                switch option5 {
-                case 0:
-                    spellsslice = append(spellsslice, "Bane")
-                case 1:
-                    spellsslice = append(spellsslice, "Bless")
-                case 2:
-                    spellsslice = append(spellsslice, "Command")
-                case 3:
-                    spellsslice = append(spellsslice, "Create or Destroy Water")
-                case 4:
-                    spellsslice = append(spellsslice, "Cure Wounds")
-                case 5:
-                    spellsslice = append(spellsslice, "Detect Evil and Good")
-                case 6:
-                    spellsslice = append(spellsslice, "Detect Magic")
-                case 7:
-                    spellsslice = append(spellsslice, "Detect Poison and Disease")
-                case 8:
-                    spellsslice = append(spellsslice, "Guiding Bolt")
-                case 9:
-                    spellsslice = append(spellsslice, "Healing Word")
-                case 10:
-                    spellsslice = append(spellsslice, "Inflict Wounds")
-                case 11:
-                    spellsslice = append(spellsslice, "Protection from Evil and Good")
-                case 12:
-                    spellsslice = append(spellsslice, "Purify Food and Drink")
-                case 13:
-                    spellsslice = append(spellsslice, "Sanctuary")
-                case 14:
-                    spellsslice = append(spellsslice, "Shield of Faith")
-                default:
-                    return errors.New("Out of bounds ()")
+                if wismod > 1 {
+                    switch option5 {
+                    case 0:
+                        spellsslice = append(spellsslice, "Bane")
+                    case 1:
+                        spellsslice = append(spellsslice, "Bless")
+                    case 2:
+                        spellsslice = append(spellsslice, "Command")
+                    case 3:
+                        spellsslice = append(spellsslice, "Create or Destroy Water")
+                    case 4:
+                        spellsslice = append(spellsslice, "Cure Wounds")
+                    case 5:
+                        spellsslice = append(spellsslice, "Detect Evil and Good")
+                    case 6:
+                        spellsslice = append(spellsslice, "Detect Magic")
+                    case 7:
+                        spellsslice = append(spellsslice, "Detect Poison and Disease")
+                    case 8:
+                        spellsslice = append(spellsslice, "Guiding Bolt")
+                    case 9:
+                        spellsslice = append(spellsslice, "Healing Word")
+                    case 10:
+                        spellsslice = append(spellsslice, "Inflict Wounds")
+                    case 11:
+                        spellsslice = append(spellsslice, "Protection from Evil and Good")
+                    case 12:
+                        spellsslice = append(spellsslice, "Purify Food and Drink")
+                    case 13:
+                        spellsslice = append(spellsslice, "Sanctuary")
+                    case 14:
+                        spellsslice = append(spellsslice, "Shield of Faith")
+                    default:
+                        return errors.New("Out of bounds ()")
+                    }
                 }
-                switch option6 {
-                case 0:
-                    spellsslice = append(spellsslice, "Bane")
-                case 1:
-                    spellsslice = append(spellsslice, "Bless")
-                case 2:
-                    spellsslice = append(spellsslice, "Command")
-                case 3:
-                    spellsslice = append(spellsslice, "Create or Destroy Water")
-                case 4:
-                    spellsslice = append(spellsslice, "Cure Wounds")
-                case 5:
-                    spellsslice = append(spellsslice, "Detect Evil and Good")
-                case 6:
-                    spellsslice = append(spellsslice, "Detect Magic")
-                case 7:
-                    spellsslice = append(spellsslice, "Detect Poison and Disease")
-                case 8:
-                    spellsslice = append(spellsslice, "Guiding Bolt")
-                case 9:
-                    spellsslice = append(spellsslice, "Healing Word")
-                case 10:
-                    spellsslice = append(spellsslice, "Inflict Wounds")
-                case 11:
-                    spellsslice = append(spellsslice, "Protection from Evil and Good")
-                case 12:
-                    spellsslice = append(spellsslice, "Purify Food and Drink")
-                case 13:
-                    spellsslice = append(spellsslice, "Sanctuary")
-                case 14:
-                    spellsslice = append(spellsslice, "Shield of Faith")
-                default:
-                    return errors.New("Out of bounds ()")
+                if wismod > 2 {
+                    switch option6 {
+                    case 0:
+                        spellsslice = append(spellsslice, "Bane")
+                    case 1:
+                        spellsslice = append(spellsslice, "Bless")
+                    case 2:
+                        spellsslice = append(spellsslice, "Command")
+                    case 3:
+                        spellsslice = append(spellsslice, "Create or Destroy Water")
+                    case 4:
+                        spellsslice = append(spellsslice, "Cure Wounds")
+                    case 5:
+                        spellsslice = append(spellsslice, "Detect Evil and Good")
+                    case 6:
+                        spellsslice = append(spellsslice, "Detect Magic")
+                    case 7:
+                        spellsslice = append(spellsslice, "Detect Poison and Disease")
+                    case 8:
+                        spellsslice = append(spellsslice, "Guiding Bolt")
+                    case 9:
+                        spellsslice = append(spellsslice, "Healing Word")
+                    case 10:
+                        spellsslice = append(spellsslice, "Inflict Wounds")
+                    case 11:
+                        spellsslice = append(spellsslice, "Protection from Evil and Good")
+                    case 12:
+                        spellsslice = append(spellsslice, "Purify Food and Drink")
+                    case 13:
+                        spellsslice = append(spellsslice, "Sanctuary")
+                    case 14:
+                        spellsslice = append(spellsslice, "Shield of Faith")
+                    default:
+                        return errors.New("Out of bounds ()")
+                    }
                 }
-                switch option7 {
-                case 0:
-                    spellsslice = append(spellsslice, "Bane")
-                case 1:
-                    spellsslice = append(spellsslice, "Bless")
-                case 2:
-                    spellsslice = append(spellsslice, "Command")
-                case 3:
-                    spellsslice = append(spellsslice, "Create or Destroy Water")
-                case 4:
-                    spellsslice = append(spellsslice, "Cure Wounds")
-                case 5:
-                    spellsslice = append(spellsslice, "Detect Evil and Good")
-                case 6:
-                    spellsslice = append(spellsslice, "Detect Magic")
-                case 7:
-                    spellsslice = append(spellsslice, "Detect Poison and Disease")
-                case 8:
-                    spellsslice = append(spellsslice, "Guiding Bolt")
-                case 9:
-                    spellsslice = append(spellsslice, "Healing Word")
-                case 10:
-                    spellsslice = append(spellsslice, "Inflict Wounds")
-                case 11:
-                    spellsslice = append(spellsslice, "Protection from Evil and Good")
-                case 12:
-                    spellsslice = append(spellsslice, "Purify Food and Drink")
-                case 13:
-                    spellsslice = append(spellsslice, "Sanctuary")
-                case 14:
-                    spellsslice = append(spellsslice, "Shield of Faith")
-                default:
-                    return errors.New("Out of bounds ()")
+                if wismod > 3 {
+                    switch option7 {
+                    case 0:
+                        spellsslice = append(spellsslice, "Bane")
+                    case 1:
+                        spellsslice = append(spellsslice, "Bless")
+                    case 2:
+                        spellsslice = append(spellsslice, "Command")
+                    case 3:
+                        spellsslice = append(spellsslice, "Create or Destroy Water")
+                    case 4:
+                        spellsslice = append(spellsslice, "Cure Wounds")
+                    case 5:
+                        spellsslice = append(spellsslice, "Detect Evil and Good")
+                    case 6:
+                        spellsslice = append(spellsslice, "Detect Magic")
+                    case 7:
+                        spellsslice = append(spellsslice, "Detect Poison and Disease")
+                    case 8:
+                        spellsslice = append(spellsslice, "Guiding Bolt")
+                    case 9:
+                        spellsslice = append(spellsslice, "Healing Word")
+                    case 10:
+                        spellsslice = append(spellsslice, "Inflict Wounds")
+                    case 11:
+                        spellsslice = append(spellsslice, "Protection from Evil and Good")
+                    case 12:
+                        spellsslice = append(spellsslice, "Purify Food and Drink")
+                    case 13:
+                        spellsslice = append(spellsslice, "Sanctuary")
+                    case 14:
+                        spellsslice = append(spellsslice, "Shield of Faith")
+                    default:
+                        return errors.New("Out of bounds ()")
+                    }
                 }
             case 3:
                 switch option0 {
