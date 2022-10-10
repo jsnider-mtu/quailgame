@@ -8718,6 +8718,21 @@ func (g *Game) Update() error {
                         return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
                 }
+                p.Equipment = &player.Equipment{}
+                log.Println(equipmentstr)
+                for _, equipped := range strings.Split(equipmentstr, "|") {
+                    itemprops := strings.Split(equipped, ",")
+                    switch len(itemprops) {
+                    case 1:
+                        p.Inv.Add(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
+                        p.Equip(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
+                    case 2:
+                        p.Inv.Add(items.LoadItem(strings.Split(itemprops[0], "=")[1], strings.Split(itemprops[1], ";")[0]))
+                        p.Equip(items.LoadItem(strings.Split(itemprops[0], "=")[1], strings.Split(itemprops[1], ";")[0]))
+                    default:
+                        return errors.New("Too many itemprops")
+                    }
+                }
                 p.Spells.Add(strings.Split(spellsstr, ","))
                 l = levels.LoadLvl(levelname, 0, x, y)
                 targeted = -1

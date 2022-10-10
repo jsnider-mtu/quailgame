@@ -78,11 +78,11 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Lamp{}
     case "Lance":
         return Lance{}
-    case "Leatherarmor":
+    case "LeatherArmor":
         return LeatherArmor{}
-    case "Lightcrossbow":
+    case "LightCrossbow":
         return LightCrossbow{}
-    case "Lighthammer":
+    case "LightHammer":
         return LightHammer{}
     case "Longbow":
         return Longbow{}

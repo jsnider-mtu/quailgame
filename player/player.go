@@ -452,109 +452,109 @@ func (s *Stats) Save() string {
 }
 
 func (e *Equipment) Save() string {
-    var result string = "Equipment:"
+    var result string
     if e.Armor == nil {
         log.Println("e.Armor == nil")
     } else {
-        result += fmt.Sprintf("Armor=%s,", e.Armor.Save())
+        result += fmt.Sprintf("Armor=%s|", e.Armor.Save())
     }
     if e.Head == nil {
         log.Println("e.Head == nil")
     } else {
-        result += fmt.Sprintf("Head=%s,", e.Head.Save())
+        result += fmt.Sprintf("Head=%s|", e.Head.Save())
     }
     if e.Torso == nil {
         log.Println("e.Torso == nil")
     } else {
-        result += fmt.Sprintf("Torso=%s,", e.Torso.Save())
+        result += fmt.Sprintf("Torso=%s|", e.Torso.Save())
     }
     if e.Legs == nil {
         log.Println("e.Legs == nil")
     } else {
-        result += fmt.Sprintf("Legs=%s,", e.Legs.Save())
+        result += fmt.Sprintf("Legs=%s|", e.Legs.Save())
     }
     if e.Feet == nil {
         log.Println("e.Feet == nil")
     } else {
-        result += fmt.Sprintf("Feet=%s,", e.Feet.Save())
+        result += fmt.Sprintf("Feet=%s|", e.Feet.Save())
     }
     if e.LeftPinky == nil {
         log.Println("e.LeftPinky == nil")
     } else {
-        result += fmt.Sprintf("LeftPinky=%s,", e.LeftPinky.Save())
+        result += fmt.Sprintf("LeftPinky=%s|", e.LeftPinky.Save())
     }
     if e.LeftRing == nil {
         log.Println("e.LeftRing == nil")
     } else {
-        result += fmt.Sprintf("LeftRing=%s,", e.LeftRing.Save())
+        result += fmt.Sprintf("LeftRing=%s|", e.LeftRing.Save())
     }
     if e.LeftMid == nil {
         log.Println("e.LeftMid == nil")
     } else {
-        result += fmt.Sprintf("LeftMid=%s,", e.LeftMid.Save())
+        result += fmt.Sprintf("LeftMid=%s|", e.LeftMid.Save())
     }
     if e.LeftInd == nil {
         log.Println("e.LeftInd == nil")
     } else {
-        result += fmt.Sprintf("LeftInd=%s,", e.LeftInd.Save())
+        result += fmt.Sprintf("LeftInd=%s|", e.LeftInd.Save())
     }
     if e.LeftThumb == nil {
         log.Println("e.LeftThumb == nil")
     } else {
-        result += fmt.Sprintf("LeftThumb=%s,", e.LeftThumb.Save())
+        result += fmt.Sprintf("LeftThumb=%s|", e.LeftThumb.Save())
     }
     if e.RightPinky == nil {
         log.Println("e.RightPinky == nil")
     } else {
-        result += fmt.Sprintf("RightPinky=%s,", e.RightPinky.Save())
+        result += fmt.Sprintf("RightPinky=%s|", e.RightPinky.Save())
     }
     if e.RightRing == nil {
         log.Println("e.RightRing == nil")
     } else {
-        result += fmt.Sprintf("RightRing=%s,", e.RightRing.Save())
+        result += fmt.Sprintf("RightRing=%s|", e.RightRing.Save())
     }
     if e.RightMid == nil {
         log.Println("e.RightMid == nil")
     } else {
-        result += fmt.Sprintf("RightMid=%s,", e.RightMid.Save())
+        result += fmt.Sprintf("RightMid=%s|", e.RightMid.Save())
     }
     if e.RightInd == nil {
         log.Println("e.RightInd == nil")
     } else {
-        result += fmt.Sprintf("RightInd=%s,", e.RightInd.Save())
+        result += fmt.Sprintf("RightInd=%s|", e.RightInd.Save())
     }
     if e.RightThumb == nil {
         log.Println("e.RightThumb == nil")
     } else {
-        result += fmt.Sprintf("RightThumb=%s,", e.RightThumb.Save())
+        result += fmt.Sprintf("RightThumb=%s|", e.RightThumb.Save())
     }
     if e.BothHands == nil {
         log.Println("e.BothHands == nil")
         if e.LeftHand == nil {
             log.Println("e.LeftHand == nil")
         } else {
-            result += fmt.Sprintf("LeftHand=%s,", e.LeftHand.Save())
+            result += fmt.Sprintf("LeftHand=%s|", e.LeftHand.Save())
         }
         if e.RightHand == nil {
             log.Println("e.RightHand == nil")
         } else {
-            result += fmt.Sprintf("RightHand=%s,", e.RightHand.Save())
+            result += fmt.Sprintf("RightHand=%s|", e.RightHand.Save())
         }
     } else {
-        result += fmt.Sprintf("BothHands=%s,", e.BothHands.Save())
+        result += fmt.Sprintf("BothHands=%s|", e.BothHands.Save())
     }
     //if e.BothHands == nil {
     //    log.Println("e.BothHands == nil")
     //} else {
-    //    result += fmt.Sprintf("BothHands=%s,", e.BothHands.Save())
+    //    result += fmt.Sprintf("BothHands=%s|", e.BothHands.Save())
     //}
     if e.Clothes == nil {
         log.Println("e.Clothes == nil")
     } else {
-        result += fmt.Sprintf("Clothes=%s,", e.Clothes.Save())
+        result += fmt.Sprintf("Clothes=%s|", e.Clothes.Save())
     }
     result += ";"
-    result = strings.Replace(result, ",;", ";", 1)
+    result = strings.Replace(result, "|;", ";", 1)
     log.Println("result = " + result)
     return result
 }
