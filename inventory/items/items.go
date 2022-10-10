@@ -78,11 +78,11 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Lamp{}
     case "Lance":
         return Lance{}
-    case "Leatherarmor":
+    case "LeatherArmor":
         return LeatherArmor{}
-    case "Lightcrossbow":
+    case "LightCrossbow":
         return LightCrossbow{}
-    case "Lighthammer":
+    case "LightHammer":
         return LightHammer{}
     case "Longbow":
         return Longbow{}
@@ -100,7 +100,7 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Morningstar{}
     case "Net":
         return Net{}
-    case "Oilflask":
+    case "OilFlask":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")

@@ -22,5 +22,5 @@ func (d Darts) Save() string {
 }
 
 func (d Darts) PrettyPrint() string {
-    return fmt.Sprintf("Darts%17s", "Quantity: " + strconv.Itoa(d.Quantity))
+    return fmt.Sprintf("Darts (%d)", d.Quantity)
 }

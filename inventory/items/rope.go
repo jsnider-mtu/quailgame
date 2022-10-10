@@ -21,5 +21,5 @@ func (r Rope) Save() string {
 }
 
 func (r Rope) PrettyPrint() string {
-    return fmt.Sprintf("Rope%18s", "Length: " + strconv.Itoa(r.Length))
+    return fmt.Sprintf("Rope (%d)", r.Length)
 }

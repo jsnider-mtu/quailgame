@@ -21,5 +21,5 @@ func (q Quiver) Save() string {
 }
 
 func (q Quiver) PrettyPrint() string {
-    return fmt.Sprintf("Quiver%16s", "Arrows: " + strconv.Itoa(q.Arrows))
+    return fmt.Sprintf("Quiver (%d)", q.Arrows)
 }
