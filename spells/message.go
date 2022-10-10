@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type Message struct {}
+type Message struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (m Message) PrettyPrint() string {
     return "Message"
 }
 
 func (m Message) GetLevel() int {
-    return 0
+    return m.level
 }
 
-func (a Message) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (m Message) GetCastTime() string {
+    return m.casttime
+}
+
+func (m Message) GetRange() int {
+    return m.range
+}
+
+func (m Message) GetComponents() string {
+    return m.components
+}
+
+func (m Message) GetDuration() int {
+    return m.duration
+}
+
+func (m Message) GetConcentration() bool {
+    return m.concentration
+}
+
+func (m Message) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Message is not implemented yet")
 }

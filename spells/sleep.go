@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type Sleep struct {}
+type Sleep struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (s Sleep) PrettyPrint() string {
     return "Sleep"
 }
 
 func (s Sleep) GetLevel() int {
-    return 1
+    return s.level
 }
 
-func (a Sleep) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (s Sleep) GetCastTime() string {
+    return s.casttime
+}
+
+func (s Sleep) GetRange() int {
+    return s.range
+}
+
+func (s Sleep) GetComponents() string {
+    return s.components
+}
+
+func (s Sleep) GetDuration() int {
+    return s.duration
+}
+
+func (s Sleep) GetConcentration() bool {
+    return s.concentration
+}
+
+func (s Sleep) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Sleep is not implemented yet")
 }

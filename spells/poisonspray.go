@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type PoisonSpray struct {}
+type PoisonSpray struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (p PoisonSpray) PrettyPrint() string {
     return "Poison Spray"
 }
 
 func (p PoisonSpray) GetLevel() int {
-    return 0
+    return p.level
 }
 
-func (a PoisonSpray) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (p PoisonSpray) GetCastTime() string {
+    return p.casttime
+}
+
+func (p PoisonSpray) GetRange() int {
+    return p.range
+}
+
+func (p PoisonSpray) GetComponents() string {
+    return p.components
+}
+
+func (p PoisonSpray) GetDuration() int {
+    return p.duration
+}
+
+func (p PoisonSpray) GetConcentration() bool {
+    return p.concentration
+}
+
+func (p PoisonSpray) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Poison Spray is not implemented yet")
 }

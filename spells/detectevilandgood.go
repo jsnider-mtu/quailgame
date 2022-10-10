@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type DetectEvilAndGood struct {}
+type DetectEvilAndGood struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (d DetectEvilAndGood) PrettyPrint() string {
     return "Detect Evil and Good"
 }
 
 func (d DetectEvilAndGood) GetLevel() int {
-    return 1
+    return d.level
 }
 
-func (a DetectEvilAndGood) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (d DetectEvilAndGood) GetCastTime() string {
+    return d.casttime
+}
+
+func (d DetectEvilAndGood) GetRange() int {
+    return d.range
+}
+
+func (d DetectEvilAndGood) GetComponents() string {
+    return d.components
+}
+
+func (d DetectEvilAndGood) GetDuration() int {
+    return d.duration
+}
+
+func (d DetectEvilAndGood) GetConcentration() bool {
+    return d.concentration
+}
+
+func (d DetectEvilAndGood) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Detect Evil and Good is not implemented yet")
 }

@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type ThornWhip struct {}
+type ThornWhip struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (t ThornWhip) PrettyPrint() string {
     return "Thorn Whip"
 }
 
 func (t ThornWhip) GetLevel() int {
-    return 0
+    return t.level
 }
 
-func (a ThornWhip) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (t ThornWhip) GetCastTime() string {
+    return t.casttime
+}
+
+func (t ThornWhip) GetRange() int {
+    return t.range
+}
+
+func (t ThornWhip) GetComponents() string {
+    return t.components
+}
+
+func (t ThornWhip) GetDuration() int {
+    return t.duration
+}
+
+func (t ThornWhip) GetConcentration() bool {
+    return t.concentration
+}
+
+func (t ThornWhip) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Thorn Whip is not implemented yet")
 }

@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type SpareTheDying struct {}
+type SpareTheDying struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (s SpareTheDying) PrettyPrint() string {
     return "Spare the Dying"
 }
 
 func (s SpareTheDying) GetLevel() int {
-    return 0
+    return s.level
 }
 
-func (a SpareTheDying) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (s SpareTheDying) GetCastTime() string {
+    return s.casttime
+}
+
+func (s SpareTheDying) GetRange() int {
+    return s.range
+}
+
+func (s SpareTheDying) GetComponents() string {
+    return s.components
+}
+
+func (s SpareTheDying) GetDuration() int {
+    return s.duration
+}
+
+func (s SpareTheDying) GetConcentration() bool {
+    return s.concentration
+}
+
+func (s SpareTheDying) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Spare the Dying is not implemented yet")
 }

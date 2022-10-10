@@ -6,14 +6,41 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type Bane struct {}
+type Bane struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (b Bane) PrettyPrint() string {
     return "Bane"
 }
 
 func (b Bane) GetLevel() int {
-    return 1
+    return b.level
+}
+
+func (b Bane) GetCastTime() string {
+    return b.casttime
+}
+
+func (b Bane) GetRange() int {
+    return b.range
+}
+
+func (b Bane) GetComponents() string {
+    return b.components
+}
+
+func (b Bane) GetDuration() int {
+    return b.duration
+}
+
+func (b Bane) GetConcentration() bool {
+    return b.concentration
 }
 
 func (a Bane) Animate(screen *ebiten.Image, targetpos [2]int) {

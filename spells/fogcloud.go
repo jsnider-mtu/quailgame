@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type FogCloud struct {}
+type FogCloud struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (f FogCloud) PrettyPrint() string {
     return "Fog Cloud"
 }
 
 func (f FogCloud) GetLevel() int {
-    return 1
+    return f.level
 }
 
-func (a FogCloud) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (f FogCloud) GetCastTime() string {
+    return f.casttime
+}
+
+func (f FogCloud) GetRange() int {
+    return f.range
+}
+
+func (f FogCloud) GetComponents() string {
+    return f.components
+}
+
+func (f FogCloud) GetDuration() int {
+    return f.duration
+}
+
+func (f FogCloud) GetConcentration() bool {
+    return f.concentration
+}
+
+func (f FogCloud) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Fog Cloud is not implemented yet")
 }

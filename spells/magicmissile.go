@@ -7,15 +7,42 @@ import (
 )
 
 type MagicMissile struct {}
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (m MagicMissile) PrettyPrint() string {
     return "Magic Missile"
 }
 
 func (m MagicMissile) GetLevel() int {
-    return 1
+    return m.level
 }
 
-func (a MagicMissile) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (m MagicMissile) GetCastTime() string {
+    return m.casttime
+}
+
+func (m MagicMissile) GetRange() int {
+    return m.range
+}
+
+func (m MagicMissile) GetComponents() string {
+    return m.components
+}
+
+func (m MagicMissile) GetDuration() int {
+    return m.duration
+}
+
+func (m MagicMissile) GetConcentration() bool {
+    return m.concentration
+}
+
+func (m MagicMissile) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Magic Missile is not implemented yet")
 }

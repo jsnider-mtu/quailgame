@@ -6,14 +6,41 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type ArmorOfAgathys struct {}
+type ArmorOfAgathys struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (a ArmorOfAgathys) PrettyPrint() string {
     return "Armor of Agathys"
 }
 
 func (a ArmorOfAgathys) GetLevel() int {
-    return 1
+    return a.level
+}
+
+func (a ArmorOfAgathys) GetCastTime() string {
+    return a.casttime
+}
+
+func (a ArmorOfAgathys) GetRange() int {
+    return a.range
+}
+
+func (a ArmorOfAgathys) GetComponents() string {
+    return a.components
+}
+
+func (a ArmorOfAgathys) GetDuration() int {
+    return a.duration
+}
+
+func (a ArmorOfAgathys) GetConcentration() bool {
+    return a.concentration
 }
 
 func (a ArmorOfAgathys) Animate(screen *ebiten.Image, targetpos [2]int) {

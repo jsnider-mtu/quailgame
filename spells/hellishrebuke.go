@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type HellishRebuke struct {}
+type HellishRebuke struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (h HellishRebuke) PrettyPrint() string {
     return "Hellish Rebuke"
 }
 
 func (h HellishRebuke) GetLevel() int {
-    return 1
+    return h.level
 }
 
-func (a HellishRebuke) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (h HellishRebuke) GetCastTime() string {
+    return h.casttime
+}
+
+func (h HellishRebuke) GetRange() int {
+    return h.range
+}
+
+func (h HellishRebuke) GetComponents() string {
+    return h.components
+}
+
+func (h HellishRebuke) GetDuration() int {
+    return h.duration
+}
+
+func (h HellishRebuke) GetConcentration() bool {
+    return h.concentration
+}
+
+func (h HellishRebuke) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Hellish Rebuke is not implemented yet")
 }

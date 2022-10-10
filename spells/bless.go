@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type Bless struct {}
+type Bless struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (b Bless) PrettyPrint() string {
     return "Bless"
 }
 
 func (b Bless) GetLevel() int {
-    return 1
+    return b.level
 }
 
-func (a Bless) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (b Bless) GetCastTime() string {
+    return b.casttime
+}
+
+func (b Bless) GetRange() int {
+    return b.range
+}
+
+func (b Bless) GetComponents() string {
+    return b.components
+}
+
+func (b Bless) GetDuration() int {
+    return b.duration
+}
+
+func (b Bless) GetConcentration() bool {
+    return b.concentration
+}
+
+func (b Bless) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Bless is not implemented yet")
 }

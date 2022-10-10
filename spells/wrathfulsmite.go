@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type WrathfulSmite struct {}
+type WrathfulSmite struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (w WrathfulSmite) PrettyPrint() string {
     return "Wrathful Smite"
 }
 
 func (w WrathfulSmite) GetLevel() int {
-    return 1
+    return w.level
 }
 
-func (a WrathfulSmite) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (w WrathfulSmite) GetCastTime() string {
+    return w.casttime
+}
+
+func (w WrathfulSmite) GetRange() int {
+    return w.range
+}
+
+func (w WrathfulSmite) GetComponents() string {
+    return w.components
+}
+
+func (w WrathfulSmite) GetDuration() int {
+    return w.duration
+}
+
+func (w WrathfulSmite) GetConcentration() bool {
+    return w.concentration
+}
+
+func (w WrathfulSmite) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Wrathful Smite is not implemented yet")
 }

@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type EnsnaringStrike struct {}
+type EnsnaringStrike struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (e EnsnaringStrike) PrettyPrint() string {
     return "Ensnaring Strike"
 }
 
 func (e EnsnaringStrike) GetLevel() int {
-    return 1
+    return e.level
 }
 
-func (a EnsnaringStrike) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (e EnsnaringStrike) GetCastTime() string {
+    return e.casttime
+}
+
+func (e EnsnaringStrike) GetRange() int {
+    return e.range
+}
+
+func (e EnsnaringStrike) GetComponents() string {
+    return e.components
+}
+
+func (e EnsnaringStrike) GetDuration() int {
+    return e.duration
+}
+
+func (e EnsnaringStrike) GetConcentration() bool {
+    return e.concentration
+}
+
+func (e EnsnaringStrike) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Ensnaring Strike is not implemented yet")
 }

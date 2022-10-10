@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type MageArmor struct {}
+type MageArmor struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (m MageArmor) PrettyPrint() string {
     return "Mage Armor"
 }
 
 func (m MageArmor) GetLevel() int {
-    return 1
+    return m.level
 }
 
-func (a MageArmor) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (m MageArmor) GetCastTime() string {
+    return m.casttime
+}
+
+func (m MageArmor) GetRange() int {
+    return m.range
+}
+
+func (m MageArmor) GetComponents() string {
+    return m.components
+}
+
+func (m MageArmor) GetDuration() int {
+    return m.duration
+}
+
+func (m MageArmor) GetConcentration() bool {
+    return m.concentration
+}
+
+func (m MageArmor) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Mage Armor is not implemented yet")
 }

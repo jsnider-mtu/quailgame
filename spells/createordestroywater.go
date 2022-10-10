@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type CreateOrDestroyWater struct {}
+type CreateOrDestroyWater struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (c CreateOrDestroyWater) PrettyPrint() string {
     return "Create or Destroy Water"
 }
 
 func (c CreateOrDestroyWater) GetLevel() int {
-    return 1
+    return c.level
 }
 
-func (a CreateOrDestroyWater) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (c CreateOrDestroyWater) GetCastTime() string {
+    return c.casttime
+}
+
+func (c CreateOrDestroyWater) GetRange() int {
+    return c.range
+}
+
+func (c CreateOrDestroyWater) GetComponents() string {
+    return c.components
+}
+
+func (c CreateOrDestroyWater) GetDuration() int {
+    return c.duration
+}
+
+func (c CreateOrDestroyWater) GetConcentration() bool {
+    return c.concentration
+}
+
+func (c CreateOrDestroyWater) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Create or Destroy Water is not implemented yet")
 }

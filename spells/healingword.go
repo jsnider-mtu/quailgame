@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type HealingWord struct {}
+type HealingWord struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (h HealingWord) PrettyPrint() string {
     return "Healing Word"
 }
 
 func (h HealingWord) GetLevel() int {
-    return 1
+    return h.level
 }
 
-func (a HealingWord) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (h HealingWord) GetCastTime() string {
+    return h.casttime
+}
+
+func (h HealingWord) GetRange() int {
+    return h.range
+}
+
+func (h HealingWord) GetComponents() string {
+    return h.components
+}
+
+func (h HealingWord) GetDuration() int {
+    return h.duration
+}
+
+func (h HealingWord) GetConcentration() bool {
+    return h.concentration
+}
+
+func (h HealingWord) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Healing Word is not implemented yet")
 }

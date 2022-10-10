@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type Entangle struct {}
+type Entangle struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (e Entangle) PrettyPrint() string {
     return "Entangle"
 }
 
 func (e Entangle) GetLevel() int {
-    return 1
+    return e.level
 }
 
-func (a Entangle) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (e Entangle) GetCastTime() string {
+    return e.casttime
+}
+
+func (e Entangle) GetRange() int {
+    return e.range
+}
+
+func (e Entangle) GetComponents() string {
+    return e.components
+}
+
+func (e Entangle) GetDuration() int {
+    return e.duration
+}
+
+func (e Entangle) GetConcentration() bool {
+    return e.concentration
+}
+
+func (e Entangle) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Entangle is not implemented yet")
 }

@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type SearingSmite struct {}
+type SearingSmite struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (s SearingSmite) PrettyPrint() string {
     return "Searing Smite"
 }
 
 func (s SearingSmite) GetLevel() int {
-    return 1
+    return s.level
 }
 
-func (a SearingSmite) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (s SearingSmite) GetCastTime() string {
+    return s.casttime
+}
+
+func (s SearingSmite) GetRange() int {
+    return s.range
+}
+
+func (s SearingSmite) GetComponents() string {
+    return s.components
+}
+
+func (s SearingSmite) GetDuration() int {
+    return s.duration
+}
+
+func (s SearingSmite) GetConcentration() bool {
+    return s.concentration
+}
+
+func (s SearingSmite) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Searing Smite is not implemented yet")
 }

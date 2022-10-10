@@ -6,16 +6,43 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type ShieldOfFaith struct {}
+type ShieldOfFaith struct {
+    level int
+    casttime string
+    range int
+    components string
+    duration int
+    concentration bool
+}
 
 func (s ShieldOfFaith) PrettyPrint() string {
     return "Shield of Faith"
 }
 
 func (s ShieldOfFaith) GetLevel() int {
-    return 1
+    return s.level
 }
 
-func (a ShieldOfFaith) Animate(screen *ebiten.Image, targetpos [2]int) {
+func (s ShieldOfFaith) GetCastTime() string {
+    return s.casttime
+}
+
+func (s ShieldOfFaith) GetRange() int {
+    return s.range
+}
+
+func (s ShieldOfFaith) GetComponents() string {
+    return s.components
+}
+
+func (s ShieldOfFaith) GetDuration() int {
+    return s.duration
+}
+
+func (s ShieldOfFaith) GetConcentration() bool {
+    return s.concentration
+}
+
+func (s ShieldOfFaith) Animate(screen *ebiten.Image, targetpos [2]int) {
     log.Println("The animation for the spell Shield of Faith is not implemented yet")
 }
