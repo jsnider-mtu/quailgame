@@ -2,8 +2,6 @@ package spells
 
 import (
     "github.com/hajimehoshi/ebiten/v2"
-
-    "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Spell interface {
