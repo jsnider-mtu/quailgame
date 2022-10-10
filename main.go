@@ -162,7 +162,7 @@ var (
     nimbleness bool = false
     brave bool = false
     ancestry string
-    targeted int = -1
+    targeted int = -2
 )
 
 var racemap = make(map[int]string)
@@ -508,7 +508,7 @@ func (g *Game) Update() error {
                         }
                         sb.Reset()
                         l = levels.LoadLvl("One", 0)
-                        targeted = -1
+                        targeted = -2
                         p.Name = name
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
@@ -554,7 +554,7 @@ func (g *Game) Update() error {
                     case 0:
                         if l == nil {
                             l = levels.LoadLvl("One", 0)
-                            targeted = -1
+                            targeted = -2
                             p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage, Spells: &player.Spells{}}
                         }
                         firstsave = true
@@ -8735,7 +8735,7 @@ func (g *Game) Update() error {
                 }
                 p.Spells.Add(strings.Split(spellsstr, ","))
                 l = levels.LoadLvl(levelname, 0, x, y)
-                targeted = -1
+                targeted = -2
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
                 load = false
             }
@@ -8857,7 +8857,7 @@ func (g *Game) Update() error {
                 if len(l.NPCs) == 0 {
                     targeted = -1
                 } else if targeted == len(l.NPCs) {
-                    targeted = 0
+                    targeted = -1
                 }
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyDigit1) {
@@ -12981,6 +12981,21 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         }
                     }
                 }
+            } else if targeted == -1 {
+                targetedBoxVert := ebiten.NewImage(2, 48)
+                targetedBoxHoriz := ebiten.NewImage(48, 2)
+                targetedBoxVert.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+                targetedBoxHoriz.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+                tbvgm := ebiten.GeoM{}
+                tbvgm.Translate(float64((w / 2) + l.Pos[0] + p.Pos[0]), float64((h / 2) + l.Pos[1] + p.Pos[1]))
+                screen.DrawImage(targetedBoxVert, &ebiten.DrawImageOptions{GeoM: tbvgm})
+                tbvgm.Translate(float64(46), float64(0))
+                screen.DrawImage(targetedBoxVert, &ebiten.DrawImageOptions{GeoM: tbvgm})
+                tbhgm := ebiten.GeoM{}
+                tbhgm.Translate(float64((w / 2) + l.Pos[0] + p.Pos[0]), float64((h / 2) + l.Pos[1] + p.Pos[1]))
+                screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
+                tbhgm.Translate(float64(0), float64(46))
+                screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
             }
         }
         if !mcdrawn && !start && !cutscene {
@@ -13274,7 +13289,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             f = 0
             lvlchange = false
             l = levels.LoadLvl(newlvl...)
-            targeted = -1
+            targeted = -2
             p.Pos[0] = -l.Pos[0]
             p.Pos[1] = -l.Pos[1]
             if l.Cutscene > 0 {
