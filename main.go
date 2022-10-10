@@ -5959,63 +5959,64 @@ func (g *Game) Update() error {
                 default:
                     log.Println(fmt.Sprintf("%s cannot be equipped", item.PrettyPrint()))
                 }
-                if len(equipmap["Armor"]) == 1 {
-                    p.Equip(equipmap["Armor"][0])
-                }
-                if len(equipmap["Head"]) == 1 {
-                    p.Equip(equipmap["Head"][0])
-                }
-                if len(equipmap["Torso"]) == 1 {
-                    p.Equip(equipmap["Torso"][0])
-                }
-                if len(equipmap["Legs"]) == 1 {
-                    p.Equip(equipmap["Legs"][0])
-                }
-                if len(equipmap["Feet"]) == 1 {
-                    p.Equip(equipmap["Feet"][0])
-                }
-                if len(equipmap["LeftPinky"]) == 1 {
-                    p.Equip(equipmap["LeftPinky"][0])
-                }
-                if len(equipmap["LeftRing"]) == 1 {
-                    p.Equip(equipmap["LeftRing"][0])
-                }
-                if len(equipmap["LeftMid"]) == 1 {
-                    p.Equip(equipmap["LeftMid"][0])
-                }
-                if len(equipmap["LeftInd"]) == 1 {
-                    p.Equip(equipmap["LeftInd"][0])
-                }
-                if len(equipmap["LeftThumb"]) == 1 {
-                    p.Equip(equipmap["LeftThumb"][0])
-                }
-                if len(equipmap["RightPinky"]) == 1 {
-                    p.Equip(equipmap["RightPinky"][0])
-                }
-                if len(equipmap["RightRing"]) == 1 {
-                    p.Equip(equipmap["RightRing"][0])
-                }
-                if len(equipmap["RightMid"]) == 1 {
-                    p.Equip(equipmap["RightMid"][0])
-                }
-                if len(equipmap["RightInd"]) == 1 {
-                    p.Equip(equipmap["RightInd"][0])
-                }
-                if len(equipmap["RightThumb"]) == 1 {
-                    p.Equip(equipmap["RightThumb"][0])
-                }
-                if len(equipmap["LeftHand"]) == 1 {
-                    p.Equip(equipmap["LeftHand"][0])
-                }
-                if len(equipmap["RightHand"]) == 1 {
-                    p.Equip(equipmap["RightHand"][0])
-                }
-                if len(equipmap["BothHands"]) == 1 {
-                    p.Equip(equipmap["BothHands"][0])
-                }
-                if len(equipmap["Clothes"]) == 1 {
-                    p.Equip(equipmap["Clothes"][0])
-                }
+            }
+            log.Println(fmt.Sprint(equipmap))
+            if len(equipmap["Armor"]) == 1 {
+                p.Equip(equipmap["Armor"][0])
+            }
+            if len(equipmap["Head"]) == 1 {
+                p.Equip(equipmap["Head"][0])
+            }
+            if len(equipmap["Torso"]) == 1 {
+                p.Equip(equipmap["Torso"][0])
+            }
+            if len(equipmap["Legs"]) == 1 {
+                p.Equip(equipmap["Legs"][0])
+            }
+            if len(equipmap["Feet"]) == 1 {
+                p.Equip(equipmap["Feet"][0])
+            }
+            if len(equipmap["LeftPinky"]) == 1 {
+                p.Equip(equipmap["LeftPinky"][0])
+            }
+            if len(equipmap["LeftRing"]) == 1 {
+                p.Equip(equipmap["LeftRing"][0])
+            }
+            if len(equipmap["LeftMid"]) == 1 {
+                p.Equip(equipmap["LeftMid"][0])
+            }
+            if len(equipmap["LeftInd"]) == 1 {
+                p.Equip(equipmap["LeftInd"][0])
+            }
+            if len(equipmap["LeftThumb"]) == 1 {
+                p.Equip(equipmap["LeftThumb"][0])
+            }
+            if len(equipmap["RightPinky"]) == 1 {
+                p.Equip(equipmap["RightPinky"][0])
+            }
+            if len(equipmap["RightRing"]) == 1 {
+                p.Equip(equipmap["RightRing"][0])
+            }
+            if len(equipmap["RightMid"]) == 1 {
+                p.Equip(equipmap["RightMid"][0])
+            }
+            if len(equipmap["RightInd"]) == 1 {
+                p.Equip(equipmap["RightInd"][0])
+            }
+            if len(equipmap["RightThumb"]) == 1 {
+                p.Equip(equipmap["RightThumb"][0])
+            }
+            if len(equipmap["LeftHand"]) == 1 {
+                p.Equip(equipmap["LeftHand"][0])
+            }
+            if len(equipmap["RightHand"]) == 1 {
+                p.Equip(equipmap["RightHand"][0])
+            }
+            if len(equipmap["BothHands"]) == 1 {
+                p.Equip(equipmap["BothHands"][0])
+            }
+            if len(equipmap["Clothes"]) == 1 {
+                p.Equip(equipmap["Clothes"][0])
             }
             for emkey, emval := range equipmap {
                 log.Println(fmt.Sprintf("%d items using %s slot", len(emval), emkey))

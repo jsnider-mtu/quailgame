@@ -528,21 +528,26 @@ func (e *Equipment) Save() string {
     } else {
         result += fmt.Sprintf("RightThumb=%s,", e.RightThumb.Save())
     }
-    if e.LeftHand == nil {
-        log.Println("e.LeftHand == nil")
-    } else {
-        result += fmt.Sprintf("LeftHand=%s,", e.LeftHand.Save())
-    }
-    if e.RightHand == nil {
-        log.Println("e.RightHand == nil")
-    } else {
-        result += fmt.Sprintf("RightHand=%s,", e.RightHand.Save())
-    }
     if e.BothHands == nil {
         log.Println("e.BothHands == nil")
+        if e.LeftHand == nil {
+            log.Println("e.LeftHand == nil")
+        } else {
+            result += fmt.Sprintf("LeftHand=%s,", e.LeftHand.Save())
+        }
+        if e.RightHand == nil {
+            log.Println("e.RightHand == nil")
+        } else {
+            result += fmt.Sprintf("RightHand=%s,", e.RightHand.Save())
+        }
     } else {
         result += fmt.Sprintf("BothHands=%s,", e.BothHands.Save())
     }
+    //if e.BothHands == nil {
+    //    log.Println("e.BothHands == nil")
+    //} else {
+    //    result += fmt.Sprintf("BothHands=%s,", e.BothHands.Save())
+    //}
     if e.Clothes == nil {
         log.Println("e.Clothes == nil")
     } else {
