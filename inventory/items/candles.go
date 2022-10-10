@@ -21,5 +21,5 @@ func (c Candles) Save() string {
 }
 
 func (c Candles) PrettyPrint() string {
-    return fmt.Sprintf("Candles%15s", "Quantity: " + strconv.Itoa(c.Quantity))
+    return fmt.Sprintf("Candles (%d)", c.Quantity)
 }
