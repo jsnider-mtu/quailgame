@@ -9,7 +9,7 @@ import (
 type ShockingGrasp struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s ShockingGrasp) GetCastTime() string {
 }
 
 func (s ShockingGrasp) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s ShockingGrasp) GetComponents() string {

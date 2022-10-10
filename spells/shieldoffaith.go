@@ -9,7 +9,7 @@ import (
 type ShieldOfFaith struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s ShieldOfFaith) GetCastTime() string {
 }
 
 func (s ShieldOfFaith) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s ShieldOfFaith) GetComponents() string {

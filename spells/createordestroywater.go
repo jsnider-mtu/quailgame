@@ -9,7 +9,7 @@ import (
 type CreateOrDestroyWater struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c CreateOrDestroyWater) GetCastTime() string {
 }
 
 func (c CreateOrDestroyWater) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c CreateOrDestroyWater) GetComponents() string {

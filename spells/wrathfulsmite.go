@@ -9,7 +9,7 @@ import (
 type WrathfulSmite struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (w WrathfulSmite) GetCastTime() string {
 }
 
 func (w WrathfulSmite) GetRange() int {
-    return w.range
+    return w.spellrange
 }
 
 func (w WrathfulSmite) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type Grease struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (g Grease) GetCastTime() string {
 }
 
 func (g Grease) GetRange() int {
-    return g.range
+    return g.spellrange
 }
 
 func (g Grease) GetComponents() string {

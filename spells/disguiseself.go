@@ -9,7 +9,7 @@ import (
 type DisguiseSelf struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (d DisguiseSelf) GetCastTime() string {
 }
 
 func (d DisguiseSelf) GetRange() int {
-    return d.range
+    return d.spellrange
 }
 
 func (d DisguiseSelf) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type Sleep struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s Sleep) GetCastTime() string {
 }
 
 func (s Sleep) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s Sleep) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type BurningHands struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (b BurningHands) GetCastTime() string {
 }
 
 func (b BurningHands) GetRange() int {
-    return b.range
+    return b.spellrange
 }
 
 func (b BurningHands) GetComponents() string {

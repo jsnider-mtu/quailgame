@@ -9,7 +9,7 @@ import (
 type Prestidigitation struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (p Prestidigitation) GetCastTime() string {
 }
 
 func (p Prestidigitation) GetRange() int {
-    return p.range
+    return p.spellrange
 }
 
 func (p Prestidigitation) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type ThornWhip struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (t ThornWhip) GetCastTime() string {
 }
 
 func (t ThornWhip) GetRange() int {
-    return t.range
+    return t.spellrange
 }
 
 func (t ThornWhip) GetComponents() string {

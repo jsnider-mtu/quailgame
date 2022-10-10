@@ -9,7 +9,7 @@ import (
 type WitchBolt struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (w WitchBolt) GetCastTime() string {
 }
 
 func (w WitchBolt) GetRange() int {
-    return w.range
+    return w.spellrange
 }
 
 func (w WitchBolt) GetComponents() string {

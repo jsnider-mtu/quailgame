@@ -9,7 +9,7 @@ import (
 type AcidSplash struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (a AcidSplash) GetCastTime() string {
 }
 
 func (a AcidSplash) GetRange() int {
-    return a.range
+    return a.spellrange
 }
 
 func (a AcidSplash) GetComponents() string {

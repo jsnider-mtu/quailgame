@@ -9,7 +9,7 @@ import (
 type TrueStrike struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (t TrueStrike) GetCastTime() string {
 }
 
 func (t TrueStrike) GetRange() int {
-    return t.range
+    return t.spellrange
 }
 
 func (t TrueStrike) GetComponents() string {

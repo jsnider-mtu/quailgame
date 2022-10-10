@@ -9,7 +9,7 @@ import (
 type Alarm struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (a Alarm) GetCastTime() string {
 }
 
 func (a Alarm) GetRange() int {
-    return a.range
+    return a.spellrange
 }
 
 func (a Alarm) GetComponents() string {

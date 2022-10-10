@@ -9,7 +9,7 @@ import (
 type ProtectionFromGoodAndEvil struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (p ProtectionFromGoodAndEvil) GetCastTime() string {
 }
 
 func (p ProtectionFromGoodAndEvil) GetRange() int {
-    return p.range
+    return p.spellrange
 }
 
 func (p ProtectionFromGoodAndEvil) GetComponents() string {

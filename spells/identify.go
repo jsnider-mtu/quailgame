@@ -9,7 +9,7 @@ import (
 type Identify struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (i Identify) GetCastTime() string {
 }
 
 func (i Identify) GetRange() int {
-    return i.range
+    return i.spellrange
 }
 
 func (i Identify) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type HealingWord struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (h HealingWord) GetCastTime() string {
 }
 
 func (h HealingWord) GetRange() int {
-    return h.range
+    return h.spellrange
 }
 
 func (h HealingWord) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type Goodberry struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (g Goodberry) GetCastTime() string {
 }
 
 func (g Goodberry) GetRange() int {
-    return g.range
+    return g.spellrange
 }
 
 func (g Goodberry) GetComponents() string {

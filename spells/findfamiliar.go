@@ -9,7 +9,7 @@ import (
 type FindFamiliar struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (f FindFamiliar) GetCastTime() string {
 }
 
 func (f FindFamiliar) GetRange() int {
-    return f.range
+    return f.spellrange
 }
 
 func (f FindFamiliar) GetComponents() string {

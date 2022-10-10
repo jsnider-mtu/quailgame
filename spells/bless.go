@@ -9,7 +9,7 @@ import (
 type Bless struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (b Bless) GetCastTime() string {
 }
 
 func (b Bless) GetRange() int {
-    return b.range
+    return b.spellrange
 }
 
 func (b Bless) GetComponents() string {

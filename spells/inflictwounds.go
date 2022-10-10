@@ -9,7 +9,7 @@ import (
 type InflictWounds struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (i InflictWounds) GetCastTime() string {
 }
 
 func (i InflictWounds) GetRange() int {
-    return i.range
+    return i.spellrange
 }
 
 func (i InflictWounds) GetComponents() string {

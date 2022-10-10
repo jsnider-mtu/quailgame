@@ -9,7 +9,7 @@ import (
 type PurifyFoodAndDrink struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (p PurifyFoodAndDrink) GetCastTime() string {
 }
 
 func (p PurifyFoodAndDrink) GetRange() int {
-    return p.range
+    return p.spellrange
 }
 
 func (p PurifyFoodAndDrink) GetComponents() string {

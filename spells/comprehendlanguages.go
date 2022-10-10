@@ -9,7 +9,7 @@ import (
 type ComprehendLanguages struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c ComprehendLanguages) GetCastTime() string {
 }
 
 func (c ComprehendLanguages) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c ComprehendLanguages) GetComponents() string {

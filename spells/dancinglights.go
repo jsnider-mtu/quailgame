@@ -9,7 +9,7 @@ import (
 type DancingLights struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (d DancingLights) GetCastTime() string {
 }
 
 func (d DancingLights) GetRange() int {
-    return d.range
+    return d.spellrange
 }
 
 func (d DancingLights) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type FireBolt struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (f FireBolt) GetCastTime() string {
 }
 
 func (f FireBolt) GetRange() int {
-    return f.range
+    return f.spellrange
 }
 
 func (f FireBolt) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type PoisonSpray struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (p PoisonSpray) GetCastTime() string {
 }
 
 func (p PoisonSpray) GetRange() int {
-    return p.range
+    return p.spellrange
 }
 
 func (p PoisonSpray) GetComponents() string {

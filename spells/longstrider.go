@@ -9,7 +9,7 @@ import (
 type Longstrider struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (l Longstrider) GetCastTime() string {
 }
 
 func (l Longstrider) GetRange() int {
-    return l.range
+    return l.spellrange
 }
 
 func (l Longstrider) GetComponents() string {

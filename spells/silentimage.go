@@ -9,7 +9,7 @@ import (
 type SilentImage struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s SilentImage) GetCastTime() string {
 }
 
 func (s SilentImage) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s SilentImage) GetComponents() string {

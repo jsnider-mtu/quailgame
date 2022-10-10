@@ -9,7 +9,7 @@ import (
 type SearingSmite struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s SearingSmite) GetCastTime() string {
 }
 
 func (s SearingSmite) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s SearingSmite) GetComponents() string {

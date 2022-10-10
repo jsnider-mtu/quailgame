@@ -9,7 +9,7 @@ import (
 type CompelledDuel struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c CompelledDuel) GetCastTime() string {
 }
 
 func (c CompelledDuel) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c CompelledDuel) GetComponents() string {

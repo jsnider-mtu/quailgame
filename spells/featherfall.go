@@ -9,7 +9,7 @@ import (
 type FeatherFall struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (f FeatherFall) GetCastTime() string {
 }
 
 func (f FeatherFall) GetRange() int {
-    return f.range
+    return f.spellrange
 }
 
 func (f FeatherFall) GetComponents() string {

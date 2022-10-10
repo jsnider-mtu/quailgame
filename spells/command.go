@@ -9,7 +9,7 @@ import (
 type Command struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c Command) GetCastTime() string {
 }
 
 func (c Command) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c Command) GetComponents() string {

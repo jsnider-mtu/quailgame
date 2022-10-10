@@ -9,7 +9,7 @@ import (
 type ChillTouch struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c ChillTouch) GetCastTime() string {
 }
 
 func (c ChillTouch) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c ChillTouch) GetComponents() string {

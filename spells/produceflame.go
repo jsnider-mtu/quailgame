@@ -9,7 +9,7 @@ import (
 type ProduceFlame struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (p ProduceFlame) GetCastTime() string {
 }
 
 func (p ProduceFlame) GetRange() int {
-    return p.range
+    return p.spellrange
 }
 
 func (p ProduceFlame) GetComponents() string {

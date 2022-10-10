@@ -9,7 +9,7 @@ import (
 type Hex struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (h Hex) GetCastTime() string {
 }
 
 func (h Hex) GetRange() int {
-    return h.range
+    return h.spellrange
 }
 
 func (h Hex) GetComponents() string {

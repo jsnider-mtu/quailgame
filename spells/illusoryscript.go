@@ -9,7 +9,7 @@ import (
 type IllusoryScript struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (i IllusoryScript) GetCastTime() string {
 }
 
 func (i IllusoryScript) GetRange() int {
-    return i.range
+    return i.spellrange
 }
 
 func (i IllusoryScript) GetComponents() string {

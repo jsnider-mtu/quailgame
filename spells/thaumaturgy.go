@@ -9,7 +9,7 @@ import (
 type Thaumaturgy struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (t Thaumaturgy) GetCastTime() string {
 }
 
 func (t Thaumaturgy) GetRange() int {
-    return t.range
+    return t.spellrange
 }
 
 func (t Thaumaturgy) GetComponents() string {

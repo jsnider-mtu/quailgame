@@ -9,7 +9,7 @@ import (
 type FogCloud struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (f FogCloud) GetCastTime() string {
 }
 
 func (f FogCloud) GetRange() int {
-    return f.range
+    return f.spellrange
 }
 
 func (f FogCloud) GetComponents() string {

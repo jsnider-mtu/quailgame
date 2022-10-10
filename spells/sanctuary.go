@@ -9,7 +9,7 @@ import (
 type Sanctuary struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s Sanctuary) GetCastTime() string {
 }
 
 func (s Sanctuary) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s Sanctuary) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type MageArmor struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (m MageArmor) GetCastTime() string {
 }
 
 func (m MageArmor) GetRange() int {
-    return m.range
+    return m.spellrange
 }
 
 func (m MageArmor) GetComponents() string {

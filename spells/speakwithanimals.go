@@ -9,7 +9,7 @@ import (
 type SpeakWithAnimals struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s SpeakWithAnimals) GetCastTime() string {
 }
 
 func (s SpeakWithAnimals) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s SpeakWithAnimals) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type ArmsOfHadar struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (a ArmsOfHadar) GetCastTime() string {
 }
 
 func (a ArmsOfHadar) GetRange() int {
-    return a.range
+    return a.spellrange
 }
 
 func (a ArmsOfHadar) GetComponents() string {

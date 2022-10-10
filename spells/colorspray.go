@@ -9,7 +9,7 @@ import (
 type ColorSpray struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c ColorSpray) GetCastTime() string {
 }
 
 func (c ColorSpray) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c ColorSpray) GetComponents() string {

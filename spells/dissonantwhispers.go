@@ -9,7 +9,7 @@ import (
 type DissonantWhispers struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (d DissonantWhispers) GetCastTime() string {
 }
 
 func (d DissonantWhispers) GetRange() int {
-    return d.range
+    return d.spellrange
 }
 
 func (d DissonantWhispers) GetComponents() string {

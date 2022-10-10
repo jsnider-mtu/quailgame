@@ -9,7 +9,7 @@ import (
 type Druidcraft struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (d Druidcraft) GetCastTime() string {
 }
 
 func (d Druidcraft) GetRange() int {
-    return d.range
+    return d.spellrange
 }
 
 func (d Druidcraft) GetComponents() string {

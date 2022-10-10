@@ -9,7 +9,7 @@ import (
 type TensersFloatingDisk struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (t TensersFloatingDisk) GetCastTime() string {
 }
 
 func (t TensersFloatingDisk) GetRange() int {
-    return t.range
+    return t.spellrange
 }
 
 func (t TensersFloatingDisk) GetComponents() string {

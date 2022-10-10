@@ -9,7 +9,7 @@ import (
 type BladeWard struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (b BladeWard) GetCastTime() string {
 }
 
 func (b BladeWard) GetRange() int {
-    return b.range
+    return b.spellrange
 }
 
 func (b BladeWard) GetComponents() string {

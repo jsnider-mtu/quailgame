@@ -9,7 +9,7 @@ import (
 type ExpeditiousRetreat struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (e ExpeditiousRetreat) GetCastTime() string {
 }
 
 func (e ExpeditiousRetreat) GetRange() int {
-    return e.range
+    return e.spellrange
 }
 
 func (e ExpeditiousRetreat) GetComponents() string {

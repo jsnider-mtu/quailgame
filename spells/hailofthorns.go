@@ -9,7 +9,7 @@ import (
 type HailOfThorns struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (h HailOfThorns) GetCastTime() string {
 }
 
 func (h HailOfThorns) GetRange() int {
-    return h.range
+    return h.spellrange
 }
 
 func (h HailOfThorns) GetComponents() string {

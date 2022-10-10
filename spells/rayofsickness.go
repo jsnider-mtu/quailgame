@@ -9,7 +9,7 @@ import (
 type RayOfSickness struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (r RayOfSickness) GetCastTime() string {
 }
 
 func (r RayOfSickness) GetRange() int {
-    return r.range
+    return r.spellrange
 }
 
 func (r RayOfSickness) GetComponents() string {

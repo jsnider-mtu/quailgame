@@ -9,7 +9,7 @@ import (
 type ArmorOfAgathys struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (a ArmorOfAgathys) GetCastTime() string {
 }
 
 func (a ArmorOfAgathys) GetRange() int {
-    return a.range
+    return a.spellrange
 }
 
 func (a ArmorOfAgathys) GetComponents() string {

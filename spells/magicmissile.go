@@ -6,10 +6,10 @@ import (
     "github.com/hajimehoshi/ebiten/v2"
 )
 
-type MagicMissile struct {}
+type MagicMissile struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (m MagicMissile) GetCastTime() string {
 }
 
 func (m MagicMissile) GetRange() int {
-    return m.range
+    return m.spellrange
 }
 
 func (m MagicMissile) GetComponents() string {

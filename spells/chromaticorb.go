@@ -9,7 +9,7 @@ import (
 type ChromaticOrb struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c ChromaticOrb) GetCastTime() string {
 }
 
 func (c ChromaticOrb) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c ChromaticOrb) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type Entangle struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (e Entangle) GetCastTime() string {
 }
 
 func (e Entangle) GetRange() int {
-    return e.range
+    return e.spellrange
 }
 
 func (e Entangle) GetComponents() string {

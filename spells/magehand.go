@@ -9,7 +9,7 @@ import (
 type MageHand struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (m MageHand) GetCastTime() string {
 }
 
 func (m MageHand) GetRange() int {
-    return m.range
+    return m.spellrange
 }
 
 func (m MageHand) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type DetectEvilAndGood struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (d DetectEvilAndGood) GetCastTime() string {
 }
 
 func (d DetectEvilAndGood) GetRange() int {
-    return d.range
+    return d.spellrange
 }
 
 func (d DetectEvilAndGood) GetComponents() string {

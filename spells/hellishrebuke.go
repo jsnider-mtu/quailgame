@@ -9,7 +9,7 @@ import (
 type HellishRebuke struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (h HellishRebuke) GetCastTime() string {
 }
 
 func (h HellishRebuke) GetRange() int {
-    return h.range
+    return h.spellrange
 }
 
 func (h HellishRebuke) GetComponents() string {

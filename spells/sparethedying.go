@@ -9,7 +9,7 @@ import (
 type SpareTheDying struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s SpareTheDying) GetCastTime() string {
 }
 
 func (s SpareTheDying) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s SpareTheDying) GetComponents() string {

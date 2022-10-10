@@ -9,7 +9,7 @@ import (
 type HuntersMark struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (h HuntersMark) GetCastTime() string {
 }
 
 func (h HuntersMark) GetRange() int {
-    return h.range
+    return h.spellrange
 }
 
 func (h HuntersMark) GetComponents() string {

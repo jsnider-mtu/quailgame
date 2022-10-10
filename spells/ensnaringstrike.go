@@ -9,7 +9,7 @@ import (
 type EnsnaringStrike struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (e EnsnaringStrike) GetCastTime() string {
 }
 
 func (e EnsnaringStrike) GetRange() int {
-    return e.range
+    return e.spellrange
 }
 
 func (e EnsnaringStrike) GetComponents() string {

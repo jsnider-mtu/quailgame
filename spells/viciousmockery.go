@@ -9,7 +9,7 @@ import (
 type ViciousMockery struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (v ViciousMockery) GetCastTime() string {
 }
 
 func (v ViciousMockery) GetRange() int {
-    return v.range
+    return v.spellrange
 }
 
 func (v ViciousMockery) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type MinorIllusion struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (m MinorIllusion) GetCastTime() string {
 }
 
 func (m MinorIllusion) GetRange() int {
-    return m.range
+    return m.spellrange
 }
 
 func (m MinorIllusion) GetComponents() string {

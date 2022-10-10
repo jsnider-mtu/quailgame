@@ -9,7 +9,7 @@ import (
 type DetectPoisonAndDisease struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (d DetectPoisonAndDisease) GetCastTime() string {
 }
 
 func (d DetectPoisonAndDisease) GetRange() int {
-    return d.range
+    return d.spellrange
 }
 
 func (d DetectPoisonAndDisease) GetComponents() string {

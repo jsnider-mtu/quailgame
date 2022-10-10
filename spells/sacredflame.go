@@ -9,7 +9,7 @@ import (
 type SacredFlame struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s SacredFlame) GetCastTime() string {
 }
 
 func (s SacredFlame) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s SacredFlame) GetComponents() string {

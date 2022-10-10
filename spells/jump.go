@@ -9,7 +9,7 @@ import (
 type Jump struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (j Jump) GetCastTime() string {
 }
 
 func (j Jump) GetRange() int {
-    return j.range
+    return j.spellrange
 }
 
 func (j Jump) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type Shillelagh struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (s Shillelagh) GetCastTime() string {
 }
 
 func (s Shillelagh) GetRange() int {
-    return s.range
+    return s.spellrange
 }
 
 func (s Shillelagh) GetComponents() string {

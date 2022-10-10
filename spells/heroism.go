@@ -9,7 +9,7 @@ import (
 type Heroism struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (h Heroism) GetCastTime() string {
 }
 
 func (h Heroism) GetRange() int {
-    return h.range
+    return h.spellrange
 }
 
 func (h Heroism) GetComponents() string {

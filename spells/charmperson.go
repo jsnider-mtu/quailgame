@@ -9,7 +9,7 @@ import (
 type CharmPerson struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (c CharmPerson) GetCastTime() string {
 }
 
 func (c CharmPerson) GetRange() int {
-    return c.range
+    return c.spellrange
 }
 
 func (c CharmPerson) GetComponents() string {

@@ -9,7 +9,7 @@ import (
 type GuidingBolt struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (g GuidingBolt) GetCastTime() string {
 }
 
 func (g GuidingBolt) GetRange() int {
-    return g.range
+    return g.spellrange
 }
 
 func (g GuidingBolt) GetComponents() string {

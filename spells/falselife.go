@@ -9,7 +9,7 @@ import (
 type FalseLife struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (f FalseLife) GetCastTime() string {
 }
 
 func (f FalseLife) GetRange() int {
-    return f.range
+    return f.spellrange
 }
 
 func (f FalseLife) GetComponents() string {

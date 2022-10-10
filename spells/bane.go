@@ -9,7 +9,7 @@ import (
 type Bane struct {
     level int
     casttime string
-    range int
+    spellrange int
     components string
     duration int
     concentration bool
@@ -28,7 +28,7 @@ func (b Bane) GetCastTime() string {
 }
 
 func (b Bane) GetRange() int {
-    return b.range
+    return b.spellrange
 }
 
 func (b Bane) GetComponents() string {
