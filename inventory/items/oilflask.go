@@ -17,7 +17,7 @@ func (o OilFlask) Use() {
 }
 
 func (o OilFlask) Save() string {
-    return "Oil Flask," + strconv.Itoa(o.Quantity)
+    return "OilFlask," + strconv.Itoa(o.Quantity)
 }
 
 func (o OilFlask) PrettyPrint() string {

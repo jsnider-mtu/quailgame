@@ -100,7 +100,7 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return Morningstar{}
     case "Net":
         return Net{}
-    case "Oilflask":
+    case "OilFlask":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
