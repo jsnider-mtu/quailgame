@@ -565,6 +565,26 @@ func (p *Player) GetName() string {
 
 func (p *Player) CastSpell(spell spells.Spell, target *Player) {
     log.Println(fmt.Sprintf("Casting spell %s, target is %s", spell.PrettyPrint(), target.GetName()))
+    // get spellrange
+    spellrange := spell.GetRange()
+    // is target within spellrange?
+    // get x, y of player and target and calculate distance
+    playerx := p.Pos[0] + 24
+    playery := p.Pos[1] + 24
+    targetx := target.Pos[0] + 24
+    targety := target.Pos[1] + 24
+    dist := math.Sqrt(math.Pow(float64(targetx - playerx), 2.0) + math.Pow(float64(targety - playery), 2.0))
+    if dist <= float64(spellrange) {
+        // get casting time
+        // if not instant start counting
+        // V can I speak?
+        // S can I move at least a hand?
+        // M do I have arcane focus or component pouch?
+        // Does target need to make a saving throw?
+        // Deal damage or condition on target
+    } else {
+        log.Println(fmt.Sprintf("%s is out of range of %s", target.GetName(), spell.PrettyPrint()))
+    }
 }
 
 func (p *Player) Unequip(slot string) {
