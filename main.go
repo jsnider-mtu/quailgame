@@ -10564,11 +10564,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Vicious Mockery", fo, 448, 64, color.White)
+                text.Draw(screen, "Vicious Mockery", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -10602,85 +10602,85 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Bane", fo, 448, 160, color.White)
+                text.Draw(screen, "Bane", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 160, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Cure Wounds", fo, 448, 160, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
             case 3:
-                text.Draw(screen, "Dissonant Whispers", fo, 448, 160, color.White)
+                text.Draw(screen, "Dissonant Whispers", fo, 448, 192, color.White)
             case 4:
-                text.Draw(screen, "Faerie Fire", fo, 448, 160, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 192, color.White)
             case 5:
-                text.Draw(screen, "Healing Word", fo, 448, 160, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
             case 6:
-                text.Draw(screen, "Heroism", fo, 448, 160, color.White)
+                text.Draw(screen, "Heroism", fo, 448, 192, color.White)
             case 7:
-                text.Draw(screen, "Longstrider", fo, 448, 160, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
             case 8:
-                text.Draw(screen, "Sleep", fo, 448, 160, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
             case 9:
-                text.Draw(screen, "Speak with Animals", fo, 448, 160, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 192, color.White)
             case 10:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 160, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
             case 11:
-                text.Draw(screen, "Thunderwave", fo, 448, 160, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Bane", fo, 448, 160, color.White)
+                text.Draw(screen, "Bane", fo, 448, 224, color.White)
             case 1:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 160, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 224, color.White)
             case 2:
-                text.Draw(screen, "Cure Wounds", fo, 448, 160, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 224, color.White)
             case 3:
-                text.Draw(screen, "Dissonant Whispers", fo, 448, 160, color.White)
+                text.Draw(screen, "Dissonant Whispers", fo, 448, 224, color.White)
             case 4:
-                text.Draw(screen, "Faerie Fire", fo, 448, 160, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 224, color.White)
             case 5:
-                text.Draw(screen, "Healing Word", fo, 448, 160, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 224, color.White)
             case 6:
-                text.Draw(screen, "Heroism", fo, 448, 160, color.White)
+                text.Draw(screen, "Heroism", fo, 448, 224, color.White)
             case 7:
-                text.Draw(screen, "Longstrider", fo, 448, 160, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 224, color.White)
             case 8:
-                text.Draw(screen, "Sleep", fo, 448, 160, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 224, color.White)
             case 9:
-                text.Draw(screen, "Speak with Animals", fo, 448, 160, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 224, color.White)
             case 10:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 160, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 224, color.White)
             case 11:
-                text.Draw(screen, "Thunderwave", fo, 448, 160, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Bane", fo, 448, 160, color.White)
+                text.Draw(screen, "Bane", fo, 448, 256, color.White)
             case 1:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 160, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 256, color.White)
             case 2:
-                text.Draw(screen, "Cure Wounds", fo, 448, 160, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 256, color.White)
             case 3:
-                text.Draw(screen, "Dissonant Whispers", fo, 448, 160, color.White)
+                text.Draw(screen, "Dissonant Whispers", fo, 448, 256, color.White)
             case 4:
-                text.Draw(screen, "Faerie Fire", fo, 448, 160, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 256, color.White)
             case 5:
-                text.Draw(screen, "Healing Word", fo, 448, 160, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 256, color.White)
             case 6:
-                text.Draw(screen, "Heroism", fo, 448, 160, color.White)
+                text.Draw(screen, "Heroism", fo, 448, 256, color.White)
             case 7:
-                text.Draw(screen, "Longstrider", fo, 448, 160, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 256, color.White)
             case 8:
-                text.Draw(screen, "Sleep", fo, 448, 160, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 256, color.White)
             case 9:
-                text.Draw(screen, "Speak with Animals", fo, 448, 160, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 256, color.White)
             case 10:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 160, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 256, color.White)
             case 11:
-                text.Draw(screen, "Thunderwave", fo, 448, 160, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -10719,21 +10719,21 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Resistance", fo, 448, 64, color.White)
+                text.Draw(screen, "Resistance", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Sacred Flame", fo, 448, 64, color.White)
+                text.Draw(screen, "Sacred Flame", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Spare the Dying", fo, 448, 64, color.White)
+                text.Draw(screen, "Spare the Dying", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Resistance", fo, 448, 64, color.White)
+                text.Draw(screen, "Resistance", fo, 448, 128, color.White)
             case 1:
-                text.Draw(screen, "Sacred Flame", fo, 448, 64, color.White)
+                text.Draw(screen, "Sacred Flame", fo, 448, 128, color.White)
             case 2:
-                text.Draw(screen, "Spare the Dying", fo, 448, 64, color.White)
+                text.Draw(screen, "Spare the Dying", fo, 448, 128, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -10764,25 +10764,25 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if wismod >= 1 {
                 switch option4 {
                 case 0:
-                    text.Draw(screen, "Bane", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bane", fo, 448, 224, color.White)
                 case 1:
-                    text.Draw(screen, "Bless", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bless", fo, 448, 224, color.White)
                 case 2:
-                    text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Cure Wounds", fo, 448, 224, color.White)
                 case 3:
-                    text.Draw(screen, "Guiding Bolt", fo, 448, 192, color.White)
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 224, color.White)
                 case 4:
-                    text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
+                    text.Draw(screen, "Healing Word", fo, 448, 224, color.White)
                 case 5:
-                    text.Draw(screen, "Inflict Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 224, color.White)
                 case 6:
-                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 224, color.White)
                 case 7:
-                    text.Draw(screen, "Purify Food and Drink", fo, 448, 192, color.White)
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 224, color.White)
                 case 8:
-                    text.Draw(screen, "Sanctuary", fo, 448, 192, color.White)
+                    text.Draw(screen, "Sanctuary", fo, 448, 224, color.White)
                 case 9:
-                    text.Draw(screen, "Shield of Faith", fo, 448, 192, color.White)
+                    text.Draw(screen, "Shield of Faith", fo, 448, 224, color.White)
                 default:
                     log.Fatal("Out of bounds ()")
                 }
@@ -10790,25 +10790,25 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if wismod >= 2 {
                 switch option5 {
                 case 0:
-                    text.Draw(screen, "Bane", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bane", fo, 448, 256, color.White)
                 case 1:
-                    text.Draw(screen, "Bless", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bless", fo, 448, 256, color.White)
                 case 2:
-                    text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Cure Wounds", fo, 448, 256, color.White)
                 case 3:
-                    text.Draw(screen, "Guiding Bolt", fo, 448, 192, color.White)
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 256, color.White)
                 case 4:
-                    text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
+                    text.Draw(screen, "Healing Word", fo, 448, 256, color.White)
                 case 5:
-                    text.Draw(screen, "Inflict Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 256, color.White)
                 case 6:
-                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 256, color.White)
                 case 7:
-                    text.Draw(screen, "Purify Food and Drink", fo, 448, 192, color.White)
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 256, color.White)
                 case 8:
-                    text.Draw(screen, "Sanctuary", fo, 448, 192, color.White)
+                    text.Draw(screen, "Sanctuary", fo, 448, 256, color.White)
                 case 9:
-                    text.Draw(screen, "Shield of Faith", fo, 448, 192, color.White)
+                    text.Draw(screen, "Shield of Faith", fo, 448, 256, color.White)
                 default:
                     log.Fatal("Out of bounds ()")
                 }
@@ -10816,25 +10816,25 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if wismod >= 3 {
                 switch option6 {
                 case 0:
-                    text.Draw(screen, "Bane", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bane", fo, 448, 288, color.White)
                 case 1:
-                    text.Draw(screen, "Bless", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bless", fo, 448, 288, color.White)
                 case 2:
-                    text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Cure Wounds", fo, 448, 288, color.White)
                 case 3:
-                    text.Draw(screen, "Guiding Bolt", fo, 448, 192, color.White)
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 288, color.White)
                 case 4:
-                    text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
+                    text.Draw(screen, "Healing Word", fo, 448, 288, color.White)
                 case 5:
-                    text.Draw(screen, "Inflict Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 288, color.White)
                 case 6:
-                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 288, color.White)
                 case 7:
-                    text.Draw(screen, "Purify Food and Drink", fo, 448, 192, color.White)
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 288, color.White)
                 case 8:
-                    text.Draw(screen, "Sanctuary", fo, 448, 192, color.White)
+                    text.Draw(screen, "Sanctuary", fo, 448, 288, color.White)
                 case 9:
-                    text.Draw(screen, "Shield of Faith", fo, 448, 192, color.White)
+                    text.Draw(screen, "Shield of Faith", fo, 448, 288, color.White)
                 default:
                     log.Fatal("Out of bounds ()")
                 }
@@ -10842,25 +10842,25 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if wismod == 4 {
                 switch option7 {
                 case 0:
-                    text.Draw(screen, "Bane", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bane", fo, 448, 320, color.White)
                 case 1:
-                    text.Draw(screen, "Bless", fo, 448, 192, color.White)
+                    text.Draw(screen, "Bless", fo, 448, 320, color.White)
                 case 2:
-                    text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Cure Wounds", fo, 448, 320, color.White)
                 case 3:
-                    text.Draw(screen, "Guiding Bolt", fo, 448, 192, color.White)
+                    text.Draw(screen, "Guiding Bolt", fo, 448, 320, color.White)
                 case 4:
-                    text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
+                    text.Draw(screen, "Healing Word", fo, 448, 320, color.White)
                 case 5:
-                    text.Draw(screen, "Inflict Wounds", fo, 448, 192, color.White)
+                    text.Draw(screen, "Inflict Wounds", fo, 448, 320, color.White)
                 case 6:
-                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                    text.Draw(screen, "Protection from Evil and Good", fo, 448, 320, color.White)
                 case 7:
-                    text.Draw(screen, "Purify Food and Drink", fo, 448, 192, color.White)
+                    text.Draw(screen, "Purify Food and Drink", fo, 448, 320, color.White)
                 case 8:
-                    text.Draw(screen, "Sanctuary", fo, 448, 192, color.White)
+                    text.Draw(screen, "Sanctuary", fo, 448, 320, color.White)
                 case 9:
-                    text.Draw(screen, "Shield of Faith", fo, 448, 192, color.White)
+                    text.Draw(screen, "Shield of Faith", fo, 448, 320, color.White)
                 default:
                     log.Fatal("Out of bounds ()")
                 }
@@ -10902,125 +10902,125 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Produce Flame", fo, 448, 64, color.White)
+                text.Draw(screen, "Produce Flame", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Resistance", fo, 448, 64, color.White)
+                text.Draw(screen, "Resistance", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Shillelagh", fo, 448, 64, color.White)
+                text.Draw(screen, "Shillelagh", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Thorn Whip", fo, 448, 64, color.White)
+                text.Draw(screen, "Thorn Whip", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 160, color.White)
             case 1:
-                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+                text.Draw(screen, "Entangle", fo, 448, 160, color.White)
             case 2:
-                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 160, color.White)
             case 3:
-                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 160, color.White)
             case 4:
-                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 160, color.White)
             case 5:
-                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 160, color.White)
             case 6:
-                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 160, color.White)
             case 7:
-                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 160, color.White)
             case 8:
-                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 160, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+                text.Draw(screen, "Entangle", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 192, color.White)
             case 3:
-                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 192, color.White)
             case 4:
-                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 192, color.White)
             case 5:
-                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
             case 6:
-                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 192, color.White)
             case 7:
-                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 192, color.White)
             case 8:
-                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 224, color.White)
             case 1:
-                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+                text.Draw(screen, "Entangle", fo, 448, 224, color.White)
             case 2:
-                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 224, color.White)
             case 3:
-                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 224, color.White)
             case 4:
-                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 224, color.White)
             case 5:
-                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 224, color.White)
             case 6:
-                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 224, color.White)
             case 7:
-                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 224, color.White)
             case 8:
-                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 256, color.White)
             case 1:
-                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+                text.Draw(screen, "Entangle", fo, 448, 256, color.White)
             case 2:
-                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 256, color.White)
             case 3:
-                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 256, color.White)
             case 4:
-                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 256, color.White)
             case 5:
-                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 256, color.White)
             case 6:
-                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 256, color.White)
             case 7:
-                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 256, color.White)
             case 8:
-                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option6 {
             case 0:
-                text.Draw(screen, "Cure Wounds", fo, 448, 128, color.White)
+                text.Draw(screen, "Cure Wounds", fo, 448, 288, color.White)
             case 1:
-                text.Draw(screen, "Entangle", fo, 448, 128, color.White)
+                text.Draw(screen, "Entangle", fo, 448, 288, color.White)
             case 2:
-                text.Draw(screen, "Faerie Fire", fo, 448, 128, color.White)
+                text.Draw(screen, "Faerie Fire", fo, 448, 288, color.White)
             case 3:
-                text.Draw(screen, "Fog Cloud", fo, 448, 128, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 288, color.White)
             case 4:
-                text.Draw(screen, "Healing Word", fo, 448, 128, color.White)
+                text.Draw(screen, "Healing Word", fo, 448, 288, color.White)
             case 5:
-                text.Draw(screen, "Longstrider", fo, 448, 128, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 288, color.White)
             case 6:
-                text.Draw(screen, "Purify Food and Drink", fo, 448, 128, color.White)
+                text.Draw(screen, "Purify Food and Drink", fo, 448, 288, color.White)
             case 7:
-                text.Draw(screen, "Speak with Animals", fo, 448, 128, color.White)
+                text.Draw(screen, "Speak with Animals", fo, 448, 288, color.White)
             case 8:
-                text.Draw(screen, "Thunderwave", fo, 448, 128, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 288, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -11065,61 +11065,61 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Acid Splash", fo, 448, 64, color.White)
+                text.Draw(screen, "Acid Splash", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+                text.Draw(screen, "Chill Touch", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Fire Bolt", fo, 448, 64, color.White)
+                text.Draw(screen, "Fire Bolt", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
             case 5:
-                text.Draw(screen, "Ray of Frost", fo, 448, 64, color.White)
+                text.Draw(screen, "Ray of Frost", fo, 448, 96, color.White)
             case 6:
-                text.Draw(screen, "Shocking Grasp", fo, 448, 64, color.White)
+                text.Draw(screen, "Shocking Grasp", fo, 448, 96, color.White)
             case 7:
-                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Acid Splash", fo, 448, 64, color.White)
+                text.Draw(screen, "Acid Splash", fo, 448, 128, color.White)
             case 1:
-                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+                text.Draw(screen, "Blade Ward", fo, 448, 128, color.White)
             case 2:
-                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+                text.Draw(screen, "Chill Touch", fo, 448, 128, color.White)
             case 3:
-                text.Draw(screen, "Fire Bolt", fo, 448, 64, color.White)
+                text.Draw(screen, "Fire Bolt", fo, 448, 128, color.White)
             case 4:
-                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+                text.Draw(screen, "Poison Spray", fo, 448, 128, color.White)
             case 5:
-                text.Draw(screen, "Ray of Frost", fo, 448, 64, color.White)
+                text.Draw(screen, "Ray of Frost", fo, 448, 128, color.White)
             case 6:
-                text.Draw(screen, "Shocking Grasp", fo, 448, 64, color.White)
+                text.Draw(screen, "Shocking Grasp", fo, 448, 128, color.White)
             case 7:
-                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+                text.Draw(screen, "True Strike", fo, 448, 128, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Acid Splash", fo, 448, 64, color.White)
+                text.Draw(screen, "Acid Splash", fo, 448, 160, color.White)
             case 1:
-                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+                text.Draw(screen, "Blade Ward", fo, 448, 160, color.White)
             case 2:
-                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+                text.Draw(screen, "Chill Touch", fo, 448, 160, color.White)
             case 3:
-                text.Draw(screen, "Fire Bolt", fo, 448, 64, color.White)
+                text.Draw(screen, "Fire Bolt", fo, 448, 160, color.White)
             case 4:
-                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+                text.Draw(screen, "Poison Spray", fo, 448, 160, color.White)
             case 5:
-                text.Draw(screen, "Ray of Frost", fo, 448, 64, color.White)
+                text.Draw(screen, "Ray of Frost", fo, 448, 160, color.White)
             case 6:
-                text.Draw(screen, "Shocking Grasp", fo, 448, 64, color.White)
+                text.Draw(screen, "Shocking Grasp", fo, 448, 160, color.White)
             case 7:
-                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+                text.Draw(screen, "True Strike", fo, 448, 160, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -11157,33 +11157,33 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Burning Hands", fo, 448, 224, color.White)
+                text.Draw(screen, "Burning Hands", fo, 448, 256, color.White)
             case 1:
-                text.Draw(screen, "Chromatic Orb", fo, 448, 224, color.White)
+                text.Draw(screen, "Chromatic Orb", fo, 448, 256, color.White)
             case 2:
-                text.Draw(screen, "Color Spray", fo, 448, 224, color.White)
+                text.Draw(screen, "Color Spray", fo, 448, 256, color.White)
             case 3:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 224, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 256, color.White)
             case 4:
-                text.Draw(screen, "Expeditious Retreat", fo, 448, 224, color.White)
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 256, color.White)
             case 5:
-                text.Draw(screen, "False Life", fo, 448, 224, color.White)
+                text.Draw(screen, "False Life", fo, 448, 256, color.White)
             case 6:
-                text.Draw(screen, "Fog Cloud", fo, 448, 224, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 256, color.White)
             case 7:
-                text.Draw(screen, "Mage Armor", fo, 448, 224, color.White)
+                text.Draw(screen, "Mage Armor", fo, 448, 256, color.White)
             case 8:
-                text.Draw(screen, "Magic Missile", fo, 448, 224, color.White)
+                text.Draw(screen, "Magic Missile", fo, 448, 256, color.White)
             case 9:
-                text.Draw(screen, "Ray of Sickness", fo, 448, 224, color.White)
+                text.Draw(screen, "Ray of Sickness", fo, 448, 256, color.White)
             case 10:
-                text.Draw(screen, "Shield", fo, 448, 224, color.White)
+                text.Draw(screen, "Shield", fo, 448, 256, color.White)
             case 11:
-                text.Draw(screen, "Sleep", fo, 448, 224, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 256, color.White)
             case 12:
-                text.Draw(screen, "Thunderwave", fo, 448, 224, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 256, color.White)
             case 13:
-                text.Draw(screen, "Witch Bolt", fo, 448, 224, color.White)
+                text.Draw(screen, "Witch Bolt", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -11218,15 +11218,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+                text.Draw(screen, "Chill Touch", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Eldritch Blast", fo, 448, 64, color.White)
+                text.Draw(screen, "Eldritch Blast", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -11252,21 +11252,21 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option3 {
             case 0:
-                text.Draw(screen, "Armor of Agathys", fo, 448, 160, color.White)
+                text.Draw(screen, "Armor of Agathys", fo, 448, 192, color.White)
             case 1:
-                text.Draw(screen, "Arms of Hadar", fo, 448, 160, color.White)
+                text.Draw(screen, "Arms of Hadar", fo, 448, 192, color.White)
             case 2:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 160, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
             case 3:
-                text.Draw(screen, "Expeditious Retreat", fo, 448, 160, color.White)
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
             case 4:
-                text.Draw(screen, "Hellish Rebuke", fo, 448, 160, color.White)
+                text.Draw(screen, "Hellish Rebuke", fo, 448, 192, color.White)
             case 5:
-                text.Draw(screen, "Hex", fo, 448, 160, color.White)
+                text.Draw(screen, "Hex", fo, 448, 192, color.White)
             case 6:
-                text.Draw(screen, "Protection from Evil and Good", fo, 448, 160, color.White)
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
             case 7:
-                text.Draw(screen, "Witch Bolt", fo, 448, 160, color.White)
+                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -11317,41 +11317,41 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option1 {
             case 0:
-                text.Draw(screen, "Acid Splash", fo, 448, 64, color.White)
+                text.Draw(screen, "Acid Splash", fo, 448, 96, color.White)
             case 1:
-                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+                text.Draw(screen, "Blade Ward", fo, 448, 96, color.White)
             case 2:
-                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+                text.Draw(screen, "Chill Touch", fo, 448, 96, color.White)
             case 3:
-                text.Draw(screen, "Fire Bolt", fo, 448, 64, color.White)
+                text.Draw(screen, "Fire Bolt", fo, 448, 96, color.White)
             case 4:
-                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+                text.Draw(screen, "Poison Spray", fo, 448, 96, color.White)
             case 5:
-                text.Draw(screen, "Ray of Frost", fo, 448, 64, color.White)
+                text.Draw(screen, "Ray of Frost", fo, 448, 96, color.White)
             case 6:
-                text.Draw(screen, "Shocking Grasp", fo, 448, 64, color.White)
+                text.Draw(screen, "Shocking Grasp", fo, 448, 96, color.White)
             case 7:
-                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+                text.Draw(screen, "True Strike", fo, 448, 96, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option2 {
             case 0:
-                text.Draw(screen, "Acid Splash", fo, 448, 64, color.White)
+                text.Draw(screen, "Acid Splash", fo, 448, 128, color.White)
             case 1:
-                text.Draw(screen, "Blade Ward", fo, 448, 64, color.White)
+                text.Draw(screen, "Blade Ward", fo, 448, 128, color.White)
             case 2:
-                text.Draw(screen, "Chill Touch", fo, 448, 64, color.White)
+                text.Draw(screen, "Chill Touch", fo, 448, 128, color.White)
             case 3:
-                text.Draw(screen, "Fire Bolt", fo, 448, 64, color.White)
+                text.Draw(screen, "Fire Bolt", fo, 448, 128, color.White)
             case 4:
-                text.Draw(screen, "Poison Spray", fo, 448, 64, color.White)
+                text.Draw(screen, "Poison Spray", fo, 448, 128, color.White)
             case 5:
-                text.Draw(screen, "Ray of Frost", fo, 448, 64, color.White)
+                text.Draw(screen, "Ray of Frost", fo, 448, 128, color.White)
             case 6:
-                text.Draw(screen, "Shocking Grasp", fo, 448, 64, color.White)
+                text.Draw(screen, "Shocking Grasp", fo, 448, 128, color.White)
             case 7:
-                text.Draw(screen, "True Strike", fo, 448, 64, color.White)
+                text.Draw(screen, "True Strike", fo, 448, 128, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
@@ -11397,201 +11397,201 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             switch option4 {
             case 0:
-                text.Draw(screen, "Burning Hands", fo, 448, 192, color.White)
+                text.Draw(screen, "Burning Hands", fo, 448, 224, color.White)
             case 1:
-                text.Draw(screen, "Chromatic Orb", fo, 448, 192, color.White)
+                text.Draw(screen, "Chromatic Orb", fo, 448, 224, color.White)
             case 2:
-                text.Draw(screen, "Color Spray", fo, 448, 192, color.White)
+                text.Draw(screen, "Color Spray", fo, 448, 224, color.White)
             case 3:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 224, color.White)
             case 4:
-                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 224, color.White)
             case 5:
-                text.Draw(screen, "False Life", fo, 448, 192, color.White)
+                text.Draw(screen, "False Life", fo, 448, 224, color.White)
             case 6:
-                text.Draw(screen, "Fog Cloud", fo, 448, 192, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 224, color.White)
             case 7:
-                text.Draw(screen, "Grease", fo, 448, 192, color.White)
+                text.Draw(screen, "Grease", fo, 448, 224, color.White)
             case 8:
-                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 224, color.White)
             case 9:
-                text.Draw(screen, "Mage Armor", fo, 448, 192, color.White)
+                text.Draw(screen, "Mage Armor", fo, 448, 224, color.White)
             case 10:
-                text.Draw(screen, "Magic Missile", fo, 448, 192, color.White)
+                text.Draw(screen, "Magic Missile", fo, 448, 224, color.White)
             case 11:
-                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 224, color.White)
             case 12:
-                text.Draw(screen, "Ray of Sickness", fo, 448, 192, color.White)
+                text.Draw(screen, "Ray of Sickness", fo, 448, 224, color.White)
             case 13:
-                text.Draw(screen, "Shield", fo, 448, 192, color.White)
+                text.Draw(screen, "Shield", fo, 448, 224, color.White)
             case 14:
-                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 224, color.White)
             case 15:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 224, color.White)
             case 16:
-                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 224, color.White)
             case 17:
-                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
+                text.Draw(screen, "Witch Bolt", fo, 448, 224, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option5 {
             case 0:
-                text.Draw(screen, "Burning Hands", fo, 448, 192, color.White)
+                text.Draw(screen, "Burning Hands", fo, 448, 256, color.White)
             case 1:
-                text.Draw(screen, "Chromatic Orb", fo, 448, 192, color.White)
+                text.Draw(screen, "Chromatic Orb", fo, 448, 256, color.White)
             case 2:
-                text.Draw(screen, "Color Spray", fo, 448, 192, color.White)
+                text.Draw(screen, "Color Spray", fo, 448, 256, color.White)
             case 3:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 256, color.White)
             case 4:
-                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 256, color.White)
             case 5:
-                text.Draw(screen, "False Life", fo, 448, 192, color.White)
+                text.Draw(screen, "False Life", fo, 448, 256, color.White)
             case 6:
-                text.Draw(screen, "Fog Cloud", fo, 448, 192, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 256, color.White)
             case 7:
-                text.Draw(screen, "Grease", fo, 448, 192, color.White)
+                text.Draw(screen, "Grease", fo, 448, 256, color.White)
             case 8:
-                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 256, color.White)
             case 9:
-                text.Draw(screen, "Mage Armor", fo, 448, 192, color.White)
+                text.Draw(screen, "Mage Armor", fo, 448, 256, color.White)
             case 10:
-                text.Draw(screen, "Magic Missile", fo, 448, 192, color.White)
+                text.Draw(screen, "Magic Missile", fo, 448, 256, color.White)
             case 11:
-                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 256, color.White)
             case 12:
-                text.Draw(screen, "Ray of Sickness", fo, 448, 192, color.White)
+                text.Draw(screen, "Ray of Sickness", fo, 448, 256, color.White)
             case 13:
-                text.Draw(screen, "Shield", fo, 448, 192, color.White)
+                text.Draw(screen, "Shield", fo, 448, 256, color.White)
             case 14:
-                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 256, color.White)
             case 15:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 256, color.White)
             case 16:
-                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 256, color.White)
             case 17:
-                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
+                text.Draw(screen, "Witch Bolt", fo, 448, 256, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option6 {
             case 0:
-                text.Draw(screen, "Burning Hands", fo, 448, 192, color.White)
+                text.Draw(screen, "Burning Hands", fo, 448, 288, color.White)
             case 1:
-                text.Draw(screen, "Chromatic Orb", fo, 448, 192, color.White)
+                text.Draw(screen, "Chromatic Orb", fo, 448, 288, color.White)
             case 2:
-                text.Draw(screen, "Color Spray", fo, 448, 192, color.White)
+                text.Draw(screen, "Color Spray", fo, 448, 288, color.White)
             case 3:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 288, color.White)
             case 4:
-                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 288, color.White)
             case 5:
-                text.Draw(screen, "False Life", fo, 448, 192, color.White)
+                text.Draw(screen, "False Life", fo, 448, 288, color.White)
             case 6:
-                text.Draw(screen, "Fog Cloud", fo, 448, 192, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 288, color.White)
             case 7:
-                text.Draw(screen, "Grease", fo, 448, 192, color.White)
+                text.Draw(screen, "Grease", fo, 448, 288, color.White)
             case 8:
-                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 288, color.White)
             case 9:
-                text.Draw(screen, "Mage Armor", fo, 448, 192, color.White)
+                text.Draw(screen, "Mage Armor", fo, 448, 288, color.White)
             case 10:
-                text.Draw(screen, "Magic Missile", fo, 448, 192, color.White)
+                text.Draw(screen, "Magic Missile", fo, 448, 288, color.White)
             case 11:
-                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 288, color.White)
             case 12:
-                text.Draw(screen, "Ray of Sickness", fo, 448, 192, color.White)
+                text.Draw(screen, "Ray of Sickness", fo, 448, 288, color.White)
             case 13:
-                text.Draw(screen, "Shield", fo, 448, 192, color.White)
+                text.Draw(screen, "Shield", fo, 448, 288, color.White)
             case 14:
-                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 288, color.White)
             case 15:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 288, color.White)
             case 16:
-                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 288, color.White)
             case 17:
-                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
+                text.Draw(screen, "Witch Bolt", fo, 448, 288, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option7 {
             case 0:
-                text.Draw(screen, "Burning Hands", fo, 448, 192, color.White)
+                text.Draw(screen, "Burning Hands", fo, 448, 320, color.White)
             case 1:
-                text.Draw(screen, "Chromatic Orb", fo, 448, 192, color.White)
+                text.Draw(screen, "Chromatic Orb", fo, 448, 320, color.White)
             case 2:
-                text.Draw(screen, "Color Spray", fo, 448, 192, color.White)
+                text.Draw(screen, "Color Spray", fo, 448, 320, color.White)
             case 3:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 320, color.White)
             case 4:
-                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 320, color.White)
             case 5:
-                text.Draw(screen, "False Life", fo, 448, 192, color.White)
+                text.Draw(screen, "False Life", fo, 448, 320, color.White)
             case 6:
-                text.Draw(screen, "Fog Cloud", fo, 448, 192, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 320, color.White)
             case 7:
-                text.Draw(screen, "Grease", fo, 448, 192, color.White)
+                text.Draw(screen, "Grease", fo, 448, 320, color.White)
             case 8:
-                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 320, color.White)
             case 9:
-                text.Draw(screen, "Mage Armor", fo, 448, 192, color.White)
+                text.Draw(screen, "Mage Armor", fo, 448, 320, color.White)
             case 10:
-                text.Draw(screen, "Magic Missile", fo, 448, 192, color.White)
+                text.Draw(screen, "Magic Missile", fo, 448, 320, color.White)
             case 11:
-                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 320, color.White)
             case 12:
-                text.Draw(screen, "Ray of Sickness", fo, 448, 192, color.White)
+                text.Draw(screen, "Ray of Sickness", fo, 448, 320, color.White)
             case 13:
-                text.Draw(screen, "Shield", fo, 448, 192, color.White)
+                text.Draw(screen, "Shield", fo, 448, 320, color.White)
             case 14:
-                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 320, color.White)
             case 15:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 320, color.White)
             case 16:
-                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 320, color.White)
             case 17:
-                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
+                text.Draw(screen, "Witch Bolt", fo, 448, 320, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
             switch option8 {
             case 0:
-                text.Draw(screen, "Burning Hands", fo, 448, 192, color.White)
+                text.Draw(screen, "Burning Hands", fo, 448, 352, color.White)
             case 1:
-                text.Draw(screen, "Chromatic Orb", fo, 448, 192, color.White)
+                text.Draw(screen, "Chromatic Orb", fo, 448, 352, color.White)
             case 2:
-                text.Draw(screen, "Color Spray", fo, 448, 192, color.White)
+                text.Draw(screen, "Color Spray", fo, 448, 352, color.White)
             case 3:
-                text.Draw(screen, "Comprehend Languages", fo, 448, 192, color.White)
+                text.Draw(screen, "Comprehend Languages", fo, 448, 352, color.White)
             case 4:
-                text.Draw(screen, "Expeditious Retreat", fo, 448, 192, color.White)
+                text.Draw(screen, "Expeditious Retreat", fo, 448, 352, color.White)
             case 5:
-                text.Draw(screen, "False Life", fo, 448, 192, color.White)
+                text.Draw(screen, "False Life", fo, 448, 352, color.White)
             case 6:
-                text.Draw(screen, "Fog Cloud", fo, 448, 192, color.White)
+                text.Draw(screen, "Fog Cloud", fo, 448, 352, color.White)
             case 7:
-                text.Draw(screen, "Grease", fo, 448, 192, color.White)
+                text.Draw(screen, "Grease", fo, 448, 352, color.White)
             case 8:
-                text.Draw(screen, "Longstrider", fo, 448, 192, color.White)
+                text.Draw(screen, "Longstrider", fo, 448, 352, color.White)
             case 9:
-                text.Draw(screen, "Mage Armor", fo, 448, 192, color.White)
+                text.Draw(screen, "Mage Armor", fo, 448, 352, color.White)
             case 10:
-                text.Draw(screen, "Magic Missile", fo, 448, 192, color.White)
+                text.Draw(screen, "Magic Missile", fo, 448, 352, color.White)
             case 11:
-                text.Draw(screen, "Protection from Evil and Good", fo, 448, 192, color.White)
+                text.Draw(screen, "Protection from Evil and Good", fo, 448, 352, color.White)
             case 12:
-                text.Draw(screen, "Ray of Sickness", fo, 448, 192, color.White)
+                text.Draw(screen, "Ray of Sickness", fo, 448, 352, color.White)
             case 13:
-                text.Draw(screen, "Shield", fo, 448, 192, color.White)
+                text.Draw(screen, "Shield", fo, 448, 352, color.White)
             case 14:
-                text.Draw(screen, "Sleep", fo, 448, 192, color.White)
+                text.Draw(screen, "Sleep", fo, 448, 352, color.White)
             case 15:
-                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 192, color.White)
+                text.Draw(screen, "Tasha's Hideous Laughter", fo, 448, 352, color.White)
             case 16:
-                text.Draw(screen, "Thunderwave", fo, 448, 192, color.White)
+                text.Draw(screen, "Thunderwave", fo, 448, 352, color.White)
             case 17:
-                text.Draw(screen, "Witch Bolt", fo, 448, 192, color.White)
+                text.Draw(screen, "Witch Bolt", fo, 448, 352, color.White)
             default:
                 log.Fatal("Out of bounds ()")
             }
