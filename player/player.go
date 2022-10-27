@@ -1,9 +1,9 @@
 package player
 
 import (
-    "errors"
     "fmt"
     "log"
+    "math"
     "strconv"
     "strings"
 
@@ -361,30 +361,30 @@ func (p *Player) CastSpell(spell spells.Spell, target *Player) int {
         switch spell.GetCastTime() {
         case "minute":
             p.Concentrating = true
-            p.TurnCastEnd = 10
-            p.TurnCasting++
-            if p.TurnCasting == p.TurnCastEnd {
+            p.TurnsCastEnd = 10
+            p.TurnsCasting++
+            if p.TurnsCasting == p.TurnsCastEnd {
                 if !spell.GetConcentration() {
                     p.Concentrating = false
                 }
-                p.TurnCastEnd = 0
-                p.TurnCasting = 0
+                p.TurnsCastEnd = 0
+                p.TurnsCasting = 0
                 return 0
             }
-            return p.TurnCastEnd - p.TurnCasting
+            return p.TurnsCastEnd - p.TurnsCasting
         case "hour":
             p.Concentrating = true
-            p.TurnCastEnd = 600
-            p.TurnCasting++
-            if p.TurnCasting == p.TurnCastEnd {
+            p.TurnsCastEnd = 600
+            p.TurnsCasting++
+            if p.TurnsCasting == p.TurnsCastEnd {
                 if !spell.GetConcentration() {
                     p.Concentrating = false
                 }
-                p.TurnCastEnd = 0
-                p.TurnCasting = 0
+                p.TurnsCastEnd = 0
+                p.TurnsCasting = 0
                 return 0
             }
-            return p.TurnCastEnd - p.TurnCasting
+            return p.TurnsCastEnd - p.TurnsCasting
         case "action":
             if spell.GetConcentration() {
                 p.Concentrating = true
@@ -411,6 +411,7 @@ func (p *Player) CastSpell(spell spells.Spell, target *Player) int {
     } else {
         log.Println(fmt.Sprintf("%s is out of range of %s", target.GetName(), spell.PrettyPrint()))
     }
+    return 0
 }
 
 func (p *Player) Unequip(slot string) {

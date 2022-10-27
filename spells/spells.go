@@ -3,7 +3,6 @@ package spells
 import (
     "errors"
     "fmt"
-    "log"
 
     "github.com/hajimehoshi/ebiten/v2"
 )
