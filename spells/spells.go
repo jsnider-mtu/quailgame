@@ -1,6 +1,7 @@
 package spells
 
 import (
+    "errors"
     "fmt"
     "log"
 
@@ -18,188 +19,125 @@ type Spell interface {
     Animate(*ebiten.Image, [2]int)
 }
 
-func New(spell string) Spell {
+func New(spell string) (Spell, error) {
     switch spell {
     case "Acid Splash":
-        return AcidSplash{level: 0, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}
-    case "Alarm":
-        return Alarm{level: 1, casttime: "minute", spellrange: 30, components: "V,S,M", duration: 480, concentration: false}
-    case "Animal Friendship":
-        return AnimalFriendship{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1440, concentration: false}
+        return AcidSplash{level: 0, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}, nil
     case "Armor of Agathys":
-        return ArmorOfAgathys{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: 60, concentration: false}
+        return ArmorOfAgathys{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: 60, concentration: false}, nil
     case "Arms of Hadar":
-        return ArmsOfHadar{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 0, concentration: false}
+        return ArmsOfHadar{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 0, concentration: false}, nil
     case "Bane":
-        return Bane{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}
+        return Bane{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}, nil
     case "Blade Ward":
-        return BladeWard{level: 0, casttime: "action", spellrange: 0, components: "V,S", duration: -1, concentration: false}
+        return BladeWard{level: 0, casttime: "action", spellrange: 0, components: "V,S", duration: -1, concentration: false}, nil
     case "Bless":
-        return Bless{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}
+        return Bless{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}, nil
     case "Burning Hands":
-        return BurningHands{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 0, concentration: false}
-    case "Charm Person":
-        return CharmPerson{level: 1, casttime: "action", spellrange: 30, components: "V,S", duration: 60, concentration: false}
+        return BurningHands{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 0, concentration: false}, nil
     case "Chill Touch":
-        return ChillTouch{level: 0, casttime: "action", spellrange: 120, components: "V,S", duration: -1}
+        return ChillTouch{level: 0, casttime: "action", spellrange: 120, components: "V,S", duration: -1}, nil
     case "Chromatic Orb":
-        return ChromaticOrb{level: 1, casttime: "action", spellrange: 90, components: "V,S,M", duration: 0, concentration: false}
+        return ChromaticOrb{level: 1, casttime: "action", spellrange: 90, components: "V,S,M", duration: 0, concentration: false}, nil
     case "Color Spray":
-        return ColorSpray{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: -1, concentration: false}
-    case "Command":
-        return Command{level: 1, casttime: "action", spellrange: 60, components: "V", duration: -1, concentration: false}
-    case "Compelled Duel":
-        return CompelledDuel{level: 1, casttime: "bonus", spellrange: 30, components: "V", duration: 1, concentration: true}
+        return ColorSpray{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: -1, concentration: false}, nil
     case "Comprehend Languages":
-        return ComprehendLanguages{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: 60, concentration: false}
-    case "Create or Destroy Water":
-        return CreateOrDestroyWater{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 0, concentration: false}
+        return ComprehendLanguages{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: 60, concentration: false}, nil
     case "Cure Wounds":
-        return CureWounds{level: 1, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}
-    case "Dancing Lights":
-        return DancingLights{level: 0, casttime: "action", spellrange: 120, components: "V,S,M", duration: 1, concentration: true}
-    case "Detect Evil and Good":
-        return DetectEvilAndGood{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 10, concentration: true}
-    case "Detect Magic":
-        return DetectMagic{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 10, concentration: true}
-    case "Detect Poison and Disease":
-        return DetectPoisonAndDisease{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: 10, concentration: true}
-    case "Disguise Self":
-        return DisguiseSelf{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 60, concentration: false}
+        return CureWounds{level: 1, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}, nil
     case "Dissonant Whispers":
-        return DissonantWhispers{level: 1, casttime: "action", spellrange: 60, components: "V", duration: 0, concentration: false}
+        return DissonantWhispers{level: 1, casttime: "action", spellrange: 60, components: "V", duration: 0, concentration: false}, nil
     case "Divine Favor":
-        return DivineFavor{level: 1, casttime: "bonus", spellrange: 0, components: "V,S", duration: 1, concentration: true}
-    case "Druidcraft":
-        return Druidcraft{level: 0, casttime: "action", spellrange: 30, components: "V,S", duration: 0, concentration: false}
+        return DivineFavor{level: 1, casttime: "bonus", spellrange: 0, components: "V,S", duration: 1, concentration: true}, nil
     case "Eldritch Blast":
-        return EldritchBlast{level: 0, casttime: "action", spellrange: 120, components: "V,S", duration: 0, concentration: false}
+        return EldritchBlast{level: 0, casttime: "action", spellrange: 120, components: "V,S", duration: 0, concentration: false}, nil
     case "Ensnaring Strike":
-        return EnsnaringStrike{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}
+        return EnsnaringStrike{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}, nil
     case "Entangle":
-        return Entangle{level: 1, casttime: "action", spellrange: 90, components: "V,S", duration: 1, concentration: true}
+        return Entangle{level: 1, casttime: "action", spellrange: 90, components: "V,S", duration: 1, concentration: true}, nil
     case "Expeditious Retreat":
-        return ExpeditiousRetreat{level: 1, casttime: "bonus", spellrange: 0, components: "V,S", duration: 10, concentration: true}
+        return ExpeditiousRetreat{level: 1, casttime: "bonus", spellrange: 0, components: "V,S", duration: 10, concentration: true}, nil
     case "Faerie Fire":
-        return FaerieFire{level: 1, casttime: "action", spellrange: 60, components: "V", duration: 1, concentration: true}
+        return FaerieFire{level: 1, casttime: "action", spellrange: 60, components: "V", duration: 1, concentration: true}, nil
     case "False Life":
-        return FalseLife{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: 60, concentration: false}
-    case "Feather Fall":
-        return FeatherFall{level: 1, casttime: "reaction", spellrange: 60, components: "V,M", duration: 1, concentration: false}
-    case "Find Familiar":
-        return FindFamiliar{level: 1, casttime: "hour", spellrange: 10, components: "V,S,M", duration: 0, concentration: false}
+        return FalseLife{level: 1, casttime: "action", spellrange: 0, components: "V,S,M", duration: 60, concentration: false}, nil
     case "Fire Bolt":
-        return FireBolt{level: 0, casttime: "action", spellrange: 120, components: "V,S", duration: 0, concentration: false}
+        return FireBolt{level: 0, casttime: "action", spellrange: 120, components: "V,S", duration: 0, concentration: false}, nil
     case "Fog Cloud":
-        return FogCloud{level: 1, casttime: "action", spellrange: 120, components: "V,S", duration: 60, concentration: true}
-    case "Friends":
-        return Friends{level: 0, casttime: "action", spellrange: 0, components: "S,M", duration: 1, concentration: true}
-    case "Goodberry":
-        return Goodberry{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 0, concentration: false}
+        return FogCloud{level: 1, casttime: "action", spellrange: 120, components: "V,S", duration: 60, concentration: true}, nil
     case "Grease":
-        return Grease{level: 1, casttime: "action", spellrange: 60, components: "V,S,M", duration: 1, concentration: false}
-    case "Guidance":
-        return Guidance{level: 0, casttime: "action", spellrange: 5, components: "V,S", duration: 1, concentration: true}
+        return Grease{level: 1, casttime: "action", spellrange: 60, components: "V,S,M", duration: 1, concentration: false}, nil
     case "Guiding Bolt":
-        return GuidingBolt{level: 1, casttime: "action", spellrange: 120, components: "V,S", duration: -1, concentration: false}
+        return GuidingBolt{level: 1, casttime: "action", spellrange: 120, components: "V,S", duration: -1, concentration: false}, nil
     case "Hail of Thorns":
-        return HailOfThorns{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}
+        return HailOfThorns{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}, nil
     case "Healing Word":
-        return HealingWord{level: 1, casttime: "bonus", spellrange: 60, components: "V", duration: 0, concentration: false}
+        return HealingWord{level: 1, casttime: "bonus", spellrange: 60, components: "V", duration: 0, concentration: false}, nil
     case "Hellish Rebuke":
-        return HellishRebuke{level: 1, casttime: "reaction", spellrange: 60, components: "V,S", duration: 0, concentration: false}
+        return HellishRebuke{level: 1, casttime: "reaction", spellrange: 60, components: "V,S", duration: 0, concentration: false}, nil
     case "Heroism":
-        return Heroism{level: 1, casttime: "action", spellrange: 5, components: "V,S", duration: 1, concentration: true}
+        return Heroism{level: 1, casttime: "action", spellrange: 5, components: "V,S", duration: 1, concentration: true}, nil
     case "Hex":
-        return Hex{level: 1, casttime: "bonus", spellrange: 90, components: "V,S,M", duration: 60, concentration: true}
+        return Hex{level: 1, casttime: "bonus", spellrange: 90, components: "V,S,M", duration: 60, concentration: true}, nil
     case "Hunter's Mark":
-        return HuntersMark{level: 1, casttime: "bonus", spellrange: 90, components: "V", duration: 60, concentration: true}
-    case "Identify":
-        return Identify{level: 1, casttime: "minute", spellrange: 5, components: "V,S,M", duration: 0, concentration: false}
-    case "Illusory Script":
-        return IllusoryScript{level: 1, casttime: "minute", spellrange: 5, components: "S,M", duration: 14400, concentration: false}
+        return HuntersMark{level: 1, casttime: "bonus", spellrange: 90, components: "V", duration: 60, concentration: true}, nil
     case "Inflict Wounds":
-        return InflictWounds{level: 1, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}
-    case "Jump":
-        return Jump{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 1, concentration: false}
-    case "Light":
-        return Light{level: 0, casttime: "action", spellrange: 5, components: "V,M", duration: 60, concentration: false}
+        return InflictWounds{level: 1, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}, nil
     case "Longstrider":
-        return Longstrider{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 60, concentration: false}
+        return Longstrider{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 60, concentration: false}, nil
     case "Mage Armor":
-        return MageArmor{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 480, concentration: false}
-    case "Mage Hand":
-        return MageHand{level: 0, casttime: "action", spellrange: 30, components: "V,S", duration: 1, concentration: false}
+        return MageArmor{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 480, concentration: false}, nil
     case "Magic Missile":
-        return MagicMissile{level: 1, casttime: "action", spellrange: 120, components: "V,S", duration: 0, concentration: false}
-    case "Mending":
-        return Mending{level: 0, casttime: "minute", spellrange: 5, components: "V,S,M", duration: 0, concentration: false}
-    case "Message":
-        return Message{level: 0, casttime: "action", spellrange: 120, components: "V,S,M", duration: -1, concentration: false}
-    case "Minor Illusion":
-        return MinorIllusion{level: 0, casttime: "action", spellrange: 30, components: "S,M", duration: 1, concentration: false}
+        return MagicMissile{level: 1, casttime: "action", spellrange: 120, components: "V,S", duration: 0, concentration: false}, nil
     case "Poison Spray":
-        return PoisonSpray{level: 0, casttime: "action", spellrange: 10, components: "V,S", duration: 0, concentration: false}
-    case "Prestidigitation":
-        return Prestidigitation{level: 0, casttime: "action", spellrange: 10, components: "V,S", duration: 60, concentration: false}
+        return PoisonSpray{level: 0, casttime: "action", spellrange: 10, components: "V,S", duration: 0, concentration: false}, nil
     case "Produce Flame":
-        return ProduceFlame{level: 0, casttime: "action", spellrange: 0, components: "V,S", duration: 10, concentration: false}
+        return ProduceFlame{level: 0, casttime: "action", spellrange: 0, components: "V,S", duration: 10, concentration: false}, nil
     case "Protection from Good and Evil":
-        return ProtectionFromGoodAndEvil{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 10, concentration: true}
-    case "Purify Food and Drink":
-        return PurifyFoodAndDrink{level: 1, casttime: "action", spellrange: 10, components: "V,S", duration: 0, concentration: false}
+        return ProtectionFromGoodAndEvil{level: 1, casttime: "action", spellrange: 5, components: "V,S,M", duration: 10, concentration: true}, nil
     case "Ray of Frost":
-        return RayOfFrost{level: 0, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}
+        return RayOfFrost{level: 0, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}, nil
     case "Ray of Sickness":
-        return RayOfSickness{level: 1, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}
+        return RayOfSickness{level: 1, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}, nil
     case "Resistance":
-        return Resistance{level: 0, casttime: "action", spellrange: 5, components: "V,S,M", duration: 1, concentration: true}
+        return Resistance{level: 0, casttime: "action", spellrange: 5, components: "V,S,M", duration: 1, concentration: true}, nil
     case "Sacred Flame":
-        return SacredFlame{level: 0, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}
+        return SacredFlame{level: 0, casttime: "action", spellrange: 60, components: "V,S", duration: 0, concentration: false}, nil
     case "Sanctuary":
-        return Sanctuary{level: 1, casttime: "bonus", spellrange: 30, components: "V,S,M", duration: 1, concentration: false}
+        return Sanctuary{level: 1, casttime: "bonus", spellrange: 30, components: "V,S,M", duration: 1, concentration: false}, nil
     case "Searing Smite":
-        return SearingSmite{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}
+        return SearingSmite{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}, nil
     case "Shield":
-        return Shield{level: 1, casttime: "reaction", spellrange: 0, components: "V,S", duration: -1, concentration: false}
+        return Shield{level: 1, casttime: "reaction", spellrange: 0, components: "V,S", duration: -1, concentration: false}, nil
     case "Shield of Faith":
-        return ShieldOfFaith{level: 1, casttime: "bonus", spellrange: 60, components: "V,S,M", duration: 10, concentration: true}
+        return ShieldOfFaith{level: 1, casttime: "bonus", spellrange: 60, components: "V,S,M", duration: 10, concentration: true}, nil
     case "Shillelagh":
-        return Shillelagh{level: 0, casttime: "bonus", spellrange: 5, components: "V,S,M", duration: 1, concentration: false}
+        return Shillelagh{level: 0, casttime: "bonus", spellrange: 5, components: "V,S,M", duration: 1, concentration: false}, nil
     case "Shocking Grasp":
-        return ShockingGrasp{level: 0, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}
-    case "Silent Image":
-        return SilentImage{level: 1, casttime: "action", spellrange: 60, components: "V,S,M", duration: 10, concentration: true}
+        return ShockingGrasp{level: 0, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}, nil
     case "Sleep":
-        return Sleep{level: 1, casttime: "action", spellrange: 90, components: "V,S,M", duration: 1, concentration: false}
+        return Sleep{level: 1, casttime: "action", spellrange: 90, components: "V,S,M", duration: 1, concentration: false}, nil
     case "Spare the Dying":
-        return SpareTheDying{level: 0, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}
+        return SpareTheDying{level: 0, casttime: "action", spellrange: 5, components: "V,S", duration: 0, concentration: false}, nil
     case "Speak with Animals":
-        return SpeakWithAnimals{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 10, concentration: false}
+        return SpeakWithAnimals{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 10, concentration: false}, nil
     case "Tasha's Hideous Laughter":
-        return TashasHideousLaughter{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}
-    case "Tenser's Floating Disk":
-        return TensersFloatingDisk{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 60, concentration: false}
-    case "Thaumaturgy":
-        return Thaumaturgy{level: 0, casttime: "action", spellrange: 30, components: "V", duration: 1, concentration: false}
+        return TashasHideousLaughter{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}, nil
     case "Thorn Whip":
-        return ThornWhip{level: 0, casttime: "action", spellrange: 30, components: "V,S,M", duration: 0, concentration: false}
+        return ThornWhip{level: 0, casttime: "action", spellrange: 30, components: "V,S,M", duration: 0, concentration: false}, nil
     case "Thunderous Smite":
-        return ThunderousSmite{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}
+        return ThunderousSmite{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}, nil
     case "Thunderwave":
-        return Thunderwave{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 0, concentration: false}
+        return Thunderwave{level: 1, casttime: "action", spellrange: 0, components: "V,S", duration: 0, concentration: false}, nil
     case "True Strike":
-        return TrueStrike{level: 0, casttime: "action", spellrange: 30, components: "S", duration: -1, concentration: true}
-    case "Unseen Servant":
-        return UnseenServant{level: 1, casttime: "action", spellrange: 60, components: "V,S,M", duration: 60, concentration: false}
+        return TrueStrike{level: 0, casttime: "action", spellrange: 30, components: "S", duration: -1, concentration: true}, nil
     case "Vicious Mockery":
-        return ViciousMockery{level: 0, casttime: "action", spellrange: 60, components: "V", duration: 0, concentration: false}
+        return ViciousMockery{level: 0, casttime: "action", spellrange: 60, components: "V", duration: 0, concentration: false}, nil
     case "Witch Bolt":
-        return WitchBolt{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}
+        return WitchBolt{level: 1, casttime: "action", spellrange: 30, components: "V,S,M", duration: 1, concentration: true}, nil
     case "Wrathful Smite":
-        return WrathfulSmite{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}
+        return WrathfulSmite{level: 1, casttime: "bonus", spellrange: 0, components: "V", duration: 1, concentration: true}, nil
     default:
-        log.Fatal(fmt.Sprintf("%s is not a valid spell", spell))
-        return nil
+        return nil, errors.New(fmt.Sprintf("%s is not a valid spell", spell))
     }
 }

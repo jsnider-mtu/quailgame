@@ -87,280 +87,18 @@ type Player struct {
     XP int
     Equipment *Equipment
     Spells *Spells
+    Concentrating bool
+    TurnsCasting int
+    TurnsCastEnd int
 }
 
 func (s *Spells) Add(spellsslice []string) error {
     for _, spell := range spellsslice {
-        switch spell {
-        case "Acid Splash":
-            var acidsplash = spells.New(spell)
-            s.Spells = append(s.Spells, acidsplash)
-        case "Alarm":
-            var alarm = spells.New(spell)
-            s.Spells = append(s.Spells, alarm)
-        case "Animal Friendship":
-            var animalfriendship = spells.New(spell)
-            s.Spells = append(s.Spells, animalfriendship)
-        case "Armor of Agathys":
-            var armorofagathys = spells.New(spell)
-            s.Spells = append(s.Spells, armorofagathys)
-        case "Arms of Hadar":
-            var armsofhadar = spells.New(spell)
-            s.Spells = append(s.Spells, armsofhadar)
-        case "Bane":
-            var bane = spells.New(spell)
-            s.Spells = append(s.Spells, bane)
-        case "Blade Ward":
-            var bladeward = spells.New(spell)
-            s.Spells = append(s.Spells, bladeward)
-        case "Bless":
-            var bless = spells.New(spell)
-            s.Spells = append(s.Spells, bless)
-        case "Burning Hands":
-            var burninghands = spells.New(spell)
-            s.Spells = append(s.Spells, burninghands)
-        case "Charm Person":
-            var charmperson = spells.New(spell)
-            s.Spells = append(s.Spells, charmperson)
-        case "Chill Touch":
-            var chilltouch = spells.New(spell)
-            s.Spells = append(s.Spells, chilltouch)
-        case "Chromatic Orb":
-            var chromaticorb = spells.New(spell)
-            s.Spells = append(s.Spells, chromaticorb)
-        case "Color Spray":
-            var colorspray = spells.New(spell)
-            s.Spells = append(s.Spells, colorspray)
-        case "Command":
-            var command = spells.New(spell)
-            s.Spells = append(s.Spells, command)
-        case "Compelled Duel":
-            var compelledduel = spells.New(spell)
-            s.Spells = append(s.Spells, compelledduel)
-        case "Comprehend Languages":
-            var comprehendlanguages = spells.New(spell)
-            s.Spells = append(s.Spells, comprehendlanguages)
-        case "Create or Destroy Water":
-            var createordestroywater = spells.New(spell)
-            s.Spells = append(s.Spells, createordestroywater)
-        case "Cure Wounds":
-            var curewounds = spells.New(spell)
-            s.Spells = append(s.Spells, curewounds)
-        case "Dancing Lights":
-            var dancinglights = spells.New(spell)
-            s.Spells = append(s.Spells, dancinglights)
-        case "Detect Evil and Good":
-            var detectevilandgood = spells.New(spell)
-            s.Spells = append(s.Spells, detectevilandgood)
-        case "Detect Magic":
-            var detectmagic = spells.New(spell)
-            s.Spells = append(s.Spells, detectmagic)
-        case "Detect Poison and Disease":
-            var detectpoisonanddisease = spells.New(spell)
-            s.Spells = append(s.Spells, detectpoisonanddisease)
-        case "Disguise Self":
-            var disguiseself = spells.New(spell)
-            s.Spells = append(s.Spells, disguiseself)
-        case "Dissonant Whispers":
-            var dissonantwhispers = spells.New(spell)
-            s.Spells = append(s.Spells, dissonantwhispers)
-        case "Divine Favor":
-            var divinefavor = spells.New(spell)
-            s.Spells = append(s.Spells, divinefavor)
-        case "Druidcraft":
-            var druidcraft = spells.New(spell)
-            s.Spells = append(s.Spells, druidcraft)
-        case "Eldritch Blast":
-            var eldritchblast = spells.New(spell)
-            s.Spells = append(s.Spells, eldritchblast)
-        case "Ensnaring Strike":
-            var ensnaringstrike = spells.New(spell)
-            s.Spells = append(s.Spells, ensnaringstrike)
-        case "Entangle":
-            var entangle = spells.New(spell)
-            s.Spells = append(s.Spells, entangle)
-        case "Expeditious Retreat":
-            var expeditiousretreat = spells.New(spell)
-            s.Spells = append(s.Spells, expeditiousretreat)
-        case "Faerie Fire":
-            var faeriefire = spells.New(spell)
-            s.Spells = append(s.Spells, faeriefire)
-        case "False Life":
-            var falselife = spells.New(spell)
-            s.Spells = append(s.Spells, falselife)
-        case "Feather Fall":
-            var featherfall = spells.New(spell)
-            s.Spells = append(s.Spells, featherfall)
-        case "Find Familiar":
-            var findfamiliar = spells.New(spell)
-            s.Spells = append(s.Spells, findfamiliar)
-        case "Fire Bolt":
-            var firebolt = spells.New(spell)
-            s.Spells = append(s.Spells, firebolt)
-        case "Fog Cloud":
-            var fogcloud = spells.New(spell)
-            s.Spells = append(s.Spells, fogcloud)
-        case "Friends":
-            var friends = spells.New(spell)
-            s.Spells = append(s.Spells, friends)
-        case "Goodberry":
-            var goodberry = spells.New(spell)
-            s.Spells = append(s.Spells, goodberry)
-        case "Grease":
-            var grease = spells.New(spell)
-            s.Spells = append(s.Spells, grease)
-        case "Guidance":
-            var guidance = spells.New(spell)
-            s.Spells = append(s.Spells, guidance)
-        case "Guiding Bolt":
-            var guidingbolt = spells.New(spell)
-            s.Spells = append(s.Spells, guidingbolt)
-        case "Hail of Thorns":
-            var hailofthorns = spells.New(spell)
-            s.Spells = append(s.Spells, hailofthorns)
-        case "Healing Word":
-            var healingword = spells.New(spell)
-            s.Spells = append(s.Spells, healingword)
-        case "Hellish Rebuke":
-            var hellishrebuke = spells.New(spell)
-            s.Spells = append(s.Spells, hellishrebuke)
-        case "Heroism":
-            var heroism = spells.New(spell)
-            s.Spells = append(s.Spells, heroism)
-        case "Hex":
-            var hex = spells.New(spell)
-            s.Spells = append(s.Spells, hex)
-        case "Hunter's Mark":
-            var huntersmark = spells.New(spell)
-            s.Spells = append(s.Spells, huntersmark)
-        case "Identify":
-            var identify = spells.New(spell)
-            s.Spells = append(s.Spells, identify)
-        case "Illusory Script":
-            var illusoryscript = spells.New(spell)
-            s.Spells = append(s.Spells, illusoryscript)
-        case "Inflict Wounds":
-            var inflictwounds = spells.New(spell)
-            s.Spells = append(s.Spells, inflictwounds)
-        case "Jump":
-            var jump = spells.New(spell)
-            s.Spells = append(s.Spells, jump)
-        case "Light":
-            var light = spells.New(spell)
-            s.Spells = append(s.Spells, light)
-        case "Longstrider":
-            var longstrider = spells.New(spell)
-            s.Spells = append(s.Spells, longstrider)
-        case "Mage Armor":
-            var magearmor = spells.New(spell)
-            s.Spells = append(s.Spells, magearmor)
-        case "Mage Hand":
-            var magehand = spells.New(spell)
-            s.Spells = append(s.Spells, magehand)
-        case "Magic Missile":
-            var magicmissile = spells.New(spell)
-            s.Spells = append(s.Spells, magicmissile)
-        case "Mending":
-            var mending = spells.New(spell)
-            s.Spells = append(s.Spells, mending)
-        case "Message":
-            var message = spells.New(spell)
-            s.Spells = append(s.Spells, message)
-        case "Minor Illusion":
-            var minorillusion = spells.New(spell)
-            s.Spells = append(s.Spells, minorillusion)
-        case "Poison Spray":
-            var poisonspray = spells.New(spell)
-            s.Spells = append(s.Spells, poisonspray)
-        case "Prestidigitation":
-            var prestidigitation = spells.New(spell)
-            s.Spells = append(s.Spells, prestidigitation)
-        case "Produce Flame":
-            var produceflame = spells.New(spell)
-            s.Spells = append(s.Spells, produceflame)
-        case "Protection from Good and Evil":
-            var protectionfromgoodandevil = spells.New(spell)
-            s.Spells = append(s.Spells, protectionfromgoodandevil)
-        case "Purify Food and Drink":
-            var purifyfoodanddrink = spells.New(spell)
-            s.Spells = append(s.Spells, purifyfoodanddrink)
-        case "Ray of Frost":
-            var rayoffrost = spells.New(spell)
-            s.Spells = append(s.Spells, rayoffrost)
-        case "Ray of Sickness":
-            var rayofsickness = spells.New(spell)
-            s.Spells = append(s.Spells, rayofsickness)
-        case "Resistance":
-            var resistance = spells.New(spell)
-            s.Spells = append(s.Spells, resistance)
-        case "Sacred Flame":
-            var sacredflame = spells.New(spell)
-            s.Spells = append(s.Spells, sacredflame)
-        case "Sanctuary":
-            var sanctuary = spells.New(spell)
-            s.Spells = append(s.Spells, sanctuary)
-        case "Searing Smite":
-            var searingsmite = spells.New(spell)
-            s.Spells = append(s.Spells, searingsmite)
-        case "Shield":
-            var shield = spells.New(spell)
-            s.Spells = append(s.Spells, shield)
-        case "Shield of Faith":
-            var shieldoffaith = spells.New(spell)
-            s.Spells = append(s.Spells, shieldoffaith)
-        case "Shillelagh":
-            var shillelagh = spells.New(spell)
-            s.Spells = append(s.Spells, shillelagh)
-        case "Shocking Grasp":
-            var shockinggrasp = spells.New(spell)
-            s.Spells = append(s.Spells, shockinggrasp)
-        case "Silent Image":
-            var silentimage = spells.New(spell)
-            s.Spells = append(s.Spells, silentimage)
-        case "Sleep":
-            var sleep = spells.New(spell)
-            s.Spells = append(s.Spells, sleep)
-        case "Spare the Dying":
-            var sparethedying = spells.New(spell)
-            s.Spells = append(s.Spells, sparethedying)
-        case "Speak with Animals":
-            var speakwithanimals = spells.New(spell)
-            s.Spells = append(s.Spells, speakwithanimals)
-        case "Tasha's Hideous Laughter":
-            var tashashideouslaughter = spells.New(spell)
-            s.Spells = append(s.Spells, tashashideouslaughter)
-        case "Tenser's Floating Disk":
-            var tensersfloatingdisk = spells.New(spell)
-            s.Spells = append(s.Spells, tensersfloatingdisk)
-        case "Thaumaturgy":
-            var thaumaturgy = spells.New(spell)
-            s.Spells = append(s.Spells, thaumaturgy)
-        case "Thorn Whip":
-            var thornwhip = spells.New(spell)
-            s.Spells = append(s.Spells, thornwhip)
-        case "Thunderous Smite":
-            var thunderoussmite = spells.New(spell)
-            s.Spells = append(s.Spells, thunderoussmite)
-        case "Thunderwave":
-            var thunderwave = spells.New(spell)
-            s.Spells = append(s.Spells, thunderwave)
-        case "True Strike":
-            var truestrike = spells.New(spell)
-            s.Spells = append(s.Spells, truestrike)
-        case "Unseen Servant":
-            var unseenservant = spells.New(spell)
-            s.Spells = append(s.Spells, unseenservant)
-        case "Vicious Mockery":
-            var viciousmockery = spells.New(spell)
-            s.Spells = append(s.Spells, viciousmockery)
-        case "Witch Bolt":
-            var witchbolt = spells.New(spell)
-            s.Spells = append(s.Spells, witchbolt)
-        case "Wrathful Smite":
-            var wrathfulsmite = spells.New(spell)
-            s.Spells = append(s.Spells, wrathfulsmite)
-        default:
-            return errors.New(fmt.Sprintf("%s is not a valid spell", spell))
+        if sp, ok := spells.New(spell); ok == nil {
+            s.Spells = append(s.Spells, sp)
+        } else {
+            return ok
+            //return errors.New(fmt.Sprintf("%s is not a valid spell", spell))
         }
     }
     return nil
@@ -563,7 +301,22 @@ func (p *Player) GetName() string {
     return p.Name
 }
 
-func (p *Player) CastSpell(spell spells.Spell, target *Player) {
+func (p *Player) CanSpeak() bool {
+    return true
+}
+
+func (p *Player) CanMove() bool {
+    return true
+}
+
+func (p *Player) HaveMat() bool {
+    if p.Equipment.LeftHand.PrettyPrint() == "Arcane Focus" || p.Equipment.LeftHand.PrettyPrint() == "Component Pouch" {
+        return true
+    }
+    return false
+}
+
+func (p *Player) CastSpell(spell spells.Spell, target *Player) int {
     log.Println(fmt.Sprintf("Casting spell %s, target is %s", spell.PrettyPrint(), target.GetName()))
     // get spellrange
     spellrange := spell.GetRange()
@@ -577,6 +330,79 @@ func (p *Player) CastSpell(spell spells.Spell, target *Player) {
     if dist <= float64(spellrange) {
         // get casting time
         // if not instant start counting
+        switch spell.GetComponents() {
+        case "V,S,M":
+            if !p.CanSpeak() || !p.CanMove() || !p.HaveMat() {
+                return 0
+            }
+        case "S,M":
+            if !p.CanMove() || !p.HaveMat() {
+                return 0
+            }
+        case "M":
+            if !p.HaveMat() {
+                return 0
+            }
+        case "V,S":
+            if !p.CanSpeak() || !p.CanMove() {
+                return 0
+            }
+        case "V":
+            if !p.CanSpeak() {
+                return 0
+            }
+        case "S":
+            if !p.CanMove() {
+                return 0
+            }
+        default:
+            log.Fatal(fmt.Sprintf("%s is an invalid spell component", spell.GetComponents()))
+        }
+        switch spell.GetCastTime() {
+        case "minute":
+            p.Concentrating = true
+            p.TurnCastEnd = 10
+            p.TurnCasting++
+            if p.TurnCasting == p.TurnCastEnd {
+                if !spell.GetConcentration() {
+                    p.Concentrating = false
+                }
+                p.TurnCastEnd = 0
+                p.TurnCasting = 0
+                return 0
+            }
+            return p.TurnCastEnd - p.TurnCasting
+        case "hour":
+            p.Concentrating = true
+            p.TurnCastEnd = 600
+            p.TurnCasting++
+            if p.TurnCasting == p.TurnCastEnd {
+                if !spell.GetConcentration() {
+                    p.Concentrating = false
+                }
+                p.TurnCastEnd = 0
+                p.TurnCasting = 0
+                return 0
+            }
+            return p.TurnCastEnd - p.TurnCasting
+        case "action":
+            if spell.GetConcentration() {
+                p.Concentrating = true
+            }
+            return 0
+        case "bonus":
+            if spell.GetConcentration() {
+                p.Concentrating = true
+            }
+            return 0
+        case "reaction":
+            if spell.GetConcentration() {
+                p.Concentrating = true
+            }
+            return 0
+        default:
+            return 0
+        }
         // V can I speak?
         // S can I move at least a hand?
         // M do I have arcane focus or component pouch?
