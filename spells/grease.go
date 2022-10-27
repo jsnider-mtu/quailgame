@@ -27,8 +27,8 @@ func (g Grease) GetCastTime() string {
     return g.casttime
 }
 
-func (g Grease) GetRange() int {
-    return g.spellrange
+func (g Grease) GetRange() float64 {
+    return float64(g.spellrange) * 4.8
 }
 
 func (g Grease) GetComponents() string {

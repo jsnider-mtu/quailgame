@@ -27,8 +27,8 @@ func (w WitchBolt) GetCastTime() string {
     return w.casttime
 }
 
-func (w WitchBolt) GetRange() int {
-    return w.spellrange
+func (w WitchBolt) GetRange() float64 {
+    return float64(w.spellrange) * 4.8
 }
 
 func (w WitchBolt) GetComponents() string {

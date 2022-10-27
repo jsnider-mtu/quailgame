@@ -27,8 +27,8 @@ func (p ProduceFlame) GetCastTime() string {
     return p.casttime
 }
 
-func (p ProduceFlame) GetRange() int {
-    return p.spellrange
+func (p ProduceFlame) GetRange() float64 {
+    return float64(p.spellrange) * 4.8
 }
 
 func (p ProduceFlame) GetComponents() string {

@@ -27,8 +27,8 @@ func (e EnsnaringStrike) GetCastTime() string {
     return e.casttime
 }
 
-func (e EnsnaringStrike) GetRange() int {
-    return e.spellrange
+func (e EnsnaringStrike) GetRange() float64 {
+    return float64(e.spellrange) * 4.8
 }
 
 func (e EnsnaringStrike) GetComponents() string {

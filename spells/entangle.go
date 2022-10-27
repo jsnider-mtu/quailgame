@@ -27,8 +27,8 @@ func (e Entangle) GetCastTime() string {
     return e.casttime
 }
 
-func (e Entangle) GetRange() int {
-    return e.spellrange
+func (e Entangle) GetRange() float64 {
+    return float64(e.spellrange) * 4.8
 }
 
 func (e Entangle) GetComponents() string {

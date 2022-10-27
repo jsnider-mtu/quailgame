@@ -27,8 +27,8 @@ func (t ThunderousSmite) GetCastTime() string {
     return t.casttime
 }
 
-func (t ThunderousSmite) GetRange() int {
-    return t.spellrange
+func (t ThunderousSmite) GetRange() float64 {
+    return float64(t.spellrange) * 4.8
 }
 
 func (t ThunderousSmite) GetComponents() string {

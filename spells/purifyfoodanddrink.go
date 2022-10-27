@@ -27,8 +27,8 @@ func (p PurifyFoodAndDrink) GetCastTime() string {
     return p.casttime
 }
 
-func (p PurifyFoodAndDrink) GetRange() int {
-    return p.spellrange
+func (p PurifyFoodAndDrink) GetRange() float64 {
+    return float64(p.spellrange) * 4.8
 }
 
 func (p PurifyFoodAndDrink) GetComponents() string {

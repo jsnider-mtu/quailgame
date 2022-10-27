@@ -27,8 +27,8 @@ func (r Resistance) GetCastTime() string {
     return r.casttime
 }
 
-func (r Resistance) GetRange() int {
-    return r.spellrange
+func (r Resistance) GetRange() float64 {
+    return float64(r.spellrange) * 4.8
 }
 
 func (r Resistance) GetComponents() string {

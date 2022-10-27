@@ -27,8 +27,8 @@ func (w WrathfulSmite) GetCastTime() string {
     return w.casttime
 }
 
-func (w WrathfulSmite) GetRange() int {
-    return w.spellrange
+func (w WrathfulSmite) GetRange() float64 {
+    return float64(w.spellrange) * 4.8
 }
 
 func (w WrathfulSmite) GetComponents() string {

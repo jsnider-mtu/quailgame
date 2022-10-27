@@ -27,8 +27,8 @@ func (t Thunderwave) GetCastTime() string {
     return t.casttime
 }
 
-func (t Thunderwave) GetRange() int {
-    return t.spellrange
+func (t Thunderwave) GetRange() float64 {
+    return float64(t.spellrange) * 4.8
 }
 
 func (t Thunderwave) GetComponents() string {

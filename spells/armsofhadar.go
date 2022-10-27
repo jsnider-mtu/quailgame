@@ -27,8 +27,8 @@ func (a ArmsOfHadar) GetCastTime() string {
     return a.casttime
 }
 
-func (a ArmsOfHadar) GetRange() int {
-    return a.spellrange
+func (a ArmsOfHadar) GetRange() float64 {
+    return float64(a.spellrange) * 4.8
 }
 
 func (a ArmsOfHadar) GetComponents() string {

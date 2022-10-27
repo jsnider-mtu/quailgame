@@ -27,8 +27,8 @@ func (l Longstrider) GetCastTime() string {
     return l.casttime
 }
 
-func (l Longstrider) GetRange() int {
-    return l.spellrange
+func (l Longstrider) GetRange() float64 {
+    return float64(l.spellrange) * 4.8
 }
 
 func (l Longstrider) GetComponents() string {

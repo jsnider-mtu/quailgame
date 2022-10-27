@@ -27,8 +27,8 @@ func (h Hex) GetCastTime() string {
     return h.casttime
 }
 
-func (h Hex) GetRange() int {
-    return h.spellrange
+func (h Hex) GetRange() float64 {
+    return float64(h.spellrange) * 4.8
 }
 
 func (h Hex) GetComponents() string {

@@ -27,8 +27,8 @@ func (s SacredFlame) GetCastTime() string {
     return s.casttime
 }
 
-func (s SacredFlame) GetRange() int {
-    return s.spellrange
+func (s SacredFlame) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s SacredFlame) GetComponents() string {

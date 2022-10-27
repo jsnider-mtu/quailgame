@@ -27,8 +27,8 @@ func (s SpareTheDying) GetCastTime() string {
     return s.casttime
 }
 
-func (s SpareTheDying) GetRange() int {
-    return s.spellrange
+func (s SpareTheDying) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s SpareTheDying) GetComponents() string {

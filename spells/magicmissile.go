@@ -27,8 +27,8 @@ func (m MagicMissile) GetCastTime() string {
     return m.casttime
 }
 
-func (m MagicMissile) GetRange() int {
-    return m.spellrange
+func (m MagicMissile) GetRange() float64 {
+    return float64(m.spellrange) * 4.8
 }
 
 func (m MagicMissile) GetComponents() string {

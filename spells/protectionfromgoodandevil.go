@@ -27,8 +27,8 @@ func (p ProtectionFromGoodAndEvil) GetCastTime() string {
     return p.casttime
 }
 
-func (p ProtectionFromGoodAndEvil) GetRange() int {
-    return p.spellrange
+func (p ProtectionFromGoodAndEvil) GetRange() float64 {
+    return float64(p.spellrange) * 4.8
 }
 
 func (p ProtectionFromGoodAndEvil) GetComponents() string {

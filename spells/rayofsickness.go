@@ -27,8 +27,8 @@ func (r RayOfSickness) GetCastTime() string {
     return r.casttime
 }
 
-func (r RayOfSickness) GetRange() int {
-    return r.spellrange
+func (r RayOfSickness) GetRange() float64 {
+    return float64(r.spellrange) * 4.8
 }
 
 func (r RayOfSickness) GetComponents() string {

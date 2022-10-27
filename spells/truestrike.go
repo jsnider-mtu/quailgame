@@ -27,8 +27,8 @@ func (t TrueStrike) GetCastTime() string {
     return t.casttime
 }
 
-func (t TrueStrike) GetRange() int {
-    return t.spellrange
+func (t TrueStrike) GetRange() float64 {
+    return float64(t.spellrange) * 4.8
 }
 
 func (t TrueStrike) GetComponents() string {

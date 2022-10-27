@@ -27,8 +27,8 @@ func (c ChromaticOrb) GetCastTime() string {
     return c.casttime
 }
 
-func (c ChromaticOrb) GetRange() int {
-    return c.spellrange
+func (c ChromaticOrb) GetRange() float64 {
+    return float64(c.spellrange) * 4.8
 }
 
 func (c ChromaticOrb) GetComponents() string {

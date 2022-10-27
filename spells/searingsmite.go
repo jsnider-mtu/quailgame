@@ -27,8 +27,8 @@ func (s SearingSmite) GetCastTime() string {
     return s.casttime
 }
 
-func (s SearingSmite) GetRange() int {
-    return s.spellrange
+func (s SearingSmite) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s SearingSmite) GetComponents() string {

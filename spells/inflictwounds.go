@@ -27,8 +27,8 @@ func (i InflictWounds) GetCastTime() string {
     return i.casttime
 }
 
-func (i InflictWounds) GetRange() int {
-    return i.spellrange
+func (i InflictWounds) GetRange() float64 {
+    return float64(i.spellrange) * 4.8
 }
 
 func (i InflictWounds) GetComponents() string {

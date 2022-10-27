@@ -27,8 +27,8 @@ func (s Sleep) GetCastTime() string {
     return s.casttime
 }
 
-func (s Sleep) GetRange() int {
-    return s.spellrange
+func (s Sleep) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s Sleep) GetComponents() string {

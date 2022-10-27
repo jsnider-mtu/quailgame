@@ -27,8 +27,8 @@ func (a ArmorOfAgathys) GetCastTime() string {
     return a.casttime
 }
 
-func (a ArmorOfAgathys) GetRange() int {
-    return a.spellrange
+func (a ArmorOfAgathys) GetRange() float64 {
+    return float64(a.spellrange) * 4.8
 }
 
 func (a ArmorOfAgathys) GetComponents() string {

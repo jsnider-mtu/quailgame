@@ -27,8 +27,8 @@ func (e ExpeditiousRetreat) GetCastTime() string {
     return e.casttime
 }
 
-func (e ExpeditiousRetreat) GetRange() int {
-    return e.spellrange
+func (e ExpeditiousRetreat) GetRange() float64 {
+    return float64(e.spellrange) * 4.8
 }
 
 func (e ExpeditiousRetreat) GetComponents() string {

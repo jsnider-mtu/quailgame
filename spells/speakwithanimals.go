@@ -27,8 +27,8 @@ func (s SpeakWithAnimals) GetCastTime() string {
     return s.casttime
 }
 
-func (s SpeakWithAnimals) GetRange() int {
-    return s.spellrange
+func (s SpeakWithAnimals) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s SpeakWithAnimals) GetComponents() string {

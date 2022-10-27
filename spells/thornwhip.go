@@ -27,8 +27,8 @@ func (t ThornWhip) GetCastTime() string {
     return t.casttime
 }
 
-func (t ThornWhip) GetRange() int {
-    return t.spellrange
+func (t ThornWhip) GetRange() float64 {
+    return float64(t.spellrange) * 4.8
 }
 
 func (t ThornWhip) GetComponents() string {

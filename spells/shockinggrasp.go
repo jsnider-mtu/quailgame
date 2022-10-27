@@ -27,8 +27,8 @@ func (s ShockingGrasp) GetCastTime() string {
     return s.casttime
 }
 
-func (s ShockingGrasp) GetRange() int {
-    return s.spellrange
+func (s ShockingGrasp) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s ShockingGrasp) GetComponents() string {

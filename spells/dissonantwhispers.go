@@ -27,8 +27,8 @@ func (d DissonantWhispers) GetCastTime() string {
     return d.casttime
 }
 
-func (d DissonantWhispers) GetRange() int {
-    return d.spellrange
+func (d DissonantWhispers) GetRange() float64 {
+    return float64(d.spellrange) * 4.8
 }
 
 func (d DissonantWhispers) GetComponents() string {

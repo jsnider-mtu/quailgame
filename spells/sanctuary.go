@@ -27,8 +27,8 @@ func (s Sanctuary) GetCastTime() string {
     return s.casttime
 }
 
-func (s Sanctuary) GetRange() int {
-    return s.spellrange
+func (s Sanctuary) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s Sanctuary) GetComponents() string {

@@ -27,8 +27,8 @@ func (h Heroism) GetCastTime() string {
     return h.casttime
 }
 
-func (h Heroism) GetRange() int {
-    return h.spellrange
+func (h Heroism) GetRange() float64 {
+    return float64(h.spellrange) * 4.8
 }
 
 func (h Heroism) GetComponents() string {

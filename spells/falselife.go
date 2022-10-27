@@ -27,8 +27,8 @@ func (f FalseLife) GetCastTime() string {
     return f.casttime
 }
 
-func (f FalseLife) GetRange() int {
-    return f.spellrange
+func (f FalseLife) GetRange() float64 {
+    return float64(f.spellrange) * 4.8
 }
 
 func (f FalseLife) GetComponents() string {

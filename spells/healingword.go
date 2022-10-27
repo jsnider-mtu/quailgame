@@ -27,8 +27,8 @@ func (h HealingWord) GetCastTime() string {
     return h.casttime
 }
 
-func (h HealingWord) GetRange() int {
-    return h.spellrange
+func (h HealingWord) GetRange() float64 {
+    return float64(h.spellrange) * 4.8
 }
 
 func (h HealingWord) GetComponents() string {

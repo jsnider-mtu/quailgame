@@ -27,8 +27,8 @@ func (b BladeWard) GetCastTime() string {
     return b.casttime
 }
 
-func (b BladeWard) GetRange() int {
-    return b.spellrange
+func (b BladeWard) GetRange() float64 {
+    return float64(b.spellrange) * 4.8
 }
 
 func (b BladeWard) GetComponents() string {

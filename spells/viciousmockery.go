@@ -27,8 +27,8 @@ func (v ViciousMockery) GetCastTime() string {
     return v.casttime
 }
 
-func (v ViciousMockery) GetRange() int {
-    return v.spellrange
+func (v ViciousMockery) GetRange() float64 {
+    return float64(v.spellrange) * 4.8
 }
 
 func (v ViciousMockery) GetComponents() string {

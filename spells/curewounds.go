@@ -27,8 +27,8 @@ func (c CureWounds) GetCastTime() string {
     return c.casttime
 }
 
-func (c CureWounds) GetRange() int {
-    return c.spellrange
+func (c CureWounds) GetRange() float64 {
+    return float64(c.spellrange) * 4.8
 }
 
 func (c CureWounds) GetComponents() string {

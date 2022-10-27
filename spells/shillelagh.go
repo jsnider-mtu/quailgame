@@ -27,8 +27,8 @@ func (s Shillelagh) GetCastTime() string {
     return s.casttime
 }
 
-func (s Shillelagh) GetRange() int {
-    return s.spellrange
+func (s Shillelagh) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s Shillelagh) GetComponents() string {

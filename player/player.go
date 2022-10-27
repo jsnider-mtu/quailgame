@@ -318,16 +318,16 @@ func (p *Player) HaveMat() bool {
 
 func (p *Player) CastSpell(spell spells.Spell, target *Player) int {
     log.Println(fmt.Sprintf("Casting spell %s, target is %s", spell.PrettyPrint(), target.GetName()))
-    // get spellrange
-    spellrange := spell.GetRange()
+    //spellrange := spell.GetRange()
     // is target within spellrange?
     // get x, y of player and target and calculate distance
     playerx := p.Pos[0] + 24
     playery := p.Pos[1] + 24
     targetx := target.Pos[0] + 24
     targety := target.Pos[1] + 24
+    // 5 ft == 24 px
     dist := math.Sqrt(math.Pow(float64(targetx - playerx), 2.0) + math.Pow(float64(targety - playery), 2.0))
-    if dist <= float64(spellrange) {
+    if dist <= spell.GetRange() {
         // get casting time
         // if not instant start counting
         switch spell.GetComponents() {

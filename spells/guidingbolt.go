@@ -27,8 +27,8 @@ func (g GuidingBolt) GetCastTime() string {
     return g.casttime
 }
 
-func (g GuidingBolt) GetRange() int {
-    return g.spellrange
+func (g GuidingBolt) GetRange() float64 {
+    return float64(g.spellrange) * 4.8
 }
 
 func (g GuidingBolt) GetComponents() string {

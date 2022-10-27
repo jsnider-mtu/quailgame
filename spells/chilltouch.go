@@ -27,8 +27,8 @@ func (c ChillTouch) GetCastTime() string {
     return c.casttime
 }
 
-func (c ChillTouch) GetRange() int {
-    return c.spellrange
+func (c ChillTouch) GetRange() float64 {
+    return float64(c.spellrange) * 4.8
 }
 
 func (c ChillTouch) GetComponents() string {

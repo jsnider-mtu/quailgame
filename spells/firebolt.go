@@ -27,8 +27,8 @@ func (f FireBolt) GetCastTime() string {
     return f.casttime
 }
 
-func (f FireBolt) GetRange() int {
-    return f.spellrange
+func (f FireBolt) GetRange() float64 {
+    return float64(f.spellrange) * 4.8
 }
 
 func (f FireBolt) GetComponents() string {

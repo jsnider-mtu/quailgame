@@ -27,8 +27,8 @@ func (r RayOfFrost) GetCastTime() string {
     return r.casttime
 }
 
-func (r RayOfFrost) GetRange() int {
-    return r.spellrange
+func (r RayOfFrost) GetRange() float64 {
+    return float64(r.spellrange) * 4.8
 }
 
 func (r RayOfFrost) GetComponents() string {

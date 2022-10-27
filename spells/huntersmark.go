@@ -27,8 +27,8 @@ func (h HuntersMark) GetCastTime() string {
     return h.casttime
 }
 
-func (h HuntersMark) GetRange() int {
-    return h.spellrange
+func (h HuntersMark) GetRange() float64 {
+    return float64(h.spellrange) * 4.8
 }
 
 func (h HuntersMark) GetComponents() string {

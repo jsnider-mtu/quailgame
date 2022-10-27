@@ -27,8 +27,8 @@ func (c ComprehendLanguages) GetCastTime() string {
     return c.casttime
 }
 
-func (c ComprehendLanguages) GetRange() int {
-    return c.spellrange
+func (c ComprehendLanguages) GetRange() float64 {
+    return float64(c.spellrange) * 4.8
 }
 
 func (c ComprehendLanguages) GetComponents() string {

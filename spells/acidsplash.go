@@ -27,8 +27,8 @@ func (a AcidSplash) GetCastTime() string {
     return a.casttime
 }
 
-func (a AcidSplash) GetRange() int {
-    return a.spellrange
+func (a AcidSplash) GetRange() float64 {
+    return float64(a.spellrange) * 4.8
 }
 
 func (a AcidSplash) GetComponents() string {

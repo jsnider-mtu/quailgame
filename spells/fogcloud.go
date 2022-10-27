@@ -27,8 +27,8 @@ func (f FogCloud) GetCastTime() string {
     return f.casttime
 }
 
-func (f FogCloud) GetRange() int {
-    return f.spellrange
+func (f FogCloud) GetRange() float64 {
+    return float64(f.spellrange) * 4.8
 }
 
 func (f FogCloud) GetComponents() string {

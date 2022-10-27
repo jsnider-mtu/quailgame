@@ -27,8 +27,8 @@ func (e EldritchBlast) GetCastTime() string {
     return e.casttime
 }
 
-func (e EldritchBlast) GetRange() int {
-    return e.spellrange
+func (e EldritchBlast) GetRange() float64 {
+    return float64(e.spellrange) * 4.8
 }
 
 func (e EldritchBlast) GetComponents() string {

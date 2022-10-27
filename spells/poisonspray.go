@@ -27,8 +27,8 @@ func (p PoisonSpray) GetCastTime() string {
     return p.casttime
 }
 
-func (p PoisonSpray) GetRange() int {
-    return p.spellrange
+func (p PoisonSpray) GetRange() float64 {
+    return float64(p.spellrange) * 4.8
 }
 
 func (p PoisonSpray) GetComponents() string {

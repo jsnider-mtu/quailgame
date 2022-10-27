@@ -27,8 +27,8 @@ func (m MageArmor) GetCastTime() string {
     return m.casttime
 }
 
-func (m MageArmor) GetRange() int {
-    return m.spellrange
+func (m MageArmor) GetRange() float64 {
+    return float64(m.spellrange) * 4.8
 }
 
 func (m MageArmor) GetComponents() string {

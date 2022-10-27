@@ -27,8 +27,8 @@ func (d DivineFavor) GetCastTime() string {
     return d.casttime
 }
 
-func (d DivineFavor) GetRange() int {
-    return d.spellrange
+func (d DivineFavor) GetRange() float64 {
+    return float64(d.spellrange) * 4.8
 }
 
 func (d DivineFavor) GetComponents() string {

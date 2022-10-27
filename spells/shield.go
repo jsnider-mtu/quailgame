@@ -27,8 +27,8 @@ func (s Shield) GetCastTime() string {
     return s.casttime
 }
 
-func (s Shield) GetRange() int {
-    return s.spellrange
+func (s Shield) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s Shield) GetComponents() string {

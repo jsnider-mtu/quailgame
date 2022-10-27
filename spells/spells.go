@@ -11,7 +11,7 @@ type Spell interface {
     PrettyPrint() string
     GetLevel() int
     GetCastTime() string
-    GetRange() int
+    GetRange() float64
     GetComponents() string
     GetDuration() int
     GetConcentration() bool

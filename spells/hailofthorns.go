@@ -27,8 +27,8 @@ func (h HailOfThorns) GetCastTime() string {
     return h.casttime
 }
 
-func (h HailOfThorns) GetRange() int {
-    return h.spellrange
+func (h HailOfThorns) GetRange() float64 {
+    return float64(h.spellrange) * 4.8
 }
 
 func (h HailOfThorns) GetComponents() string {

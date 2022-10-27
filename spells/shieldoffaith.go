@@ -27,8 +27,8 @@ func (s ShieldOfFaith) GetCastTime() string {
     return s.casttime
 }
 
-func (s ShieldOfFaith) GetRange() int {
-    return s.spellrange
+func (s ShieldOfFaith) GetRange() float64 {
+    return float64(s.spellrange) * 4.8
 }
 
 func (s ShieldOfFaith) GetComponents() string {
