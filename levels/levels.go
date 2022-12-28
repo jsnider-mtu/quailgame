@@ -362,7 +362,7 @@ func (l *Level) LineOfSight(p, target *player.Player) (bool, bool, float64) {
 
 func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, attempt int, mc *player.Player) (bool, string) {
     if vert {
-        if p.Pos[1] + dist > l.Pos[1] && p.Pos[1] + dist < l.GetMax()[1] {
+        if p.Pos[1] + dist > 0 && p.Pos[1] + dist < l.GetMax()[1] {
             if dist < 0 {
                 if !pc {
                     if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
@@ -426,7 +426,7 @@ func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, att
         }
         return false, "mapedge"
     } else {
-        if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.GetMax()[0] {
+        if p.Pos[0] + dist > 0 && p.Pos[0] + dist < l.GetMax()[0] {
             if dist < 0 {
                 if !pc {
                     if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
