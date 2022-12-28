@@ -8,6 +8,8 @@ import (
     _ "image/png"
     "log"
     "math/rand"
+    "strconv"
+    "strings"
 
     "github.com/hajimehoshi/ebiten/v2"
 
@@ -209,34 +211,102 @@ func (l *Level) GrassAnim(screen *ebiten.Image, w, h int) {
     }
 }
 
+func (l *Level) SaveNPCs() string {
+    result := ""
+    for _, npc := range l.NPCs {
+        result += npc.SaveHP()
+    }
+    return result
+}
+
 func LoadLvl(newlvl ...interface{}) *Level {
-    if len(newlvl) != 4 && len(newlvl) != 2 {
-        log.Fatal("Incorrect number of arguments passed to levels.LoadLvl; should be 2 or 4, got %d", len(newlvl))
+    if len(newlvl) != 5 && len(newlvl) != 3 {
+        log.Fatal("Incorrect number of arguments passed to levels.LoadLvl; should be 3 or 5, got %d", len(newlvl))
         return nil
     }
     switch newlvl[0] {
     case "One":
-        l := lvlOne(newlvl[1].(int))
-        if len(newlvl) == 4 {
+        var l *Level
+        if len(newlvl) == 5 {
+            l = lvlOne(newlvl[1].(int), newlvl[4].(string))
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
+            if newlvl[4].(string) != "" {
+                npchps := strings.Split(newlvl[4].(string), ";")
+                npchps = npchps[:len(npchps) - 1]
+                for x := 0; x < len(npchps); x++ {
+                    npcname := strings.Split(npchps[x], "=")[0]
+                    npchp := strings.Split(npchps[x], "=")[1]
+                    for _, npc := range l.NPCs {
+                        if npc.GetName() == npcname {
+                            hpint, err := strconv.Atoi(npchp)
+                            if err != nil {
+                                panic(err)
+                            }
+                            npc.PC.Stats.HP = hpint
+                        }
+                    }
+                }
+            }
+        } else {
+            l = lvlOne(newlvl[1].(int), newlvl[2].(string))
         }
         return l
     case "Two":
-        l := lvlTwo(newlvl[1].(int))
-        if len(newlvl) == 4 {
+        var l *Level
+        if len(newlvl) == 5 {
+            l = lvlTwo(newlvl[1].(int), newlvl[4].(string))
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
+            if newlvl[4] != "" {
+                npchps := strings.Split(newlvl[4].(string), ";")
+                npchps = npchps[:len(npchps) - 1]
+                for x := 0; x < len(npchps); x++ {
+                    npcname := strings.Split(npchps[x], "=")[0]
+                    npchp := strings.Split(npchps[x], "=")[1]
+                    for _, npc := range l.NPCs {
+                        if npc.GetName() == npcname {
+                            hpint, err := strconv.Atoi(npchp)
+                            if err != nil {
+                                panic(err)
+                            }
+                            npc.PC.Stats.HP = hpint
+                        }
+                    }
+                }
+            }
+        } else {
+            l = lvlTwo(newlvl[1].(int), newlvl[2].(string))
         }
         return l
     case "VerticalWall":
-        l := verticalWallLvl(newlvl[1].(int))
-        if len(newlvl) == 4 {
+        var l *Level
+        if len(newlvl) == 5 {
+            l = verticalWallLvl(newlvl[1].(int), newlvl[4].(string))
             l.Pos = [2]int{newlvl[2].(int), newlvl[3].(int)}
+            if newlvl[4] != "" {
+                npchps := strings.Split(newlvl[4].(string), ";")
+                npchps = npchps[:len(npchps) - 1]
+                for x := 0; x < len(npchps); x++ {
+                    npcname := strings.Split(npchps[x], "=")[0]
+                    npchp := strings.Split(npchps[x], "=")[1]
+                    for _, npc := range l.NPCs {
+                        if npc.GetName() == npcname {
+                            hpint, err := strconv.Atoi(npchp)
+                            if err != nil {
+                                panic(err)
+                            }
+                            npc.PC.Stats.HP = hpint
+                        }
+                    }
+                }
+            }
+        } else {
+            l = verticalWallLvl(newlvl[1].(int), newlvl[2].(string))
         }
         return l
     default:
         log.Fatal(fmt.Sprintf("Level %s does not exist", newlvl[0]))
     }
-    return lvlOne(newlvl[1].(int))
+    return lvlOne(newlvl[1].(int), "")
 }
 
 func (l *Level) LineOfSight(p, target *player.Player) (bool, bool, float64) {

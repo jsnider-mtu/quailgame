@@ -16,7 +16,7 @@ import (
     "github.com/jsnider-mtu/quailgame/player"
 )
 
-func lvlOne(entrance int) *Level {
+func lvlOne(entrance int, npchps string) *Level {
     lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.One_JPEG))
     if err != nil {
         log.Fatal(err)
@@ -34,8 +34,8 @@ func lvlOne(entrance int) *Level {
     wizardImage := ebiten.NewImageFromImage(wizardimage)
 
     lvldoors := []*Door{
-        &Door{coords: [2]int{0, 0}, NewLvl: []interface{}{"Two", 1}},
-        &Door{coords: [2]int{336, 504}, NewLvl: []interface{}{"Two", 2}}}
+        &Door{coords: [2]int{0, 0}, NewLvl: []interface{}{"Two", 1, npchps}},
+        &Door{coords: [2]int{336, 504}, NewLvl: []interface{}{"Two", 2, npchps}}}
 
     NPCs := []*npcs.NPC{npcs.NewNPC(
         "down", [][]string{

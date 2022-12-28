@@ -16,7 +16,7 @@ import (
 //    "github.com/jsnider-mtu/quailgame/player"
 )
 
-func verticalWallLvl(entrance int) *Level {
+func verticalWallLvl(entrance int, npchps string) *Level {
     lvlimg, _, err := image.Decode(bytes.NewReader(lvlimages.VerticalWallLvlOne_PNG))
     if err != nil {
         log.Fatal(err)
@@ -31,11 +31,11 @@ func verticalWallLvl(entrance int) *Level {
     lvldoors := []*Door{}
 
     for x := 0; x < 15; x++ {
-        lvldoors = append(lvldoors, &Door{coords: [2]int{432 + (24 * x), 288}, NewLvl: []interface{}{"Two", 1}})
+        lvldoors = append(lvldoors, &Door{coords: [2]int{432 + (24 * x), 288}, NewLvl: []interface{}{"Two", 1, npchps}})
     }
 
     for x := 0; x < 15; x++ {
-        lvldoors = append(lvldoors, &Door{coords: [2]int{432 + (24 * x), 5808}, NewLvl: []interface{}{"Two", 2}})
+        lvldoors = append(lvldoors, &Door{coords: [2]int{432 + (24 * x), 5808}, NewLvl: []interface{}{"Two", 2, npchps}})
     }
 
     var pos [2]int

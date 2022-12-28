@@ -164,6 +164,9 @@ var (
     ancestry string
     targeted int = -1
     passattempts int = 0
+    npchp string
+    levelslice []*levels.Level
+    lvlloaded bool = false
 )
 
 var racemap = make(map[int]string)
@@ -508,7 +511,8 @@ func (g *Game) Update() error {
                             log.Fatal(err)
                         }
                         sb.Reset()
-                        l = levels.LoadLvl("One", 0)
+                        //l = levels.LoadLvl("One", 0, "")
+                        //levelslice = append(levelslice, l)
                         targeted = -1
                         p.Name = name
                         p.Pos[0] = -l.Pos[0]
@@ -554,7 +558,8 @@ func (g *Game) Update() error {
                     switch startsel {
                     case 0:
                         if l == nil {
-                            l = levels.LoadLvl("One", 0)
+                            l = levels.LoadLvl("One", 0, "")
+                            levelslice = append(levelslice, l)
                             targeted = -1
                             p = &player.Player{Pos: [2]int{-l.Pos[0], -l.Pos[1]}, Inv: &inventory.Inv{}, Image: pcImage, Spells: &player.Spells{}}
                         }
@@ -8294,7 +8299,11 @@ func (g *Game) Update() error {
                 fmt.Println(statsstr)
                 var equipmentstr string = p.Equipment.Save()
                 var spellsstr string = p.Spells.Save()
-                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Race, p.Class, p.Level, p.XP, equipmentstr, spellsstr)
+                var npchps string
+                for _, lvl := range levelslice {
+                    npchps += lvl.SaveNPCs()
+                }
+                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Race, p.Class, p.Level, p.XP, equipmentstr, spellsstr, npchps)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -8329,7 +8338,7 @@ func (g *Game) Update() error {
                 var equipmentstr string
                 var spellsstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &racestr, &classstr, &playerlvl, &playerxp, &equipmentstr, &spellsstr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &racestr, &classstr, &playerlvl, &playerxp, &equipmentstr, &spellsstr, &npchp)
                 }
                 err = rows.Err()
                 if err != nil {
@@ -8720,11 +8729,13 @@ func (g *Game) Update() error {
                     }
                 }
                 p.Equipment = &player.Equipment{}
-                log.Println(equipmentstr)
                 for _, equipped := range strings.Split(equipmentstr, "|") {
+                    log.Println(equipped)
                     itemprops := strings.Split(equipped, ",")
+                    log.Println("itemprops = " + fmt.Sprint(itemprops))
                     switch len(itemprops) {
                     case 1:
+                        log.Println(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1])
                         p.Inv.Add(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
                         p.Equip(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
                     case 2:
@@ -8735,7 +8746,8 @@ func (g *Game) Update() error {
                     }
                 }
                 p.Spells.Add(strings.Split(spellsstr, ","))
-                l = levels.LoadLvl(levelname, 0, x, y)
+                log.Println(npchp)
+                l = levels.LoadLvl(levelname, 0, x, y, npchp)
                 targeted = -1
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
                 load = false
@@ -13273,6 +13285,42 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if lvlchange {
+        for _, lvl := range levelslice {
+            if lvl.GetName() == l.GetName() {
+                npchporig := npchp
+                for _, npc := range l.NPCs {
+                    npchpslice := strings.Split(npchp, ";")
+                    npchpslice = npchpslice[:len(npchpslice) - 1]
+                    var npchporigval string
+                    var update bool = false
+                    for _, npchpstr := range npchpslice {
+                        log.Println(strings.Split(npchpstr, "=")[0])
+                        log.Println(npc.GetName())
+                        if strings.Split(npchpstr, "=")[0] == npc.GetName() {
+                            update = true
+                            npchporigval = strings.Split(npchpstr, "=")[1]
+                        }
+                    }
+                    if update {
+                        npchp = strings.Replace(npchp, npc.GetName() + "=" + npchporigval, npc.SaveHP(), 1)
+                        npchp = strings.ReplaceAll(npchp, ";;", ";")
+                        log.Println(fmt.Sprintf("Replaced npchp = %s", npchp))
+                        update = false
+                    } else {
+                        log.Println("not updating npchp")
+                        npchp += npc.SaveHP()
+                    }
+                    log.Println(npchp)
+                }
+                if npchp != npchporig {
+                    log.Println(fmt.Sprintf("npchp = %s\nnpchporig = %s", npchp, npchporig))
+                    save = true
+                }
+            }
+        }
+        if save {
+            return
+        }
         op := &ebiten.DrawImageOptions{}
         fadeScreen = ebiten.NewImage(768, 576)
         fadeScreen.Fill(color.Black)
@@ -13298,7 +13346,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
             screen.DrawImage(fadeScreen, nil)
             f = 0
             lvlchange = false
-            l = levels.LoadLvl(newlvl...)
+            for _, lvl := range levelslice {
+                if lvl.GetName() == newlvl[0] {
+                    l = lvl
+                    lvlloaded = true
+                }
+            }
+            if !lvlloaded {
+                l = levels.LoadLvl(newlvl...)
+                levelslice = append(levelslice, l)
+            }
             targeted = -1
             p.Pos[0] = -l.Pos[0]
             p.Pos[1] = -l.Pos[1]
@@ -13306,6 +13363,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 curCS = l.Cutscene
                 cutscene = true
             }
+            lvlloaded = false
         }
     }
 }
@@ -13490,7 +13548,7 @@ func init() {
     classmap[10] = "Warlock"
     classmap[11] = "Wizard"
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "race,TEXT,0,null,0", "class,TEXT,0,null,0", "playerlevel,INT,0,null,0", "xp,INT,0,null,0", "equipment,TEXT,0,null,0", "spells,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "race,TEXT,0,null,0", "class,TEXT,0,null,0", "playerlevel,INT,0,null,0", "xp,INT,0,null,0", "equipment,TEXT,0,null,0", "spells,TEXT,0,null,0", "npchps,TEXT,0,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)
