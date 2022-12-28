@@ -5,18 +5,18 @@ import (
     "github.com/jsnider-mtu/quailgame/player"
 )
 
-func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist int, mc *player.Player) bool {
+func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist int, attempt int, mc *player.Player) (bool, string) {
     if vert {
         if p.Pos[1] + dist > l.Pos[1] && p.Pos[1] + dist < l.GetMax()[1] {
             if dist < 0 {
                 if !pc {
                     if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
-                        return false
+                        return false, "player"
                     }
                 }
                 for _, a := range l.Boxes {
                     if p.Pos[0] > a[0] - 48 && p.Pos[0] < a[2] && p.Pos[1] + dist >= a[1] && p.Pos[1] + dist < a[3] - 24 {
-                        return false
+                        return false, "box"
                     }
                 }
                 for _, b := range l.NPCs {
@@ -25,23 +25,25 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                             continue
                         }
                         if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist < b.PC.Pos[1] + 48 {
-                            return false
+                            return false, "npc"
                         }
                     } else {
                         if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist == b.PC.Pos[1] {
-                            return false
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
                         }
                     }
                 }
             } else {
                 if !pc {
                     if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
-                        return false
+                        return false, "player"
                     }
                 }
                 for _, a := range l.Boxes {
                     if p.Pos[0] > a[0] - 24 && p.Pos[0] < a[2] - 24 && p.Pos[1] + dist >= a[1] - 24 && p.Pos[1] + dist < a[3] {
-                        return false
+                        return false, "box"
                     }
                 }
                 for _, b := range l.NPCs {
@@ -50,11 +52,13 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                             continue
                         }
                         if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] - 48 {
-                            return false
+                            return false, "npc"
                         }
                     } else {
                         if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist == b.PC.Pos[1] {
-                            return false
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
                         }
                     }
                 }
@@ -63,20 +67,20 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
             if pc {
                 l.Pos[1] -= dist
             }
-            return true
+            return true, ""
         }
-        return false
+        return false, "mapedge"
     } else {
         if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.GetMax()[0] {
             if dist < 0 {
                 if !pc {
                     if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
-                        return false
+                        return false, "player"
                     }
                 }
                 for _, a := range l.Boxes {
                     if p.Pos[0] + dist >= a[0] && p.Pos[0] + dist < a[2] && p.Pos[1] >= a[1] - 24 && p.Pos[1] < a[3] - 24 {
-                        return false
+                        return false, "box"
                     }
                 }
                 for _, b := range l.NPCs {
@@ -85,23 +89,25 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                             continue
                         }
                         if p.Pos[0] + dist == b.PC.Pos[0] && p.Pos[1] >= b.PC.Pos[1] - 24 && p.Pos[1] <= b.PC.Pos[1] + 24 {
-                            return false
+                            return false, "npc"
                         }
                     } else {
                         if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] == b.PC.Pos[1] {
-                            return false
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
                         }
                     }
                 }
             } else {
                 if !pc {
                     if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
-                        return false
+                        return false, "player"
                     }
                 }
                 for _, a := range l.Boxes {
                     if p.Pos[0] + dist >= a[0] - 24 && p.Pos[0] + dist < a[2] && p.Pos[1] >= a[1] - 24 && p.Pos[1] < a[3] - 24 {
-                        return false
+                        return false, "box"
                     }
                 }
                 for _, b := range l.NPCs {
@@ -110,11 +116,13 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
                             continue
                         }
                         if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[1] >= b.PC.Pos[1] - 24 && p.Pos[1] <= b.PC.Pos[1] + 24 {
-                            return false
+                            return false, "npc"
                         }
                     } else {
                         if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] == b.PC.Pos[1] {
-                            return false
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
                         }
                     }
                 }
@@ -123,9 +131,9 @@ func TryUpdatePos(pc bool, p *player.Player, l *levels.Level, vert bool, dist in
             if pc {
                 l.Pos[0] -= dist
             }
-            return true
+            return true, ""
         }
-        return false
+        return false, "mapedge"
     }
 }
 

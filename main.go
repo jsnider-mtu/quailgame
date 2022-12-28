@@ -163,6 +163,7 @@ var (
     brave bool = false
     ancestry string
     targeted int = -1
+    passattempts int = 0
 )
 
 var racemap = make(map[int]string)
@@ -8876,16 +8877,16 @@ func (g *Game) Update() error {
                         switch rand.Intn(4) {
                         case 0:
                             npc.Direction = "down"
-                            utils.TryUpdatePos(false, npc.PC, l, true, 24, p)
+                            utils.TryUpdatePos(false, npc.PC, l, true, 24, 0, p)
                         case 1:
                             npc.Direction = "up"
-                            utils.TryUpdatePos(false, npc.PC, l, true, -24, p)
+                            utils.TryUpdatePos(false, npc.PC, l, true, -24, 0, p)
                         case 2:
                             npc.Direction = "right"
-                            utils.TryUpdatePos(false, npc.PC, l, false, 24, p)
+                            utils.TryUpdatePos(false, npc.PC, l, false, 24, 0, p)
                         case 3:
                             npc.Direction = "left"
-                            utils.TryUpdatePos(false, npc.PC, l, false, -24, p)
+                            utils.TryUpdatePos(false, npc.PC, l, false, -24, 0, p)
                         }
                     } else if !npc.Stopped && (npcCount + npc.GetOffset() - 4) % npc.GetSpeed() == 0 {
                         npc.Stopped = true
@@ -8919,12 +8920,17 @@ func (g *Game) Update() error {
                     left = false
                     right = false
                     if smallestnum % 4 == 0 {
-                        if utils.TryUpdatePos(true, p, l, true, -24, p) {
+                        ok, blocker := utils.TryUpdatePos(true, p, l, true, -24, passattempts, p)
+                        if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
+                            }
+                        } else {
+                            if blocker == "npc" {
+                                passattempts++
                             }
                         }
                     }
@@ -8936,12 +8942,17 @@ func (g *Game) Update() error {
                     down = false
                     right = false
                     if smallestnum % 4 == 0 {
-                        if utils.TryUpdatePos(true, p, l, false, -24, p) {
+                        ok, blocker := utils.TryUpdatePos(true, p, l, false, -24, passattempts, p)
+                        if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
+                            }
+                        } else {
+                            if blocker == "npc" {
+                                passattempts++
                             }
                         }
                     }
@@ -8953,12 +8964,17 @@ func (g *Game) Update() error {
                     up = false
                     down = false
                     if smallestnum % 4 == 0 {
-                        if utils.TryUpdatePos(true, p, l, false, 24, p) {
+                        ok, blocker := utils.TryUpdatePos(true, p, l, false, 24, passattempts, p)
+                        if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
+                            }
+                        } else {
+                            if blocker == "npc" {
+                                passattempts++
                             }
                         }
                     }
@@ -8970,12 +8986,17 @@ func (g *Game) Update() error {
                     left = false
                     right = false
                     if smallestnum % 4 == 0 {
-                        if utils.TryUpdatePos(true, p, l, true, 24, p) {
+                        ok, blocker := utils.TryUpdatePos(true, p, l, true, 24, passattempts, p)
+                        if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
                                     newlvl = a.NewLvl
                                     lvlchange = true
                                 }
+                            }
+                        } else {
+                            if blocker == "npc" {
+                                passattempts++
                             }
                         }
                     }
@@ -8983,6 +9004,7 @@ func (g *Game) Update() error {
                 case 4:
                     stopped = true
                     count = 0
+                    passattempts = 0
                 }
             }
         }
