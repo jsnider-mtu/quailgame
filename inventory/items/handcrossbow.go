@@ -18,3 +18,11 @@ func (h HandCrossbow) Save() string {
 func (h HandCrossbow) PrettyPrint() string {
     return "Hand Crossbow"
 }
+
+func (h HandCrossbow) Function() string {
+    return "range"
+}
+
+func (h HandCrossbow) Damage() (int, int, string) {
+    return 1, 6, "piercing"
+}

@@ -10,6 +10,8 @@ type Item interface {
     Use()
     Save() string
     PrettyPrint() string
+    Function() string
+    Damage() (int, int, string)
 }
 
 type Inv struct {

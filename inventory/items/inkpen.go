@@ -17,3 +17,11 @@ func (i InkPen) Save() string {
 func (i InkPen) PrettyPrint() string {
     return "Ink Pen"
 }
+
+func (i InkPen) Function() string {
+    return "writing"
+}
+
+func (i InkPen) Damage() (int, int, string) {
+    return 0, 0, ""
+}

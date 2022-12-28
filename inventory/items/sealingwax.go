@@ -17,3 +17,11 @@ func (s SealingWax) Save() string {
 func (s SealingWax) PrettyPrint() string {
     return "Sealing Wax"
 }
+
+func (s SealingWax) Function() string {
+    return "writing"
+}
+
+func (s SealingWax) Damage() (int, int, string) {
+    return 0, 0, ""
+}

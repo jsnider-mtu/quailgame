@@ -18,3 +18,11 @@ func (h Handaxe) Save() string {
 func (h Handaxe) PrettyPrint() string {
     return "Handaxe"
 }
+
+func (h Handaxe) Function() string {
+    return "melee"
+}
+
+func (h Handaxe) Damage() (int, int, string) {
+    return 1, 6, "slashing"
+}

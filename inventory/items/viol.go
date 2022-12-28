@@ -17,3 +17,11 @@ func (v Viol) Save() string {
 func (v Viol) PrettyPrint() string {
     return "Viol"
 }
+
+func (v Viol) Function() string {
+    return "instrument"
+}
+
+func (v Viol) Damage() (int, int, string) {
+    return 0, 0, ""
+}

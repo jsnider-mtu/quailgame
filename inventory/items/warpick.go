@@ -18,3 +18,11 @@ func (w WarPick) Save() string {
 func (w WarPick) PrettyPrint() string {
     return "War Pick"
 }
+
+func (w WarPick) Function() string {
+    return "melee"
+}
+
+func (w WarPick) Damage() (int, int, string) {
+    return 1, 8, "piercing"
+}

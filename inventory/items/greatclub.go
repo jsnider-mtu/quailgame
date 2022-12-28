@@ -18,3 +18,11 @@ func (g Greatclub) Save() string {
 func (g Greatclub) PrettyPrint() string {
     return "Greatclub"
 }
+
+func (g Greatclub) Function() string {
+    return "melee"
+}
+
+func (g Greatclub) Damage() (int, int, string) {
+    return 1, 8, "bludgeoning"
+}

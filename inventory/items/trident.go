@@ -18,3 +18,11 @@ func (t Trident) Save() string {
 func (t Trident) PrettyPrint() string {
     return "Trident"
 }
+
+func (t Trident) Function() string {
+    return "melee"
+}
+
+func (t Trident) Damage() (int, int, string) {
+    return 1, 6, "piercing"
+}

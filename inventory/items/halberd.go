@@ -18,3 +18,11 @@ func (h Halberd) Save() string {
 func (h Halberd) PrettyPrint() string {
     return "Halberd"
 }
+
+func (h Halberd) Function() string {
+    return "melee"
+}
+
+func (h Halberd) Damage() (int, int, string) {
+    return 1, 10, "slashing"
+}

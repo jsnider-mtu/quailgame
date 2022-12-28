@@ -18,3 +18,11 @@ func (p Pike) Save() string {
 func (p Pike) PrettyPrint() string {
     return "Pike"
 }
+
+func (p Pike) Function() string {
+    return "melee"
+}
+
+func (p Pike) Damage() (int, int, string) {
+    return 1, 10, "piercing"
+}

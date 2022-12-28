@@ -18,3 +18,11 @@ func (j Javelin) Save() string {
 func (j Javelin) PrettyPrint() string {
     return "Javelin"
 }
+
+func (j Javelin) Function() string {
+    return "melee"
+}
+
+func (j Javelin) Damage() (int, int, string) {
+    return 1, 6, "piercing"
+}

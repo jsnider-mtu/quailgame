@@ -17,3 +17,11 @@ func (p Perfume) Save() string {
 func (p Perfume) PrettyPrint() string {
     return "Perfume"
 }
+
+func (p Perfume) Function() string {
+    return "disguise"
+}
+
+func (p Perfume) Damage() (int, int, string) {
+    return 0, 0, ""
+}

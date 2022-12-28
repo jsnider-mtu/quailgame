@@ -17,3 +17,11 @@ func (s Scalemail) Save() string {
 func (s Scalemail) PrettyPrint() string {
     return "Scalemail"
 }
+
+func (s Scalemail) Function() string {
+    return "armor"
+}
+
+func (s Scalemail) Damage() (int, int, string) {
+    return 0, 0, ""
+}

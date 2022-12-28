@@ -17,3 +17,11 @@ func (l Lyre) Save() string {
 func (l Lyre) PrettyPrint() string {
     return "Lyre"
 }
+
+func (l Lyre) Function() string {
+    return "instrument"
+}
+
+func (l Lyre) Damage() (int, int, string) {
+    return 0, 0, ""
+}

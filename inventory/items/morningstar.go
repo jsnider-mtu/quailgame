@@ -18,3 +18,11 @@ func (m Morningstar) Save() string {
 func (m Morningstar) PrettyPrint() string {
     return "Morningstar"
 }
+
+func (m Morningstar) Function() string {
+    return "melee"
+}
+
+func (m Morningstar) Damage() (int, int, string) {
+    return 1, 8, "piercing"
+}

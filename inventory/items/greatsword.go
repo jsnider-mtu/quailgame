@@ -18,3 +18,11 @@ func (g Greatsword) Save() string {
 func (g Greatsword) PrettyPrint() string {
     return "Greatsword"
 }
+
+func (g Greatsword) Function() string {
+    return "melee"
+}
+
+func (g Greatsword) Damage() (int, int, string) {
+    return 2, 6, "slashing"
+}

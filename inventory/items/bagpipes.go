@@ -17,3 +17,11 @@ func (b Bagpipes) Save() string {
 func (b Bagpipes) PrettyPrint() string {
     return "Bagpipes" 
 }
+
+func (b Bagpipes) Function() string {
+    return "instrument"
+}
+
+func (b Bagpipes) Damage() (int, int, string) {
+    return 0, 0, ""
+}

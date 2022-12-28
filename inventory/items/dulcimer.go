@@ -17,3 +17,11 @@ func (d Dulcimer) Save() string {
 func (d Dulcimer) PrettyPrint() string {
     return "Dulcimer"
 }
+
+func (d Dulcimer) Function() string {
+    return "instrument"
+}
+
+func (d Dulcimer) Damage() (int, int, string) {
+    return 0, 0, ""
+}

@@ -18,3 +18,11 @@ func (l Lance) Save() string {
 func (l Lance) PrettyPrint() string {
     return "Lance"
 }
+
+func (l Lance) Function() string {
+    return "melee"
+}
+
+func (l Lance) Damage() (int, int, string) {
+    return 1, 12, "piercing"
+}

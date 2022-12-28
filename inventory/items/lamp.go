@@ -17,3 +17,11 @@ func (l Lamp) Save() string {
 func (l Lamp) PrettyPrint() string {
     return "Lamp"
 }
+
+func (l Lamp) Function() string {
+    return "light"
+}
+
+func (l Lamp) Damage() (int, int, string) {
+    return 0, 0, ""
+}

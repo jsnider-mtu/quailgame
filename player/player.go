@@ -87,6 +87,7 @@ type Player struct {
     XP int
     Equipment *Equipment
     Spells *Spells
+    CurLevel string
 }
 
 func (s *Spells) Add(spellsslice []string) error {

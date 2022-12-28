@@ -18,3 +18,11 @@ func (d Dagger) Save() string {
 func (d Dagger) PrettyPrint() string {
     return "Dagger"
 }
+
+func (d Dagger) Function() string {
+    return "melee"
+}
+
+func (d Dagger) Damage() (int, int, string) {
+    return 1, 4, "piercing"
+}

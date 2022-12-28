@@ -18,3 +18,11 @@ func (s Sickle) Save() string {
 func (s Sickle) PrettyPrint() string {
     return "Sickle"
 }
+
+func (s Sickle) Function() string {
+    return "melee"
+}
+
+func (s Sickle) Damage() (int, int, string) {
+    return 1, 4, "slashing"
+}

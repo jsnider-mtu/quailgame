@@ -17,3 +17,11 @@ func (d DisguiseKit) Save() string {
 func (d DisguiseKit) PrettyPrint() string {
     return "Disguise Kit"
 }
+
+func (d DisguiseKit) Function() string {
+    return "disguise"
+}
+
+func (d DisguiseKit) Damage() (int, int, string) {
+    return 0, 0, ""
+}

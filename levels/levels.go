@@ -2,15 +2,19 @@ package levels
 
 import (
     "bytes"
+    "errors"
     "fmt"
     "image"
     _ "image/png"
     "log"
+    "math/rand"
 
     "github.com/hajimehoshi/ebiten/v2"
 
     "github.com/jsnider-mtu/quailgame/assets"
     "github.com/jsnider-mtu/quailgame/npcs"
+    "github.com/jsnider-mtu/quailgame/player"
+//    "github.com/jsnider-mtu/quailgame/utils"
 )
 
 var (
@@ -55,6 +59,142 @@ func (l *Level) GetMax() [2]int {
     return l.max
 }
 
+func (l *Level) Attack(p, target *player.Player) (bool, error) {
+    // Check equipped weapon, if melee check npc's position before attacking, if range check lineofsight
+    if p.Equipment.BothHands != nil {
+        if p.Equipment.BothHands.Function() == "melee" {
+            if (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1] + 24) ||
+                (p.Pos[0] == target.Pos[0] && p.Pos[1] == target.Pos[1] + 24) ||
+                (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1] + 24) ||
+                (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1]) ||
+                (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1]) ||
+                (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1] - 24) ||
+                (p.Pos[0] == target.Pos[0] && p.Pos[1] == target.Pos[1] - 24) ||
+                (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1] - 24) {
+                // Roll to hit (modifiers), if meets or exceeds AC then roll for damage
+                hitroll := rand.Intn(20) + 1
+                hittotal := hitroll + p.Stats.StrMod
+                fmt.Println(fmt.Sprintf("Melee attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.StrMod, hittotal))
+                if hit := hittotal >= target.Stats.AC; hit {
+                    fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
+                    damnd, dam, _ := p.Equipment.BothHands.Damage()
+                    damage := 0
+                    for x := 0; x < damnd; x++ {
+                        newdam := rand.Intn(dam) + 1
+                        damage += newdam
+                        fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                    }
+                    target.Stats.HP -= damage
+                    fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
+                    return true, nil
+                } else {
+                    fmt.Println(fmt.Sprintf("Melee attack missed, Roll: %d, AC: %d", hittotal, target.Stats.AC))
+                    return false, nil
+                }
+            } else {
+                fmt.Println("Enemy is not within melee range")
+                return false, errors.New("Enemy is not within melee range")
+            }
+        } else if p.Equipment.BothHands.Function() == "range" {
+            if ok, _, _ := l.LineOfSight(p, target); ok {
+                // Check distance, if ok roll to hit (modifiers), if meets or exceeds AC then roll for damage
+                hitroll := rand.Intn(20) + 1
+                hittotal := hitroll + p.Stats.DexMod
+                fmt.Println(fmt.Sprintf("Ranged attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.DexMod, hittotal))
+                if hit := hittotal >= target.Stats.AC; hit {
+                    fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
+                    damnd, dam, _ := p.Equipment.BothHands.Damage()
+                    damage := 0
+                    for x := 0; x < damnd; x++ {
+                        newdam := rand.Intn(dam) + 1
+                        damage += newdam
+                        fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                    }
+                    target.Stats.HP -= damage
+                    fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
+                    return true, nil
+                } else {
+                    fmt.Println(fmt.Sprintf("Ranged attack missed. Roll: %d, AC: %d", hittotal, target.Stats.AC))
+                    return false, nil
+                }
+            } else {
+                fmt.Println("You do not have line of sight to the enemy")
+                return false, errors.New("You do not have line of sight to the enemy")
+            }
+        } else {
+            fmt.Println(fmt.Sprintf("Can't attack with %s, function %s", p.Equipment.BothHands.PrettyPrint(), p.Equipment.BothHands.Function()))
+            return false, errors.New(fmt.Sprintf("Can't attack with %s, function %s", p.Equipment.BothHands.PrettyPrint(), p.Equipment.BothHands.Function()))
+        }
+    } else if p.Equipment.RightHand != nil {
+        if p.Equipment.RightHand.Function() == "melee" {
+            if (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1] + 24) ||
+                (p.Pos[0] == target.Pos[0] && p.Pos[1] == target.Pos[1] + 24) ||
+                (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1] + 24) ||
+                (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1]) ||
+                (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1]) ||
+                (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1] - 24) ||
+                (p.Pos[0] == target.Pos[0] && p.Pos[1] == target.Pos[1] - 24) ||
+                (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1] - 24) {
+                // Roll to hit (modifiers), if meets or exceeds AC then roll for damage
+                hitroll := rand.Intn(20) + 1
+                hittotal := hitroll + p.Stats.StrMod
+                fmt.Println(fmt.Sprintf("Melee attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.StrMod, hittotal))
+                if hit := hittotal >= target.Stats.AC; hit {
+                    fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
+                    damnd, dam, _ := p.Equipment.RightHand.Damage()
+                    damage := 0
+                    for x := 0; x < damnd; x++ {
+                        newdam := rand.Intn(dam) + 1
+                        damage += newdam
+                        fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                    }
+                    target.Stats.HP -= damage
+                    fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
+                    return true, nil
+                } else {
+                    fmt.Println(fmt.Sprintf("Melee attack missed, Roll: %d, AC: %d", hittotal, target.Stats.AC))
+                    return false, nil
+                }
+            } else {
+                fmt.Println("Enemy is not within melee range")
+                return false, errors.New("Enemy is not within melee range")
+            }
+        } else if p.Equipment.RightHand.Function() == "range" {
+            if ok, _, _ := l.LineOfSight(p, target); ok {
+                // Check distance, if ok roll to hit (modifiers), if meets or exceeds AC then roll for damage
+                hitroll := rand.Intn(20) + 1
+                hittotal := hitroll + p.Stats.DexMod
+                fmt.Println(fmt.Sprintf("Ranged attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.DexMod, hittotal))
+                if hit := hittotal >= target.Stats.AC; hit {
+                    fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
+                    damnd, dam, _ := p.Equipment.RightHand.Damage()
+                    damage := 0
+                    for x := 0; x < damnd; x++ {
+                        newdam := rand.Intn(dam) + 1
+                        damage += newdam
+                        fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                    }
+                    target.Stats.HP -= damage
+                    fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
+                    return true, nil
+                } else {
+                    fmt.Println(fmt.Sprintf("Ranged attack missed. Roll: %d, AC: %d", hittotal, target.Stats.AC))
+                    return false, nil
+                }
+            } else {
+                fmt.Println("You do not have line of sight to the enemy")
+                return false, errors.New("You do not have line of sight to the enemy")
+            }
+        } else {
+            fmt.Println(fmt.Sprintf("Can't attack with %s, function %s", p.Equipment.RightHand.PrettyPrint(), p.Equipment.RightHand.Function()))
+            return false, errors.New(fmt.Sprintf("Can't attack with %s, function %s", p.Equipment.RightHand.PrettyPrint(), p.Equipment.RightHand.Function()))
+        }
+    } else {
+        fmt.Println("No weapon equipped")
+    }
+    return false, nil
+}
+
 func (l *Level) GetGrasses() [][2]int {
     return l.grasses
 }
@@ -97,4 +237,187 @@ func LoadLvl(newlvl ...interface{}) *Level {
         log.Fatal(fmt.Sprintf("Level %s does not exist", newlvl[0]))
     }
     return lvlOne(newlvl[1].(int))
+}
+
+func (l *Level) LineOfSight(p, target *player.Player) (bool, bool, float64) {
+    var slope float64
+    var slopevert bool = false
+    if target.Pos[0] > p.Pos[0] {
+        slope = float64((target.Pos[1] + 24) - (p.Pos[1] + 24)) / float64((target.Pos[0] + 24) - (p.Pos[0] + 24))
+    } else if target.Pos[0] < p.Pos[0] {
+        slope = float64((p.Pos[1] + 24) - (target.Pos[1] + 24)) / float64((p.Pos[0] + 24) - (target.Pos[0] + 24))
+    } else {
+        slopevert = true
+    }
+    if slopevert {
+        if target.Pos[1] > p.Pos[1] {
+            for _, box := range l.Boxes {
+                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[2] && p.Pos[1] + 24 < box[1] && target.Pos[1] + 24 > box[3] {
+                    return false, true, slope
+                }
+            }
+            return true, true, slope
+        } else {
+            for _, box := range l.Boxes {
+                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[2] && p.Pos[1] + 24 > box[3] && target.Pos[1] + 24 < box[1] {
+                    return false, true, slope
+                }
+            }
+            return true, true, slope
+        }
+    } else {
+        if target.Pos[0] > p.Pos[0] {
+            for x := p.Pos[0] + 24; x <= target.Pos[0] + 24; x++ {
+                y := int((float64(x - (p.Pos[0] + 24)) * slope) + float64(p.Pos[1] + 24))
+                for _, box := range l.Boxes {
+                    if x > box[0] && x < box[2] && y > box[1] && y < box[3] {
+                        return false, false, slope
+                    }
+                }
+            }
+            return true, false, slope
+        } else {
+            for x := target.Pos[0] + 24; x <= p.Pos[0] + 24; x++ {
+                y := int((float64(x - (target.Pos[0] + 24)) * slope) + float64(target.Pos[1] + 24))
+                for _, box := range l.Boxes {
+                    if x > box[0] && x < box[2] && y > box[1] && y < box[3] {
+                        return false, false, slope
+                    }
+                }
+            }
+            return true, false, slope
+        }
+    }
+}
+
+func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, attempt int, mc *player.Player) (bool, string) {
+    if vert {
+        if p.Pos[1] + dist > l.Pos[1] && p.Pos[1] + dist < l.GetMax()[1] {
+            if dist < 0 {
+                if !pc {
+                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
+                        return false, "player"
+                    }
+                }
+                for _, a := range l.Boxes {
+                    if p.Pos[0] > a[0] - 48 && p.Pos[0] < a[2] && p.Pos[1] + dist >= a[1] && p.Pos[1] + dist < a[3] - 24 {
+                        return false, "box"
+                    }
+                }
+                for _, b := range l.NPCs {
+                    if !pc {
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                            continue
+                        }
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist < b.PC.Pos[1] + 48 {
+                            return false, "npc"
+                        }
+                    } else {
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist == b.PC.Pos[1] {
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
+                        }
+                    }
+                }
+            } else {
+                if !pc {
+                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
+                        return false, "player"
+                    }
+                }
+                for _, a := range l.Boxes {
+                    if p.Pos[0] > a[0] - 24 && p.Pos[0] < a[2] - 24 && p.Pos[1] + dist >= a[1] - 24 && p.Pos[1] + dist < a[3] {
+                        return false, "box"
+                    }
+                }
+                for _, b := range l.NPCs {
+                    if !pc {
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                            continue
+                        }
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] - 48 {
+                            return false, "npc"
+                        }
+                    } else {
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist == b.PC.Pos[1] {
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
+                        }
+                    }
+                }
+            }
+            p.Pos[1] += dist
+            if pc {
+                l.Pos[1] -= dist
+            }
+            return true, ""
+        }
+        return false, "mapedge"
+    } else {
+        if p.Pos[0] + dist > l.Pos[0] && p.Pos[0] + dist < l.GetMax()[0] {
+            if dist < 0 {
+                if !pc {
+                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
+                        return false, "player"
+                    }
+                }
+                for _, a := range l.Boxes {
+                    if p.Pos[0] + dist >= a[0] && p.Pos[0] + dist < a[2] && p.Pos[1] >= a[1] - 24 && p.Pos[1] < a[3] - 24 {
+                        return false, "box"
+                    }
+                }
+                for _, b := range l.NPCs {
+                    if !pc {
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                            continue
+                        }
+                        if p.Pos[0] + dist == b.PC.Pos[0] && p.Pos[1] >= b.PC.Pos[1] - 24 && p.Pos[1] <= b.PC.Pos[1] + 24 {
+                            return false, "npc"
+                        }
+                    } else {
+                        if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] == b.PC.Pos[1] {
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
+                        }
+                    }
+                }
+            } else {
+                if !pc {
+                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
+                        return false, "player"
+                    }
+                }
+                for _, a := range l.Boxes {
+                    if p.Pos[0] + dist >= a[0] - 24 && p.Pos[0] + dist < a[2] && p.Pos[1] >= a[1] - 24 && p.Pos[1] < a[3] - 24 {
+                        return false, "box"
+                    }
+                }
+                for _, b := range l.NPCs {
+                    if !pc {
+                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                            continue
+                        }
+                        if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[1] >= b.PC.Pos[1] - 24 && p.Pos[1] <= b.PC.Pos[1] + 24 {
+                            return false, "npc"
+                        }
+                    } else {
+                        if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] == b.PC.Pos[1] {
+                            if attempt < 10 {
+                                return false, "npc"
+                            }
+                        }
+                    }
+                }
+            }
+            p.Pos[0] += dist
+            if pc {
+                l.Pos[0] -= dist
+            }
+            return true, ""
+        }
+        return false, "mapedge"
+    }
 }

@@ -18,3 +18,11 @@ func (s Sling) Save() string {
 func (s Sling) PrettyPrint() string {
     return "Sling"
 }
+
+func (s Sling) Function() string {
+    return "range"
+}
+
+func (s Sling) Damage() (int, int, string) {
+    return 1, 4, "bludgeoning"
+}

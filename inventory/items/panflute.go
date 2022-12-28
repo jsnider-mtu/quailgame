@@ -17,3 +17,11 @@ func (p PanFlute) Save() string {
 func (p PanFlute) PrettyPrint() string {
     return "Pan Flute"
 }
+
+func (p PanFlute) Function() string {
+    return "instrument"
+}
+
+func (p PanFlute) Damage() (int, int, string) {
+    return 0, 0, ""
+}

@@ -42,14 +42,18 @@ func lvlOne(entrance int) *Level {
             {"Hello there,", "ObiWan Kenobi."},
             {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
         240, rand.Intn(60) + 60, &player.Player{
-            Name: "Jane Doe", Pos: [2]int{192, 192}, Image: npcGirlImage, Spells: &player.Spells{}}),
+            Name: "Jane Doe", Pos: [2]int{192, 192}, Image: npcGirlImage, Spells: &player.Spells{}, Stats: &player.Stats{
+                AC: 10, Str: 10, StrMod: 0, Dex: 10, DexMod: 0, Con: 10, ConMod: 0, Intel: 10, IntelMod: 0, Wis: 10, WisMod: 0,
+                Cha: 10, ChaMod: 0, MaxHP: 6, HP: 6, Size: 1}}),
         npcs.NewNPC("down", [][]string{
             {"I'm a wizard, Harry!"},
             {"The great and terrible Lord Adrian", "has invaded the peaceful Quail Kingdom,",
              "stoking a rebellion from within.", "", "Your quest is simple,",
              "quell the rebellion and defeat", "Lord Adrian!"}},
         0, rand.Intn(60) + 60, &player.Player{
-            Name: "Wizard", Pos: [2]int{288, 288}, Image: wizardImage, Spells: &player.Spells{}})}
+            Name: "Wizard", Pos: [2]int{288, 288}, Image: wizardImage, Spells: &player.Spells{}, Stats: &player.Stats{
+                AC: 10, Str: 10, StrMod: 0, Dex: 10, DexMod: 0, Con: 10, ConMod: 0, Intel: 10, IntelMod: 0, Wis: 10, WisMod: 0,
+                Cha: 10, ChaMod: 0, MaxHP: 6, HP: 6, Size: 1}})}
 
     var pos [2]int
 

@@ -23,3 +23,11 @@ func (t Torches) Save() string {
 func (t Torches) PrettyPrint() string {
     return fmt.Sprintf("Torches (%d)", t.Quantity)
 }
+
+func (t Torches) Function() string {
+    return "light"
+}
+
+func (t Torches) Damage() (int, int, string) {
+    return 0, 0, ""
+}

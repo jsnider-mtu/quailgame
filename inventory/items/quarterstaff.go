@@ -18,3 +18,11 @@ func (q Quarterstaff) Save() string {
 func (q Quarterstaff) PrettyPrint() string {
     return "Quarterstaff"
 }
+
+func (q Quarterstaff) Function() string {
+    return "melee"
+}
+
+func (q Quarterstaff) Damage() (int, int, string) {
+    return 1, 6, "bludgeoning"
+}

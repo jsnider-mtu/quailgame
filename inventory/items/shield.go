@@ -17,3 +17,11 @@ func (s Shield) Save() string {
 func (s Shield) PrettyPrint() string {
     return "Shield"
 }
+
+func (s Shield) Function() string {
+    return "armor"
+}
+
+func (s Shield) Damage() (int, int, string) {
+    return 0, 0, ""
+}

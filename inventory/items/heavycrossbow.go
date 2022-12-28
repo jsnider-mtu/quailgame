@@ -18,3 +18,11 @@ func (h HeavyCrossbow) Save() string {
 func (h HeavyCrossbow) PrettyPrint() string {
     return "Heavy Crossbow"
 }
+
+func (h HeavyCrossbow) Function() string {
+    return "range"
+}
+
+func (h HeavyCrossbow) Damage() (int, int, string) {
+    return 1, 10, "piercing"
+}

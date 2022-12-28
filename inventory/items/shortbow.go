@@ -18,3 +18,11 @@ func (s Shortbow) Save() string {
 func (s Shortbow) PrettyPrint() string {
     return "Shortbow"
 }
+
+func (s Shortbow) Function() string {
+    return "range"
+}
+
+func (s Shortbow) Damage() (int, int, string) {
+    return 1, 6, "piercing"
+}

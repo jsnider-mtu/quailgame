@@ -18,3 +18,11 @@ func (b Battleaxe) Save() string {
 func (b Battleaxe) PrettyPrint() string {
     return "Battleaxe"
 }
+
+func (b Battleaxe) Function() string {
+    return "melee"
+}
+
+func (b Battleaxe) Damage() (int, int, string) {
+    return 1, 8, "slashing"
+}

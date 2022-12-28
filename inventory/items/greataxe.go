@@ -18,3 +18,11 @@ func (g Greataxe) Save() string {
 func (g Greataxe) PrettyPrint() string {
     return "Greataxe"
 }
+
+func (g Greataxe) Function() string {
+    return "melee"
+}
+
+func (g Greataxe) Damage() (int, int, string) {
+    return 1, 12, "slashing"
+}

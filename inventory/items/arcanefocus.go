@@ -17,3 +17,11 @@ func (a ArcaneFocus) Save() string {
 func (a ArcaneFocus) PrettyPrint() string {
     return "Arcane Focus" 
 }
+
+func (a ArcaneFocus) Function() string {
+    return "spells"
+}
+
+func (a ArcaneFocus) Damage() (int, int, string) {
+    return 0, 0, ""
+}

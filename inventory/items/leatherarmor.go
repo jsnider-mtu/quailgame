@@ -17,3 +17,11 @@ func (l LeatherArmor) Save() string {
 func (l LeatherArmor) PrettyPrint() string {
     return "Leather Armor"
 }
+
+func (l LeatherArmor) Function() string {
+    return "armor"
+}
+
+func (l LeatherArmor) Damage() (int, int, string) {
+    return 0, 0, ""
+}

@@ -18,3 +18,11 @@ func (m Mace) Save() string {
 func (m Mace) PrettyPrint() string {
     return "Mace"
 }
+
+func (m Mace) Function() string {
+    return "melee"
+}
+
+func (m Mace) Damage() (int, int, string) {
+    return 1, 6, "bludgeoning"
+}

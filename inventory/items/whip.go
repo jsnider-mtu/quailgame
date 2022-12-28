@@ -18,3 +18,11 @@ func (w Whip) Save() string {
 func (w Whip) PrettyPrint() string {
     return "Whip"
 }
+
+func (w Whip) Function() string {
+    return "melee"
+}
+
+func (w Whip) Damage() (int, int, string) {
+    return 1, 4, "slashing"
+}

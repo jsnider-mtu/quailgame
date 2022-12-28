@@ -18,3 +18,11 @@ func (g Glaive) Save() string {
 func (g Glaive) PrettyPrint() string {
     return "Glaive"
 }
+
+func (g Glaive) Function() string {
+    return "melee"
+}
+
+func (g Glaive) Damage() (int, int, string) {
+    return 1, 10, "slashing"
+}

@@ -18,3 +18,11 @@ func (b Blowgun) Save() string {
 func (b Blowgun) PrettyPrint() string {
     return "Blowgun"
 }
+
+func (b Blowgun) Function() string {
+    return "range"
+}
+
+func (b Blowgun) Damage() (int, int, string) {
+    return 1, 1, "piercing"
+}

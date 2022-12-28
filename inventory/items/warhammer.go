@@ -18,3 +18,11 @@ func (w Warhammer) Save() string {
 func (w Warhammer) PrettyPrint() string {
     return "Warhammer"
 }
+
+func (w Warhammer) Function() string {
+    return "melee"
+}
+
+func (w Warhammer) Damage() (int, int, string) {
+    return 1, 8, "bludgeoning"
+}

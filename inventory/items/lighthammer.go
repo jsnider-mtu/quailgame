@@ -18,3 +18,11 @@ func (l LightHammer) Save() string {
 func (l LightHammer) PrettyPrint() string {
     return "Light Hammer"
 }
+
+func (l LightHammer) Function() string {
+    return "melee"
+}
+
+func (l LightHammer) Damage() (int, int, string) {
+    return 1, 4, "bludgeoning"
+}

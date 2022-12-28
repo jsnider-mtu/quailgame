@@ -23,3 +23,11 @@ func (p Paper) Save() string {
 func (p Paper) PrettyPrint() string {
     return fmt.Sprintf("Paper (%d)", p.Quantity)
 }
+
+func (p Paper) Function() string {
+    return "writing"
+}
+
+func (p Paper) Damage() (int, int, string) {
+    return 0, 0, ""
+}

@@ -22,3 +22,11 @@ func (c Clothes) PrettyPrint() string {
         return c.Quality + " Clothes"
     }
 }
+
+func (c Clothes) Function() string {
+    return "clothes"
+}
+
+func (c Clothes) Damage() (int, int, string) {
+    return 0, 0, ""
+}

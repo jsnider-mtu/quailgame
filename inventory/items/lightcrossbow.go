@@ -18,3 +18,11 @@ func (l LightCrossbow) Save() string {
 func (l LightCrossbow) PrettyPrint() string {
     return "Light Crossbow"
 }
+
+func (l LightCrossbow) Function() string {
+    return "range"
+}
+
+func (l LightCrossbow) Damage() (int, int, string) {
+    return 1, 8, "piercing"
+}

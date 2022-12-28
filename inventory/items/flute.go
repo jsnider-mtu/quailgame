@@ -17,3 +17,11 @@ func (f Flute) Save() string {
 func (f Flute) PrettyPrint() string {
     return "Flute"
 }
+
+func (f Flute) Function() string {
+    return "instrument"
+}
+
+func (f Flute) Damage() (int, int, string) {
+    return 0, 0, ""
+}

@@ -17,3 +17,11 @@ func (t Tinderbox) Save() string {
 func (t Tinderbox) PrettyPrint() string {
     return "Tinderbox"
 }
+
+func (t Tinderbox) Function() string {
+    return "fire"
+}
+
+func (t Tinderbox) Damage() (int, int, string) {
+    return 0, 0, ""
+}

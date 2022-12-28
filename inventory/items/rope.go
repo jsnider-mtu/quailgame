@@ -23,3 +23,11 @@ func (r Rope) Save() string {
 func (r Rope) PrettyPrint() string {
     return fmt.Sprintf("Rope (%d)", r.Length)
 }
+
+func (r Rope) Function() string {
+    return "climbing"
+}
+
+func (r Rope) Damage() (int, int, string) {
+    return 0, 0, ""
+}

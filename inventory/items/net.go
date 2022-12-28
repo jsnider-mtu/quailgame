@@ -18,3 +18,11 @@ func (n Net) Save() string {
 func (n Net) PrettyPrint() string {
     return "Net"
 }
+
+func (n Net) Function() string {
+    return "range"
+}
+
+func (n Net) Damage() (int, int, string) {
+    return 0, 0, ""
+}

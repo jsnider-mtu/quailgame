@@ -18,3 +18,11 @@ func (r Rapier) Save() string {
 func (r Rapier) PrettyPrint() string {
     return "Rapier"
 }
+
+func (r Rapier) Function() string {
+    return "melee"
+}
+
+func (r Rapier) Damage() (int, int, string) {
+    return 1, 8, "piercing"
+}

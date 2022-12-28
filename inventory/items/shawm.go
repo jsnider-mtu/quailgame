@@ -17,3 +17,11 @@ func (s Shawm) Save() string {
 func (s Shawm) PrettyPrint() string {
     return "Shawm"
 }
+
+func (s Shawm) Function() string {
+    return "instrument"
+}
+
+func (s Shawm) Damage() (int, int, string) {
+    return 0, 0, ""
+}

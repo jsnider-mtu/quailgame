@@ -17,3 +17,11 @@ func (h Horn) Save() string {
 func (h Horn) PrettyPrint() string {
     return "Horn"
 }
+
+func (h Horn) Function() string {
+    return "instrument"
+}
+
+func (h Horn) Damage() (int, int, string) {
+    return 0, 0, ""
+}

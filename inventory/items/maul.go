@@ -18,3 +18,11 @@ func (m Maul) Save() string {
 func (m Maul) PrettyPrint() string {
     return "Maul"
 }
+
+func (m Maul) Function() string {
+    return "melee"
+}
+
+func (m Maul) Damage() (int, int, string) {
+    return 2, 6, "bludgeoning"
+}

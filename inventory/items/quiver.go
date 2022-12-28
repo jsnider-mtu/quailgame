@@ -23,3 +23,11 @@ func (q Quiver) Save() string {
 func (q Quiver) PrettyPrint() string {
     return fmt.Sprintf("Quiver (%d)", q.Arrows)
 }
+
+func (q Quiver) Function() string {
+    return "ammo"
+}
+
+func (q Quiver) Damage() (int, int, string) {
+    return 0, 0, ""
+}

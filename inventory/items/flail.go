@@ -18,3 +18,11 @@ func (f Flail) Save() string {
 func (f Flail) PrettyPrint() string {
     return "Flail"
 }
+
+func (f Flail) Function() string {
+    return "melee"
+}
+
+func (f Flail) Damage() (int, int, string) {
+    return 1, 8, "bludgeoning"
+}

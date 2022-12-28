@@ -17,3 +17,11 @@ func (t ThievesTools) Save() string {
 func (t ThievesTools) PrettyPrint() string {
     return "Thieves Tools"
 }
+
+func (t ThievesTools) Function() string {
+    return "theft"
+}
+
+func (t ThievesTools) Damage() (int, int, string) {
+    return 0, 0, ""
+}

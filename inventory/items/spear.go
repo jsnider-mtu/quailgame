@@ -18,3 +18,11 @@ func (s Spear) Save() string {
 func (s Spear) PrettyPrint() string {
     return "Spear"
 }
+
+func (s Spear) Function() string {
+    return "melee"
+}
+
+func (s Spear) Damage() (int, int, string) {
+    return 1, 6, "piercing"
+}

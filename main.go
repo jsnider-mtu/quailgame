@@ -28,7 +28,7 @@ import (
     "github.com/jsnider-mtu/quailgame/levels"
     "github.com/jsnider-mtu/quailgame/player"
     "github.com/jsnider-mtu/quailgame/player/pcimages"
-    "github.com/jsnider-mtu/quailgame/utils"
+//    "github.com/jsnider-mtu/quailgame/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -8870,6 +8870,9 @@ func (g *Game) Update() error {
                     }
                 }
             }
+            if inpututil.IsKeyJustPressed(ebiten.KeyDigit2) && targeted >= 0 {
+                l.Attack(p, l.NPCs[targeted].PC)
+            }
             if !dialogopen && !lvlchange && !start {
                 for _, npc := range l.NPCs {
                     if npc.GetSpeed() > 0 && (npcCount + npc.GetOffset()) % npc.GetSpeed() == 0 {
@@ -8877,16 +8880,16 @@ func (g *Game) Update() error {
                         switch rand.Intn(4) {
                         case 0:
                             npc.Direction = "down"
-                            utils.TryUpdatePos(false, npc.PC, l, true, 24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, true, 24, 0, p)
                         case 1:
                             npc.Direction = "up"
-                            utils.TryUpdatePos(false, npc.PC, l, true, -24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, true, -24, 0, p)
                         case 2:
                             npc.Direction = "right"
-                            utils.TryUpdatePos(false, npc.PC, l, false, 24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, false, 24, 0, p)
                         case 3:
                             npc.Direction = "left"
-                            utils.TryUpdatePos(false, npc.PC, l, false, -24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, false, -24, 0, p)
                         }
                     } else if !npc.Stopped && (npcCount + npc.GetOffset() - 4) % npc.GetSpeed() == 0 {
                         npc.Stopped = true
@@ -8920,7 +8923,7 @@ func (g *Game) Update() error {
                     left = false
                     right = false
                     if smallestnum % 4 == 0 {
-                        ok, blocker := utils.TryUpdatePos(true, p, l, true, -24, passattempts, p)
+                        ok, blocker := l.TryUpdatePos(true, p, true, -24, passattempts, p)
                         if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
@@ -8942,7 +8945,7 @@ func (g *Game) Update() error {
                     down = false
                     right = false
                     if smallestnum % 4 == 0 {
-                        ok, blocker := utils.TryUpdatePos(true, p, l, false, -24, passattempts, p)
+                        ok, blocker := l.TryUpdatePos(true, p, false, -24, passattempts, p)
                         if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
@@ -8964,7 +8967,7 @@ func (g *Game) Update() error {
                     up = false
                     down = false
                     if smallestnum % 4 == 0 {
-                        ok, blocker := utils.TryUpdatePos(true, p, l, false, 24, passattempts, p)
+                        ok, blocker := l.TryUpdatePos(true, p, false, 24, passattempts, p)
                         if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
@@ -8986,7 +8989,7 @@ func (g *Game) Update() error {
                     left = false
                     right = false
                     if smallestnum % 4 == 0 {
-                        ok, blocker := utils.TryUpdatePos(true, p, l, true, 24, passattempts, p)
+                        ok, blocker := l.TryUpdatePos(true, p, true, 24, passattempts, p)
                         if ok {
                             for _, a := range l.Doors {
                                 if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
@@ -12889,7 +12892,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
                 tbhgm.Translate(float64(0), float64(46))
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
-                lineofsight, losvert, slope := utils.LineOfSight(p, npc.PC, l)
+                lineofsight, losvert, slope := l.LineOfSight(p, npc.PC)
                 if lineofsight {
                     if losvert {
                         dist := p.Pos[1] - npc.PC.Pos[1]

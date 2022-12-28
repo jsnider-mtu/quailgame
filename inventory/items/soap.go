@@ -17,3 +17,11 @@ func (s Soap) Save() string {
 func (s Soap) PrettyPrint() string {
     return "Soap"
 }
+
+func (s Soap) Function() string {
+    return "cleaning"
+}
+
+func (s Soap) Damage() (int, int, string) {
+    return 0, 0, ""
+}

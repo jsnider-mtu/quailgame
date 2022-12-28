@@ -18,3 +18,11 @@ func (s Scimitar) Save() string {
 func (s Scimitar) PrettyPrint() string {
     return "Scimitar"
 }
+
+func (s Scimitar) Function() string {
+    return "melee"
+}
+
+func (s Scimitar) Damage() (int, int, string) {
+    return 1, 6, "slashing"
+}

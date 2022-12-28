@@ -17,3 +17,11 @@ func (c Chainmail) Save() string {
 func (c Chainmail) PrettyPrint() string {
     return "Chainmail"
 }
+
+func (c Chainmail) Function() string {
+    return "armor"
+}
+
+func (c Chainmail) Damage() (int, int, string) {
+    return 0, 0, ""
+}

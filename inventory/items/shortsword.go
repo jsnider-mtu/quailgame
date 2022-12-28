@@ -18,3 +18,11 @@ func (s Shortsword) Save() string {
 func (s Shortsword) PrettyPrint() string {
     return "Shortsword"
 }
+
+func (s Shortsword) Function() string {
+    return "melee"
+}
+
+func (s Shortsword) Damage() (int, int, string) {
+    return 1, 6, "piercing"
+}

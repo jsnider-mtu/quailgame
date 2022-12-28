@@ -17,3 +17,11 @@ func (c ComponentPouch) Save() string {
 func (c ComponentPouch) PrettyPrint() string {
     return "Component Pouch"
 }
+
+func (c ComponentPouch) Function() string {
+    return "spells"
+}
+
+func (c ComponentPouch) Damage() (int, int, string) {
+    return 0, 0, ""
+}

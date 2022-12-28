@@ -18,3 +18,11 @@ func (l Longbow) Save() string {
 func (l Longbow) PrettyPrint() string {
     return "Longbow"
 }
+
+func (l Longbow) Function() string {
+    return "range"
+}
+
+func (l Longbow) Damage() (int, int, string) {
+    return 1, 8, "piercing"
+}
