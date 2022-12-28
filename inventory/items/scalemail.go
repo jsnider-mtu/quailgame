@@ -8,6 +8,7 @@ func (s Scalemail) Slot() string {
 }
 
 func (s Scalemail) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (s Scalemail) Save() string {

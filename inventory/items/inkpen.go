@@ -8,6 +8,7 @@ func (i InkPen) Slot() string {
 }
 
 func (i InkPen) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (i InkPen) Save() string {

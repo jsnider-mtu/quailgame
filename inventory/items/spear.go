@@ -8,6 +8,7 @@ func (s Spear) Slot() string {
 }
 
 func (s Spear) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

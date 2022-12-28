@@ -8,6 +8,7 @@ func (l LeatherArmor) Slot() string {
 }
 
 func (l LeatherArmor) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (l LeatherArmor) Save() string {

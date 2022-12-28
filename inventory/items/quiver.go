@@ -14,6 +14,7 @@ func (q Quiver) Slot() string {
 }
 
 func (q Quiver) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (q Quiver) Save() string {

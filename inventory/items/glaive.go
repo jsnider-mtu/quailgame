@@ -8,6 +8,7 @@ func (g Glaive) Slot() string {
 }
 
 func (g Glaive) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

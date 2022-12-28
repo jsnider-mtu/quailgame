@@ -8,6 +8,7 @@ func (w Warhammer) Slot() string {
 }
 
 func (w Warhammer) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

@@ -14,6 +14,7 @@ func (p Paper) Slot() string {
 }
 
 func (p Paper) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (p Paper) Save() string {

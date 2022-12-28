@@ -8,6 +8,7 @@ func (n Net) Slot() string {
 }
 
 func (n Net) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

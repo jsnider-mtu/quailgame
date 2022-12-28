@@ -8,6 +8,7 @@ func (l Longbow) Slot() string {
 }
 
 func (l Longbow) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

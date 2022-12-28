@@ -8,6 +8,7 @@ func (s Shortbow) Slot() string {
 }
 
 func (s Shortbow) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

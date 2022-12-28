@@ -8,6 +8,7 @@ func (t Trident) Slot() string {
 }
 
 func (t Trident) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

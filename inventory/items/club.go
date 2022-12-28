@@ -8,6 +8,7 @@ func (c Club) Slot() string {
 }
 
 func (c Club) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

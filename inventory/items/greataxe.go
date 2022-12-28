@@ -8,6 +8,7 @@ func (g Greataxe) Slot() string {
 }
 
 func (g Greataxe) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

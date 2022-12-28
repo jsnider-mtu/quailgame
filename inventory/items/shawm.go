@@ -8,6 +8,7 @@ func (s Shawm) Slot() string {
 }
 
 func (s Shawm) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (s Shawm) Save() string {

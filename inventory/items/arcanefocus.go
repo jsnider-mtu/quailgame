@@ -8,6 +8,7 @@ func (a ArcaneFocus) Slot() string {
 }
 
 func (a ArcaneFocus) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (a ArcaneFocus) Save() string {

@@ -8,6 +8,7 @@ func (g Greatsword) Slot() string {
 }
 
 func (g Greatsword) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

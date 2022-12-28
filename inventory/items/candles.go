@@ -16,8 +16,9 @@ func (c Candles) Slot() string {
 func (c Candles) Use() (string, []int) {
     // illuminate surroundings
     if c.Quantity > 0 {
-        p.Light = [3]int{5, 5, 600}
+        return "illuminate", []int{5, 5, 600}
     }
+    return "", []int{}
 }
 
 func (c Candles) Save() string {

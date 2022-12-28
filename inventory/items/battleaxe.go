@@ -8,6 +8,7 @@ func (b Battleaxe) Slot() string {
 }
 
 func (b Battleaxe) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

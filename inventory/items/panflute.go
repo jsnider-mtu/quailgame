@@ -8,6 +8,7 @@ func (p PanFlute) Slot() string {
 }
 
 func (p PanFlute) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (p PanFlute) Save() string {

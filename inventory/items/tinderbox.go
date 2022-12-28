@@ -8,6 +8,7 @@ func (t Tinderbox) Slot() string {
 }
 
 func (t Tinderbox) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (t Tinderbox) Save() string {

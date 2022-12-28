@@ -8,6 +8,7 @@ func (p Perfume) Slot() string {
 }
 
 func (p Perfume) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (p Perfume) Save() string {

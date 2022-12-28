@@ -8,6 +8,7 @@ func (h Handaxe) Slot() string {
 }
 
 func (h Handaxe) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

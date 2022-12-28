@@ -8,6 +8,7 @@ func (m Maul) Slot() string {
 }
 
 func (m Maul) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

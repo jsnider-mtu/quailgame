@@ -8,6 +8,7 @@ func (l Lance) Slot() string {
 }
 
 func (l Lance) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

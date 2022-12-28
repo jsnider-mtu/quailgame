@@ -8,6 +8,7 @@ func (v Viol) Slot() string {
 }
 
 func (v Viol) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (v Viol) Save() string {

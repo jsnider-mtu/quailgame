@@ -14,6 +14,7 @@ func (t Torches) Slot() string {
 }
 
 func (t Torches) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (t Torches) Save() string {

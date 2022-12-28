@@ -8,6 +8,7 @@ func (s Soap) Slot() string {
 }
 
 func (s Soap) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (s Soap) Save() string {

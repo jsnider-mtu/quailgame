@@ -8,6 +8,7 @@ func (q Quarterstaff) Slot() string {
 }
 
 func (q Quarterstaff) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

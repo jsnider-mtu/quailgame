@@ -8,6 +8,7 @@ func (h Halberd) Slot() string {
 }
 
 func (h Halberd) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

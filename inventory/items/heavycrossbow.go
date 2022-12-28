@@ -8,6 +8,7 @@ func (h HeavyCrossbow) Slot() string {
 }
 
 func (h HeavyCrossbow) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

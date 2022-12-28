@@ -8,6 +8,7 @@ func (b Bagpipes) Slot() string {
 }
 
 func (b Bagpipes) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (b Bagpipes) Save() string {

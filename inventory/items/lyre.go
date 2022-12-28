@@ -8,6 +8,7 @@ func (l Lyre) Slot() string {
 }
 
 func (l Lyre) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (l Lyre) Save() string {

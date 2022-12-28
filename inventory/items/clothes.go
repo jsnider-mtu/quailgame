@@ -9,6 +9,7 @@ func (c Clothes) Slot() string {
 }
 
 func (c Clothes) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (c Clothes) Save() string {

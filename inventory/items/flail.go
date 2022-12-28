@@ -8,6 +8,7 @@ func (f Flail) Slot() string {
 }
 
 func (f Flail) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

@@ -8,6 +8,7 @@ func (s Shield) Slot() string {
 }
 
 func (s Shield) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (s Shield) Save() string {

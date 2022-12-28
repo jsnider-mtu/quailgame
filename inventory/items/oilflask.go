@@ -14,6 +14,7 @@ func (o OilFlask) Slot() string {
 }
 
 func (o OilFlask) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (o OilFlask) Save() string {

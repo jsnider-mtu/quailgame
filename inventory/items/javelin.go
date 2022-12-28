@@ -8,6 +8,7 @@ func (j Javelin) Slot() string {
 }
 
 func (j Javelin) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

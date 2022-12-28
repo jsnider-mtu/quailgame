@@ -8,6 +8,7 @@ func (s SealingWax) Slot() string {
 }
 
 func (s SealingWax) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (s SealingWax) Save() string {

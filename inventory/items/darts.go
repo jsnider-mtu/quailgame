@@ -14,6 +14,7 @@ func (d Darts) Slot() string {
 }
 
 func (d Darts) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

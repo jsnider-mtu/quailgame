@@ -8,6 +8,7 @@ func (t ThievesTools) Slot() string {
 }
 
 func (t ThievesTools) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (t ThievesTools) Save() string {

@@ -8,6 +8,7 @@ func (b Blowgun) Slot() string {
 }
 
 func (b Blowgun) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

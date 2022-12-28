@@ -8,6 +8,7 @@ func (l LightHammer) Slot() string {
 }
 
 func (l LightHammer) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

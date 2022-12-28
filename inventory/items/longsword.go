@@ -8,6 +8,7 @@ func (l Longsword) Slot() string {
 }
 
 func (l Longsword) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

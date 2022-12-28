@@ -8,6 +8,7 @@ func (d Dulcimer) Slot() string {
 }
 
 func (d Dulcimer) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (d Dulcimer) Save() string {

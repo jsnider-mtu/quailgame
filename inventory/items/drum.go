@@ -8,6 +8,7 @@ func (d Drum) Slot() string {
 }
 
 func (d Drum) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (d Drum) Save() string {

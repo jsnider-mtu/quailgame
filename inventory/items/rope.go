@@ -14,6 +14,7 @@ func (r Rope) Slot() string {
 }
 
 func (r Rope) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (r Rope) Save() string {

@@ -8,6 +8,7 @@ func (r Rapier) Slot() string {
 }
 
 func (r Rapier) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

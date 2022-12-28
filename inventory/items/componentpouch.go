@@ -8,6 +8,7 @@ func (c ComponentPouch) Slot() string {
 }
 
 func (c ComponentPouch) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (c ComponentPouch) Save() string {

@@ -8,6 +8,7 @@ func (d Dagger) Slot() string {
 }
 
 func (d Dagger) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

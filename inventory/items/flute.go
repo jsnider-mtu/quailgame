@@ -8,6 +8,7 @@ func (f Flute) Slot() string {
 }
 
 func (f Flute) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (f Flute) Save() string {

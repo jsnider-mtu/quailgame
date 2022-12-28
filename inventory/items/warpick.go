@@ -8,6 +8,7 @@ func (w WarPick) Slot() string {
 }
 
 func (w WarPick) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

@@ -8,6 +8,7 @@ func (s Sling) Slot() string {
 }
 
 func (s Sling) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

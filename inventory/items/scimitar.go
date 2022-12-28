@@ -8,6 +8,7 @@ func (s Scimitar) Slot() string {
 }
 
 func (s Scimitar) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

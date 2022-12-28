@@ -8,6 +8,7 @@ func (i InkBottle) Slot() string {
 }
 
 func (i InkBottle) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (i InkBottle) Save() string {

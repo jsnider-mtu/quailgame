@@ -8,6 +8,7 @@ func (l Lute) Slot() string {
 }
 
 func (l Lute) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (l Lute) Save() string {

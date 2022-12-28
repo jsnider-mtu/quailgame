@@ -8,6 +8,7 @@ func (s Sickle) Slot() string {
 }
 
 func (s Sickle) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

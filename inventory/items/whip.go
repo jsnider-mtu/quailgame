@@ -8,6 +8,7 @@ func (w Whip) Slot() string {
 }
 
 func (w Whip) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

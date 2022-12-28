@@ -8,6 +8,7 @@ func (m Morningstar) Slot() string {
 }
 
 func (m Morningstar) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

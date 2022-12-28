@@ -8,6 +8,7 @@ func (p Pike) Slot() string {
 }
 
 func (p Pike) Use() (string, []int) {
+    return "", []int{}
     // must be equipped to use
 }
 

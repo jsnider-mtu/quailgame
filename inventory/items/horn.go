@@ -8,6 +8,7 @@ func (h Horn) Slot() string {
 }
 
 func (h Horn) Use() (string, []int) {
+    return "", []int{}
 }
 
 func (h Horn) Save() string {
