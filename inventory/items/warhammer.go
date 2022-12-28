@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Warhammer struct {
 }
 
@@ -7,7 +9,7 @@ func (w Warhammer) Slot() string {
     return "BothHands"
 }
 
-func (w Warhammer) Use() {
+func (w Warhammer) Use(p *player.Player) {
     // must be equipped to use
 }
 

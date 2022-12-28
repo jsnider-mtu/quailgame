@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Lyre struct {
 }
 
@@ -7,7 +9,7 @@ func (l Lyre) Slot() string {
     return "BothHands"
 }
 
-func (l Lyre) Use() {
+func (l Lyre) Use(p *player.Player) {
 }
 
 func (l Lyre) Save() string {

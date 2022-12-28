@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Mace struct {
 }
 
@@ -7,7 +9,7 @@ func (m Mace) Slot() string {
     return "RightHand"
 }
 
-func (m Mace) Use() {
+func (m Mace) Use(p *player.Player) {
     // must be equipped to use
 }
 

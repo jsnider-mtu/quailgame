@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type ThievesTools struct {
 }
 
@@ -7,7 +9,7 @@ func (t ThievesTools) Slot() string {
     return ""
 }
 
-func (t ThievesTools) Use() {
+func (t ThievesTools) Use(p *player.Player) {
 }
 
 func (t ThievesTools) Save() string {

@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Lamp struct {
 }
 
@@ -7,7 +9,7 @@ func (l Lamp) Slot() string {
     return "LeftHand"
 }
 
-func (l Lamp) Use() {
+func (l Lamp) Use(p *player.Player) {
 }
 
 func (l Lamp) Save() string {

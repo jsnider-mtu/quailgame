@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type LeatherArmor struct {
 }
 
@@ -7,7 +9,7 @@ func (l LeatherArmor) Slot() string {
     return "Armor"
 }
 
-func (l LeatherArmor) Use() {
+func (l LeatherArmor) Use(p *player.Player) {
 }
 
 func (l LeatherArmor) Save() string {

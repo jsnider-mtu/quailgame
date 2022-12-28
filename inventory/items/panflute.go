@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type PanFlute struct {
 }
 
@@ -7,7 +9,7 @@ func (p PanFlute) Slot() string {
     return "BothHands"
 }
 
-func (p PanFlute) Use() {
+func (p PanFlute) Use(p *player.Player) {
 }
 
 func (p PanFlute) Save() string {

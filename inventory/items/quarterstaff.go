@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Quarterstaff struct {
 }
 
@@ -7,7 +9,7 @@ func (q Quarterstaff) Slot() string {
     return "BothHands"
 }
 
-func (q Quarterstaff) Use() {
+func (q Quarterstaff) Use(p *player.Player) {
     // must be equipped to use
 }
 

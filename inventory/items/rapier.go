@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Rapier struct {
 }
 
@@ -7,7 +9,7 @@ func (r Rapier) Slot() string {
     return "RightHand"
 }
 
-func (r Rapier) Use() {
+func (r Rapier) Use(p *player.Player) {
     // must be equipped to use
 }
 

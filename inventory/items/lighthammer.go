@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type LightHammer struct {
 }
 
@@ -7,7 +9,7 @@ func (l LightHammer) Slot() string {
     return "RightHand"
 }
 
-func (l LightHammer) Use() {
+func (l LightHammer) Use(p *player.Player) {
     // must be equipped to use
 }
 

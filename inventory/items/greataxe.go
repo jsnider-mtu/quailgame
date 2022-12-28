@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Greataxe struct {
 }
 
@@ -7,7 +9,7 @@ func (g Greataxe) Slot() string {
     return "BothHands"
 }
 
-func (g Greataxe) Use() {
+func (g Greataxe) Use(p *player.Player) {
     // must be equipped to use
 }
 

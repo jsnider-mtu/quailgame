@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Shield struct {
 }
 
@@ -7,7 +9,7 @@ func (s Shield) Slot() string {
     return "LeftHand"
 }
 
-func (s Shield) Use() {
+func (s Shield) Use(p *player.Player) {
 }
 
 func (s Shield) Save() string {

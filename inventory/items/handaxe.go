@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Handaxe struct {
 }
 
@@ -7,7 +9,7 @@ func (h Handaxe) Slot() string {
     return "RightHand"
 }
 
-func (h Handaxe) Use() {
+func (h Handaxe) Use(p *player.Player) {
     // must be equipped to use
 }
 

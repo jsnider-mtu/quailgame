@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Trident struct {
 }
 
@@ -7,7 +9,7 @@ func (t Trident) Slot() string {
     return "BothHands"
 }
 
-func (t Trident) Use() {
+func (t Trident) Use(p *player.Player) {
     // must be equipped to use
 }
 

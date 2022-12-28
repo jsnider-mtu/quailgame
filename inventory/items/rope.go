@@ -3,6 +3,8 @@ package items
 import (
     "fmt"
     "strconv"
+
+    import "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Rope struct {
@@ -13,7 +15,7 @@ func (r Rope) Slot() string {
     return "BothHands"
 }
 
-func (r Rope) Use() {
+func (r Rope) Use(p *player.Player) {
 }
 
 func (r Rope) Save() string {

@@ -3,11 +3,13 @@ package inventory
 import (
     "errors"
     "fmt"
+
+    "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Item interface {
     Slot() string
-    Use()
+    Use(*player.Player)
     Save() string
     PrettyPrint() string
     Function() string

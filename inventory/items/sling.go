@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Sling struct {
 }
 
@@ -7,7 +9,7 @@ func (s Sling) Slot() string {
     return "RightHand"
 }
 
-func (s Sling) Use() {
+func (s Sling) Use(p *player.Player) {
     // must be equipped to use
 }
 

@@ -3,6 +3,8 @@ package items
 import (
     "fmt"
     "strconv"
+
+    import "github.com/jsnider-mtu/quailgame/player"
 )
 
 type OilFlask struct {
@@ -13,7 +15,7 @@ func (o OilFlask) Slot() string {
     return "LeftHand"
 }
 
-func (o OilFlask) Use() {
+func (o OilFlask) Use(p *player.Player) {
 }
 
 func (o OilFlask) Save() string {

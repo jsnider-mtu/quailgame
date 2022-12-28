@@ -3,6 +3,8 @@ package items
 import (
     "fmt"
     "strconv"
+
+    import "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Darts struct {
@@ -13,7 +15,7 @@ func (d Darts) Slot() string {
     return "RightHand"
 }
 
-func (d Darts) Use() {
+func (d Darts) Use(p *player.Player) {
     // must be equipped to use
 }
 

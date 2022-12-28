@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Longsword struct {
 }
 
@@ -7,7 +9,7 @@ func (l Longsword) Slot() string {
     return "RightHand"
 }
 
-func (l Longsword) Use() {
+func (l Longsword) Use(p *player.Player) {
     // must be equipped to use
 }
 

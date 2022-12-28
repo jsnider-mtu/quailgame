@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Glaive struct {
 }
 
@@ -7,7 +9,7 @@ func (g Glaive) Slot() string {
     return "BothHands"
 }
 
-func (g Glaive) Use() {
+func (g Glaive) Use(p *player.Player) {
     // must be equipped to use
 }
 

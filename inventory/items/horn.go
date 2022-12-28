@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Horn struct {
 }
 
@@ -7,7 +9,7 @@ func (h Horn) Slot() string {
     return "BothHands"
 }
 
-func (h Horn) Use() {
+func (h Horn) Use(p *player.Player) {
 }
 
 func (h Horn) Save() string {

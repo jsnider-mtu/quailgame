@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Shawm struct {
 }
 
@@ -7,7 +9,7 @@ func (s Shawm) Slot() string {
     return "BothHands"
 }
 
-func (s Shawm) Use() {
+func (s Shawm) Use(p *player.Player) {
 }
 
 func (s Shawm) Save() string {

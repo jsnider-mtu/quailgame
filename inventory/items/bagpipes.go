@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Bagpipes struct {
 }
 
@@ -7,7 +9,7 @@ func (b Bagpipes) Slot() string {
     return "BothHands"
 }
 
-func (b Bagpipes) Use() {
+func (b Bagpipes) Use(p *player.Player) {
 }
 
 func (b Bagpipes) Save() string {

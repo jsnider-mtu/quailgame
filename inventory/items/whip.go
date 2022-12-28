@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Whip struct {
 }
 
@@ -7,7 +9,7 @@ func (w Whip) Slot() string {
     return "RightHand"
 }
 
-func (w Whip) Use() {
+func (w Whip) Use(p *player.Player) {
     // must be equipped to use
 }
 

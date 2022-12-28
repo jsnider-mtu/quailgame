@@ -1,5 +1,7 @@
 package items
 
+import "github.com/jsnider-mtu/quailgame/player"
+
 type Dagger struct {
 }
 
@@ -7,7 +9,7 @@ func (d Dagger) Slot() string {
     return "RightHand"
 }
 
-func (d Dagger) Use() {
+func (d Dagger) Use(p *player.Player) {
     // must be equipped to use
 }
 
