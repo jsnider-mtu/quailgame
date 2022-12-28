@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Club struct {
 }
 
@@ -9,7 +7,7 @@ func (c Club) Slot() string {
     return "RightHand"
 }
 
-func (c Club) Use(p *player.Player) {
+func (c Club) Use() (string, []int) {
     // must be equipped to use
 }
 

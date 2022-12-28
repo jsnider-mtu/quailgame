@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type DisguiseKit struct {
 }
 
@@ -9,7 +7,7 @@ func (d DisguiseKit) Slot() string {
     return ""
 }
 
-func (d DisguiseKit) Use(p *player.Player) {
+func (d DisguiseKit) Use() (string, []int) {
 }
 
 func (d DisguiseKit) Save() string {

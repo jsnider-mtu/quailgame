@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Halberd struct {
 }
 
@@ -9,7 +7,7 @@ func (h Halberd) Slot() string {
     return "BothHands"
 }
 
-func (h Halberd) Use(p *player.Player) {
+func (h Halberd) Use() (string, []int) {
     // must be equipped to use
 }
 

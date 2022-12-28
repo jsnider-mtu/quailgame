@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Morningstar struct {
 }
 
@@ -9,7 +7,7 @@ func (m Morningstar) Slot() string {
     return "RightHand"
 }
 
-func (m Morningstar) Use(p *player.Player) {
+func (m Morningstar) Use() (string, []int) {
     // must be equipped to use
 }
 

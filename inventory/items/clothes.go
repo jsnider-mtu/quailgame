@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Clothes struct {
     Quality string
 }
@@ -10,7 +8,7 @@ func (c Clothes) Slot() string {
     return "Clothes"
 }
 
-func (c Clothes) Use(p *player.Player) {
+func (c Clothes) Use() (string, []int) {
 }
 
 func (c Clothes) Save() string {

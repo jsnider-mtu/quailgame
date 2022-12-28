@@ -9,7 +9,7 @@ import (
 
 type Item interface {
     Slot() string
-    Use(*player.Player)
+    Use() (string, []int)
     Save() string
     PrettyPrint() string
     Function() string

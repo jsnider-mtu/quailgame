@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Javelin struct {
 }
 
@@ -9,7 +7,7 @@ func (j Javelin) Slot() string {
     return "RightHand"
 }
 
-func (j Javelin) Use(p *player.Player) {
+func (j Javelin) Use() (string, []int) {
     // must be equipped to use
 }
 

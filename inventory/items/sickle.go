@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Sickle struct {
 }
 
@@ -9,7 +7,7 @@ func (s Sickle) Slot() string {
     return "RightHand"
 }
 
-func (s Sickle) Use(p *player.Player) {
+func (s Sickle) Use() (string, []int) {
     // must be equipped to use
 }
 

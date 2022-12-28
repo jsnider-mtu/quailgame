@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Scalemail struct {
 }
 
@@ -9,7 +7,7 @@ func (s Scalemail) Slot() string {
     return "Armor"
 }
 
-func (s Scalemail) Use(p *player.Player) {
+func (s Scalemail) Use() (string, []int) {
 }
 
 func (s Scalemail) Save() string {

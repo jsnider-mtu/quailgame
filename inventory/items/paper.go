@@ -3,8 +3,6 @@ package items
 import (
     "fmt"
     "strconv"
-
-    import "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Paper struct {
@@ -15,7 +13,7 @@ func (p Paper) Slot() string {
     return ""
 }
 
-func (p Paper) Use(p *player.Player) {
+func (p Paper) Use() (string, []int) {
 }
 
 func (p Paper) Save() string {

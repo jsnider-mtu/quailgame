@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Scimitar struct {
 }
 
@@ -9,7 +7,7 @@ func (s Scimitar) Slot() string {
     return "RightHand"
 }
 
-func (s Scimitar) Use(p *player.Player) {
+func (s Scimitar) Use() (string, []int) {
     // must be equipped to use
 }
 

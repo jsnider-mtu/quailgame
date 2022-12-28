@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Lance struct {
 }
 
@@ -9,7 +7,7 @@ func (l Lance) Slot() string {
     return "RightHand"
 }
 
-func (l Lance) Use(p *player.Player) {
+func (l Lance) Use() (string, []int) {
     // must be equipped to use
 }
 

@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Pike struct {
 }
 
@@ -9,7 +7,7 @@ func (p Pike) Slot() string {
     return "BothHands"
 }
 
-func (p Pike) Use(p *player.Player) {
+func (p Pike) Use() (string, []int) {
     // must be equipped to use
 }
 

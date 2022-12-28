@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type ComponentPouch struct {
 }
 
@@ -9,7 +7,7 @@ func (c ComponentPouch) Slot() string {
     return "LeftHand"
 }
 
-func (c ComponentPouch) Use(p *player.Player) {
+func (c ComponentPouch) Use() (string, []int) {
 }
 
 func (c ComponentPouch) Save() string {

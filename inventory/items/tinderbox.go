@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Tinderbox struct {
 }
 
@@ -9,7 +7,7 @@ func (t Tinderbox) Slot() string {
     return ""
 }
 
-func (t Tinderbox) Use(p *player.Player) {
+func (t Tinderbox) Use() (string, []int) {
 }
 
 func (t Tinderbox) Save() string {

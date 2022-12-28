@@ -3,8 +3,6 @@ package items
 import (
     "fmt"
     "strconv"
-
-    "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Candles struct {
@@ -15,7 +13,7 @@ func (c Candles) Slot() string {
     return "LeftHand"
 }
 
-func (c Candles) Use(p *player.Player) {
+func (c Candles) Use() (string, []int) {
     // illuminate surroundings
     if c.Quantity > 0 {
         p.Light = [3]int{5, 5, 600}

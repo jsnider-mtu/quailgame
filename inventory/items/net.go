@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Net struct {
 }
 
@@ -9,7 +7,7 @@ func (n Net) Slot() string {
     return "RightHand"
 }
 
-func (n Net) Use(p *player.Player) {
+func (n Net) Use() (string, []int) {
     // must be equipped to use
 }
 

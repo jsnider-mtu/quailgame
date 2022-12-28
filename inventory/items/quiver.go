@@ -3,8 +3,6 @@ package items
 import (
     "fmt"
     "strconv"
-
-    import "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Quiver struct {
@@ -15,7 +13,7 @@ func (q Quiver) Slot() string {
     return "Torso"
 }
 
-func (q Quiver) Use(p *player.Player) {
+func (q Quiver) Use() (string, []int) {
 }
 
 func (q Quiver) Save() string {

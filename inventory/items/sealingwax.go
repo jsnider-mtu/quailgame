@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type SealingWax struct {
 }
 
@@ -9,7 +7,7 @@ func (s SealingWax) Slot() string {
     return ""
 }
 
-func (s SealingWax) Use(p *player.Player) {
+func (s SealingWax) Use() (string, []int) {
 }
 
 func (s SealingWax) Save() string {

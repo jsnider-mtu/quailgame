@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type HandCrossbow struct {
 }
 
@@ -9,7 +7,7 @@ func (h HandCrossbow) Slot() string {
     return "RightHand"
 }
 
-func (h HandCrossbow) Use(p *player.Player) {
+func (h HandCrossbow) Use() (string, []int) {
     // must be equipped to use
 }
 

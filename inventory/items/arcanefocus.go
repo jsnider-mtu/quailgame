@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type ArcaneFocus struct {
 }
 
@@ -9,7 +7,7 @@ func (a ArcaneFocus) Slot() string {
     return "LeftHand"
 }
 
-func (a ArcaneFocus) Use(p *player.Player) {
+func (a ArcaneFocus) Use() (string, []int) {
 }
 
 func (a ArcaneFocus) Save() string {

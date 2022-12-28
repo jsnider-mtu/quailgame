@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Spear struct {
 }
 
@@ -9,7 +7,7 @@ func (s Spear) Slot() string {
     return "BothHands"
 }
 
-func (s Spear) Use(p *player.Player) {
+func (s Spear) Use() (string, []int) {
     // must be equipped to use
 }
 

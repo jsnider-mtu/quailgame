@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Shortsword struct {
 }
 
@@ -9,7 +7,7 @@ func (s Shortsword) Slot() string {
     return "RightHand"
 }
 
-func (s Shortsword) Use(p *player.Player) {
+func (s Shortsword) Use() (string, []int) {
     // must be equipped to use
 }
 

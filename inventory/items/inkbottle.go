@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type InkBottle struct {
 }
 
@@ -9,7 +7,7 @@ func (i InkBottle) Slot() string {
     return ""
 }
 
-func (i InkBottle) Use(p *player.Player) {
+func (i InkBottle) Use() (string, []int) {
 }
 
 func (i InkBottle) Save() string {

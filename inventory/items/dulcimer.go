@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Dulcimer struct {
 }
 
@@ -9,7 +7,7 @@ func (d Dulcimer) Slot() string {
     return "BothHands"
 }
 
-func (d Dulcimer) Use(p *player.Player) {
+func (d Dulcimer) Use() (string, []int) {
 }
 
 func (d Dulcimer) Save() string {

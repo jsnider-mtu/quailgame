@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Perfume struct {
 }
 
@@ -9,7 +7,7 @@ func (p Perfume) Slot() string {
     return ""
 }
 
-func (p Perfume) Use(p *player.Player) {
+func (p Perfume) Use() (string, []int) {
 }
 
 func (p Perfume) Save() string {

@@ -3,8 +3,6 @@ package items
 import (
     "fmt"
     "strconv"
-
-    import "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Torches struct {
@@ -15,7 +13,7 @@ func (t Torches) Slot() string {
     return "LeftHand"
 }
 
-func (t Torches) Use(p *player.Player) {
+func (t Torches) Use() (string, []int) {
 }
 
 func (t Torches) Save() string {

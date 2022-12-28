@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type WarPick struct {
 }
 
@@ -9,7 +7,7 @@ func (w WarPick) Slot() string {
     return "RightHand"
 }
 
-func (w WarPick) Use(p *player.Player) {
+func (w WarPick) Use() (string, []int) {
     // must be equipped to use
 }
 

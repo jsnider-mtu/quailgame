@@ -1,7 +1,5 @@
 package items
 
-import "github.com/jsnider-mtu/quailgame/player"
-
 type Blowgun struct {
 }
 
@@ -9,7 +7,7 @@ func (b Blowgun) Slot() string {
     return "RightHand"
 }
 
-func (b Blowgun) Use(p *player.Player) {
+func (b Blowgun) Use() (string, []int) {
     // must be equipped to use
 }
 
