@@ -8730,12 +8730,9 @@ func (g *Game) Update() error {
                 }
                 p.Equipment = &player.Equipment{}
                 for _, equipped := range strings.Split(equipmentstr, "|") {
-                    log.Println(equipped)
                     itemprops := strings.Split(equipped, ",")
-                    log.Println("itemprops = " + fmt.Sprint(itemprops))
                     switch len(itemprops) {
                     case 1:
-                        log.Println(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1])
                         p.Inv.Add(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
                         p.Equip(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
                     case 2:
@@ -8746,7 +8743,6 @@ func (g *Game) Update() error {
                     }
                 }
                 p.Spells.Add(strings.Split(spellsstr, ","))
-                log.Println(npchp)
                 l = levels.LoadLvl(levelname, 0, x, y, npchp)
                 targeted = -1
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
@@ -13294,8 +13290,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
                     var npchporigval string
                     var update bool = false
                     for _, npchpstr := range npchpslice {
-                        log.Println(strings.Split(npchpstr, "=")[0])
-                        log.Println(npc.GetName())
                         if strings.Split(npchpstr, "=")[0] == npc.GetName() {
                             update = true
                             npchporigval = strings.Split(npchpstr, "=")[1]
@@ -13304,16 +13298,12 @@ func (g *Game) Draw(screen *ebiten.Image) {
                     if update {
                         npchp = strings.Replace(npchp, npc.GetName() + "=" + npchporigval, npc.SaveHP(), 1)
                         npchp = strings.ReplaceAll(npchp, ";;", ";")
-                        log.Println(fmt.Sprintf("Replaced npchp = %s", npchp))
                         update = false
                     } else {
-                        log.Println("not updating npchp")
                         npchp += npc.SaveHP()
                     }
-                    log.Println(npchp)
                 }
                 if npchp != npchporig {
-                    log.Println(fmt.Sprintf("npchp = %s\nnpchporig = %s", npchp, npchporig))
                     save = true
                 }
             }
