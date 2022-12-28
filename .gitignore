@@ -16,3 +16,4 @@ Makefile
 *.yaml
 *.scss
 *.kage
+quail_game_demo*
