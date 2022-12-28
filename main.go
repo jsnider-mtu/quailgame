@@ -8249,6 +8249,7 @@ func (g *Game) Update() error {
                     invmenu = false
                     charsheet0 = false
                     charsheet1 = false
+                    charsheet2 = false
                     pause = false
                 case 2:
                     start = true
