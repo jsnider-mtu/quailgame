@@ -180,8 +180,54 @@ var (
     overflowcur int = 0
     overflownum int = 0
     pageind int = 0
+    pageexists bool = false
+    maxw int = 0
+    maxh int = 0
+    numlines int = 0
+    r image.Rectangle
+    r2 image.Rectangle
+    r3 image.Rectangle
+    maxlines int = 0
+    readgm ebiten.GeoM
+    readimg *ebiten.Image
+    readgm2 ebiten.GeoM
+    readimg2 *ebiten.Image
+    readgm3 ebiten.GeoM
+    readimg3 *ebiten.Image
+    readimgopt *ebiten.DrawImageOptions
+    moreshown bool = false
+    hei int = 0
+    wid int = 0
+    hei2 int = 0
+    wid2 int = 0
+    hei3 int = 0
+    wid3 int = 0
+    dagm ebiten.GeoM
+    ismgm ebiten.GeoM
+    ismimg *ebiten.Image
+    ismgm2 ebiten.GeoM
+    ismimg2 *ebiten.Image
+    actcheck string
+    dur time.Duration
+    effgm ebiten.GeoM
+    effimg *ebiten.Image
+    effgm2 ebiten.GeoM
+    effimg2 *ebiten.Image
+    owgm ebiten.GeoM
+    iw int = 0
+    pausegm ebiten.GeoM
+    pauseimg *ebiten.Image
+    pausegm2 ebiten.GeoM
+    pauseimg2 *ebiten.Image
+    npchporig string
+    npchpslice []string
+    npchporigval string
+    npchpupdate bool = false
+    op *ebiten.DrawImageOptions
 )
 
+var lines = make([]string, 0)
+var pages = make([]*items.Page, 0)
 var racemap = make(map[int]string)
 var classmap = make(map[int]string)
 var equipmentmap = make(map[int]string)
@@ -8876,8 +8922,6 @@ func (g *Game) Update() error {
                         invselmenu = false
                     case 1:
                         action, data := p.Inv.GetItems()[invsel].Use()
-                        //p.Inv.Drop(p.Inv.GetItems()[invsel])
-                        //p.Inv.Add(tempitem)
                         if action == "write" || action == "read" {
                             for in, i := range p.Inv.GetItems() {
                                 if strings.HasPrefix(i.PrettyPrint(), "Paper") {
@@ -9261,9 +9305,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
         if selload {
-            r := text.BoundString(fo, fmt.Sprint("> aaaaaaaaaaaaaaaaaaaaaaaa -- Level: aaaaaaaaaaaa"))
-            hei := r.Max.Y - r.Min.Y
-            wid := r.Max.X - r.Min.X
+            r = text.BoundString(fo, fmt.Sprint("> aaaaaaaaaaaaaaaaaaaaaaaa -- Level: aaaaaaaaaaaa"))
+            hei = r.Max.Y - r.Min.Y
+            wid = r.Max.X - r.Min.X
             for ind, lo := range loads {
                 savesuffix := 24 - len(lo[0])
                 if loadsel == len(loads) {
@@ -9286,9 +9330,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
         } else if overwritewarning {
             warning := "           WARNING!!!\n\nYou will overwrite a previous save\n\n           Continue??\n"
             selection := "      > Yes <         > No <"
-            r := text.BoundString(fo, warning + selection)
-            hei := r.Max.Y - r.Min.Y
-            wid := r.Max.X - r.Min.X
+            r = text.BoundString(fo, warning + selection)
+            hei = r.Max.Y - r.Min.Y
+            wid = r.Max.X - r.Min.X
             warninggm := ebiten.GeoM{}
             warninggm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (hei / 2) - 24))
             warningimg := ebiten.NewImage(wid + 16, (2 * hei) + 16)
@@ -9303,9 +9347,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 text.Draw(screen, "        Yes           > No <", fo, (w / 2) - (wid / 2), (h / 2) + hei, color.White)
             }
         } else if firstsave {
-            r := text.BoundString(fo, "aaaaaaaaaaaaaaaaaaaaaaaa")
-            hei := r.Max.Y - r.Min.Y
-            wid := r.Max.X - r.Min.X
+            r = text.BoundString(fo, "aaaaaaaaaaaaaaaaaaaaaaaa")
+            hei = r.Max.Y - r.Min.Y
+            wid = r.Max.X - r.Min.X
             inputgm := ebiten.GeoM{}
             inputgm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (hei / 2) - 16))
             inputimg := ebiten.NewImage(wid + 8, hei + 16)
@@ -9314,14 +9358,14 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 inputimg, &ebiten.DrawImageOptions{
                     GeoM: inputgm})
             text.Draw(screen, sb.String(), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + (3 * hei / 8), color.White)
-            r2 := text.BoundString(fo, "Name")
-            hei2 := r2.Max.Y - r2.Min.Y
-            wid2 := r2.Max.X - r2.Min.X
+            r2 = text.BoundString(fo, "Name")
+            hei2 = r2.Max.Y - r2.Min.Y
+            wid2 = r2.Max.X - r2.Min.X
             text.Draw(screen, "Name", fo, (w / 2) - (wid2 / 2), (h / 2) - (hei2 * 2), color.White)
         } else {
-            r := text.BoundString(fo, "> New Game <")
-            hei := r.Max.Y - r.Min.Y
-            wid := r.Max.X - r.Min.X
+            r = text.BoundString(fo, "> New Game <")
+            hei = r.Max.Y - r.Min.Y
+            wid = r.Max.X - r.Min.X
             switch startsel {
             case 0:
                 text.Draw(screen, "> New Game <", fo, (w / 2) - (wid / 2), (h / 2) + (hei * 4), color.White)
@@ -13203,15 +13247,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
         screen.DrawImage(
             dialogimg2, &ebiten.DrawImageOptions{
                 GeoM: dialoggm2})
-        r := text.BoundString(fo, dialogstrs[0])
-        hei := r.Max.Y - r.Min.Y
+        r = text.BoundString(fo, dialogstrs[0])
+        hei = r.Max.Y - r.Min.Y
         if s < len(dialogstrs) {
             text.Draw(screen, npcname, fo, 140, 500, color.RGBA{200, 36, 121, 255})
             text.Draw(screen, dialogstrs[s], fo, 140, 516 + hei, color.Black)
             if s + 1 < len(dialogstrs) {
                 text.Draw(screen, dialogstrs[s + 1], fo, 140, 524 + (hei * 2), color.Black)
                 if s + 2 < len(dialogstrs) {
-                    dagm := ebiten.GeoM{}
+                    dagm = ebiten.GeoM{}
                     dagm.Scale(0.25, 0.25)
                     dagm.Translate(float64(586), float64(522))
                     if dialogCount % 13 == 0 {
@@ -13240,19 +13284,19 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if invselmenu {
-        r := text.BoundString(fo, "> Equip")
-        hei := r.Max.Y - r.Min.Y
-        wid := r.Max.X - r.Min.X
-        ismgm := ebiten.GeoM{}
+        r = text.BoundString(fo, "> Use (illuminate)")
+        hei = r.Max.Y - r.Min.Y
+        wid = r.Max.X - r.Min.X
+        ismgm = ebiten.GeoM{}
         ismgm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (3 * hei / 2) - 16))
-        ismimg := ebiten.NewImage(wid + 28, (hei * 3) + 48)
+        ismimg = ebiten.NewImage(wid + 28, (hei * 3) + 48)
         ismimg.Fill(color.Black)
         screen.DrawImage(
             ismimg, &ebiten.DrawImageOptions{
                 GeoM: ismgm})
-        ismgm2 := ebiten.GeoM{}
+        ismgm2 = ebiten.GeoM{}
         ismgm2.Translate(float64((w / 2) - (wid / 2) - 4), float64((h / 2) - (3 * hei / 2) - 12))
-        ismimg2 := ebiten.NewImage(wid + 20, (hei * 3) + 40)
+        ismimg2 = ebiten.NewImage(wid + 20, (hei * 3) + 40)
         ismimg2.Fill(color.White)
         screen.DrawImage(
             ismimg2, &ebiten.DrawImageOptions{
@@ -13260,10 +13304,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
         switch invsel2 {
         case 0:
             text.Draw(screen, "> Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
-            if a := p.Inv.GetItems()[invsel].Action(); a == "" {
+            if actcheck = p.Inv.GetItems()[invsel].Action(); actcheck == "" {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
             } else {
-                text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+                text.Draw(screen, fmt.Sprintf("  Use (%s)", a), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
             }
             text.Draw(screen, "  Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         case 1:
@@ -13272,7 +13316,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
             } else {
                 text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
             }
-            text.Draw(screen, "> Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            if actcheck = p.Inv.GetItems()[invsel].Action(); actcheck == "" {
+                text.Draw(screen, "> Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            } else {
+                text.Draw(screen, fmt.Sprintf("> Use (%s)", a), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            }
             text.Draw(screen, "  Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         case 2:
             if p.Inv.GetItems()[invsel].Slot() == "" {
@@ -13280,10 +13328,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
             } else {
                 text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
             }
-            if a := p.Inv.GetItems()[invsel].Action(); a == "" {
+            if actcheck = p.Inv.GetItems()[invsel].Action(); actcheck == "" {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
             } else {
-                text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+                text.Draw(screen, fmt.Sprintf("  Use (%s)", a), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
             }
             text.Draw(screen, "> Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         }
@@ -13294,29 +13342,29 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
         switch effectact {
         case "illuminate":
-            r := text.BoundString(fo, "Your path is illuminated:")
-            hei := r.Max.Y - r.Min.Y
-            wid := r.Max.X - r.Min.X
-            dur, err := time.ParseDuration(strconv.Itoa(p.Stats.Illuminated[2] * 6) + "s")
+            r = text.BoundString(fo, "Your path is illuminated:")
+            hei = r.Max.Y - r.Min.Y
+            wid = r.Max.X - r.Min.X
+            dur, err = time.ParseDuration(strconv.Itoa(p.Stats.Illuminated[2] * 6) + "s")
             if err != nil {
                 log.Fatal(err)
             }
-            r2 := text.BoundString(fo, fmt.Sprintf("%d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]))
-            hei2 := r2.Max.Y - r.Min.Y
-            wid2 := r2.Max.X - r.Min.X
-            r3 := text.BoundString(fo, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur))
-            hei3 := r3.Max.Y - r.Min.Y
-            wid3 := r3.Max.X - r.Min.X
-            effgm := ebiten.GeoM{}
+            r2 = text.BoundString(fo, fmt.Sprintf("%d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]))
+            hei2 = r2.Max.Y - r.Min.Y
+            wid2 = r2.Max.X - r.Min.X
+            r3 = text.BoundString(fo, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur))
+            hei3 = r3.Max.Y - r.Min.Y
+            wid3 = r3.Max.X - r.Min.X
+            effgm = ebiten.GeoM{}
             effgm.Translate(float64((w / 2) - (wid3 / 2) - 8), float64((h / 2) - (3 * hei3) - 20))
-            effimg := ebiten.NewImage(wid3 + 28, (hei3 * 3) + 48)
+            effimg = ebiten.NewImage(wid3 + 28, (hei3 * 3) + 48)
             effimg.Fill(color.Black)
             screen.DrawImage(
                 effimg, &ebiten.DrawImageOptions{
                     GeoM: effgm})
-            effgm2 := ebiten.GeoM{}
+            effgm2 = ebiten.GeoM{}
             effgm2.Translate(float64((w / 2) - (wid3 / 2) - 4), float64((h / 2) - (3 * hei3) - 16))
-            effimg2 := ebiten.NewImage(wid3 + 20, (hei3 * 3) + 40)
+            effimg2 = ebiten.NewImage(wid3 + 20, (hei3 * 3) + 40)
             effimg2.Fill(color.White)
             screen.DrawImage(
                 effimg2, &ebiten.DrawImageOptions{
@@ -13327,13 +13375,34 @@ func (g *Game) Draw(screen *ebiten.Image) {
         case "disguise":
             log.Println("Need to implement disguise menu")
         case "write":
-            p.WriteMsg = "Testing"
+            p.WriteMsg = `This is a test file written to work out the kinks with reading written pages in the game.
+I will be trying to get these kinks worked out over the course of the next few days.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ligula dolor, condimentum rhoncus eros ac,
+tincidunt faucibus felis. Mauris efficitur sagittis ipsum, malesuada feugiat nisl tincidunt id.
+Cras vitae purus facilisis, venenatis erat ac, sollicitudin tortor. Morbi euismod consequat eros in tincidunt.
+Nunc rhoncus odio vel lectus hendrerit eleifend. Sed vestibulum neque non mattis varius. Nullam eget nibh elementum,
+luctus odio sed, ullamcorper felis. Fusce feugiat pellentesque ligula eu placerat.
+Nulla suscipit lacus eget tellus condimentum, ac iaculis neque condimentum. Praesent vitae lectus neque.
+
+Nulla arcu leo, interdum nec aliquet vel, dictum ac elit. Phasellus tempus massa in eleifend venenatis.
+Mauris accumsan leo eget egestas ornare. Maecenas varius iaculis nibh, ac volutpat mauris tempus vel.
+Morbi et bibendum nisl, vel dignissim neque. Suspendisse nec metus faucibus, tincidunt neque quis, pulvinar justo.
+Integer tortor ante, euismod faucibus dictum a, iaculis vel ex. Duis pellentesque in mauris in tempus.
+Fusce commodo iaculis vehicula. Aenean ornare ante a magna euismod accumsan. In at justo ac quam bibendum commodo. Sed eu mollis nisi.
+
+Nunc venenatis efficitur lacus, sed malesuada lectus. Pellentesque blandit enim urna, non laoreet mauris accumsan quis.
+Quisque a metus tellus. Pellentesque condimentum velit et bibendum molestie. Pellentesque vehicula cursus erat,
+vel convallis sem mattis quis. Quisque at consectetur sem. Nulla magna leo, vulputate et vulputate vitae, malesuada in eros.
+Curabitur vel iaculis mi.
+
+Quisque dictum nisl vel ligula condimentum, sit amet ultricies massa dictum. Curabitur nec lacus ac odio dapibus fringilla.
+Vivamus non aliquet quam. Nunc condimentum ipsum in nisl hendrerit mattis aliquam a orci. Etiam eleifend sagittis enim a mollis.
+Nullam volutpat ac risus in fermentum.`
             log.Println("Need to implement write menu")
             effectmsg = false
             effectact = ""
         case "read":
-            pageexists := false
-            pages := make([]*items.Page, 0)
             for in, i := range p.Inv.GetItems() {
                 if strings.HasPrefix(i.PrettyPrint(), "Paper") {
                     pages = p.Inv.GetItems()[in].(*items.Paper).GetPages()
@@ -13345,13 +13414,16 @@ func (g *Game) Draw(screen *ebiten.Image) {
                     for _, pm := range p.PageMsgs {
                         if pa.GetName() == pm[5].(string) {
                             pageexists = true
+                            break
                         }
                     }
-                    maxw, maxh := 0, 0
-                    lines := strings.Split(pa.Read(), "\n")
-                    numlines := len(lines)
+                    if pageexists {
+                        continue
+                    }
+                    lines = strings.Split(pa.Read(), "\n")
+                    numlines = len(lines)
                     for _, line := range lines {
-                        r := text.BoundString(utils.Fo(), line)
+                        r = text.BoundString(fo, line)
                         if (r.Max.Y - r.Min.Y) > maxh {
                             maxh = r.Max.Y - r.Min.Y
                         }
@@ -13359,43 +13431,42 @@ func (g *Game) Draw(screen *ebiten.Image) {
                             maxw = r.Max.X - r.Min.X
                         }
                     }
-                    maxlines := 724 / (maxh + 8)
+                    maxlines = 552 / (maxh + 8)
                     maxh = (maxh * numlines) + (numlines * 8)
-                    if maxh > 724 {
-                        maxh = 724
+                    if maxh > 552 {
+                        maxh = 552
                     }
-                    maxw = maxw + 40
-                    if maxw > 552 {
-                        maxw = 552
+                    maxw = maxw + 32
+                    if maxw > 724 {
+                        maxw = 724
                     }
                     if !pageexists {
-                        log.Println("Appending to p.PageMsgs")
                         p.PageMsgs = append(p.PageMsgs, []interface{}{lines, numlines, maxw, maxh, maxlines, pa.GetName()})
-                        log.Println("Appended")
                     }
                 }
-            }
-            overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][4].(int)
-            readgm := ebiten.GeoM{}
-            readgm.Translate(float64((w / 2) - (p.PageMsgs[pageind][2].(int) / 2)), float64((h / 2) - (p.PageMsgs[pageind][3].(int) / 2)))
-            readimg := ebiten.NewImage(p.PageMsgs[pageind][2].(int), p.PageMsgs[pageind][3].(int))
-            readimg.Fill(color.Black)
-            screen.DrawImage(
-                readimg, &ebiten.DrawImageOptions{
-                    GeoM: readgm})
-            readgm2 := ebiten.GeoM{}
-            readgm2.Translate(float64((w / 2) - (p.PageMsgs[pageind][2].(int) / 2) + 4), float64((h / 2) - (p.PageMsgs[pageind][3].(int) / 2) + 4))
-            readimg2 := ebiten.NewImage(p.PageMsgs[pageind][2].(int) - 8, p.PageMsgs[pageind][3].(int) - 8)
-            readimg2.Fill(color.White)
-            screen.DrawImage(
-                readimg2, &ebiten.DrawImageOptions{
-                    GeoM: readgm2})
-            for y := ((overflowcur - 1) * p.PageMsgs[pageind][4].(int)) + p.PageMsgs[pageind][4].(int); y < p.PageMsgs[pageind][1].(int); y++ {
-                if y < (overflowcur * p.PageMsgs[pageind][4].(int) - 1) + p.PageMsgs[pageind][4].(int) {
-                    text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (w / 2) - (p.PageMsgs[pageind][2].(int) / 2) + 16, (h / 2) - (p.PageMsgs[pageind][3].(int) / 2) + 16 + (16 * (y % ((overflowcur * p.PageMsgs[pageind][4].(int)) + p.PageMsgs[pageind][4].(int)))), color.Black)
-                } else {
-                    text.Draw(screen, "More...", fo, 552 - 24, 736 - 48, color.Black)
+                overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][4].(int)
+                screen.DrawImage(
+                    readimg, &ebiten.DrawImageOptions{
+                        GeoM: readgm})
+                screen.DrawImage(
+                    readimg2, &ebiten.DrawImageOptions{
+                        GeoM: readgm2})
+                moreshown = false
+                for y := ((overflowcur - 1) * p.PageMsgs[pageind][4].(int)) + p.PageMsgs[pageind][4].(int); y < p.PageMsgs[pageind][1].(int); y++ {
+                    if y < (overflowcur * p.PageMsgs[pageind][4].(int) - 1) + p.PageMsgs[pageind][4].(int) {
+                        text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (768 / 2) - (724 / 2) + 16, (576 / 2) - (552 / 2) + 28 + (28 * (y % p.PageMsgs[pageind][4].(int))), color.Black)
+                    } else {
+                        if !moreshown {
+                            text.Draw(screen, "More...", fo, (768 / 2) + (724 / 2) - 24, (576 / 2) + (552 / 2) - 48, color.Black)
+                            moreshown = true
+                        }
+                    }
                 }
+            } else {
+                screen.DrawImage(
+                    readimg3, &ebiten.DrawImageOptions{
+                        GeoM: readgm3})
+                text.Draw(screen, "You do not have any written pages", fo, (w / 2) - (wid / 2), (h / 2), color.White)
             }
         default:
             log.Fatal(effectact + " is not defined")
@@ -13559,27 +13630,26 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     if overworld {
         screen.DrawImage(blankImage, nil)
-        iw, _ := overworldImage.Size()
-        owgm := ebiten.GeoM{}
+        owgm = ebiten.GeoM{}
         owgm.Translate(float64(iw) - (float64(iw) / 2.0), 0.0)
         screen.DrawImage(
             overworldImage, &ebiten.DrawImageOptions{
                 GeoM: owgm})
     }
     if pause {
-        r := text.BoundString(fo, "> Save game")
-        hei := r.Max.Y - r.Min.Y
-        wid := r.Max.X - r.Min.X
-        pausegm := ebiten.GeoM{}
+        r = text.BoundString(fo, "> Save game")
+        hei = r.Max.Y - r.Min.Y
+        wid = r.Max.X - r.Min.X
+        pausegm = ebiten.GeoM{}
         pausegm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (3 * hei / 2) - 16))
-        pauseimg := ebiten.NewImage(wid + 28, (hei * 5) + 64)
+        pauseimg = ebiten.NewImage(wid + 28, (hei * 5) + 64)
         pauseimg.Fill(color.Black)
         screen.DrawImage(
             pauseimg, &ebiten.DrawImageOptions{
                 GeoM: pausegm})
-        pausegm2 := ebiten.GeoM{}
+        pausegm2 = ebiten.GeoM{}
         pausegm2.Translate(float64((w / 2) - (wid / 2) - 4), float64((h / 2) - (3 * hei / 2) - 12))
-        pauseimg2 := ebiten.NewImage(wid + 20, (hei * 5) + 56)
+        pauseimg2 = ebiten.NewImage(wid + 20, (hei * 5) + 56)
         pauseimg2.Fill(color.White)
         screen.DrawImage(
             pauseimg2, &ebiten.DrawImageOptions{
@@ -13614,22 +13684,20 @@ func (g *Game) Draw(screen *ebiten.Image) {
     if lvlchange {
         for _, lvl := range levelslice {
             if lvl.GetName() == l.GetName() {
-                npchporig := npchp
+                npchporig = npchp
                 for _, npc := range l.NPCs {
                     npchpslice := strings.Split(npchp, ";")
                     npchpslice = npchpslice[:len(npchpslice) - 1]
-                    var npchporigval string
-                    var update bool = false
                     for _, npchpstr := range npchpslice {
                         if strings.Split(npchpstr, "=")[0] == npc.GetName() {
-                            update = true
+                            npchpupdate = true
                             npchporigval = strings.Split(npchpstr, "=")[1]
                         }
                     }
-                    if update {
+                    if npchpupdate {
                         npchp = strings.Replace(npchp, npc.GetName() + "=" + npchporigval, npc.SaveHP(), 1)
                         npchp = strings.ReplaceAll(npchp, ";;", ";")
-                        update = false
+                        npchpupdate = false
                     } else {
                         npchp += npc.SaveHP()
                     }
@@ -13642,7 +13710,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
         if save {
             return
         }
-        op := &ebiten.DrawImageOptions{}
         fadeScreen = ebiten.NewImage(768, 576)
         fadeScreen.Fill(color.Black)
         if npcCount % 10 == 0 {
@@ -13781,6 +13848,24 @@ func init() {
     //fo = truetype.NewFace(fon, &truetype.Options{Size: 20})
     fo = utils.Fo()
 
+    //readgm = ebiten.GeoM{}
+    readgm.Translate(float64((768 / 2) - (724 / 2)), float64((576 / 2) - (552 / 2)))
+    readimg = ebiten.NewImage(724, 552)
+    readimg.Fill(color.Black)
+
+    //readgm2 = ebiten.GeoM{}
+    readgm2.Translate(float64((768 / 2) - (724 / 2) + 8), float64((576 / 2) - (552 / 2) + 8))
+    readimg2 = ebiten.NewImage(724 - 8, 552 - 8)
+    readimg2.Fill(color.White)
+
+    //readgm3 = ebiten.GeoM{}
+    readgm3r := text.BoundString(fo, "You do not have any written pages")
+    readgm3h := readgm3r.Max.Y - readgm3r.Min.Y
+    readgm3w := readgm3r.Max.X - readgm3r.Min.X
+    readgm3.Translate(float64((768 / 2) - (readgm3w / 2) - 8), float64((576 / 2) - (readgm3h / 2) - 24))
+    readimg3 = ebiten.NewImage(readgm3w + 16, (2 * readgm3h) + 16)
+    readimg3.Fill(color.Black)
+
     startimage, _, err := image.Decode(bytes.NewReader(assets.Start_PNG))
     if err != nil {
         log.Fatal(err)
@@ -13828,6 +13913,7 @@ func init() {
         log.Fatal(err)
     }
     overworldImage = ebiten.NewImageFromImage(overworldimg)
+    iw, _ = overworldImage.Size()
 
     icon16img, _, err = image.Decode(bytes.NewReader(assets.Icon_16_PNG))
     if err != nil {
