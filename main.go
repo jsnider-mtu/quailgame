@@ -176,6 +176,7 @@ var (
     nextturn bool = false
     effectact string
     effectmsg bool = false
+    countend int = 0
 )
 
 var racemap = make(map[int]string)
@@ -13242,30 +13243,48 @@ func (g *Game) Draw(screen *ebiten.Image) {
         }
     }
     if effectmsg {
-        countstart := count
-        if count >= 5940 {
-            countstart = count - 6000
+        if countend == 0 {
+            countend = (npcCount + 300) % 6000
         }
         switch effectact {
         case "illuminate":
-            r := text.BoundString(fo, fmt.Sprintf("Your path is illuminated: %d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]))
+            r := text.BoundString(fo, "Your path is illuminated:")
             hei := r.Max.Y - r.Min.Y
             wid := r.Max.X - r.Min.X
             dur, err := time.ParseDuration(strconv.Itoa(p.Stats.Illuminated[2] * 6) + "s")
             if err != nil {
                 log.Fatal(err)
             }
-            r2 := text.BoundString(fo, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur))
+            r2 := text.BoundString(fo, fmt.Sprintf("%d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]))
             hei2 := r2.Max.Y - r.Min.Y
             wid2 := r2.Max.X - r.Min.X
-            text.Draw(screen, fmt.Sprintf("Your path is illuminated: %d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]), fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) - 16, color.RGBA{159, 11, 88, 205})
-            text.Draw(screen, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur), fo, (w / 2) - (wid2 / 2), (h / 2) - (hei2 / 2), color.RGBA{159, 11, 88, 205})
+            r3 := text.BoundString(fo, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur))
+            hei3 := r3.Max.Y - r.Min.Y
+            wid3 := r3.Max.X - r.Min.X
+            effgm := ebiten.GeoM{}
+            effgm.Translate(float64((w / 2) - (wid3 / 2) - 8), float64((h / 2) - (3 * hei3) - 20))
+            effimg := ebiten.NewImage(wid3 + 28, (hei3 * 3) + 48)
+            effimg.Fill(color.Black)
+            screen.DrawImage(
+                effimg, &ebiten.DrawImageOptions{
+                    GeoM: effgm})
+            effgm2 := ebiten.GeoM{}
+            effgm2.Translate(float64((w / 2) - (wid3 / 2) - 4), float64((h / 2) - (3 * hei3) - 16))
+            effimg2 := ebiten.NewImage(wid3 + 20, (hei3 * 3) + 40)
+            effimg2.Fill(color.White)
+            screen.DrawImage(
+                effimg2, &ebiten.DrawImageOptions{
+                    GeoM: effgm2})
+            text.Draw(screen, "Your path is illuminated:", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) - 16, color.RGBA{159, 11, 19, 255})
+            text.Draw(screen, fmt.Sprintf("%d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]), fo, (w / 2) - (wid2 / 2), (h / 2) - (hei2 / 2) - 8, color.RGBA{159, 11, 19, 255})
+            text.Draw(screen, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur), fo, (w / 2) - (wid3 / 2), (h / 2) + (hei3 / 2), color.RGBA{159, 11, 19, 255})
         case "disguise":
             log.Println("Need to implement disguise menu")
         default:
             log.Fatal(effectact + " is not defined")
         }
-        if count - countstart >= 60 && count - countstart < 6000 {
+        if npcCount >= countend {
+            countend = 0
             effectmsg = false
             effectact = ""
         }
