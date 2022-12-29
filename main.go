@@ -527,8 +527,6 @@ func (g *Game) Update() error {
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
                         p.Spells = &player.Spells{}
-                        // temp line here
-                        p.Inv.Add(&items.Candles{Quantity: 1})
                         down = true
                         up = false
                         left = false
@@ -644,6 +642,7 @@ func (g *Game) Update() error {
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
             p.Inv.Clear()
+            p.Inv.Add(&items.Candles{Quantity: 1})
             curCS = 0
             csDone = make([]int, 0)
             proficiencies = make([]string, 0)
@@ -8795,12 +8794,6 @@ func (g *Game) Update() error {
             if !dialogopen {
                 npcCount++
             }
-            if inpututil.IsKeyJustPressed(ebiten.KeyI) && !overworld {
-                charsheet0 = false
-                charsheet1 = false
-                charsheet2 = false
-                invmenu = !invmenu
-            }
             if invselmenu {
                 if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
                     if invsel2 > 0 {
@@ -8859,7 +8852,7 @@ func (g *Game) Update() error {
                         log.Fatal(fmt.Sprintf("Invalid value %d for invsel in invselmenu", invsel))
                     }
                 }
-                if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
+                if inpututil.IsKeyJustPressed(ebiten.KeyI) {
                     invselmenu = false
                 }
             } else if invmenu {
@@ -8879,9 +8872,15 @@ func (g *Game) Update() error {
                     invsel2 = 0
                     invselmenu = true
                 }
-                if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
+                if inpututil.IsKeyJustPressed(ebiten.KeyI) {
                     invmenu = false
                 }
+            } else if inpututil.IsKeyJustPressed(ebiten.KeyI) && !overworld {
+                charsheet0 = false
+                charsheet1 = false
+                charsheet2 = false
+                invmenu = !invmenu
+                invselmenu = false
             }
             if inpututil.IsKeyJustPressed(ebiten.KeyC) && !overworld {
                 invmenu = false
@@ -13244,6 +13243,9 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     if effectmsg {
         countstart := count
+        if count >= 5940 {
+            countstart = count - 6000
+        }
         switch effectact {
         case "illuminate":
             r := text.BoundString(fo, fmt.Sprintf("Your path is illuminated: %d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]))
@@ -13258,10 +13260,12 @@ func (g *Game) Draw(screen *ebiten.Image) {
             wid2 := r2.Max.X - r.Min.X
             text.Draw(screen, fmt.Sprintf("Your path is illuminated: %d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]), fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) - 16, color.RGBA{159, 11, 88, 205})
             text.Draw(screen, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur), fo, (w / 2) - (wid2 / 2), (h / 2) - (hei2 / 2), color.RGBA{159, 11, 88, 205})
+        case "disguise":
+            log.Println("Need to implement disguise menu")
         default:
             log.Fatal(effectact + " is not defined")
         }
-        if count - countstart >= 60 {
+        if count - countstart >= 60 && count - countstart < 6000 {
             effectmsg = false
             effectact = ""
         }
