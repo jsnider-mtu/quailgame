@@ -8234,108 +8234,7 @@ func (g *Game) Update() error {
             spellschoices = false
             cutscene = true
         }
-    } else if invselmenu {
-        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
-            if invsel2 > 0 {
-                if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
-                    invsel2 -= 2
-                } else {
-                    invsel2--
-                }
-            }
-        }
-        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
-            if invsel2 < 2 {
-                if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
-                    invsel2 += 2
-                } else {
-                    invsel2++
-                }
-            }
-        }
-        if p.Inv.GetItems()[invsel].Slot() == "" {
-            if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
-                if invsel2 < 2 {
-                    invsel2 = 2
-                }
-            } else {
-                if invsel2 < 1 {
-                    invsel2 = 1
-                }
-            }
-        } else {
-            if invsel2 < 0 {
-                invsel2 = 0
-            }
-        }
-        if invsel2 > 2 {
-            invsel2 = 2
-        }
-        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-            switch invsel2 {
-            case 0:
-                p.Equip(invselitem)
-                invselmenu = false
-            case 1:
-                action, data := invselitem.Use()
-                if action != "" {
-                    p.Effects(action, data)
-                    effectact = action
-                    effectmsg = true
-                }
-                invselmenu = false
-                invmenu = false
-            case 2:
-                p.Inv.Drop(invselitem)
-                invselmenu = false
-            default:
-                log.Fatal(fmt.Sprintf("Invalid value %d for invsel in invselmenu", invsel))
-            }
-        }
-        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
-            invselmenu = false
-        }
-    } else if invmenu {
-        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
-            invsel--
-        } 
-        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
-            invsel++
-        }
-        if invsel < 0 {
-            invsel = 0
-        } else if invsel > len(p.Inv.GetItems()) - 1 {
-            invsel = len(p.Inv.GetItems()) - 1
-        }
-        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-            invselitem = p.Inv.GetItems()[invsel]
-            invsel2 = 0
-            invselmenu = true
-        }
-        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
-            invmenu = false
-        }
     } else {
-        if timestart.IsZero() {
-            log.Println("Starting the clock")
-            timestart = time.Now()
-        }
-        t := time.Now()
-        dur := t.Sub(timestart)
-        if (dur / 1000000000) % 6 == 0 {
-            if nextturn {
-                log.Println("Next turn")
-                if len(p.Stats.Illuminated) == 3 {
-                    p.Stats.Illuminated[2]--
-                    if p.Stats.Illuminated[2] == 0 {
-                        p.Stats.Illuminated = []int{}
-                    }
-                }
-                nextturn = false
-            }
-        } else {
-            nextturn = true
-        }
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause
         }
@@ -8379,6 +8278,26 @@ func (g *Game) Update() error {
                 }
             }
         } else {
+            if timestart.IsZero() {
+                log.Println("Starting the clock")
+                timestart = time.Now()
+            }
+            t := time.Now()
+            dur := t.Sub(timestart)
+            if (dur / 1000000000) % 6 == 0 {
+                if nextturn {
+                    log.Println("Next turn")
+                    if len(p.Stats.Illuminated) == 3 {
+                        p.Stats.Illuminated[2]--
+                        if p.Stats.Illuminated[2] == 0 {
+                            p.Stats.Illuminated = []int{}
+                        }
+                    }
+                    nextturn = false
+                }
+            } else {
+                nextturn = true
+            }
             if save {
                 homeDir, err := os.UserHomeDir()
                 if err != nil {
@@ -8882,8 +8801,91 @@ func (g *Game) Update() error {
                 charsheet2 = false
                 invmenu = !invmenu
             }
+            if invselmenu {
+                if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                    if invsel2 > 0 {
+                        if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                            invsel2 -= 2
+                        } else {
+                            invsel2--
+                        }
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                    if invsel2 < 2 {
+                        if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                            invsel2 += 2
+                        } else {
+                            invsel2++
+                        }
+                    }
+                }
+                if p.Inv.GetItems()[invsel].Slot() == "" {
+                    if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                        if invsel2 < 2 {
+                            invsel2 = 2
+                        }
+                    } else {
+                        if invsel2 < 1 {
+                            invsel2 = 1
+                        }
+                    }
+                } else {
+                    if invsel2 < 0 {
+                        invsel2 = 0
+                    }
+                }
+                if invsel2 > 2 {
+                    invsel2 = 2
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+                    switch invsel2 {
+                    case 0:
+                        p.Equip(invselitem)
+                        invselmenu = false
+                    case 1:
+                        action, data := invselitem.Use()
+                        if action != "" {
+                            p.Effects(action, data)
+                            effectact = action
+                            effectmsg = true
+                        }
+                        invselmenu = false
+                        invmenu = false
+                    case 2:
+                        p.Inv.Drop(invselitem)
+                        invselmenu = false
+                    default:
+                        log.Fatal(fmt.Sprintf("Invalid value %d for invsel in invselmenu", invsel))
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
+                    invselmenu = false
+                }
+            } else if invmenu {
+                if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                    invsel--
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                    invsel++
+                }
+                if invsel < 0 {
+                    invsel = 0
+                } else if invsel > len(p.Inv.GetItems()) - 1 {
+                    invsel = len(p.Inv.GetItems()) - 1
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+                    invselitem = p.Inv.GetItems()[invsel]
+                    invsel2 = 0
+                    invselmenu = true
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
+                    invmenu = false
+                }
+            }
             if inpututil.IsKeyJustPressed(ebiten.KeyC) && !overworld {
                 invmenu = false
+                invselmenu = false
                 if charsheet0 || charsheet1 || charsheet2 {
                     charsheet0 = false
                     charsheet1 = false
