@@ -13454,7 +13454,7 @@ Nullam volutpat ac risus in fermentum.`
                 moreshown = false
                 for y := ((overflowcur - 1) * p.PageMsgs[pageind][4].(int)) + p.PageMsgs[pageind][4].(int); y < p.PageMsgs[pageind][1].(int); y++ {
                     if y < (overflowcur * p.PageMsgs[pageind][4].(int) - 1) + p.PageMsgs[pageind][4].(int) {
-                        text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (768 / 2) - (724 / 2) + 16, (576 / 2) - (552 / 2) + 28 + (28 * (y % p.PageMsgs[pageind][4].(int))), color.Black)
+                        text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (768 / 2) - (724 / 2) + 28, (576 / 2) - (552 / 2) + 48 + (28 * (y % p.PageMsgs[pageind][4].(int))), color.Black)
                     } else {
                         if !moreshown {
                             text.Draw(screen, "More...", fo, (768 / 2) + (724 / 2) - 24, (576 / 2) + (552 / 2) - 48, color.Black)
@@ -13854,8 +13854,8 @@ func init() {
     readimg.Fill(color.Black)
 
     //readgm2 = ebiten.GeoM{}
-    readgm2.Translate(float64((768 / 2) - (724 / 2) + 8), float64((576 / 2) - (552 / 2) + 8))
-    readimg2 = ebiten.NewImage(724 - 8, 552 - 8)
+    readgm2.Translate(float64((768 / 2) - (724 / 2) + 20), float64((576 / 2) - (552 / 2) + 20))
+    readimg2 = ebiten.NewImage(724 - 40, 552 - 40)
     readimg2.Fill(color.White)
 
     //readgm3 = ebiten.GeoM{}

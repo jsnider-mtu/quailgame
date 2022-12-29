@@ -4,6 +4,7 @@ import (
     "fmt"
     "log"
     "strconv"
+    "strings"
 )
 
 type Page struct {
@@ -59,7 +60,25 @@ func (p *Paper) GetQuantity() int {
 func (p *Paper) Write(msg string) {
     if p.GetQuantity() > 0 {
         log.Println(fmt.Sprintf("p.GetQuantity() == %d", p.GetQuantity()))
-        page := &Page{msg: msg}
+        var y int
+        result := ""
+        lines := strings.Split(msg, "\n")
+        for ind, line := range lines {
+            if len(line) > 55 {
+                for x := 54; x < len(line); x = y + 56 {
+                    for y = x; line[y] != ' '; y-- {
+                        continue
+                    }
+                    line = line[:y + 1] + "\n" + line[y + 1:]
+                }
+            }
+            if ind + 1 < len(lines) {
+                result += line + "\n"
+            } else {
+                result += line
+            }
+        }
+        page := &Page{msg: result}
         p.Quantity--
         p.pages = append(p.pages, page)
     } else {
