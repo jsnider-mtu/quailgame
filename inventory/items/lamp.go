@@ -8,7 +8,7 @@ func (l Lamp) Slot() string {
 }
 
 func (l Lamp) Use() (string, []int) {
-    return "", []int{}
+    return "illuminate", []int{15, 30, 3600}
 }
 
 func (l Lamp) Save() string {

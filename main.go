@@ -643,6 +643,7 @@ func (g *Game) Update() error {
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
             p.Inv.Clear()
+            // temp line here
             p.Inv.Add(&items.Candles{Quantity: 1})
             curCS = 0
             csDone = make([]int, 0)
@@ -13280,6 +13281,21 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur), fo, (w / 2) - (wid3 / 2), (h / 2) + (hei3 / 2), color.RGBA{159, 11, 19, 255})
         case "disguise":
             log.Println("Need to implement disguise menu")
+        case "write":
+            reqs := 0
+            for _, i := range p.Inv.GetItems() {
+                if i.PrettyPrint() == "Ink Bottle" {
+                    reqs++
+                }
+                if strings.HasPrefix(i.PrettyPrint(), "Paper") {
+                    reqs++
+                }
+            }
+            if reqs == 2 {
+                log.Println("Need to implement write menu")
+            } else {
+                log.Println("Missing a required item to write")
+            }
         default:
             log.Fatal(effectact + " is not defined")
         }
