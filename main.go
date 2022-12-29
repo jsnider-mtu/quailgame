@@ -13307,7 +13307,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if actcheck = p.Inv.GetItems()[invsel].Action(); actcheck == "" {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
             } else {
-                text.Draw(screen, fmt.Sprintf("  Use (%s)", a), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+                text.Draw(screen, fmt.Sprintf("  Use (%s)", actcheck), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
             }
             text.Draw(screen, "  Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         case 1:
@@ -13319,7 +13319,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if actcheck = p.Inv.GetItems()[invsel].Action(); actcheck == "" {
                 text.Draw(screen, "> Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
             } else {
-                text.Draw(screen, fmt.Sprintf("> Use (%s)", a), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+                text.Draw(screen, fmt.Sprintf("> Use (%s)", actcheck), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
             }
             text.Draw(screen, "  Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         case 2:
@@ -13331,7 +13331,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             if actcheck = p.Inv.GetItems()[invsel].Action(); actcheck == "" {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
             } else {
-                text.Draw(screen, fmt.Sprintf("  Use (%s)", a), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+                text.Draw(screen, fmt.Sprintf("  Use (%s)", actcheck), fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
             }
             text.Draw(screen, "> Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         }
