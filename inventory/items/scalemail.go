@@ -30,3 +30,7 @@ func (s *Scalemail) Damage() (int, int, string) {
 func (s *Scalemail) Action() string {
     return ""
 }
+
+func (s *Scalemail) GetQuantity() int {
+    return 1
+}

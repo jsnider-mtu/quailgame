@@ -31,3 +31,7 @@ func (n *Net) Damage() (int, int, string) {
 func (n *Net) Action() string {
     return ""
 }
+
+func (n *Net) GetQuantity() int {
+    return 1
+}

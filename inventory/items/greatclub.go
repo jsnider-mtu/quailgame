@@ -31,3 +31,7 @@ func (g *Greatclub) Damage() (int, int, string) {
 func (g *Greatclub) Action() string {
     return ""
 }
+
+func (g *Greatclub) GetQuantity() int {
+    return 1
+}

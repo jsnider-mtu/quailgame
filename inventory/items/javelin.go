@@ -31,3 +31,7 @@ func (j *Javelin) Damage() (int, int, string) {
 func (j *Javelin) Action() string {
     return ""
 }
+
+func (j *Javelin) GetQuantity() int {
+    return 1
+}

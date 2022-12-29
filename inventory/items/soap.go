@@ -30,3 +30,7 @@ func (s *Soap) Damage() (int, int, string) {
 func (s *Soap) Action() string {
     return ""
 }
+
+func (s *Soap) GetQuantity() int {
+    return 1
+}

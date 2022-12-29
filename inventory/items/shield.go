@@ -30,3 +30,7 @@ func (s *Shield) Damage() (int, int, string) {
 func (s *Shield) Action() string {
     return ""
 }
+
+func (s *Shield) GetQuantity() int {
+    return 1
+}

@@ -31,3 +31,7 @@ func (m *Mace) Damage() (int, int, string) {
 func (m *Mace) Action() string {
     return ""
 }
+
+func (m *Mace) GetQuantity() int {
+    return 1
+}

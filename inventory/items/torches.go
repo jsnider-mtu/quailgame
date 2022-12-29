@@ -36,3 +36,7 @@ func (t *Torches) Damage() (int, int, string) {
 func (t *Torches) Action() string {
     return ""
 }
+
+func (t *Torches) GetQuantity() int {
+    return t.Quantity
+}

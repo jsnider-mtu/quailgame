@@ -31,3 +31,7 @@ func (s *Scimitar) Damage() (int, int, string) {
 func (s *Scimitar) Action() string {
     return ""
 }
+
+func (s *Scimitar) GetQuantity() int {
+    return 1
+}

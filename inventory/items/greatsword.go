@@ -31,3 +31,7 @@ func (g *Greatsword) Damage() (int, int, string) {
 func (g *Greatsword) Action() string {
     return ""
 }
+
+func (g *Greatsword) GetQuantity() int {
+    return 1
+}

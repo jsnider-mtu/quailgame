@@ -31,3 +31,7 @@ func (s *Sickle) Damage() (int, int, string) {
 func (s *Sickle) Action() string {
     return ""
 }
+
+func (s *Sickle) GetQuantity() int {
+    return 1
+}

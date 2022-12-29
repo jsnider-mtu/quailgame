@@ -30,3 +30,7 @@ func (p *Perfume) Damage() (int, int, string) {
 func (p *Perfume) Action() string {
     return ""
 }
+
+func (p *Perfume) GetQuantity() int {
+    return 1
+}

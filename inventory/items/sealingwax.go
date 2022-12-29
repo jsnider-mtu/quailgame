@@ -30,3 +30,7 @@ func (s *SealingWax) Damage() (int, int, string) {
 func (s *SealingWax) Action() string {
     return ""
 }
+
+func (s *SealingWax) GetQuantity() int {
+    return 1
+}

@@ -30,3 +30,7 @@ func (s *Shawm) Damage() (int, int, string) {
 func (s *Shawm) Action() string {
     return ""
 }
+
+func (s *Shawm) GetQuantity() int {
+    return 1
+}

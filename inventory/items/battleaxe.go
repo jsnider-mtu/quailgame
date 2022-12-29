@@ -31,3 +31,7 @@ func (b *Battleaxe) Damage() (int, int, string) {
 func (b *Battleaxe) Action() string {
     return ""
 }
+
+func (b *Battleaxe) GetQuantity() int {
+    return 1
+}

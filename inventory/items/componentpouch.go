@@ -30,3 +30,7 @@ func (c *ComponentPouch) Damage() (int, int, string) {
 func (c *ComponentPouch) Action() string {
     return ""
 }
+
+func (c *ComponentPouch) GetQuantity() int {
+    return 1
+}

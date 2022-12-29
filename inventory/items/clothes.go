@@ -35,3 +35,7 @@ func (c *Clothes) Damage() (int, int, string) {
 func (c *Clothes) Action() string {
     return ""
 }
+
+func (c *Clothes) GetQuantity() int {
+    return 1
+}

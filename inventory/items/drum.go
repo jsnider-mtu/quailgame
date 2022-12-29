@@ -30,3 +30,7 @@ func (d *Drum) Damage() (int, int, string) {
 func (d *Drum) Action() string {
     return ""
 }
+
+func (d *Drum) GetQuantity() int {
+    return 1
+}

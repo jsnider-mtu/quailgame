@@ -13,6 +13,7 @@ type Item interface {
     Function() string
     Damage() (int, int, string)
     Action() string
+    GetQuantity() int
 }
 
 type Inv struct {

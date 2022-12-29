@@ -31,3 +31,7 @@ func (l *LightHammer) Damage() (int, int, string) {
 func (l *LightHammer) Action() string {
     return ""
 }
+
+func (l *LightHammer) GetQuantity() int {
+    return 1
+}

@@ -31,3 +31,7 @@ func (l *Longsword) Damage() (int, int, string) {
 func (l *Longsword) Action() string {
     return ""
 }
+
+func (l *Longsword) GetQuantity() int {
+    return 1
+}

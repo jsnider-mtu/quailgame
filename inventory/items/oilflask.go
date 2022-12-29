@@ -36,3 +36,7 @@ func (o *OilFlask) Damage() (int, int, string) {
 func (o *OilFlask) Action() string {
     return ""
 }
+
+func (o *OilFlask) GetQuantity() int {
+    return o.Quantity
+}

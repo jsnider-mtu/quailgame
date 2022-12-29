@@ -31,3 +31,7 @@ func (m *Maul) Damage() (int, int, string) {
 func (m *Maul) Action() string {
     return ""
 }
+
+func (m *Maul) GetQuantity() int {
+    return 1
+}

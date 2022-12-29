@@ -30,3 +30,7 @@ func (p *PanFlute) Damage() (int, int, string) {
 func (p *PanFlute) Action() string {
     return ""
 }
+
+func (p *PanFlute) GetQuantity() int {
+    return 1
+}

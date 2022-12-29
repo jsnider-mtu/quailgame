@@ -31,3 +31,7 @@ func (s *Sling) Damage() (int, int, string) {
 func (s *Sling) Action() string {
     return ""
 }
+
+func (s *Sling) GetQuantity() int {
+    return 1
+}

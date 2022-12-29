@@ -31,3 +31,7 @@ func (h *Halberd) Damage() (int, int, string) {
 func (h *Halberd) Action() string {
     return ""
 }
+
+func (h *Halberd) GetQuantity() int {
+    return 1
+}

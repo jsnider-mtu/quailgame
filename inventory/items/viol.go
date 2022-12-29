@@ -30,3 +30,7 @@ func (v *Viol) Damage() (int, int, string) {
 func (v *Viol) Action() string {
     return ""
 }
+
+func (v *Viol) GetQuantity() int {
+    return 1
+}

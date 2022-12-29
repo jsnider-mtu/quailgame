@@ -30,3 +30,7 @@ func (d *DisguiseKit) Damage() (int, int, string) {
 func (d *DisguiseKit) Action() string {
     return "disguise"
 }
+
+func (d *DisguiseKit) GetQuantity() int {
+    return 1
+}

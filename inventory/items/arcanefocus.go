@@ -30,3 +30,7 @@ func (a *ArcaneFocus) Damage() (int, int, string) {
 func (a *ArcaneFocus) Action() string {
     return ""
 }
+
+func (a *ArcaneFocus) GetQuantity() int {
+    return 1
+}

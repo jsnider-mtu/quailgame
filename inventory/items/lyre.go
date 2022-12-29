@@ -30,3 +30,7 @@ func (l *Lyre) Damage() (int, int, string) {
 func (l *Lyre) Action() string {
     return ""
 }
+
+func (l *Lyre) GetQuantity() int {
+    return 1
+}

@@ -31,3 +31,7 @@ func (h *Handaxe) Damage() (int, int, string) {
 func (h *Handaxe) Action() string {
     return ""
 }
+
+func (h *Handaxe) GetQuantity() int {
+    return 1
+}

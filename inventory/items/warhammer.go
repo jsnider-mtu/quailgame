@@ -31,3 +31,7 @@ func (w *Warhammer) Damage() (int, int, string) {
 func (w *Warhammer) Action() string {
     return ""
 }
+
+func (w *Warhammer) GetQuantity() int {
+    return 1
+}

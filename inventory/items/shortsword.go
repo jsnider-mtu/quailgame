@@ -31,3 +31,7 @@ func (s *Shortsword) Damage() (int, int, string) {
 func (s *Shortsword) Action() string {
     return ""
 }
+
+func (s *Shortsword) GetQuantity() int {
+    return 1
+}

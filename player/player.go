@@ -9,7 +9,11 @@ import (
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/quailgame/inventory"
+    "github.com/jsnider-mtu/quailgame/inventory/items"
     "github.com/jsnider-mtu/quailgame/spells"
+//    "github.com/jsnider-mtu/quailgame/utils"
+
+//    "github.com/hajimehoshi/ebiten/v2/text"
 )
 
 type Stats struct {
@@ -89,6 +93,8 @@ type Player struct {
     Equipment *Equipment
     Spells *Spells
     CurLevel string
+    WriteMsg string
+    PageMsgs [][]interface{}
 }
 
 func (s *Spells) Add(spellsslice []string) error {
@@ -572,9 +578,59 @@ func (p *Player) Effects(action string, data []int) {
             log.Fatal(fmt.Sprintf("Incorrect # of arguments %d for illuminate data", len(data)))
         }
         p.Stats.Illuminated = data
+        return
+    case "disguise":
+        log.Println("Need to implement disguise action")
+        return
+    case "write":
+        reqs := []string{"Ink Bottle", "Paper"}
+        for _, i := range p.Inv.GetItems() {
+            for x := 0; x < len(reqs); x++ {
+                for in, j := range reqs {
+                    if strings.HasPrefix(i.PrettyPrint(), j) {
+                        if i.GetQuantity() > 0 {
+                            reqs = append(reqs[:in], reqs[in + 1:]...)
+                            log.Println(fmt.Sprint(reqs))
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        if len(reqs) == 0 {
+            for {
+                if p.WriteMsg != "" {
+                    p.Inv.GetItems()[data[0]].(*items.Paper).Write(p.WriteMsg)
+                    p.WriteMsg = ""
+                    return
+                } else {
+                    log.Println("Waiting on p.WriteMsg to be populated")
+                }
+            }
+        } else {
+            msg := "Missing requirements: "
+            for _, k := range reqs {
+                msg += k + ", "
+            }
+            strings.TrimRight(msg, ", ")
+            log.Println(msg)
+        }
+        return
+    case "read":
+        for {
+            if len(p.PageMsgs) == len(p.Inv.GetItems()[data[0]].(*items.Paper).GetPages()) {
+                log.Println("p.PageMsgs populated")
+                break
+            } else {
+                log.Println("Waiting on p.PageMsgs to be populated")
+            }
+        }
+        return
     default:
         log.Println(action + " is not a recognized action")
+        return
     }
+    return
 }
 
 func (p *Player) CastSpell(spell spells.Spell, target *Player) {

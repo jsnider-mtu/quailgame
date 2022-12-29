@@ -31,3 +31,7 @@ func (s *Shortbow) Damage() (int, int, string) {
 func (s *Shortbow) Action() string {
     return ""
 }
+
+func (s *Shortbow) GetQuantity() int {
+    return 1
+}

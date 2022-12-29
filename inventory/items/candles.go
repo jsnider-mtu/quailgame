@@ -46,3 +46,7 @@ func (c *Candles) Action() string {
     }
     return ""
 }
+
+func (c *Candles) GetQuantity() int {
+    return c.Quantity
+}

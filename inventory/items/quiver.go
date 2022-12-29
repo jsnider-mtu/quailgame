@@ -36,3 +36,7 @@ func (q *Quiver) Damage() (int, int, string) {
 func (q *Quiver) Action() string {
     return ""
 }
+
+func (q *Quiver) GetQuantity() int {
+    return 1
+}

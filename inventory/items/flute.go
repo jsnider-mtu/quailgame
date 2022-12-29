@@ -30,3 +30,7 @@ func (f *Flute) Damage() (int, int, string) {
 func (f *Flute) Action() string {
     return ""
 }
+
+func (f *Flute) GetQuantity() int {
+    return 1
+}

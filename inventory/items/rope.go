@@ -36,3 +36,7 @@ func (r *Rope) Damage() (int, int, string) {
 func (r *Rope) Action() string {
     return ""
 }
+
+func (r *Rope) GetQuantity() int {
+    return 1
+}

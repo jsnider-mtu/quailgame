@@ -30,3 +30,7 @@ func (l *Lamp) Damage() (int, int, string) {
 func (l *Lamp) Action() string {
     return "illuminate"
 }
+
+func (l *Lamp) GetQuantity() int {
+    return 1
+}

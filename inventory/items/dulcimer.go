@@ -30,3 +30,7 @@ func (d *Dulcimer) Damage() (int, int, string) {
 func (d *Dulcimer) Action() string {
     return ""
 }
+
+func (d *Dulcimer) GetQuantity() int {
+    return 1
+}

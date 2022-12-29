@@ -31,3 +31,7 @@ func (t *Trident) Damage() (int, int, string) {
 func (t *Trident) Action() string {
     return ""
 }
+
+func (t *Trident) GetQuantity() int {
+    return 1
+}

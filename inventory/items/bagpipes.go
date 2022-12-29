@@ -30,3 +30,7 @@ func (b *Bagpipes) Damage() (int, int, string) {
 func (b *Bagpipes) Action() string {
     return ""
 }
+
+func (b *Bagpipes) GetQuantity() int {
+    return 1
+}

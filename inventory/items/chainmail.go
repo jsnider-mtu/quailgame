@@ -30,3 +30,7 @@ func (c *Chainmail) Damage() (int, int, string) {
 func (c *Chainmail) Action() string {
     return ""
 }
+
+func (c *Chainmail) GetQuantity() int {
+    return 1
+}

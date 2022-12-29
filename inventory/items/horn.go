@@ -30,3 +30,7 @@ func (h *Horn) Damage() (int, int, string) {
 func (h *Horn) Action() string {
     return ""
 }
+
+func (h *Horn) GetQuantity() int {
+    return 1
+}

@@ -31,3 +31,7 @@ func (b *Blowgun) Damage() (int, int, string) {
 func (b *Blowgun) Action() string {
     return ""
 }
+
+func (b *Blowgun) GetQuantity() int {
+    return 1
+}

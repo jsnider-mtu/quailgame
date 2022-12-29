@@ -31,3 +31,7 @@ func (m *Morningstar) Damage() (int, int, string) {
 func (m *Morningstar) Action() string {
     return ""
 }
+
+func (m *Morningstar) GetQuantity() int {
+    return 1
+}

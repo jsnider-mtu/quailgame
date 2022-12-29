@@ -31,3 +31,7 @@ func (w *Whip) Damage() (int, int, string) {
 func (w *Whip) Action() string {
     return ""
 }
+
+func (w *Whip) GetQuantity() int {
+    return 1
+}

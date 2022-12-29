@@ -31,3 +31,7 @@ func (w WarPick) Damage() (int, int, string) {
 func (w WarPick) Action() string {
     return ""
 }
+
+func (w WarPick) GetQuantity() int {
+    return 1
+}

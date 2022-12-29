@@ -16,7 +16,7 @@ func (i *InkBottle) Save() string {
 }
 
 func (i *InkBottle) PrettyPrint() string {
-    return "InkBottle"
+    return "Ink Bottle"
 }
 
 func (i *InkBottle) Function() string {
@@ -29,4 +29,8 @@ func (i *InkBottle) Damage() (int, int, string) {
 
 func (i *InkBottle) Action() string {
     return ""
+}
+
+func (i *InkBottle) GetQuantity() int {
+    return 1
 }

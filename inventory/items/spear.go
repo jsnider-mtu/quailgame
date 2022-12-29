@@ -31,3 +31,7 @@ func (s *Spear) Damage() (int, int, string) {
 func (s *Spear) Action() string {
     return ""
 }
+
+func (s *Spear) GetQuantity() int {
+    return 1
+}

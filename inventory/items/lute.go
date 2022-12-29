@@ -30,3 +30,7 @@ func (l *Lute) Damage() (int, int, string) {
 func (l *Lute) Action() string {
     return ""
 }
+
+func (l *Lute) GetQuantity() int {
+    return 1
+}

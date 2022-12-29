@@ -31,3 +31,7 @@ func (q *Quarterstaff) Damage() (int, int, string) {
 func (q *Quarterstaff) Action() string {
     return ""
 }
+
+func (q *Quarterstaff) GetQuantity() int {
+    return 1
+}

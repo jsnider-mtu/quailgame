@@ -31,3 +31,7 @@ func (l *LightCrossbow) Damage() (int, int, string) {
 func (l *LightCrossbow) Action() string {
     return ""
 }
+
+func (l *LightCrossbow) GetQuantity() int {
+    return 1
+}

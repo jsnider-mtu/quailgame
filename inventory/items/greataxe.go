@@ -31,3 +31,7 @@ func (g *Greataxe) Damage() (int, int, string) {
 func (g *Greataxe) Action() string {
     return ""
 }
+
+func (g *Greataxe) GetQuantity() int {
+    return 1
+}

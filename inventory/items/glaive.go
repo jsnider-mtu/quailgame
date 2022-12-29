@@ -31,3 +31,7 @@ func (g *Glaive) Damage() (int, int, string) {
 func (g *Glaive) Action() string {
     return ""
 }
+
+func (g *Glaive) GetQuantity() int {
+    return 1
+}

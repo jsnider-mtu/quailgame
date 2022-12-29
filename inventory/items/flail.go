@@ -31,3 +31,7 @@ func (f *Flail) Damage() (int, int, string) {
 func (f *Flail) Action() string {
     return ""
 }
+
+func (f *Flail) GetQuantity() int {
+    return 1
+}

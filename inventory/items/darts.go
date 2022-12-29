@@ -37,3 +37,7 @@ func (d *Darts) Damage() (int, int, string) {
 func (d *Darts) Action() string {
     return ""
 }
+
+func (d *Darts) GetQuantity() int {
+    return d.Quantity
+}

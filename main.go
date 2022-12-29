@@ -18,9 +18,9 @@ import (
     "time"
 
     "golang.org/x/image/font"
-    "golang.org/x/image/font/gofont/gomonobold"
+//    "golang.org/x/image/font/gofont/gomonobold"
 
-    "github.com/golang/freetype/truetype"
+//    "github.com/golang/freetype/truetype"
 
     "github.com/jsnider-mtu/quailgame/assets"
     "github.com/jsnider-mtu/quailgame/cutscenes"
@@ -29,7 +29,7 @@ import (
     "github.com/jsnider-mtu/quailgame/levels"
     "github.com/jsnider-mtu/quailgame/player"
     "github.com/jsnider-mtu/quailgame/player/pcimages"
-//    "github.com/jsnider-mtu/quailgame/utils"
+    "github.com/jsnider-mtu/quailgame/utils"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -88,7 +88,7 @@ var (
     npcname string
     l *levels.Level
     p *player.Player
-    fon *truetype.Font
+    //fon *truetype.Font
     fo font.Face
     s int = 0
     lvlchange bool = false
@@ -177,6 +177,9 @@ var (
     effectact string
     effectmsg bool = false
     countend int = 0
+    overflowcur int = 0
+    overflownum int = 0
+    pageind int = 0
 )
 
 var racemap = make(map[int]string)
@@ -8299,6 +8302,39 @@ func (g *Game) Update() error {
             } else {
                 nextturn = true
             }
+            if effectact == "read" {
+                if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+                    if overflowcur < overflownum {
+                        overflowcur++
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+                    if overflowcur > 0 {
+                        overflowcur--
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+                    pageind--
+                    if pageind < 0 {
+                        pageind = 0
+                    }
+                    overflowcur = 0
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+                    pageind++
+                    if pageind > len(p.PageMsgs) - 1 {
+                        pageind = len(p.PageMsgs) - 1
+                    }
+                    overflowcur = 0
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyQ) {
+                    effectmsg = false
+                    effectact = ""
+                    overflowcur = 0
+                    overflownum = 0
+                    pageind = 0
+                }
+            }
             if save {
                 homeDir, err := os.UserHomeDir()
                 if err != nil {
@@ -8842,10 +8878,17 @@ func (g *Game) Update() error {
                         action, data := p.Inv.GetItems()[invsel].Use()
                         //p.Inv.Drop(p.Inv.GetItems()[invsel])
                         //p.Inv.Add(tempitem)
+                        if action == "write" || action == "read" {
+                            for in, i := range p.Inv.GetItems() {
+                                if strings.HasPrefix(i.PrettyPrint(), "Paper") {
+                                    data = append(data, in)
+                                }
+                            }
+                        }
                         if action != "" {
-                            p.Effects(action, data)
                             effectact = action
                             effectmsg = true
+                            go p.Effects(action, data)
                         }
                         invselmenu = false
                         invmenu = false
@@ -13284,24 +13327,80 @@ func (g *Game) Draw(screen *ebiten.Image) {
         case "disguise":
             log.Println("Need to implement disguise menu")
         case "write":
-            reqs := 0
-            for _, i := range p.Inv.GetItems() {
-                if i.PrettyPrint() == "Ink Bottle" {
-                    reqs++
-                }
+            p.WriteMsg = "Testing"
+            log.Println("Need to implement write menu")
+            effectmsg = false
+            effectact = ""
+        case "read":
+            pageexists := false
+            pages := make([]*items.Page, 0)
+            for in, i := range p.Inv.GetItems() {
                 if strings.HasPrefix(i.PrettyPrint(), "Paper") {
-                    reqs++
+                    pages = p.Inv.GetItems()[in].(*items.Paper).GetPages()
+                    break
                 }
             }
-            if reqs == 2 {
-                log.Println("Need to implement write menu")
-            } else {
-                log.Println("Missing a required item to write")
+            if len(pages) > 0 {
+                for _, pa := range pages {
+                    for _, pm := range p.PageMsgs {
+                        if pa.GetName() == pm[5].(string) {
+                            pageexists = true
+                        }
+                    }
+                    maxw, maxh := 0, 0
+                    lines := strings.Split(pa.Read(), "\n")
+                    numlines := len(lines)
+                    for _, line := range lines {
+                        r := text.BoundString(utils.Fo(), line)
+                        if (r.Max.Y - r.Min.Y) > maxh {
+                            maxh = r.Max.Y - r.Min.Y
+                        }
+                        if (r.Max.X - r.Min.X) > maxw {
+                            maxw = r.Max.X - r.Min.X
+                        }
+                    }
+                    maxlines := 724 / (maxh + 8)
+                    maxh = (maxh * numlines) + (numlines * 8)
+                    if maxh > 724 {
+                        maxh = 724
+                    }
+                    maxw = maxw + 40
+                    if maxw > 552 {
+                        maxw = 552
+                    }
+                    if !pageexists {
+                        log.Println("Appending to p.PageMsgs")
+                        p.PageMsgs = append(p.PageMsgs, []interface{}{lines, numlines, maxw, maxh, maxlines, pa.GetName()})
+                        log.Println("Appended")
+                    }
+                }
+            }
+            overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][4].(int)
+            readgm := ebiten.GeoM{}
+            readgm.Translate(float64((w / 2) - (p.PageMsgs[pageind][2].(int) / 2)), float64((h / 2) - (p.PageMsgs[pageind][3].(int) / 2)))
+            readimg := ebiten.NewImage(p.PageMsgs[pageind][2].(int), p.PageMsgs[pageind][3].(int))
+            readimg.Fill(color.Black)
+            screen.DrawImage(
+                readimg, &ebiten.DrawImageOptions{
+                    GeoM: readgm})
+            readgm2 := ebiten.GeoM{}
+            readgm2.Translate(float64((w / 2) - (p.PageMsgs[pageind][2].(int) / 2) + 4), float64((h / 2) - (p.PageMsgs[pageind][3].(int) / 2) + 4))
+            readimg2 := ebiten.NewImage(p.PageMsgs[pageind][2].(int) - 8, p.PageMsgs[pageind][3].(int) - 8)
+            readimg2.Fill(color.White)
+            screen.DrawImage(
+                readimg2, &ebiten.DrawImageOptions{
+                    GeoM: readgm2})
+            for y := ((overflowcur - 1) * p.PageMsgs[pageind][4].(int)) + p.PageMsgs[pageind][4].(int); y < p.PageMsgs[pageind][1].(int); y++ {
+                if y < (overflowcur * p.PageMsgs[pageind][4].(int) - 1) + p.PageMsgs[pageind][4].(int) {
+                    text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (w / 2) - (p.PageMsgs[pageind][2].(int) / 2) + 16, (h / 2) - (p.PageMsgs[pageind][3].(int) / 2) + 16 + (16 * (y % ((overflowcur * p.PageMsgs[pageind][4].(int)) + p.PageMsgs[pageind][4].(int)))), color.Black)
+                } else {
+                    text.Draw(screen, "More...", fo, 552 - 24, 736 - 48, color.Black)
+                }
             }
         default:
             log.Fatal(effectact + " is not defined")
         }
-        if npcCount >= countend {
+        if effectact != "read" && npcCount >= countend {
             countend = 0
             effectmsg = false
             effectact = ""
@@ -13675,11 +13774,12 @@ func drawmc(screen *ebiten.Image, w, h int) {
 }
 
 func init() {
-    fon, err = truetype.Parse(gomonobold.TTF)
-    if err != nil {
-        log.Fatal(err)
-    }
-    fo = truetype.NewFace(fon, &truetype.Options{Size: 20})
+    //fon, err = truetype.Parse(gomonobold.TTF)
+    //if err != nil {
+    //    log.Fatal(err)
+    //}
+    //fo = truetype.NewFace(fon, &truetype.Options{Size: 20})
+    fo = utils.Fo()
 
     startimage, _, err := image.Decode(bytes.NewReader(assets.Start_PNG))
     if err != nil {

@@ -31,3 +31,7 @@ func (h HeavyCrossbow) Damage() (int, int, string) {
 func (h HeavyCrossbow) Action() string {
     return ""
 }
+
+func (h HeavyCrossbow) GetQuantity() int {
+    return 1
+}

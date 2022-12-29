@@ -31,3 +31,7 @@ func (p *Pike) Damage() (int, int, string) {
 func (p *Pike) Action() string {
     return ""
 }
+
+func (p *Pike) GetQuantity() int {
+    return 1
+}

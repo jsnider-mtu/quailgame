@@ -31,3 +31,7 @@ func (d *Dagger) Damage() (int, int, string) {
 func (d *Dagger) Action() string {
     return ""
 }
+
+func (d *Dagger) GetQuantity() int {
+    return 1
+}

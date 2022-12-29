@@ -30,3 +30,7 @@ func (l *LeatherArmor) Damage() (int, int, string) {
 func (l *LeatherArmor) Action() string {
     return ""
 }
+
+func (l *LeatherArmor) GetQuantity() int {
+    return 1
+}

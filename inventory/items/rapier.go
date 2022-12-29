@@ -31,3 +31,7 @@ func (r *Rapier) Damage() (int, int, string) {
 func (r *Rapier) Action() string {
     return ""
 }
+
+func (r *Rapier) GetQuantity() int {
+    return 1
+}

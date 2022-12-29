@@ -30,3 +30,7 @@ func (t *Tinderbox) Damage() (int, int, string) {
 func (t *Tinderbox) Action() string {
     return ""
 }
+
+func (t *Tinderbox) GetQuantity() int {
+    return 1
+}

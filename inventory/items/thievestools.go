@@ -30,3 +30,7 @@ func (t *ThievesTools) Damage() (int, int, string) {
 func (t *ThievesTools) Action() string {
     return ""
 }
+
+func (t *ThievesTools) GetQuantity() int {
+    return 1
+}

@@ -30,3 +30,7 @@ func (i *InkPen) Damage() (int, int, string) {
 func (i *InkPen) Action() string {
     return "write"
 }
+
+func (i *InkPen) GetQuantity() int {
+    return 1
+}

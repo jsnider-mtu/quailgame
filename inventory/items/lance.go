@@ -31,3 +31,7 @@ func (l *Lance) Damage() (int, int, string) {
 func (l *Lance) Action() string {
     return ""
 }
+
+func (l *Lance) GetQuantity() int {
+    return 1
+}

@@ -31,3 +31,7 @@ func (l *Longbow) Damage() (int, int, string) {
 func (l *Longbow) Action() string {
     return ""
 }
+
+func (l *Longbow) GetQuantity() int {
+    return 1
+}
