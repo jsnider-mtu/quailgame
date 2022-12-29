@@ -8236,14 +8236,32 @@ func (g *Game) Update() error {
         }
     } else if invselmenu {
         if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
-            invsel2--
+            if invsel2 > 0 {
+                if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                    invsel2 -= 2
+                } else {
+                    invsel2--
+                }
+            }
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
-            invsel2++
+            if invsel2 < 2 {
+                if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                    invsel2 += 2
+                } else {
+                    invsel2++
+                }
+            }
         }
         if p.Inv.GetItems()[invsel].Slot() == "" {
-            if invsel2 < 1 {
-                invsel2 = 1
+            if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                if invsel2 < 2 {
+                    invsel2 = 2
+                }
+            } else {
+                if invsel2 < 1 {
+                    invsel2 = 1
+                }
             }
         } else {
             if invsel2 < 0 {
@@ -13194,7 +13212,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
         switch invsel2 {
         case 0:
             text.Draw(screen, "> Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
-            text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
+            } else {
+                text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            }
             text.Draw(screen, "  Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         case 1:
             if p.Inv.GetItems()[invsel].Slot() == "" {
@@ -13210,7 +13232,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
             } else {
                 text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
             }
-            text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
+            } else {
+                text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            }
             text.Draw(screen, "> Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
         }
     }
