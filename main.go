@@ -15,6 +15,7 @@ import (
     "sort"
     "strconv"
     "strings"
+    "time"
 
     "golang.org/x/image/font"
     "golang.org/x/image/font/gofont/gomonobold"
@@ -167,6 +168,14 @@ var (
     npchp string
     levelslice []*levels.Level
     lvlloaded bool = false
+    invsel int = 0
+    invsel2 int = 0
+    invselmenu bool = false
+    invselitem inventory.Item
+    timestart time.Time
+    nextturn bool = false
+    effectact string
+    effectmsg bool = false
 )
 
 var racemap = make(map[int]string)
@@ -518,6 +527,8 @@ func (g *Game) Update() error {
                         p.Pos[0] = -l.Pos[0]
                         p.Pos[1] = -l.Pos[1]
                         p.Spells = &player.Spells{}
+                        // temp line here
+                        p.Inv.Add(&items.Candles{Quantity: 1})
                         down = true
                         up = false
                         left = false
@@ -8223,7 +8234,90 @@ func (g *Game) Update() error {
             spellschoices = false
             cutscene = true
         }
+    } else if invselmenu {
+        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+            invsel2--
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            invsel2++
+        }
+        if p.Inv.GetItems()[invsel].Slot() == "" {
+            if invsel2 < 1 {
+                invsel2 = 1
+            }
+        } else {
+            if invsel2 < 0 {
+                invsel2 = 0
+            }
+        }
+        if invsel2 > 2 {
+            invsel2 = 2
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            switch invsel2 {
+            case 0:
+                p.Equip(invselitem)
+                invselmenu = false
+            case 1:
+                action, data := invselitem.Use()
+                if action != "" {
+                    p.Effects(action, data)
+                    effectact = action
+                    effectmsg = true
+                }
+                invselmenu = false
+                invmenu = false
+            case 2:
+                p.Inv.Drop(invselitem)
+                invselmenu = false
+            default:
+                log.Fatal(fmt.Sprintf("Invalid value %d for invsel in invselmenu", invsel))
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
+            invselmenu = false
+        }
+    } else if invmenu {
+        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+            invsel--
+        } 
+        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            invsel++
+        }
+        if invsel < 0 {
+            invsel = 0
+        } else if invsel > len(p.Inv.GetItems()) - 1 {
+            invsel = len(p.Inv.GetItems()) - 1
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            invselitem = p.Inv.GetItems()[invsel]
+            invsel2 = 0
+            invselmenu = true
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEscape) || inpututil.IsKeyJustPressed(ebiten.KeyI) {
+            invmenu = false
+        }
     } else {
+        if timestart.IsZero() {
+            log.Println("Starting the clock")
+            timestart = time.Now()
+        }
+        t := time.Now()
+        dur := t.Sub(timestart)
+        if (dur / 1000000000) % 6 == 0 {
+            if nextturn {
+                log.Println("Next turn")
+                if len(p.Stats.Illuminated) == 3 {
+                    p.Stats.Illuminated[2]--
+                    if p.Stats.Illuminated[2] == 0 {
+                        p.Stats.Illuminated = []int{}
+                    }
+                }
+                nextturn = false
+            }
+        } else {
+            nextturn = true
+        }
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause
         }
@@ -13073,7 +13167,75 @@ func (g *Game) Draw(screen *ebiten.Image) {
         screen.DrawImage(blankImage, nil)
         invitems := p.Inv.GetItems()
         for iind, ival := range invitems {
+            if iind == invsel {
+                text.Draw(screen, ">", fo, 32, 64 + (32 * iind), color.White)
+            }
             text.Draw(screen, ival.PrettyPrint(), fo, 64, 64 + (32 * iind), color.White)
+        }
+    }
+    if invselmenu {
+        r := text.BoundString(fo, "> Equip")
+        hei := r.Max.Y - r.Min.Y
+        wid := r.Max.X - r.Min.X
+        ismgm := ebiten.GeoM{}
+        ismgm.Translate(float64((w / 2) - (wid / 2) - 8), float64((h / 2) - (3 * hei / 2) - 16))
+        ismimg := ebiten.NewImage(wid + 28, (hei * 3) + 48)
+        ismimg.Fill(color.Black)
+        screen.DrawImage(
+            ismimg, &ebiten.DrawImageOptions{
+                GeoM: ismgm})
+        ismgm2 := ebiten.GeoM{}
+        ismgm2.Translate(float64((w / 2) - (wid / 2) - 4), float64((h / 2) - (3 * hei / 2) - 12))
+        ismimg2 := ebiten.NewImage(wid + 20, (hei * 3) + 40)
+        ismimg2.Fill(color.White)
+        screen.DrawImage(
+            ismimg2, &ebiten.DrawImageOptions{
+                GeoM: ismgm2})
+        switch invsel2 {
+        case 0:
+            text.Draw(screen, "> Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
+            text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+        case 1:
+            if p.Inv.GetItems()[invsel].Slot() == "" {
+                text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Gray16{0x8000})
+            } else {
+                text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
+            }
+            text.Draw(screen, "> Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "  Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+        case 2:
+            if p.Inv.GetItems()[invsel].Slot() == "" {
+                text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Gray16{0x8000})
+            } else {
+                text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
+            }
+            text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
+            text.Draw(screen, "> Drop", fo, (w / 2) - (wid / 2), (h / 2) + (hei / 2) + 32, color.Black)
+        }
+    }
+    if effectmsg {
+        countstart := count
+        switch effectact {
+        case "illuminate":
+            r := text.BoundString(fo, fmt.Sprintf("Your path is illuminated: %d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]))
+            hei := r.Max.Y - r.Min.Y
+            wid := r.Max.X - r.Min.X
+            dur, err := time.ParseDuration(strconv.Itoa(p.Stats.Illuminated[2] * 6) + "s")
+            if err != nil {
+                log.Fatal(err)
+            }
+            r2 := text.BoundString(fo, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur))
+            hei2 := r2.Max.Y - r.Min.Y
+            wid2 := r2.Max.X - r.Min.X
+            text.Draw(screen, fmt.Sprintf("Your path is illuminated: %d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]), fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) - 16, color.RGBA{159, 11, 88, 205})
+            text.Draw(screen, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur), fo, (w / 2) - (wid2 / 2), (h / 2) - (hei2 / 2), color.RGBA{159, 11, 88, 205})
+        default:
+            log.Fatal(effectact + " is not defined")
+        }
+        if count - countstart >= 60 {
+            effectmsg = false
+            effectact = ""
         }
     }
     if charsheet0 {

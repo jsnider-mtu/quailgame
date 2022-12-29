@@ -47,6 +47,7 @@ type Stats struct {
     Nimbleness bool
     Brave bool
     Ancestry string
+    Illuminated []int
 }
 
 type Equipment struct {
@@ -564,6 +565,18 @@ func (p *Player) GetName() string {
     return p.Name
 }
 
+func (p *Player) Effects(action string, data []int) {
+    switch action {
+    case "illuminate":
+        if len(data) != 3 {
+            log.Fatal(fmt.Sprintf("Incorrect # of arguments %d for illuminate data", len(data)))
+        }
+        p.Stats.Illuminated = data
+    default:
+        log.Println(action + " is not a recognized action")
+    }
+}
+
 func (p *Player) CastSpell(spell spells.Spell, target *Player) {
     log.Println(fmt.Sprintf("Casting spell %s, target is %s", spell.PrettyPrint(), target.GetName()))
 }
@@ -787,17 +800,29 @@ func (p *Player) Equip(item inventory.Item) {
                 if p.Equipment.LeftHand != nil {
                     p.Inv.Add(p.Equipment.LeftHand)
                 }
+                if p.Equipment.BothHands != nil {
+                    p.Unequip("BothHands")
+                }
                 p.Equipment.LeftHand = item
                 p.Inv.Drop(item)
             case "RightHand":
                 if p.Equipment.RightHand != nil {
                     p.Inv.Add(p.Equipment.RightHand)
                 }
+                if p.Equipment.BothHands != nil {
+                    p.Unequip("BothHands")
+                }
                 p.Equipment.RightHand = item
                 p.Inv.Drop(item)
             case "BothHands":
                 if p.Equipment.BothHands != nil {
                     p.Inv.Add(p.Equipment.BothHands)
+                }
+                if p.Equipment.RightHand != nil {
+                    p.Unequip("RightHand")
+                }
+                if p.Equipment.LeftHand != nil {
+                    p.Unequip("LeftHand")
                 }
                 p.Equipment.BothHands = item
                 p.Inv.Drop(item)
