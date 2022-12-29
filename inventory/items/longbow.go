@@ -3,27 +3,31 @@ package items
 type Longbow struct {
 }
 
-func (l Longbow) Slot() string {
+func (l *Longbow) Slot() string {
     return "BothHands"
 }
 
-func (l Longbow) Use() (string, []int) {
+func (l *Longbow) Use() (string, []int) {
     return "", []int{}
     // must be equipped to use
 }
 
-func (l Longbow) Save() string {
+func (l *Longbow) Save() string {
     return "Longbow"
 }
 
-func (l Longbow) PrettyPrint() string {
+func (l *Longbow) PrettyPrint() string {
     return "Longbow"
 }
 
-func (l Longbow) Function() string {
+func (l *Longbow) Function() string {
     return "range"
 }
 
-func (l Longbow) Damage() (int, int, string) {
+func (l *Longbow) Damage() (int, int, string) {
     return 1, 8, "piercing"
+}
+
+func (l *Longbow) Action() string {
+    return ""
 }

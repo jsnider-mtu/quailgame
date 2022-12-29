@@ -3,27 +3,31 @@ package items
 type Mace struct {
 }
 
-func (m Mace) Slot() string {
+func (m *Mace) Slot() string {
     return "RightHand"
 }
 
-func (m Mace) Use() (string, []int) {
+func (m *Mace) Use() (string, []int) {
     return "", []int{}
     // must be equipped to use
 }
 
-func (m Mace) Save() string {
+func (m *Mace) Save() string {
     return "Mace"
 }
 
-func (m Mace) PrettyPrint() string {
+func (m *Mace) PrettyPrint() string {
     return "Mace"
 }
 
-func (m Mace) Function() string {
+func (m *Mace) Function() string {
     return "melee"
 }
 
-func (m Mace) Damage() (int, int, string) {
+func (m *Mace) Damage() (int, int, string) {
     return 1, 6, "bludgeoning"
+}
+
+func (m *Mace) Action() string {
+    return ""
 }

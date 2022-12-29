@@ -3,27 +3,31 @@ package items
 type Greataxe struct {
 }
 
-func (g Greataxe) Slot() string {
+func (g *Greataxe) Slot() string {
     return "BothHands"
 }
 
-func (g Greataxe) Use() (string, []int) {
+func (g *Greataxe) Use() (string, []int) {
     return "", []int{}
     // must be equipped to use
 }
 
-func (g Greataxe) Save() string {
+func (g *Greataxe) Save() string {
     return "Greataxe"
 }
 
-func (g Greataxe) PrettyPrint() string {
+func (g *Greataxe) PrettyPrint() string {
     return "Greataxe"
 }
 
-func (g Greataxe) Function() string {
+func (g *Greataxe) Function() string {
     return "melee"
 }
 
-func (g Greataxe) Damage() (int, int, string) {
+func (g *Greataxe) Damage() (int, int, string) {
     return 1, 12, "slashing"
+}
+
+func (g *Greataxe) Action() string {
+    return ""
 }

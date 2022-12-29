@@ -4,19 +4,19 @@ type Clothes struct {
     Quality string
 }
 
-func (c Clothes) Slot() string {
+func (c *Clothes) Slot() string {
     return "Clothes"
 }
 
-func (c Clothes) Use() (string, []int) {
+func (c *Clothes) Use() (string, []int) {
     return "", []int{}
 }
 
-func (c Clothes) Save() string {
+func (c *Clothes) Save() string {
     return "Clothes," + c.Quality
 }
 
-func (c Clothes) PrettyPrint() string {
+func (c *Clothes) PrettyPrint() string {
     if c.Quality == "Costume" {
         return c.Quality
     } else {
@@ -24,10 +24,14 @@ func (c Clothes) PrettyPrint() string {
     }
 }
 
-func (c Clothes) Function() string {
+func (c *Clothes) Function() string {
     return "clothes"
 }
 
-func (c Clothes) Damage() (int, int, string) {
+func (c *Clothes) Damage() (int, int, string) {
     return 0, 0, ""
+}
+
+func (c *Clothes) Action() string {
+    return ""
 }

@@ -27,3 +27,7 @@ func (w WarPick) Function() string {
 func (w WarPick) Damage() (int, int, string) {
     return 1, 8, "piercing"
 }
+
+func (w WarPick) Action() string {
+    return ""
+}

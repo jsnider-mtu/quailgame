@@ -3,26 +3,30 @@ package items
 type Scalemail struct {
 }
 
-func (s Scalemail) Slot() string {
+func (s *Scalemail) Slot() string {
     return "Armor"
 }
 
-func (s Scalemail) Use() (string, []int) {
+func (s *Scalemail) Use() (string, []int) {
     return "", []int{}
 }
 
-func (s Scalemail) Save() string {
+func (s *Scalemail) Save() string {
     return "Scalemail"
 }
 
-func (s Scalemail) PrettyPrint() string {
+func (s *Scalemail) PrettyPrint() string {
     return "Scalemail"
 }
 
-func (s Scalemail) Function() string {
+func (s *Scalemail) Function() string {
     return "armor"
 }
 
-func (s Scalemail) Damage() (int, int, string) {
+func (s *Scalemail) Damage() (int, int, string) {
     return 0, 0, ""
+}
+
+func (s *Scalemail) Action() string {
+    return ""
 }

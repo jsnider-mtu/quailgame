@@ -12,6 +12,7 @@ type Item interface {
     PrettyPrint() string
     Function() string
     Damage() (int, int, string)
+    Action() string
 }
 
 type Inv struct {

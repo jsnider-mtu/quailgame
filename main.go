@@ -2400,109 +2400,109 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var greataxe items.Greataxe
+                    var greataxe *items.Greataxe
                     err = p.Inv.Add(greataxe)
                     if err != nil {
                         return errors.New("Failed to add greataxe to inv")
                     }
                 case 1:
-                    var battleaxe items.Battleaxe
+                    var battleaxe *items.Battleaxe
                     err = p.Inv.Add(battleaxe)
                     if err != nil {
                         return errors.New("Failed to add battleaxe to inv")
                     }
                 case 2:
-                    var flail items.Flail
+                    var flail *items.Flail
                     err = p.Inv.Add(flail)
                     if err != nil {
                         return errors.New("Failed to add flail to inv")
                     }
                 case 3:
-                    var glaive items.Glaive
+                    var glaive *items.Glaive
                     err = p.Inv.Add(glaive)
                     if err != nil {
                         return errors.New("Failed to add glaive to inv")
                     }
                 case 4:
-                    var greatsword items.Greatsword
+                    var greatsword *items.Greatsword
                     err = p.Inv.Add(greatsword)
                     if err != nil {
                         return errors.New("Failed to add greatsword to inv")
                     }
                 case 5:
-                    var halberd items.Halberd
+                    var halberd *items.Halberd
                     err = p.Inv.Add(halberd)
                     if err != nil {
                         return errors.New("Failed to add halberd to inv")
                     }
                 case 6:
-                    var lance items.Lance
+                    var lance *items.Lance
                     err = p.Inv.Add(lance)
                     if err != nil {
                         return errors.New("Failed to add lance to inv")
                     }
                 case 7:
-                    var longsword items.Longsword
+                    var longsword *items.Longsword
                     err = p.Inv.Add(longsword)
                     if err != nil {
                         return errors.New("Failed to add longsword to inv")
                     }
                 case 8:
-                    var maul items.Maul
+                    var maul *items.Maul
                     err = p.Inv.Add(maul)
                     if err != nil {
                         return errors.New("Failed to add maul to inv")
                     }
                 case 9:
-                    var morningstar items.Morningstar
+                    var morningstar *items.Morningstar
                     err = p.Inv.Add(morningstar)
                     if err != nil {
                         return errors.New("Failed to add morningstar to inv")
                     }
                 case 10:
-                    var pike items.Pike
+                    var pike *items.Pike
                     err = p.Inv.Add(pike)
                     if err != nil {
                         return errors.New("Failed to add pike to inv")
                     }
                 case 11:
-                    var rapier items.Rapier
+                    var rapier *items.Rapier
                     err = p.Inv.Add(rapier)
                     if err != nil {
                         return errors.New("Failed to add rapier to inv")
                     }
                 case 12:
-                    var scimitar items.Scimitar
+                    var scimitar *items.Scimitar
                     err = p.Inv.Add(scimitar)
                     if err != nil {
                         return errors.New("Failed to add scimitar to inv")
                     }
                 case 13:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 14:
-                    var trident items.Trident
+                    var trident *items.Trident
                     err = p.Inv.Add(trident)
                     if err != nil {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 15:
-                    var warpick items.WarPick
+                    var warpick *items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
                     }
                 case 16:
-                    var warhammer items.Warhammer
+                    var warhammer *items.Warhammer
                     err = p.Inv.Add(warhammer)
                     if err != nil {
                         return errors.New("Failed to add warhammer to inv")
                     }
                 case 17:
-                    var whip items.Whip
+                    var whip *items.Whip
                     err = p.Inv.Add(whip)
                     if err != nil {
                         return errors.New("Failed to add whip to inv")
@@ -2512,8 +2512,8 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var handaxe0 items.Handaxe
-                    var handaxe1 items.Handaxe
+                    var handaxe0 *items.Handaxe
+                    var handaxe1 *items.Handaxe
                     err = p.Inv.Add(handaxe0)
                     if err != nil {
                         return errors.New("Failed to add handaxe0 to inv")
@@ -2523,79 +2523,79 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add handaxe1 to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 5:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 6:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 7:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 8:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 9:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 10:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 11:
-                    var dart items.Darts
+                    var dart *items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
                     }
                 case 12:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 13:
-                    var sling items.Sling
+                    var sling *items.Sling
                     err = p.Inv.Add(sling)
                     if err != nil {
                         return errors.New("Failed to add sling to inv")
@@ -2603,9 +2603,9 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option3 (case 0)")
                 }
-                var torches = items.Torches{Quantity: 10}
-                var tinderbox items.Tinderbox
-                var rope = items.Rope{Length: 50}
+                var torches = &items.Torches{Quantity: 10}
+                var tinderbox *items.Tinderbox
+                var rope = &items.Rope{Length: 50}
                 err = p.Inv.Add(torches)
                 if err != nil {
                     return errors.New("Failed to add torches to inv")
@@ -2618,10 +2618,10 @@ func (g *Game) Update() error {
                 if err != nil {
                     return errors.New("Failed to add rope to inv")
                 }
-                var javelin0 items.Javelin
-                var javelin1 items.Javelin
-                var javelin2 items.Javelin
-                var javelin3 items.Javelin
+                var javelin0 *items.Javelin
+                var javelin1 *items.Javelin
+                var javelin2 *items.Javelin
+                var javelin3 *items.Javelin
                 err = p.Inv.Add(javelin0)
                 if err != nil {
                     return errors.New("Failed to javelin0 rope to inv")
@@ -2833,97 +2833,97 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var rapier items.Rapier
+                    var rapier *items.Rapier
                     err = p.Inv.Add(rapier)
                     if err != nil {
                         return errors.New("Failed to add rapier to inv")
                     }
                 case 1:
-                    var longsword items.Longsword
+                    var longsword *items.Longsword
                     err = p.Inv.Add(longsword)
                     if err != nil {
                         return errors.New("Failed to add longsword to inv")
                     }
                 case 2:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 3:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 4:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 5:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 6:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 7:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 8:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 9:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 10:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 11:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 12:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 13:
-                    var dart items.Darts
+                    var dart *items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
                     }
                 case 14:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 15:
-                    var sling items.Sling
+                    var sling *items.Sling
                     err = p.Inv.Add(sling)
                     if err != nil {
                         return errors.New("Failed to add sling to inv")
@@ -2933,15 +2933,15 @@ func (g *Game) Update() error {
                 }
                 switch option7 {
                 case 0:
-                    var clothes = items.Clothes{Quality: "Fine"}
-                    var inkbottle items.InkBottle
-                    var inkpen items.InkPen
-                    var lamp items.Lamp
-                    var oilflask = items.OilFlask{Quantity: 2}
-                    var paper = items.Paper{Quantity: 5}
-                    var perfume items.Perfume
-                    var sealingwax items.SealingWax
-                    var soap items.Soap
+                    var clothes = &items.Clothes{Quality: "Fine"}
+                    var inkbottle *items.InkBottle
+                    var inkpen *items.InkPen
+                    var lamp *items.Lamp
+                    var oilflask = &items.OilFlask{Quantity: 2}
+                    var paper = &items.Paper{Quantity: 5}
+                    var perfume *items.Perfume
+                    var sealingwax *items.SealingWax
+                    var soap *items.Soap
                     err = p.Inv.Add(clothes)
                     if err != nil {
                         return errors.New("Failed to add clothes to inv")
@@ -2979,9 +2979,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add soap to inv")
                     }
                 case 1:
-                    var clothes = items.Clothes{Quality: "Costume"}
-                    var candles = items.Candles{Quantity: 5}
-                    var disguisekit items.DisguiseKit
+                    var clothes = &items.Clothes{Quality: "Costume"}
+                    var candles = &items.Candles{Quantity: 5}
+                    var disguisekit *items.DisguiseKit
                     err = p.Inv.Add(clothes)
                     if err != nil {
                         return errors.New("Failed to add clothes to inv")
@@ -2999,61 +2999,61 @@ func (g *Game) Update() error {
                 }
                 switch option8 {
                 case 0:
-                    var bagpipes items.Bagpipes
+                    var bagpipes *items.Bagpipes
                     err = p.Inv.Add(bagpipes)
                     if err != nil {
                         return errors.New("Failed to add bagpipes to inv")
                     }
                 case 1:
-                    var drum items.Drum
+                    var drum *items.Drum
                     err = p.Inv.Add(drum)
                     if err != nil {
                         return errors.New("Failed to add drum to inv")
                     }
                 case 2:
-                    var dulcimer items.Dulcimer
+                    var dulcimer *items.Dulcimer
                     err = p.Inv.Add(dulcimer)
                     if err != nil {
                         return errors.New("Failed to add dulcimer to inv")
                     }
                 case 3:
-                    var flute items.Flute
+                    var flute *items.Flute
                     err = p.Inv.Add(flute)
                     if err != nil {
                         return errors.New("Failed to add flute to inv")
                     }
                 case 4:
-                    var lute items.Lute
+                    var lute *items.Lute
                     err = p.Inv.Add(lute)
                     if err != nil {
                         return errors.New("Failed to add lute to inv")
                     }
                 case 5:
-                    var lyre items.Lyre
+                    var lyre *items.Lyre
                     err = p.Inv.Add(lyre)
                     if err != nil {
                         return errors.New("Failed to add lyre to inv")
                     }
                 case 6:
-                    var horn items.Horn
+                    var horn *items.Horn
                     err = p.Inv.Add(horn)
                     if err != nil {
                         return errors.New("Failed to add horn to inv")
                     }
                 case 7:
-                    var panflute items.PanFlute
+                    var panflute *items.PanFlute
                     err = p.Inv.Add(panflute)
                     if err != nil {
                         return errors.New("Failed to add panflute to inv")
                     }
                 case 8:
-                    var shawm items.Shawm
+                    var shawm *items.Shawm
                     err = p.Inv.Add(shawm)
                     if err != nil {
                         return errors.New("Failed to add shawm to inv")
                     }
                 case 9:
-                    var viol items.Viol
+                    var viol *items.Viol
                     err = p.Inv.Add(viol)
                     if err != nil {
                         return errors.New("Failed to add viol to inv")
@@ -3061,8 +3061,8 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option8 (case 1)")
                 }
-                var leatherarmor items.LeatherArmor
-                var dagger items.Dagger
+                var leatherarmor *items.LeatherArmor
+                var dagger *items.Dagger
                 err = p.Inv.Add(leatherarmor)
                 if err != nil {
                     return errors.New("Failed to add leatherarmor to inv")
@@ -3102,13 +3102,13 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 1:
-                    var warhammer items.Warhammer
+                    var warhammer *items.Warhammer
                     err = p.Inv.Add(warhammer)
                     if err != nil {
                         return errors.New("Failed to add warhammer to inv")
@@ -3118,19 +3118,19 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var scalemail items.Scalemail
+                    var scalemail *items.Scalemail
                     err = p.Inv.Add(scalemail)
                     if err != nil {
                         return errors.New("Failed to add scalemail to inv")
                     }
                 case 1:
-                    var leatherarmor items.LeatherArmor
+                    var leatherarmor *items.LeatherArmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
                     }
                 case 2:
-                    var chainmail items.Chainmail
+                    var chainmail *items.Chainmail
                     err = p.Inv.Add(chainmail)
                     if err != nil {
                         return errors.New("Failed to add chainmail to inv")
@@ -3140,85 +3140,85 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var dart items.Darts
+                    var dart *items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
                     }
                 case 12:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 13:
-                    var sling items.Sling
+                    var sling *items.Sling
                     err = p.Inv.Add(sling)
                     if err != nil {
                         return errors.New("Failed to add sling to inv")
@@ -3228,8 +3228,8 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var candles = items.Candles{Quantity: 10}
-                    var tinderbox items.Tinderbox
+                    var candles = &items.Candles{Quantity: 10}
+                    var tinderbox *items.Tinderbox
                     err = p.Inv.Add(candles)
                     if err != nil {
                         return errors.New("Failed to add candles to inv")
@@ -3239,9 +3239,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add tinderbox to inv")
                     }
                 case 1:
-                    var tinderbox items.Tinderbox
-                    var torches = items.Torches{Quantity: 10}
-                    var rope = items.Rope{Length: 50}
+                    var tinderbox *items.Tinderbox
+                    var torches = &items.Torches{Quantity: 10}
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(tinderbox)
                     if err != nil {
                         return errors.New("Failed to add tinderbox to inv")
@@ -3257,7 +3257,7 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option5 (case 2)")
                 }
-                var shield items.Shield
+                var shield *items.Shield
                 err = p.Inv.Add(shield)
                 if err != nil {
                     return errors.New("Failed to add shield to inv")
@@ -3306,92 +3306,92 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var shield items.Shield
+                    var shield *items.Shield
                     err = p.Inv.Add(shield)
                     if err != nil {
                         return errors.New("Failed to add shield to inv")
                     }
                     ac += 2
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 12:
-                    var dart items.Darts
+                    var dart *items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
                     }
                 case 13:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 14:
-                    var sling items.Sling
+                    var sling *items.Sling
                     err = p.Inv.Add(sling)
                     if err != nil {
                         return errors.New("Failed to add sling to inv")
@@ -3401,67 +3401,67 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var scimitar items.Scimitar
+                    var scimitar *items.Scimitar
                     err = p.Inv.Add(scimitar)
                     if err != nil {
                         return errors.New("Failed to add scimitar to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
@@ -3469,14 +3469,14 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option3 (case 3)")
                 }
-                var leatherarmor items.LeatherArmor
+                var leatherarmor *items.LeatherArmor
                 err = p.Inv.Add(leatherarmor)
                 if err != nil {
                     return errors.New("Failed to add leatherarmor to inv")
                 }
-                var torches = items.Torches{Quantity: 10}
-                var tinderbox items.Tinderbox
-                var rope = items.Rope{Length: 50}
+                var torches = &items.Torches{Quantity: 10}
+                var tinderbox *items.Tinderbox
+                var rope = &items.Rope{Length: 50}
                 err = p.Inv.Add(torches)
                 if err != nil {
                     return errors.New("Failed to add torches to inv")
@@ -3532,14 +3532,14 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var chainmail items.Chainmail
+                    var chainmail *items.Chainmail
                     err = p.Inv.Add(chainmail)
                     if err != nil {
                         return errors.New("Failed to add chainmail to inv")
                     }
                 case 1:
-                    var leatherarmor items.LeatherArmor
-                    var longbow items.Longbow
+                    var leatherarmor *items.LeatherArmor
+                    var longbow *items.Longbow
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
@@ -3553,139 +3553,139 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var battleaxe items.Battleaxe
+                    var battleaxe *items.Battleaxe
                     err = p.Inv.Add(battleaxe)
                     if err != nil {
                         return errors.New("Failed to add battleaxe to inv")
                     }
                 case 1:
-                    var flail items.Flail
+                    var flail *items.Flail
                     err = p.Inv.Add(flail)
                     if err != nil {
                         return errors.New("Failed to add flail to inv")
                     }
                 case 2:
-                    var glaive items.Glaive
+                    var glaive *items.Glaive
                     err = p.Inv.Add(glaive)
                     if err != nil {
                         return errors.New("Failed to add glaive to inv")
                     }
                 case 3:
-                    var greataxe items.Greataxe
+                    var greataxe *items.Greataxe
                     err = p.Inv.Add(greataxe)
                     if err != nil {
                         return errors.New("Failed to add greataxe to inv")
                     }
                 case 4:
-                    var greatsword items.Greatsword
+                    var greatsword *items.Greatsword
                     err = p.Inv.Add(greatsword)
                     if err != nil {
                         return errors.New("Failed to add greatsword to inv")
                     }
                 case 5:
-                    var halberd items.Halberd
+                    var halberd *items.Halberd
                     err = p.Inv.Add(halberd)
                     if err != nil {
                         return errors.New("Failed to add halberd to inv")
                     }
                 case 6:
-                    var lance items.Lance
+                    var lance *items.Lance
                     err = p.Inv.Add(lance)
                     if err != nil {
                         return errors.New("Failed to add lance to inv")
                     }
                 case 7:
-                    var longsword items.Longsword
+                    var longsword *items.Longsword
                     err = p.Inv.Add(longsword)
                     if err != nil {
                         return errors.New("Failed to add longsword to inv")
                     }
                 case 8:
-                    var maul items.Maul
+                    var maul *items.Maul
                     err = p.Inv.Add(maul)
                     if err != nil {
                         return errors.New("Failed to add maul to inv")
                     }
                 case 9:
-                    var morningstar items.Morningstar
+                    var morningstar *items.Morningstar
                     err = p.Inv.Add(morningstar)
                     if err != nil {
                         return errors.New("Failed to add morningstar to inv")
                     }
                 case 10:
-                    var pike items.Pike
+                    var pike *items.Pike
                     err = p.Inv.Add(pike)
                     if err != nil {
                         return errors.New("Failed to add pike to inv")
                     }
                 case 11:
-                    var rapier items.Rapier
+                    var rapier *items.Rapier
                     err = p.Inv.Add(rapier)
                     if err != nil {
                         return errors.New("Failed to add rapier to inv")
                     }
                 case 12:
-                    var scimitar items.Scimitar
+                    var scimitar *items.Scimitar
                     err = p.Inv.Add(scimitar)
                     if err != nil {
                         return errors.New("Failed to add scimitar to inv")
                     }
                 case 13:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 14:
-                    var trident items.Trident
+                    var trident *items.Trident
                     err = p.Inv.Add(trident)
                     if err != nil {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 15:
-                    var warpick items.WarPick
+                    var warpick *items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
                     }
                 case 16:
-                    var warhammer items.Warhammer
+                    var warhammer *items.Warhammer
                     err = p.Inv.Add(warhammer)
                     if err != nil {
                         return errors.New("Failed to add warhammer to inv")
                     }
                 case 17:
-                    var whip items.Whip
+                    var whip *items.Whip
                     err = p.Inv.Add(whip)
                     if err != nil {
                         return errors.New("Failed to add whip to inv")
                     }
                 case 18:
-                    var blowgun items.Blowgun
+                    var blowgun *items.Blowgun
                     err = p.Inv.Add(blowgun)
                     if err != nil {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 19:
-                    var handcrossbow items.HandCrossbow
+                    var handcrossbow *items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 20:
-                    var heavycrossbow items.HeavyCrossbow
+                    var heavycrossbow *items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
                     }
                 case 21:
-                    var longbow items.Longbow
+                    var longbow *items.Longbow
                     err = p.Inv.Add(longbow)
                     if err != nil {
                         return errors.New("Failed to add longbow to inv")
                     }
                 case 22:
-                    var net items.Net
+                    var net *items.Net
                     err = p.Inv.Add(net)
                     if err != nil {
                         return errors.New("Failed to add net to inv")
@@ -3695,146 +3695,146 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var shield items.Shield
+                    var shield *items.Shield
                     err = p.Inv.Add(shield)
                     if err != nil {
                         return errors.New("Failed to add shield to inv")
                     }
                     ac += 2
                 case 1:
-                    var battleaxe items.Battleaxe
+                    var battleaxe *items.Battleaxe
                     err = p.Inv.Add(battleaxe)
                     if err != nil {
                         return errors.New("Failed to add battleaxe to inv")
                     }
                 case 2:
-                    var flail items.Flail
+                    var flail *items.Flail
                     err = p.Inv.Add(flail)
                     if err != nil {
                         return errors.New("Failed to add flail to inv")
                     }
                 case 3:
-                    var glaive items.Glaive
+                    var glaive *items.Glaive
                     err = p.Inv.Add(glaive)
                     if err != nil {
                         return errors.New("Failed to add glaive to inv")
                     }
                 case 4:
-                    var greataxe items.Greataxe
+                    var greataxe *items.Greataxe
                     err = p.Inv.Add(greataxe)
                     if err != nil {
                         return errors.New("Failed to add greataxe to inv")
                     }
                 case 5:
-                    var greatsword items.Greatsword
+                    var greatsword *items.Greatsword
                     err = p.Inv.Add(greatsword)
                     if err != nil {
                         return errors.New("Failed to add greatsword to inv")
                     }
                 case 6:
-                    var halberd items.Halberd
+                    var halberd *items.Halberd
                     err = p.Inv.Add(halberd)
                     if err != nil {
                         return errors.New("Failed to add halberd to inv")
                     }
                 case 7:
-                    var lance items.Lance
+                    var lance *items.Lance
                     err = p.Inv.Add(lance)
                     if err != nil {
                         return errors.New("Failed to add lance to inv")
                     }
                 case 8:
-                    var longsword items.Longsword
+                    var longsword *items.Longsword
                     err = p.Inv.Add(longsword)
                     if err != nil {
                         return errors.New("Failed to add longsword to inv")
                     }
                 case 9:
-                    var maul items.Maul
+                    var maul *items.Maul
                     err = p.Inv.Add(maul)
                     if err != nil {
                         return errors.New("Failed to add maul to inv")
                     }
                 case 10:
-                    var morningstar items.Morningstar
+                    var morningstar *items.Morningstar
                     err = p.Inv.Add(morningstar)
                     if err != nil {
                         return errors.New("Failed to add morningstar to inv")
                     }
                 case 11:
-                    var pike items.Pike
+                    var pike *items.Pike
                     err = p.Inv.Add(pike)
                     if err != nil {
                         return errors.New("Failed to add pike to inv")
                     }
                 case 12:
-                    var rapier items.Rapier
+                    var rapier *items.Rapier
                     err = p.Inv.Add(rapier)
                     if err != nil {
                         return errors.New("Failed to add rapier to inv")
                     }
                 case 13:
-                    var scimitar items.Scimitar
+                    var scimitar *items.Scimitar
                     err = p.Inv.Add(scimitar)
                     if err != nil {
                         return errors.New("Failed to add scimitar to inv")
                     }
                 case 14:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 15:
-                    var trident items.Trident
+                    var trident *items.Trident
                     err = p.Inv.Add(trident)
                     if err != nil {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 16:
-                    var warpick items.WarPick
+                    var warpick *items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
                     }
                 case 17:
-                    var warhammer items.Warhammer
+                    var warhammer *items.Warhammer
                     err = p.Inv.Add(warhammer)
                     if err != nil {
                         return errors.New("Failed to add warhammer to inv")
                     }
                 case 18:
-                    var whip items.Whip
+                    var whip *items.Whip
                     err = p.Inv.Add(whip)
                     if err != nil {
                         return errors.New("Failed to add whip to inv")
                     }
                 case 19:
-                    var blowgun items.Blowgun
+                    var blowgun *items.Blowgun
                     err = p.Inv.Add(blowgun)
                     if err != nil {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 20:
-                    var handcrossbow items.HandCrossbow
+                    var handcrossbow *items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 21:
-                    var heavycrossbow items.HeavyCrossbow
+                    var heavycrossbow *items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
                     }
                 case 22:
-                    var longbow items.Longbow
+                    var longbow *items.Longbow
                     err = p.Inv.Add(longbow)
                     if err != nil {
                         return errors.New("Failed to add longbow to inv")
                     }
                 case 23:
-                    var net items.Net
+                    var net *items.Net
                     err = p.Inv.Add(net)
                     if err != nil {
                         return errors.New("Failed to add net to inv")
@@ -3844,14 +3844,14 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 1:
-                    var handaxe0 items.Handaxe
-                    var handaxe1 items.Handaxe
+                    var handaxe0 *items.Handaxe
+                    var handaxe1 *items.Handaxe
                     err = p.Inv.Add(handaxe0)
                     if err != nil {
                         return errors.New("Failed to add handaxe0 to inv")
@@ -3865,9 +3865,9 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -3881,9 +3881,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -3934,91 +3934,91 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 12:
-                    var dart items.Darts
+                    var dart *items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
                     }
                 case 13:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 14:
-                    var sling items.Sling
+                    var sling *items.Sling
                     err = p.Inv.Add(sling)
                     if err != nil {
                         return errors.New("Failed to add sling to inv")
@@ -4028,9 +4028,9 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4044,9 +4044,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4062,7 +4062,7 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option3 (case 5)")
                 }
-                var darts = items.Darts{Quantity: 10}
+                var darts = &items.Darts{Quantity: 10}
                 err = p.Inv.Add(darts)
                 if err != nil {
                     return errors.New("Failed to add darts to inv")
@@ -4102,139 +4102,139 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var battleaxe items.Battleaxe
+                    var battleaxe *items.Battleaxe
                     err = p.Inv.Add(battleaxe)
                     if err != nil {
                         return errors.New("Failed to add battleaxe to inv")
                     }
                 case 1:
-                    var flail items.Flail
+                    var flail *items.Flail
                     err = p.Inv.Add(flail)
                     if err != nil {
                         return errors.New("Failed to add flail to inv")
                     }
                 case 2:
-                    var glaive items.Glaive
+                    var glaive *items.Glaive
                     err = p.Inv.Add(glaive)
                     if err != nil {
                         return errors.New("Failed to add glaive to inv")
                     }
                 case 3:
-                    var greataxe items.Greataxe
+                    var greataxe *items.Greataxe
                     err = p.Inv.Add(greataxe)
                     if err != nil {
                         return errors.New("Failed to add greataxe to inv")
                     }
                 case 4:
-                    var greatsword items.Greatsword
+                    var greatsword *items.Greatsword
                     err = p.Inv.Add(greatsword)
                     if err != nil {
                         return errors.New("Failed to add greatsword to inv")
                     }
                 case 5:
-                    var halberd items.Halberd
+                    var halberd *items.Halberd
                     err = p.Inv.Add(halberd)
                     if err != nil {
                         return errors.New("Failed to add halberd to inv")
                     }
                 case 6:
-                    var lance items.Lance
+                    var lance *items.Lance
                     err = p.Inv.Add(lance)
                     if err != nil {
                         return errors.New("Failed to add lance to inv")
                     }
                 case 7:
-                    var longsword items.Longsword
+                    var longsword *items.Longsword
                     err = p.Inv.Add(longsword)
                     if err != nil {
                         return errors.New("Failed to add longsword to inv")
                     }
                 case 8:
-                    var maul items.Maul
+                    var maul *items.Maul
                     err = p.Inv.Add(maul)
                     if err != nil {
                         return errors.New("Failed to add maul to inv")
                     }
                 case 9:
-                    var morningstar items.Morningstar
+                    var morningstar *items.Morningstar
                     err = p.Inv.Add(morningstar)
                     if err != nil {
                         return errors.New("Failed to add morningstar to inv")
                     }
                 case 10:
-                    var pike items.Pike
+                    var pike *items.Pike
                     err = p.Inv.Add(pike)
                     if err != nil {
                         return errors.New("Failed to add pike to inv")
                     }
                 case 11:
-                    var rapier items.Rapier
+                    var rapier *items.Rapier
                     err = p.Inv.Add(rapier)
                     if err != nil {
                         return errors.New("Failed to add rapier to inv")
                     }
                 case 12:
-                    var scimitar items.Scimitar
+                    var scimitar *items.Scimitar
                     err = p.Inv.Add(scimitar)
                     if err != nil {
                         return errors.New("Failed to add scimitar to inv")
                     }
                 case 13:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 14:
-                    var trident items.Trident
+                    var trident *items.Trident
                     err = p.Inv.Add(trident)
                     if err != nil {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 15:
-                    var warpick items.WarPick
+                    var warpick *items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
                     }
                 case 16:
-                    var warhammer items.Warhammer
+                    var warhammer *items.Warhammer
                     err = p.Inv.Add(warhammer)
                     if err != nil {
                         return errors.New("Failed to add warhammer to inv")
                     }
                 case 17:
-                    var whip items.Whip
+                    var whip *items.Whip
                     err = p.Inv.Add(whip)
                     if err != nil {
                         return errors.New("Failed to add whip to inv")
                     }
                 case 18:
-                    var blowgun items.Blowgun
+                    var blowgun *items.Blowgun
                     err = p.Inv.Add(blowgun)
                     if err != nil {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 19:
-                    var handcrossbow items.HandCrossbow
+                    var handcrossbow *items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 20:
-                    var heavycrossbow items.HeavyCrossbow
+                    var heavycrossbow *items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
                     }
                 case 21:
-                    var longbow items.Longbow
+                    var longbow *items.Longbow
                     err = p.Inv.Add(longbow)
                     if err != nil {
                         return errors.New("Failed to add longbow to inv")
                     }
                 case 22:
-                    var net items.Net
+                    var net *items.Net
                     err = p.Inv.Add(net)
                     if err != nil {
                         return errors.New("Failed to add net to inv")
@@ -4244,146 +4244,146 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var shield items.Shield
+                    var shield *items.Shield
                     err = p.Inv.Add(shield)
                     if err != nil {
                         return errors.New("Failed to add shield to inv")
                     }
                     ac += 2
                 case 1:
-                    var battleaxe items.Battleaxe
+                    var battleaxe *items.Battleaxe
                     err = p.Inv.Add(battleaxe)
                     if err != nil {
                         return errors.New("Failed to add battleaxe to inv")
                     }
                 case 2:
-                    var flail items.Flail
+                    var flail *items.Flail
                     err = p.Inv.Add(flail)
                     if err != nil {
                         return errors.New("Failed to add flail to inv")
                     }
                 case 3:
-                    var glaive items.Glaive
+                    var glaive *items.Glaive
                     err = p.Inv.Add(glaive)
                     if err != nil {
                         return errors.New("Failed to add glaive to inv")
                     }
                 case 4:
-                    var greataxe items.Greataxe
+                    var greataxe *items.Greataxe
                     err = p.Inv.Add(greataxe)
                     if err != nil {
                         return errors.New("Failed to add greataxe to inv")
                     }
                 case 5:
-                    var greatsword items.Greatsword
+                    var greatsword *items.Greatsword
                     err = p.Inv.Add(greatsword)
                     if err != nil {
                         return errors.New("Failed to add greatsword to inv")
                     }
                 case 6:
-                    var halberd items.Halberd
+                    var halberd *items.Halberd
                     err = p.Inv.Add(halberd)
                     if err != nil {
                         return errors.New("Failed to add halberd to inv")
                     }
                 case 7:
-                    var lance items.Lance
+                    var lance *items.Lance
                     err = p.Inv.Add(lance)
                     if err != nil {
                         return errors.New("Failed to add lance to inv")
                     }
                 case 8:
-                    var longsword items.Longsword
+                    var longsword *items.Longsword
                     err = p.Inv.Add(longsword)
                     if err != nil {
                         return errors.New("Failed to add longsword to inv")
                     }
                 case 9:
-                    var maul items.Maul
+                    var maul *items.Maul
                     err = p.Inv.Add(maul)
                     if err != nil {
                         return errors.New("Failed to add maul to inv")
                     }
                 case 10:
-                    var morningstar items.Morningstar
+                    var morningstar *items.Morningstar
                     err = p.Inv.Add(morningstar)
                     if err != nil {
                         return errors.New("Failed to add morningstar to inv")
                     }
                 case 11:
-                    var pike items.Pike
+                    var pike *items.Pike
                     err = p.Inv.Add(pike)
                     if err != nil {
                         return errors.New("Failed to add pike to inv")
                     }
                 case 12:
-                    var rapier items.Rapier
+                    var rapier *items.Rapier
                     err = p.Inv.Add(rapier)
                     if err != nil {
                         return errors.New("Failed to add rapier to inv")
                     }
                 case 13:
-                    var scimitar items.Scimitar
+                    var scimitar *items.Scimitar
                     err = p.Inv.Add(scimitar)
                     if err != nil {
                         return errors.New("Failed to add scimitar to inv")
                     }
                 case 14:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 15:
-                    var trident items.Trident
+                    var trident *items.Trident
                     err = p.Inv.Add(trident)
                     if err != nil {
                         return errors.New("Failed to add trident to inv")
                     }
                 case 16:
-                    var warpick items.WarPick
+                    var warpick *items.WarPick
                     err = p.Inv.Add(warpick)
                     if err != nil {
                         return errors.New("Failed to add warpick to inv")
                     }
                 case 17:
-                    var warhammer items.Warhammer
+                    var warhammer *items.Warhammer
                     err = p.Inv.Add(warhammer)
                     if err != nil {
                         return errors.New("Failed to add warhammer to inv")
                     }
                 case 18:
-                    var whip items.Whip
+                    var whip *items.Whip
                     err = p.Inv.Add(whip)
                     if err != nil {
                         return errors.New("Failed to add whip to inv")
                     }
                 case 19:
-                    var blowgun items.Blowgun
+                    var blowgun *items.Blowgun
                     err = p.Inv.Add(blowgun)
                     if err != nil {
                         return errors.New("Failed to add blowgun to inv")
                     }
                 case 20:
-                    var handcrossbow items.HandCrossbow
+                    var handcrossbow *items.HandCrossbow
                     err = p.Inv.Add(handcrossbow)
                     if err != nil {
                         return errors.New("Failed to add handcrossbow to inv")
                     }
                 case 21:
-                    var heavycrossbow items.HeavyCrossbow
+                    var heavycrossbow *items.HeavyCrossbow
                     err = p.Inv.Add(heavycrossbow)
                     if err != nil {
                         return errors.New("Failed to add heavycrossbow to inv")
                     }
                 case 22:
-                    var longbow items.Longbow
+                    var longbow *items.Longbow
                     err = p.Inv.Add(longbow)
                     if err != nil {
                         return errors.New("Failed to add longbow to inv")
                     }
                 case 23:
-                    var net items.Net
+                    var net *items.Net
                     err = p.Inv.Add(net)
                     if err != nil {
                         return errors.New("Failed to add net to inv")
@@ -4393,11 +4393,11 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var javelin0 items.Javelin
-                    var javelin1 items.Javelin
-                    var javelin2 items.Javelin
-                    var javelin3 items.Javelin
-                    var javelin4 items.Javelin
+                    var javelin0 *items.Javelin
+                    var javelin1 *items.Javelin
+                    var javelin2 *items.Javelin
+                    var javelin3 *items.Javelin
+                    var javelin4 *items.Javelin
                     err = p.Inv.Add(javelin0)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
@@ -4419,61 +4419,61 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
@@ -4483,8 +4483,8 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var candles = items.Candles{Quantity: 10}
-                    var tinderbox items.Tinderbox
+                    var candles = &items.Candles{Quantity: 10}
+                    var tinderbox *items.Tinderbox
                     err = p.Inv.Add(candles)
                     if err != nil {
                         return errors.New("Failed to add candles to inv")
@@ -4494,9 +4494,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add tinderbox to inv")
                     }
                 case 1:
-                    var tinderbox items.Tinderbox
-                    var torches = items.Torches{Quantity: 10}
-                    var rope = items.Rope{Length: 50}
+                    var tinderbox *items.Tinderbox
+                    var torches = &items.Torches{Quantity: 10}
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(tinderbox)
                     if err != nil {
                         return errors.New("Failed to add tinderbox to inv")
@@ -4512,7 +4512,7 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option5 (case 6)")
                 }
-                var chainmail items.Chainmail
+                var chainmail *items.Chainmail
                 err = p.Inv.Add(chainmail)
                 if err != nil {
                     return errors.New("Failed to add chainmail to inv")
@@ -4580,13 +4580,13 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var scalemail items.Scalemail
+                    var scalemail *items.Scalemail
                     err = p.Inv.Add(scalemail)
                     if err != nil {
                         return errors.New("Failed to add scalemail to inv")
                     }
                 case 1:
-                    var leatherarmor items.LeatherArmor
+                    var leatherarmor *items.LeatherArmor
                     err = p.Inv.Add(leatherarmor)
                     if err != nil {
                         return errors.New("Failed to add leatherarmor to inv")
@@ -4596,67 +4596,67 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
@@ -4666,67 +4666,67 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
@@ -4736,9 +4736,9 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4752,9 +4752,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4770,8 +4770,8 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option6 (case 7)")
                 }
-                var longbow items.Longbow
-                var quiver = items.Quiver{Arrows: 20}
+                var longbow *items.Longbow
+                var quiver = &items.Quiver{Arrows: 20}
                 err = p.Inv.Add(longbow)
                 if err != nil {
                     return errors.New("Failed to add longbow to inv")
@@ -4887,13 +4887,13 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var rapier items.Rapier
+                    var rapier *items.Rapier
                     err = p.Inv.Add(rapier)
                     if err != nil {
                         return errors.New("Failed to add rapier to inv")
                     }
                 case 1:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
@@ -4903,13 +4903,13 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 1:
-                    var shortsword items.Shortsword
+                    var shortsword *items.Shortsword
                     err = p.Inv.Add(shortsword)
                     if err != nil {
                         return errors.New("Failed to add shortsword to inv")
@@ -4919,10 +4919,10 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var candles = items.Candles{Quantity: 5}
-                    var oilflasks = items.OilFlask{Quantity: 2}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var candles = &items.Candles{Quantity: 5}
+                    var oilflasks = &items.OilFlask{Quantity: 2}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(candles)
                     if err != nil {
                         return errors.New("Failed to add candles to inv")
@@ -4940,9 +4940,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4956,9 +4956,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 2:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -4974,10 +4974,10 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option6 (case 8)")
                 }
-                var leatherarmor items.LeatherArmor
-                var dagger0 items.Dagger
-                var dagger1 items.Dagger
-                var thievestools items.ThievesTools
+                var leatherarmor *items.LeatherArmor
+                var dagger0 *items.Dagger
+                var dagger1 *items.Dagger
+                var thievestools *items.ThievesTools
                 err = p.Inv.Add(leatherarmor)
                 if err != nil {
                     return errors.New("Failed to add leatherarmor to inv")
@@ -5029,85 +5029,85 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var dart items.Darts
+                    var dart *items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
                     }
                 case 12:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 13:
-                    var sling items.Sling
+                    var sling *items.Sling
                     err = p.Inv.Add(sling)
                     if err != nil {
                         return errors.New("Failed to add sling to inv")
@@ -5117,13 +5117,13 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var componentpouch items.ComponentPouch
+                    var componentpouch *items.ComponentPouch
                     err = p.Inv.Add(componentpouch)
                     if err != nil {
                         return errors.New("Failed to add componentpouch to inv")
                     }
                 case 1:
-                    var arcanefocus items.ArcaneFocus
+                    var arcanefocus *items.ArcaneFocus
                     err = p.Inv.Add(arcanefocus)
                     if err != nil {
                         return errors.New("Failed to add arcanefocus to inv")
@@ -5133,9 +5133,9 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -5149,9 +5149,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add rope to inv")
                     }
                 case 1:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -5167,8 +5167,8 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option4 (case 9)")
                 }
-                var dagger0 items.Dagger
-                var dagger1 items.Dagger
+                var dagger0 *items.Dagger
+                var dagger1 *items.Dagger
                 err = p.Inv.Add(dagger0)
                 if err != nil {
                     return errors.New("Failed to add dagger0 to inv")
@@ -5216,85 +5216,85 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var lightcrossbow items.LightCrossbow
+                    var lightcrossbow *items.LightCrossbow
                     err = p.Inv.Add(lightcrossbow)
                     if err != nil {
                         return errors.New("Failed to add lightcrossbow to inv")
                     }
                 case 1:
-                    var club items.Club
+                    var club *items.Club
                     err = p.Inv.Add(club)
                     if err != nil {
                         return errors.New("Failed to add club to inv")
                     }
                 case 2:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
                     }
                 case 3:
-                    var greatclub items.Greatclub
+                    var greatclub *items.Greatclub
                     err = p.Inv.Add(greatclub)
                     if err != nil {
                         return errors.New("Failed to add greatclub to inv")
                     }
                 case 4:
-                    var handaxe items.Handaxe
+                    var handaxe *items.Handaxe
                     err = p.Inv.Add(handaxe)
                     if err != nil {
                         return errors.New("Failed to add handaxe to inv")
                     }
                 case 5:
-                    var javelin items.Javelin
+                    var javelin *items.Javelin
                     err = p.Inv.Add(javelin)
                     if err != nil {
                         return errors.New("Failed to add javelin to inv")
                     }
                 case 6:
-                    var lighthammer items.LightHammer
+                    var lighthammer *items.LightHammer
                     err = p.Inv.Add(lighthammer)
                     if err != nil {
                         return errors.New("Failed to add lighthammer to inv")
                     }
                 case 7:
-                    var mace items.Mace
+                    var mace *items.Mace
                     err = p.Inv.Add(mace)
                     if err != nil {
                         return errors.New("Failed to add mace to inv")
                     }
                 case 8:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 9:
-                    var sickle items.Sickle
+                    var sickle *items.Sickle
                     err = p.Inv.Add(sickle)
                     if err != nil {
                         return errors.New("Failed to add sickle to inv")
                     }
                 case 10:
-                    var spear items.Spear
+                    var spear *items.Spear
                     err = p.Inv.Add(spear)
                     if err != nil {
                         return errors.New("Failed to add spear to inv")
                     }
                 case 11:
-                    var dart items.Darts
+                    var dart *items.Darts
                     err = p.Inv.Add(dart)
                     if err != nil {
                         return errors.New("Failed to add dart to inv")
                     }
                 case 12:
-                    var shortbow items.Shortbow
+                    var shortbow *items.Shortbow
                     err = p.Inv.Add(shortbow)
                     if err != nil {
                         return errors.New("Failed to add shortbow to inv")
                     }
                 case 13:
-                    var sling items.Sling
+                    var sling *items.Sling
                     err = p.Inv.Add(sling)
                     if err != nil {
                         return errors.New("Failed to add sling to inv")
@@ -5304,13 +5304,13 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var componentpouch items.ComponentPouch
+                    var componentpouch *items.ComponentPouch
                     err = p.Inv.Add(componentpouch)
                     if err != nil {
                         return errors.New("Failed to add componentpouch to inv")
                     }
                 case 1:
-                    var arcanefocus items.ArcaneFocus
+                    var arcanefocus *items.ArcaneFocus
                     err = p.Inv.Add(arcanefocus)
                     if err != nil {
                         return errors.New("Failed to add arcanefocus to inv")
@@ -5320,9 +5320,9 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var inkbottle items.InkBottle
-                    var inkpen items.InkPen
-                    var papers = items.Paper{Quantity: 10}
+                    var inkbottle *items.InkBottle
+                    var inkpen *items.InkPen
+                    var papers = &items.Paper{Quantity: 10}
                     err = p.Inv.Add(inkbottle)
                     if err != nil {
                         return errors.New("Failed to add inkbottle to inv")
@@ -5336,10 +5336,10 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add papers to inv")
                     }
                 case 1:
-                    var candles = items.Candles{Quantity: 5}
-                    var oilflasks = items.OilFlask{Quantity: 2}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var candles = &items.Candles{Quantity: 5}
+                    var oilflasks = &items.OilFlask{Quantity: 2}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(candles)
                     if err != nil {
                         return errors.New("Failed to add candles to inv")
@@ -5359,9 +5359,9 @@ func (g *Game) Update() error {
                 default:
                     return errors.New("Invalid value for option4 (case 10)")
                 }
-                var leatherarmor items.LeatherArmor
-                var dagger0 items.Dagger
-                var dagger1 items.Dagger
+                var leatherarmor *items.LeatherArmor
+                var dagger0 *items.Dagger
+                var dagger1 *items.Dagger
                 err = p.Inv.Add(leatherarmor)
                 if err != nil {
                     return errors.New("Failed to add leatherarmor to inv")
@@ -5409,13 +5409,13 @@ func (g *Game) Update() error {
                 }
                 switch option2 {
                 case 0:
-                    var quarterstaff items.Quarterstaff
+                    var quarterstaff *items.Quarterstaff
                     err = p.Inv.Add(quarterstaff)
                     if err != nil {
                         return errors.New("Failed to add quarterstaff to inv")
                     }
                 case 1:
-                    var dagger items.Dagger
+                    var dagger *items.Dagger
                     err = p.Inv.Add(dagger)
                     if err != nil {
                         return errors.New("Failed to add dagger to inv")
@@ -5425,13 +5425,13 @@ func (g *Game) Update() error {
                 }
                 switch option3 {
                 case 0:
-                    var componentpouch items.ComponentPouch
+                    var componentpouch *items.ComponentPouch
                     err = p.Inv.Add(componentpouch)
                     if err != nil {
                         return errors.New("Failed to add componentpouch to inv")
                     }
                 case 1:
-                    var arcanefocus items.ArcaneFocus
+                    var arcanefocus *items.ArcaneFocus
                     err = p.Inv.Add(arcanefocus)
                     if err != nil {
                         return errors.New("Failed to add arcanefocus to inv")
@@ -5441,9 +5441,9 @@ func (g *Game) Update() error {
                 }
                 switch option4 {
                 case 0:
-                    var inkbottle items.InkBottle
-                    var inkpen items.InkPen
-                    var papers = items.Paper{Quantity: 10}
+                    var inkbottle *items.InkBottle
+                    var inkpen *items.InkPen
+                    var papers = &items.Paper{Quantity: 10}
                     err = p.Inv.Add(inkbottle)
                     if err != nil {
                         return errors.New("Failed to add inkbottle to inv")
@@ -5457,9 +5457,9 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add papers to inv")
                     }
                 case 1:
-                    var torches = items.Torches{Quantity: 10}
-                    var tinderbox items.Tinderbox
-                    var rope = items.Rope{Length: 50}
+                    var torches = &items.Torches{Quantity: 10}
+                    var tinderbox *items.Tinderbox
+                    var rope = &items.Rope{Length: 50}
                     err = p.Inv.Add(torches)
                     if err != nil {
                         return errors.New("Failed to add torches to inv")
@@ -5793,188 +5793,188 @@ func (g *Game) Update() error {
             for _, item := range p.Inv.GetItems() {
                 switch item.PrettyPrint() {
                 case "Arcane Focus":
-                    var arcanefocus items.ArcaneFocus
-                    equipmap[arcanefocus.Slot()] = append(equipmap[arcanefocus.Slot()], arcanefocus)
+                    //var arcanefocus *items.ArcaneFocus
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //arcanefocus)
                 case "Bagpipes":
-                    var bagpipes items.Bagpipes
-                    equipmap[bagpipes.Slot()] = append(equipmap[bagpipes.Slot()], bagpipes)
+                    //var bagpipes *items.Bagpipes
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //bagpipes)
                 case "Battleaxe":
-                    var battleaxe items.Battleaxe
-                    equipmap[battleaxe.Slot()] = append(equipmap[battleaxe.Slot()], battleaxe)
+                    //var battleaxe *items.Battleaxe
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //battleaxe)
                 case "Blowgun":
-                    var blowgun items.Blowgun
-                    equipmap[blowgun.Slot()] = append(equipmap[blowgun.Slot()], blowgun)
+                    //var blowgun *items.Blowgun
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //blowgun)
                 case "Candles":
-                    var candles items.Candles
-                    equipmap[candles.Slot()] = append(equipmap[candles.Slot()], candles)
+                    //var candles *items.Candles
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //candles)
                 case "Chainmail":
-                    var chainmail items.Chainmail
-                    equipmap[chainmail.Slot()] = append(equipmap[chainmail.Slot()], chainmail)
+                    //var chainmail *items.Chainmail
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //chainmail)
                 case "Clothes":
-                    var clothes items.Clothes
-                    equipmap[clothes.Slot()] = append(equipmap[clothes.Slot()], clothes)
+                    //var clothes *items.Clothes
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //clothes)
                 case "Club":
-                    var club items.Club
-                    equipmap[club.Slot()] = append(equipmap[club.Slot()], club)
+                    //var club *items.Club
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //club)
                 case "Component Pouch":
-                    var componentpouch items.ComponentPouch
-                    equipmap[componentpouch.Slot()] = append(equipmap[componentpouch.Slot()], componentpouch)
+                    //var componentpouch *items.ComponentPouch
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //componentpouch)
                 case "Dagger":
-                    var dagger items.Dagger
-                    equipmap[dagger.Slot()] = append(equipmap[dagger.Slot()], dagger)
+                    //var dagger *items.Dagger
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //dagger)
                 case "Darts":
-                    var darts items.Darts
-                    equipmap[darts.Slot()] = append(equipmap[darts.Slot()], darts)
+                    //var darts *items.Darts
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //darts)
                 case "Drum":
-                    var drum items.Drum
-                    equipmap[drum.Slot()] = append(equipmap[drum.Slot()], drum)
+                    //var drum *items.Drum
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //drum)
                 case "Dulcimer":
-                    var dulcimer items.Dulcimer
-                    equipmap[dulcimer.Slot()] = append(equipmap[dulcimer.Slot()], dulcimer)
+                    //var dulcimer *items.Dulcimer
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //dulcimer)
                 case "Flail":
-                    var flail items.Flail
-                    equipmap[flail.Slot()] = append(equipmap[flail.Slot()], flail)
+                    //var flail *items.Flail
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //flail)
                 case "Flute":
-                    var flute items.Flute
-                    equipmap[flute.Slot()] = append(equipmap[flute.Slot()], flute)
+                    //var flute *items.Flute
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //flute)
                 case "Glaive":
-                    var glaive items.Glaive
-                    equipmap[glaive.Slot()] = append(equipmap[glaive.Slot()], glaive)
+                    //var glaive *items.Glaive
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //glaive)
                 case "Greataxe":
-                    var greataxe items.Greataxe
-                    equipmap[greataxe.Slot()] = append(equipmap[greataxe.Slot()], greataxe)
+                    //var greataxe *items.Greataxe
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //greataxe)
                 case "Greatclub":
-                    var greatclub items.Greatclub
-                    equipmap[greatclub.Slot()] = append(equipmap[greatclub.Slot()], greatclub)
+                    //var greatclub *items.Greatclub
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //greatclub)
                 case "Greatsword":
-                    var greatsword items.Greatsword
-                    equipmap[greatsword.Slot()] = append(equipmap[greatsword.Slot()], greatsword)
+                    //var greatsword *items.Greatsword
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //greatsword)
                 case "Halberd":
-                    var halberd items.Halberd
-                    equipmap[halberd.Slot()] = append(equipmap[halberd.Slot()], halberd)
+                    //var halberd *items.Halberd
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //halberd)
                 case "Handaxe":
-                    var handaxe items.Handaxe
-                    equipmap[handaxe.Slot()] = append(equipmap[handaxe.Slot()], handaxe)
+                    //var handaxe *items.Handaxe
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //handaxe)
                 case "Hand Crossbow":
-                    var handcrossbow items.HandCrossbow
-                    equipmap[handcrossbow.Slot()] = append(equipmap[handcrossbow.Slot()], handcrossbow)
+                    //var handcrossbow *items.HandCrossbow
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //handcrossbow)
                 case "Heavy Crossbow":
-                    var heavycrossbow items.HeavyCrossbow
-                    equipmap[heavycrossbow.Slot()] = append(equipmap[heavycrossbow.Slot()], heavycrossbow)
+                    //var heavycrossbow *items.HeavyCrossbow
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //heavycrossbow)
                 case "Horn":
-                    var horn items.Horn
-                    equipmap[horn.Slot()] = append(equipmap[horn.Slot()], horn)
+                    //var horn *items.Horn
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //horn)
                 case "Ink Pen":
-                    var inkpen items.InkPen
-                    equipmap[inkpen.Slot()] = append(equipmap[inkpen.Slot()], inkpen)
+                    //var inkpen *items.InkPen
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //inkpen)
                 case "Javelin":
-                    var javelin items.Javelin
-                    equipmap[javelin.Slot()] = append(equipmap[javelin.Slot()], javelin)
+                    //var javelin *items.Javelin
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //javelin)
                 case "Lamp":
-                    var lamp items.Lamp
-                    equipmap[lamp.Slot()] = append(equipmap[lamp.Slot()], lamp)
+                    //var lamp *items.Lamp
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //lamp)
                 case "Lance":
-                    var lance items.Lance
-                    equipmap[lance.Slot()] = append(equipmap[lance.Slot()], lance)
+                    //var lance *items.Lance
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //lance)
                 case "Leather Armor":
-                    var leatherarmor items.LeatherArmor
-                    equipmap[leatherarmor.Slot()] = append(equipmap[leatherarmor.Slot()], leatherarmor)
+                    //var leatherarmor *items.LeatherArmor
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //leatherarmor)
                 case "Light Crossbow":
-                    var lightcrossbow items.LightCrossbow
-                    equipmap[lightcrossbow.Slot()] = append(equipmap[lightcrossbow.Slot()], lightcrossbow)
+                    //var lightcrossbow *items.LightCrossbow
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //lightcrossbow)
                 case "Light Hammer":
-                    var lighthammer items.LightHammer
-                    equipmap[lighthammer.Slot()] = append(equipmap[lighthammer.Slot()], lighthammer)
+                    //var lighthammer *items.LightHammer
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //lighthammer)
                 case "Longbow":
-                    var longbow items.Longbow
-                    equipmap[longbow.Slot()] = append(equipmap[longbow.Slot()], longbow)
+                    //var longbow *items.Longbow
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //longbow)
                 case "Longsword":
-                    var longsword items.Longsword
-                    equipmap[longsword.Slot()] = append(equipmap[longsword.Slot()], longsword)
+                    //var longsword *items.Longsword
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //longsword)
                 case "Lute":
-                    var lute items.Lute
-                    equipmap[lute.Slot()] = append(equipmap[lute.Slot()], lute)
+                    //var lute *items.Lute
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //lute)
                 case "Lyre":
-                    var lyre items.Lyre
-                    equipmap[lyre.Slot()] = append(equipmap[lyre.Slot()], lyre)
+                    //var lyre *items.Lyre
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //lyre)
                 case "Mace":
-                    var mace items.Mace
-                    equipmap[mace.Slot()] = append(equipmap[mace.Slot()], mace)
+                    //var mace *items.Mace
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //mace)
                 case "Maul":
-                    var maul items.Maul
-                    equipmap[maul.Slot()] = append(equipmap[maul.Slot()], maul)
+                    //var maul *items.Maul
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //maul)
                 case "Morningstar":
-                    var morningstar items.Morningstar
-                    equipmap[morningstar.Slot()] = append(equipmap[morningstar.Slot()], morningstar)
+                    //var morningstar *items.Morningstar
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //morningstar)
                 case "Net":
-                    var net items.Net
-                    equipmap[net.Slot()] = append(equipmap[net.Slot()], net)
+                    //var net *items.Net
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //net)
                 case "Oil Flask":
-                    var oilflask items.OilFlask
-                    equipmap[oilflask.Slot()] = append(equipmap[oilflask.Slot()], oilflask)
+                    //var oilflask *items.OilFlask
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //oilflask)
                 case "Pan Flute":
-                    var panflute items.PanFlute
-                    equipmap[panflute.Slot()] = append(equipmap[panflute.Slot()], panflute)
+                    //var panflute *items.PanFlute
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //panflute)
                 case "Pike":
-                    var pike items.Pike
-                    equipmap[pike.Slot()] = append(equipmap[pike.Slot()], pike)
+                    //var pike *items.Pike
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //pike)
                 case "Quarterstaff":
-                    var quarterstaff items.Quarterstaff
-                    equipmap[quarterstaff.Slot()] = append(equipmap[quarterstaff.Slot()], quarterstaff)
+                    //var quarterstaff *items.Quarterstaff
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //quarterstaff)
                 case "Quiver":
-                    var quiver items.Quiver
-                    equipmap[quiver.Slot()] = append(equipmap[quiver.Slot()], quiver)
+                    //var quiver *items.Quiver
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //quiver)
                 case "Rapier":
-                    var rapier items.Rapier
-                    equipmap[rapier.Slot()] = append(equipmap[rapier.Slot()], rapier)
+                    //var rapier *items.Rapier
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //rapier)
                 case fmt.Sprintf("Rope%18s", "Length: 50"):
-                    var rope items.Rope
-                    equipmap[rope.Slot()] = append(equipmap[rope.Slot()], rope)
+                    //var rope *items.Rope
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //rope)
                 case "Scalemail":
-                    var scalemail items.Scalemail
-                    equipmap[scalemail.Slot()] = append(equipmap[scalemail.Slot()], scalemail)
+                    //var scalemail *items.Scalemail
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //scalemail)
                 case "Scimitar":
-                    var scimitar items.Scimitar
-                    equipmap[scimitar.Slot()] = append(equipmap[scimitar.Slot()], scimitar)
+                    //var scimitar *items.Scimitar
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //scimitar)
                 case "Shawm":
-                    var shawm items.Shawm
-                    equipmap[shawm.Slot()] = append(equipmap[shawm.Slot()], shawm)
+                    //var shawm *items.Shawm
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //shawm)
                 case "Shield":
-                    var shield items.Shield
-                    equipmap[shield.Slot()] = append(equipmap[shield.Slot()], shield)
+                    //var shield *items.Shield
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //shield)
                 case "Shortbow":
-                    var shortbow items.Shortbow
-                    equipmap[shortbow.Slot()] = append(equipmap[shortbow.Slot()], shortbow)
+                    //var shortbow *items.Shortbow
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //shortbow)
                 case "Shortsword":
-                    var shortsword items.Shortsword
-                    equipmap[shortsword.Slot()] = append(equipmap[shortsword.Slot()], shortsword)
+                    //var shortsword *items.Shortsword
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //shortsword)
                 case "Sickle":
-                    var sickle items.Sickle
-                    equipmap[sickle.Slot()] = append(equipmap[sickle.Slot()], sickle)
+                    //var sickle *items.Sickle
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //sickle)
                 case "Sling":
-                    var sling items.Sling
-                    equipmap[sling.Slot()] = append(equipmap[sling.Slot()], sling)
+                    //var sling *items.Sling
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //sling)
                 case "Spear":
-                    var spear items.Spear
-                    equipmap[spear.Slot()] = append(equipmap[spear.Slot()], spear)
+                    //var spear *items.Spear
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //spear)
                 case fmt.Sprintf("Torches%15s", "Quantity: 10"):
-                    var torches items.Torches
-                    equipmap[torches.Slot()] = append(equipmap[torches.Slot()], torches)
+                    //var torches *items.Torches
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //torches)
                 case "Trident":
-                    var trident items.Trident
-                    equipmap[trident.Slot()] = append(equipmap[trident.Slot()], trident)
+                    //var trident *items.Trident
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //trident)
                 case "Viol":
-                    var viol items.Viol
-                    equipmap[viol.Slot()] = append(equipmap[viol.Slot()], viol)
+                    //var viol *items.Viol
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //viol)
                 case "Warhammer":
-                    var warhammer items.Warhammer
-                    equipmap[warhammer.Slot()] = append(equipmap[warhammer.Slot()], warhammer)
+                    //var warhammer *items.Warhammer
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //warhammer)
                 case "War Pick":
-                    var warpick items.WarPick
-                    equipmap[warpick.Slot()] = append(equipmap[warpick.Slot()], warpick)
+                    //var warpick *items.WarPick
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //warpick)
                 case "Whip":
-                    var whip items.Whip
-                    equipmap[whip.Slot()] = append(equipmap[whip.Slot()], whip)
+                    //var whip *items.Whip
+                    equipmap[item.Slot()] = append(equipmap[item.Slot()], item) //whip)
                 default:
                     log.Println(fmt.Sprintf("%s cannot be equipped", item.PrettyPrint()))
                 }
@@ -8799,7 +8799,7 @@ func (g *Game) Update() error {
             if invselmenu {
                 if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
                     if invsel2 > 0 {
-                        if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                        if a := p.Inv.GetItems()[invsel].Action(); a == "" {
                             invsel2 -= 2
                         } else {
                             invsel2--
@@ -8808,7 +8808,7 @@ func (g *Game) Update() error {
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
                     if invsel2 < 2 {
-                        if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                        if a := p.Inv.GetItems()[invsel].Action(); a == "" {
                             invsel2 += 2
                         } else {
                             invsel2++
@@ -8816,7 +8816,7 @@ func (g *Game) Update() error {
                     }
                 }
                 if p.Inv.GetItems()[invsel].Slot() == "" {
-                    if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+                    if a := p.Inv.GetItems()[invsel].Action(); a == "" {
                         if invsel2 < 2 {
                             invsel2 = 2
                         }
@@ -8836,10 +8836,12 @@ func (g *Game) Update() error {
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
                     switch invsel2 {
                     case 0:
-                        p.Equip(invselitem)
+                        p.Equip(p.Inv.GetItems()[invsel])
                         invselmenu = false
                     case 1:
-                        action, data := invselitem.Use()
+                        action, data := p.Inv.GetItems()[invsel].Use()
+                        //p.Inv.Drop(p.Inv.GetItems()[invsel])
+                        //p.Inv.Add(tempitem)
                         if action != "" {
                             p.Effects(action, data)
                             effectact = action
@@ -8848,7 +8850,7 @@ func (g *Game) Update() error {
                         invselmenu = false
                         invmenu = false
                     case 2:
-                        p.Inv.Drop(invselitem)
+                        p.Inv.Drop(p.Inv.GetItems()[invsel])
                         invselmenu = false
                     default:
                         log.Fatal(fmt.Sprintf("Invalid value %d for invsel in invselmenu", invsel))
@@ -8870,7 +8872,7 @@ func (g *Game) Update() error {
                     invsel = len(p.Inv.GetItems()) - 1
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-                    invselitem = p.Inv.GetItems()[invsel]
+                    //invselitem = p.Inv.GetItems()[invsel]
                     invsel2 = 0
                     invselmenu = true
                 }
@@ -13215,7 +13217,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         switch invsel2 {
         case 0:
             text.Draw(screen, "> Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
-            if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+            if a := p.Inv.GetItems()[invsel].Action(); a == "" {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
             } else {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)
@@ -13235,7 +13237,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             } else {
                 text.Draw(screen, "  Equip", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) + 16, color.Black)
             }
-            if a, _ := p.Inv.GetItems()[invsel].Use(); a == "" {
+            if a := p.Inv.GetItems()[invsel].Action(); a == "" {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Gray16{0x8000})
             } else {
                 text.Draw(screen, "  Use", fo, (w / 2) - (wid / 2), (h / 2) - (hei / 2) + 24, color.Black)

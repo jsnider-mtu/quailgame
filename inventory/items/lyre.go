@@ -3,26 +3,30 @@ package items
 type Lyre struct {
 }
 
-func (l Lyre) Slot() string {
+func (l *Lyre) Slot() string {
     return "BothHands"
 }
 
-func (l Lyre) Use() (string, []int) {
+func (l *Lyre) Use() (string, []int) {
     return "", []int{}
 }
 
-func (l Lyre) Save() string {
+func (l *Lyre) Save() string {
     return "Lyre"
 }
 
-func (l Lyre) PrettyPrint() string {
+func (l *Lyre) PrettyPrint() string {
     return "Lyre"
 }
 
-func (l Lyre) Function() string {
+func (l *Lyre) Function() string {
     return "instrument"
 }
 
-func (l Lyre) Damage() (int, int, string) {
+func (l *Lyre) Damage() (int, int, string) {
     return 0, 0, ""
+}
+
+func (l *Lyre) Action() string {
+    return ""
 }

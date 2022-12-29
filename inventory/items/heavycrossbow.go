@@ -27,3 +27,7 @@ func (h HeavyCrossbow) Function() string {
 func (h HeavyCrossbow) Damage() (int, int, string) {
     return 1, 10, "piercing"
 }
+
+func (h HeavyCrossbow) Action() string {
+    return ""
+}

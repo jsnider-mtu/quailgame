@@ -3,26 +3,30 @@ package items
 type Flute struct {
 }
 
-func (f Flute) Slot() string {
+func (f *Flute) Slot() string {
     return "BothHands"
 }
 
-func (f Flute) Use() (string, []int) {
+func (f *Flute) Use() (string, []int) {
     return "", []int{}
 }
 
-func (f Flute) Save() string {
+func (f *Flute) Save() string {
     return "Flute"
 }
 
-func (f Flute) PrettyPrint() string {
+func (f *Flute) PrettyPrint() string {
     return "Flute"
 }
 
-func (f Flute) Function() string {
+func (f *Flute) Function() string {
     return "instrument"
 }
 
-func (f Flute) Damage() (int, int, string) {
+func (f *Flute) Damage() (int, int, string) {
     return 0, 0, ""
+}
+
+func (f *Flute) Action() string {
+    return ""
 }

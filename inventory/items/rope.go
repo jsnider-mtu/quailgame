@@ -9,26 +9,30 @@ type Rope struct {
     Length int
 }
 
-func (r Rope) Slot() string {
+func (r *Rope) Slot() string {
     return "BothHands"
 }
 
-func (r Rope) Use() (string, []int) {
+func (r *Rope) Use() (string, []int) {
     return "", []int{}
 }
 
-func (r Rope) Save() string {
+func (r *Rope) Save() string {
     return "Rope," + strconv.Itoa(r.Length)
 }
 
-func (r Rope) PrettyPrint() string {
+func (r *Rope) PrettyPrint() string {
     return fmt.Sprintf("Rope (%d)", r.Length)
 }
 
-func (r Rope) Function() string {
+func (r *Rope) Function() string {
     return "climbing"
 }
 
-func (r Rope) Damage() (int, int, string) {
+func (r *Rope) Damage() (int, int, string) {
     return 0, 0, ""
+}
+
+func (r *Rope) Action() string {
+    return ""
 }

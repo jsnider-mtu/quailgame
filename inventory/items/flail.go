@@ -3,27 +3,31 @@ package items
 type Flail struct {
 }
 
-func (f Flail) Slot() string {
+func (f *Flail) Slot() string {
     return "RightHand"
 }
 
-func (f Flail) Use() (string, []int) {
+func (f *Flail) Use() (string, []int) {
     return "", []int{}
     // must be equipped to use
 }
 
-func (f Flail) Save() string {
+func (f *Flail) Save() string {
     return "Flail"
 }
 
-func (f Flail) PrettyPrint() string {
+func (f *Flail) PrettyPrint() string {
     return "Flail"
 }
 
-func (f Flail) Function() string {
+func (f *Flail) Function() string {
     return "melee"
 }
 
-func (f Flail) Damage() (int, int, string) {
+func (f *Flail) Damage() (int, int, string) {
     return 1, 8, "bludgeoning"
+}
+
+func (f *Flail) Action() string {
+    return ""
 }

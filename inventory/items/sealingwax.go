@@ -3,26 +3,30 @@ package items
 type SealingWax struct {
 }
 
-func (s SealingWax) Slot() string {
+func (s *SealingWax) Slot() string {
     return ""
 }
 
-func (s SealingWax) Use() (string, []int) {
+func (s *SealingWax) Use() (string, []int) {
     return "", []int{}
 }
 
-func (s SealingWax) Save() string {
+func (s *SealingWax) Save() string {
     return "SealingWax"
 }
 
-func (s SealingWax) PrettyPrint() string {
+func (s *SealingWax) PrettyPrint() string {
     return "Sealing Wax"
 }
 
-func (s SealingWax) Function() string {
+func (s *SealingWax) Function() string {
     return "writing"
 }
 
-func (s SealingWax) Damage() (int, int, string) {
+func (s *SealingWax) Damage() (int, int, string) {
     return 0, 0, ""
+}
+
+func (s *SealingWax) Action() string {
+    return ""
 }

@@ -11,171 +11,171 @@ import (
 func LoadItem(name string, quaity interface{}) inventory.Item {
     switch name {
     case "ArcaneFocus":
-        return ArcaneFocus{}
+        return &ArcaneFocus{}
     case "Bagpipes":
-        return Bagpipes{}
+        return &Bagpipes{}
     case "Battleaxe":
-        return Battleaxe{}
+        return &Battleaxe{}
     case "Blowgun":
-        return Blowgun{}
+        return &Blowgun{}
     case "Candles":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return Candles{Quantity: quaityint}
+        return &Candles{Quantity: quaityint}
     case "Chainmail":
-        return Chainmail{}
+        return &Chainmail{}
     case "Clothes":
-        return Clothes{Quality: quaity.(string)}
+        return &Clothes{Quality: quaity.(string)}
     case "Club":
-        return Club{}
+        return &Club{}
     case "ComponentPouch":
-        return ComponentPouch{}
+        return &ComponentPouch{}
     case "Dagger":
-        return Dagger{}
+        return &Dagger{}
     case "Darts":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return Darts{Quantity: quaityint}
+        return &Darts{Quantity: quaityint}
     case "DisguiseKit":
-        return DisguiseKit{}
+        return &DisguiseKit{}
     case "Drum":
-        return Drum{}
+        return &Drum{}
     case "Dulcimer":
-        return Dulcimer{}
+        return &Dulcimer{}
     case "Flail":
-        return Flail{}
+        return &Flail{}
     case "Flute":
-        return Flute{}
+        return &Flute{}
     case "Glaive":
-        return Glaive{}
+        return &Glaive{}
     case "Greataxe":
-        return Greataxe{}
+        return &Greataxe{}
     case "Greatclub":
-        return Greatclub{}
+        return &Greatclub{}
     case "Greatsword":
-        return Greatsword{}
+        return &Greatsword{}
     case "Halberd":
-        return Halberd{}
+        return &Halberd{}
     case "Handaxe":
-        return Handaxe{}
+        return &Handaxe{}
     case "Handcrossbow":
-        return HandCrossbow{}
+        return &HandCrossbow{}
     case "Heavycrossbow":
-        return HeavyCrossbow{}
+        return &HeavyCrossbow{}
     case "Horn":
-        return Horn{}
+        return &Horn{}
     case "InkBottle":
-        return InkBottle{}
+        return &InkBottle{}
     case "InkPen":
-        return InkPen{}
+        return &InkPen{}
     case "Javelin":
-        return Javelin{}
+        return &Javelin{}
     case "Lamp":
-        return Lamp{}
+        return &Lamp{}
     case "Lance":
-        return Lance{}
+        return &Lance{}
     case "LeatherArmor":
-        return LeatherArmor{}
+        return &LeatherArmor{}
     case "LightCrossbow":
-        return LightCrossbow{}
+        return &LightCrossbow{}
     case "LightHammer":
-        return LightHammer{}
+        return &LightHammer{}
     case "Longbow":
-        return Longbow{}
+        return &Longbow{}
     case "Longsword":
-        return Longsword{}
+        return &Longsword{}
     case "Lute":
-        return Lute{}
+        return &Lute{}
     case "Lyre":
-        return Lyre{}
+        return &Lyre{}
     case "Mace":
-        return Mace{}
+        return &Mace{}
     case "Maul":
-        return Maul{}
+        return &Maul{}
     case "Morningstar":
-        return Morningstar{}
+        return &Morningstar{}
     case "Net":
-        return Net{}
+        return &Net{}
     case "OilFlask":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return OilFlask{Quantity: quaityint}
+        return &OilFlask{Quantity: quaityint}
     case "PanFlute":
-        return PanFlute{}
+        return &PanFlute{}
     case "Paper":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return Paper{Quantity: quaityint}
+        return &Paper{Quantity: quaityint}
     case "Perfume":
-        return Perfume{}
+        return &Perfume{}
     case "Pike":
-        return Pike{}
+        return &Pike{}
     case "Quarterstaff":
-        return Quarterstaff{}
+        return &Quarterstaff{}
     case "Quiver":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return Quiver{Arrows: quaityint}
+        return &Quiver{Arrows: quaityint}
     case "Rapier":
-        return Rapier{}
+        return &Rapier{}
     case "Rope":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return Rope{Length: quaityint}
+        return &Rope{Length: quaityint}
     case "Scalemail":
-        return Scalemail{}
+        return &Scalemail{}
     case "Scimitar":
-        return Scimitar{}
+        return &Scimitar{}
     case "SealingWax":
-        return SealingWax{}
+        return &SealingWax{}
     case "Shawm":
-        return Shawm{}
+        return &Shawm{}
     case "Shield":
-        return Shield{}
+        return &Shield{}
     case "Shortbow":
-        return Shortbow{}
+        return &Shortbow{}
     case "Shortsword":
-        return Shortsword{}
+        return &Shortsword{}
     case "Sickle":
-        return Sickle{}
+        return &Sickle{}
     case "Sling":
-        return Sling{}
+        return &Sling{}
     case "Soap":
-        return Soap{}
+        return &Soap{}
     case "Spear":
-        return Spear{}
+        return &Spear{}
     case "ThievesTools":
-        return ThievesTools{}
+        return &ThievesTools{}
     case "Tinderbox":
-        return Tinderbox{}
+        return &Tinderbox{}
     case "Torches":
         quaityint, err := strconv.Atoi(quaity.(string))
         if err != nil {
             log.Fatal("quaity is not an integer")
         }
-        return Torches{Quantity: quaityint}
+        return &Torches{Quantity: quaityint}
     case "Trident":
-        return Trident{}
+        return &Trident{}
     case "Viol":
-        return Viol{}
+        return &Viol{}
     case "Warhammer":
-        return Warhammer{}
+        return &Warhammer{}
     case "WarPick":
-        return WarPick{}
+        return &WarPick{}
     case "Whip":
-        return Whip{}
+        return &Whip{}
     default:
         log.Fatal(fmt.Sprintf("Item with name %s does not exist", name))
         return nil
