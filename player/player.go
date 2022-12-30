@@ -1,6 +1,7 @@
 package player
 
 import (
+    "crypto/md5"
     "errors"
     "fmt"
     "log"
@@ -571,7 +572,7 @@ func (p *Player) GetName() string {
     return p.Name
 }
 
-func (p *Player) Effects(action string, data []int) {
+func (p *Player) Effects(action string, data []int, c chan string) {
     switch action {
     case "illuminate":
         if len(data) != 3 {
@@ -599,11 +600,20 @@ func (p *Player) Effects(action string, data []int) {
         }
         if len(reqs) == 0 {
             for {
-                if p.WriteMsg != "" {
-                    p.Inv.GetItems()[data[0]].(*items.Paper).Write(p.WriteMsg)
-                    p.WriteMsg = ""
+                msg := <-c
+                log.Println("msg == " + msg)
+                switch msg {
+                case "ready":
+                    if p.WriteMsg != "" {
+                        p.Inv.GetItems()[data[0]].(*items.Paper).Write(fmt.Sprintf("%x", md5.Sum([]byte(p.WriteMsg))), p.WriteMsg)
+                        p.WriteMsg = ""
+                        return
+                    } else {
+                        log.Println("p.WriteMsg was empty, waiting some more")
+                    }
+                case "quit":
                     return
-                } else {
+                default:
                     log.Println("Waiting on p.WriteMsg to be populated")
                 }
             }

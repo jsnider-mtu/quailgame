@@ -237,6 +237,7 @@ var languages = make([]string, 0)
 var proficiencies = make([]string, 0)
 var resistances = make([]string, 0)
 var spellsslice = make([]string, 0)
+var c = make(chan string)
 
 type Game struct {}
 
@@ -345,191 +346,7 @@ func (g *Game) Update() error {
                     firstsave = false
                 }
                 if len(sb.String()) < 24 {
-                    switch {
-                    case inpututil.IsKeyJustPressed(ebiten.KeyA) || inpututil.KeyPressDuration(ebiten.KeyA) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('A')
-                        } else {
-                            err = sb.WriteByte('a')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyB) || inpututil.KeyPressDuration(ebiten.KeyB) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('B')
-                        } else {
-                            err = sb.WriteByte('b')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyC) || inpututil.KeyPressDuration(ebiten.KeyC) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('C')
-                        } else {
-                            err = sb.WriteByte('c')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyD) || inpututil.KeyPressDuration(ebiten.KeyD) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('D')
-                        } else {
-                            err = sb.WriteByte('d')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyE) || inpututil.KeyPressDuration(ebiten.KeyE) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('E')
-                        } else {
-                            err = sb.WriteByte('e')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyF) || inpututil.KeyPressDuration(ebiten.KeyF) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('F')
-                        } else {
-                            err = sb.WriteByte('f')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyG) || inpututil.KeyPressDuration(ebiten.KeyG) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('G')
-                        } else {
-                            err = sb.WriteByte('g')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyH) || inpututil.KeyPressDuration(ebiten.KeyH) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('H')
-                        } else {
-                            err = sb.WriteByte('h')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyI) || inpututil.KeyPressDuration(ebiten.KeyI) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('I')
-                        } else {
-                            err = sb.WriteByte('i')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyJ) || inpututil.KeyPressDuration(ebiten.KeyJ) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('J')
-                        } else {
-                            err = sb.WriteByte('j')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyK) || inpututil.KeyPressDuration(ebiten.KeyK) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('K')
-                        } else {
-                            err = sb.WriteByte('k')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyL) || inpututil.KeyPressDuration(ebiten.KeyL) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('L')
-                        } else {
-                            err = sb.WriteByte('l')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyM) || inpututil.KeyPressDuration(ebiten.KeyM) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('M')
-                        } else {
-                            err = sb.WriteByte('m')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyN) || inpututil.KeyPressDuration(ebiten.KeyN) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('N')
-                        } else {
-                            err = sb.WriteByte('n')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyO) || inpututil.KeyPressDuration(ebiten.KeyO) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('O')
-                        } else {
-                            err = sb.WriteByte('o')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyP) || inpututil.KeyPressDuration(ebiten.KeyP) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('P')
-                        } else {
-                            err = sb.WriteByte('p')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyQ) || inpututil.KeyPressDuration(ebiten.KeyQ) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('Q')
-                        } else {
-                            err = sb.WriteByte('q')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyR) || inpututil.KeyPressDuration(ebiten.KeyR) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('R')
-                        } else {
-                            err = sb.WriteByte('r')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyS) || inpututil.KeyPressDuration(ebiten.KeyS) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('S')
-                        } else {
-                            err = sb.WriteByte('s')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyT) || inpututil.KeyPressDuration(ebiten.KeyT) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('T')
-                        } else {
-                            err = sb.WriteByte('t')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyU) || inpututil.KeyPressDuration(ebiten.KeyU) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('U')
-                        } else {
-                            err = sb.WriteByte('u')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyV) || inpututil.KeyPressDuration(ebiten.KeyV) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('V')
-                        } else {
-                            err = sb.WriteByte('v')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyW) || inpututil.KeyPressDuration(ebiten.KeyW) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('W')
-                        } else {
-                            err = sb.WriteByte('w')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyX) || inpututil.KeyPressDuration(ebiten.KeyX) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('X')
-                        } else {
-                            err = sb.WriteByte('x')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyY) || inpututil.KeyPressDuration(ebiten.KeyY) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('Y')
-                        } else {
-                            err = sb.WriteByte('y')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.KeyZ) || inpututil.KeyPressDuration(ebiten.KeyZ) > 20:
-                        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
-                            err = sb.WriteByte('Z')
-                        } else {
-                            err = sb.WriteByte('z')
-                        }
-                    case inpututil.IsKeyJustPressed(ebiten.Key0) || inpututil.KeyPressDuration(ebiten.Key0) > 20:
-                        err = sb.WriteByte('0')
-                    case inpututil.IsKeyJustPressed(ebiten.Key1) || inpututil.KeyPressDuration(ebiten.Key1) > 20:
-                        err = sb.WriteByte('1')
-                    case inpututil.IsKeyJustPressed(ebiten.Key2) || inpututil.KeyPressDuration(ebiten.Key2) > 20:
-                        err = sb.WriteByte('2')
-                    case inpututil.IsKeyJustPressed(ebiten.Key3) || inpututil.KeyPressDuration(ebiten.Key3) > 20:
-                        err = sb.WriteByte('3')
-                    case inpututil.IsKeyJustPressed(ebiten.Key4) || inpututil.KeyPressDuration(ebiten.Key4) > 20:
-                        err = sb.WriteByte('4')
-                    case inpututil.IsKeyJustPressed(ebiten.Key5) || inpututil.KeyPressDuration(ebiten.Key5) > 20:
-                        err = sb.WriteByte('5')
-                    case inpututil.IsKeyJustPressed(ebiten.Key6) || inpututil.KeyPressDuration(ebiten.Key6) > 20:
-                        err = sb.WriteByte('6')
-                    case inpututil.IsKeyJustPressed(ebiten.Key7) || inpututil.KeyPressDuration(ebiten.Key7) > 20:
-                        err = sb.WriteByte('7')
-                    case inpututil.IsKeyJustPressed(ebiten.Key8) || inpututil.KeyPressDuration(ebiten.Key8) > 20:
-                        err = sb.WriteByte('8')
-                    case inpututil.IsKeyJustPressed(ebiten.Key9) || inpututil.KeyPressDuration(ebiten.Key9) > 20:
-                        err = sb.WriteByte('9')
-                    case inpututil.IsKeyJustPressed(ebiten.KeyBackspace) || inpututil.KeyPressDuration(ebiten.KeyBackspace) > 20:
-                        str := sb.String()
-                        if len(str) > 0 {
-                            str = str[:len(str) - 1]
-                            sb.Reset()
-                            _, err = sb.WriteString(str)
-                        }
-                    }
+                    Input(&sb)
                 } else {
                     if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
                         str := sb.String()
@@ -8348,6 +8165,25 @@ func (g *Game) Update() error {
             } else {
                 nextturn = true
             }
+            if effectact == "write" {
+                Input(&sb)
+                if inpututil.IsKeyJustPressed(ebiten.KeyF5) {
+                    p.WriteMsg = sb.String()
+                    c <- "ready"
+                    sb.Reset()
+                    effectmsg = false
+                    effectact = ""
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyC) {
+                    if inpututil.KeyPressDuration(ebiten.KeyControlLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyControlRight) > 0 {
+                        c <- "quit"
+                        sb.Reset()
+                        effectmsg = false
+                        effectact = ""
+                    }
+                }
+                return nil
+            }
             if effectact == "read" {
                 if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
                     if overflowcur < overflownum {
@@ -8932,7 +8768,7 @@ func (g *Game) Update() error {
                         if action != "" {
                             effectact = action
                             effectmsg = true
-                            go p.Effects(action, data)
+                            go p.Effects(action, data, c)
                         }
                         invselmenu = false
                         invmenu = false
@@ -13375,34 +13211,81 @@ func (g *Game) Draw(screen *ebiten.Image) {
         case "disguise":
             log.Println("Need to implement disguise menu")
         case "write":
-            p.WriteMsg = `This is a test file written to work out the kinks with reading written pages in the game.
-I will be trying to get these kinks worked out over the course of the next few days.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ligula dolor, condimentum rhoncus eros ac,
-tincidunt faucibus felis. Mauris efficitur sagittis ipsum, malesuada feugiat nisl tincidunt id.
-Cras vitae purus facilisis, venenatis erat ac, sollicitudin tortor. Morbi euismod consequat eros in tincidunt.
-Nunc rhoncus odio vel lectus hendrerit eleifend. Sed vestibulum neque non mattis varius. Nullam eget nibh elementum,
-luctus odio sed, ullamcorper felis. Fusce feugiat pellentesque ligula eu placerat.
-Nulla suscipit lacus eget tellus condimentum, ac iaculis neque condimentum. Praesent vitae lectus neque.
-
-Nulla arcu leo, interdum nec aliquet vel, dictum ac elit. Phasellus tempus massa in eleifend venenatis.
-Mauris accumsan leo eget egestas ornare. Maecenas varius iaculis nibh, ac volutpat mauris tempus vel.
-Morbi et bibendum nisl, vel dignissim neque. Suspendisse nec metus faucibus, tincidunt neque quis, pulvinar justo.
-Integer tortor ante, euismod faucibus dictum a, iaculis vel ex. Duis pellentesque in mauris in tempus.
-Fusce commodo iaculis vehicula. Aenean ornare ante a magna euismod accumsan. In at justo ac quam bibendum commodo. Sed eu mollis nisi.
-
-Nunc venenatis efficitur lacus, sed malesuada lectus. Pellentesque blandit enim urna, non laoreet mauris accumsan quis.
-Quisque a metus tellus. Pellentesque condimentum velit et bibendum molestie. Pellentesque vehicula cursus erat,
-vel convallis sem mattis quis. Quisque at consectetur sem. Nulla magna leo, vulputate et vulputate vitae, malesuada in eros.
-Curabitur vel iaculis mi.
-
-Quisque dictum nisl vel ligula condimentum, sit amet ultricies massa dictum. Curabitur nec lacus ac odio dapibus fringilla.
-Vivamus non aliquet quam. Nunc condimentum ipsum in nisl hendrerit mattis aliquam a orci. Etiam eleifend sagittis enim a mollis.
-Nullam volutpat ac risus in fermentum.`
-            log.Println("Need to implement write menu")
-            effectmsg = false
-            effectact = ""
+//            p.WriteMsg = `This is a test file written to work out the kinks with reading written pages in the game.
+//I will be trying to get these kinks worked out over the course of the next few days.
+//
+//Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ligula dolor, condimentum rhoncus eros ac,
+//tincidunt faucibus felis. Mauris efficitur sagittis ipsum, malesuada feugiat nisl tincidunt id.
+//Cras vitae purus facilisis, venenatis erat ac, sollicitudin tortor. Morbi euismod consequat eros in tincidunt.
+//Nunc rhoncus odio vel lectus hendrerit eleifend. Sed vestibulum neque non mattis varius. Nullam eget nibh elementum,
+//luctus odio sed, ullamcorper felis. Fusce feugiat pellentesque ligula eu placerat.
+//Nulla suscipit lacus eget tellus condimentum, ac iaculis neque condimentum. Praesent vitae lectus neque.
+//
+//Nulla arcu leo, interdum nec aliquet vel, dictum ac elit. Phasellus tempus massa in eleifend venenatis.
+//Mauris accumsan leo eget egestas ornare. Maecenas varius iaculis nibh, ac volutpat mauris tempus vel.
+//Morbi et bibendum nisl, vel dignissim neque. Suspendisse nec metus faucibus, tincidunt neque quis, pulvinar justo.
+//Integer tortor ante, euismod faucibus dictum a, iaculis vel ex. Duis pellentesque in mauris in tempus.
+//Fusce commodo iaculis vehicula. Aenean ornare ante a magna euismod accumsan. In at justo ac quam bibendum commodo. Sed eu mollis nisi.
+//
+//Nunc venenatis efficitur lacus, sed malesuada lectus. Pellentesque blandit enim urna, non laoreet mauris accumsan quis.
+//Quisque a metus tellus. Pellentesque condimentum velit et bibendum molestie. Pellentesque vehicula cursus erat,
+//vel convallis sem mattis quis. Quisque at consectetur sem. Nulla magna leo, vulputate et vulputate vitae, malesuada in eros.
+//Curabitur vel iaculis mi.
+//
+//Quisque dictum nisl vel ligula condimentum, sit amet ultricies massa dictum. Curabitur nec lacus ac odio dapibus fringilla.
+//Vivamus non aliquet quam. Nunc condimentum ipsum in nisl hendrerit mattis aliquam a orci. Etiam eleifend sagittis enim a mollis.
+//Nullam volutpat ac risus in fermentum.`
+            //log.Println("Need to implement write menu")
+            readimg.Fill(color.White)
+            readimg2.Fill(color.Black)
+            screen.DrawImage(
+                readimg, &ebiten.DrawImageOptions{
+                    GeoM: readgm})
+            screen.DrawImage(
+                readimg2, &ebiten.DrawImageOptions{
+                    GeoM: readgm2})
+            var y int
+            result := ""
+            lines := strings.Split(sb.String(), "\n")
+            log.Println(fmt.Sprintf("lines == %v", lines))
+            for ind, line := range lines {
+                log.Println(fmt.Sprintf("len(lines[%d]) == %d", ind, len(line)))
+                if len(line) > 55 {
+                    for x := 54; x < len(line); x = y + 56 {
+                        for y = x; line[y] != ' '; y-- {
+                            if y == 0 {
+                                y = 54
+                                break
+                            }
+                            continue
+                        }
+                        line = line[:y + 1] + "\n" + line[y + 1:]
+                    }
+                }
+                if ind + 1 < len(lines) {
+                    result += line + "\n"
+                } else {
+                    result += line
+                }
+            }
+            if len(result) > 0 {
+                sb.Reset()
+                _, err = sb.WriteString(result)
+            }
+            resslice := strings.Split(result, "\n")
+            if len(resslice) > 18 {
+                offset := len(resslice) - 18
+                for z := offset; z < len(resslice); z++ {
+                    text.Draw(screen, resslice[z], fo, (768 / 2) - (724 / 2) + 28, (576 / 2) - (552 / 2) + 48 + (28 * ((z - offset) % 19)), color.White)
+                }
+            } else {
+                for z := 0; z < len(resslice); z++ {
+                    text.Draw(screen, resslice[z], fo, (768 / 2) - (724 / 2) + 28, (576 / 2) - (552 / 2) + 48 + (28 * z), color.White)
+                }
+            }
         case "read":
+            readimg.Fill(color.Black)
+            readimg2.Fill(color.White)
             for in, i := range p.Inv.GetItems() {
                 if strings.HasPrefix(i.PrettyPrint(), "Paper") {
                     pages = p.Inv.GetItems()[in].(*items.Paper).GetPages()
@@ -13412,7 +13295,7 @@ Nullam volutpat ac risus in fermentum.`
             if len(pages) > 0 {
                 for _, pa := range pages {
                     for _, pm := range p.PageMsgs {
-                        if pa.GetName() == pm[5].(string) {
+                        if pa.GetName() == pm[3].(string) {
                             pageexists = true
                             break
                         }
@@ -13422,29 +13305,12 @@ Nullam volutpat ac risus in fermentum.`
                     }
                     lines = strings.Split(pa.Read(), "\n")
                     numlines = len(lines)
-                    for _, line := range lines {
-                        r = text.BoundString(fo, line)
-                        if (r.Max.Y - r.Min.Y) > maxh {
-                            maxh = r.Max.Y - r.Min.Y
-                        }
-                        if (r.Max.X - r.Min.X) > maxw {
-                            maxw = r.Max.X - r.Min.X
-                        }
-                    }
-                    maxlines = 552 / (maxh + 8)
-                    maxh = (maxh * numlines) + (numlines * 8)
-                    if maxh > 552 {
-                        maxh = 552
-                    }
-                    maxw = maxw + 32
-                    if maxw > 724 {
-                        maxw = 724
-                    }
+                    maxlines = (552 - 48) / 28
                     if !pageexists {
-                        p.PageMsgs = append(p.PageMsgs, []interface{}{lines, numlines, maxw, maxh, maxlines, pa.GetName()})
+                        p.PageMsgs = append(p.PageMsgs, []interface{}{lines, numlines, maxlines, pa.GetName()})
                     }
                 }
-                overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][4].(int)
+                overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][2].(int)
                 screen.DrawImage(
                     readimg, &ebiten.DrawImageOptions{
                         GeoM: readgm})
@@ -13452,9 +13318,9 @@ Nullam volutpat ac risus in fermentum.`
                     readimg2, &ebiten.DrawImageOptions{
                         GeoM: readgm2})
                 moreshown = false
-                for y := ((overflowcur - 1) * p.PageMsgs[pageind][4].(int)) + p.PageMsgs[pageind][4].(int); y < p.PageMsgs[pageind][1].(int); y++ {
-                    if y < (overflowcur * p.PageMsgs[pageind][4].(int) - 1) + p.PageMsgs[pageind][4].(int) {
-                        text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (768 / 2) - (724 / 2) + 28, (576 / 2) - (552 / 2) + 48 + (28 * (y % p.PageMsgs[pageind][4].(int))), color.Black)
+                for y := ((overflowcur - 1) * p.PageMsgs[pageind][2].(int)) + p.PageMsgs[pageind][2].(int); y < p.PageMsgs[pageind][1].(int); y++ {
+                    if y < (overflowcur * p.PageMsgs[pageind][2].(int) - 1) + p.PageMsgs[pageind][2].(int) {
+                        text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (768 / 2) - (724 / 2) + 28, (576 / 2) - (552 / 2) + 48 + (28 * (y % p.PageMsgs[pageind][2].(int))), color.Black)
                     } else {
                         if !moreshown {
                             text.Draw(screen, "More...", fo, (768 / 2) + (724 / 2) - 24, (576 / 2) + (552 / 2) - 48, color.Black)
@@ -13471,7 +13337,7 @@ Nullam volutpat ac risus in fermentum.`
         default:
             log.Fatal(effectact + " is not defined")
         }
-        if effectact != "read" && npcCount >= countend {
+        if effectact != "read" && effectact != "write" && npcCount >= countend {
             countend = 0
             effectmsg = false
             effectact = ""
@@ -13838,6 +13704,305 @@ func drawmc(screen *ebiten.Image, w, h int) {
                             GeoM: gm})
         }
     }
+}
+
+func Input(sb *strings.Builder) {
+    switch {
+    case inpututil.IsKeyJustPressed(ebiten.KeyA) || inpututil.KeyPressDuration(ebiten.KeyA) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('A')
+        } else {
+            err = sb.WriteByte('a')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyB) || inpututil.KeyPressDuration(ebiten.KeyB) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('B')
+        } else {
+            err = sb.WriteByte('b')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyC) || inpututil.KeyPressDuration(ebiten.KeyC) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('C')
+        } else {
+            err = sb.WriteByte('c')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyD) || inpututil.KeyPressDuration(ebiten.KeyD) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('D')
+        } else {
+            err = sb.WriteByte('d')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyE) || inpututil.KeyPressDuration(ebiten.KeyE) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('E')
+        } else {
+            err = sb.WriteByte('e')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyF) || inpututil.KeyPressDuration(ebiten.KeyF) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('F')
+        } else {
+            err = sb.WriteByte('f')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyG) || inpututil.KeyPressDuration(ebiten.KeyG) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('G')
+        } else {
+            err = sb.WriteByte('g')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyH) || inpututil.KeyPressDuration(ebiten.KeyH) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('H')
+        } else {
+            err = sb.WriteByte('h')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyI) || inpututil.KeyPressDuration(ebiten.KeyI) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('I')
+        } else {
+            err = sb.WriteByte('i')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyJ) || inpututil.KeyPressDuration(ebiten.KeyJ) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('J')
+        } else {
+            err = sb.WriteByte('j')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyK) || inpututil.KeyPressDuration(ebiten.KeyK) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('K')
+        } else {
+            err = sb.WriteByte('k')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyL) || inpututil.KeyPressDuration(ebiten.KeyL) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('L')
+        } else {
+            err = sb.WriteByte('l')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyM) || inpututil.KeyPressDuration(ebiten.KeyM) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('M')
+        } else {
+            err = sb.WriteByte('m')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyN) || inpututil.KeyPressDuration(ebiten.KeyN) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('N')
+        } else {
+            err = sb.WriteByte('n')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyO) || inpututil.KeyPressDuration(ebiten.KeyO) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('O')
+        } else {
+            err = sb.WriteByte('o')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyP) || inpututil.KeyPressDuration(ebiten.KeyP) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('P')
+        } else {
+            err = sb.WriteByte('p')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyQ) || inpututil.KeyPressDuration(ebiten.KeyQ) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('Q')
+        } else {
+            err = sb.WriteByte('q')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyR) || inpututil.KeyPressDuration(ebiten.KeyR) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('R')
+        } else {
+            err = sb.WriteByte('r')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyS) || inpututil.KeyPressDuration(ebiten.KeyS) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('S')
+        } else {
+            err = sb.WriteByte('s')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyT) || inpututil.KeyPressDuration(ebiten.KeyT) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('T')
+        } else {
+            err = sb.WriteByte('t')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyU) || inpututil.KeyPressDuration(ebiten.KeyU) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('U')
+        } else {
+            err = sb.WriteByte('u')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyV) || inpututil.KeyPressDuration(ebiten.KeyV) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('V')
+        } else {
+            err = sb.WriteByte('v')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyW) || inpututil.KeyPressDuration(ebiten.KeyW) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('W')
+        } else {
+            err = sb.WriteByte('w')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyX) || inpututil.KeyPressDuration(ebiten.KeyX) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('X')
+        } else {
+            err = sb.WriteByte('x')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyY) || inpututil.KeyPressDuration(ebiten.KeyY) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('Y')
+        } else {
+            err = sb.WriteByte('y')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyZ) || inpututil.KeyPressDuration(ebiten.KeyZ) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('Z')
+        } else {
+            err = sb.WriteByte('z')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit0) || inpututil.KeyPressDuration(ebiten.KeyDigit0) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte(')')
+        } else {
+            err = sb.WriteByte('0')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit1) || inpututil.KeyPressDuration(ebiten.KeyDigit1) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('!')
+        } else {
+            err = sb.WriteByte('1')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit2) || inpututil.KeyPressDuration(ebiten.KeyDigit2) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('@')
+        } else {
+            err = sb.WriteByte('2')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit3) || inpututil.KeyPressDuration(ebiten.KeyDigit3) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('#')
+        } else {
+            err = sb.WriteByte('3')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit4) || inpututil.KeyPressDuration(ebiten.KeyDigit4) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('$')
+        } else {
+            err = sb.WriteByte('4')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit5) || inpututil.KeyPressDuration(ebiten.KeyDigit5) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('%')
+        } else {
+            err = sb.WriteByte('5')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit6) || inpututil.KeyPressDuration(ebiten.KeyDigit6) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('^')
+        } else {
+            err = sb.WriteByte('6')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit7) || inpututil.KeyPressDuration(ebiten.KeyDigit7) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('&')
+        } else {
+            err = sb.WriteByte('7')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit8) || inpututil.KeyPressDuration(ebiten.KeyDigit8) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('*')
+        } else {
+            err = sb.WriteByte('8')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyDigit9) || inpututil.KeyPressDuration(ebiten.KeyDigit9) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('(')
+        } else {
+            err = sb.WriteByte('9')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyBackspace) || inpututil.KeyPressDuration(ebiten.KeyBackspace) > 20:
+        str := sb.String()
+        if len(str) > 0 {
+            str = str[:len(str) - 1]
+            sb.Reset()
+            _, err = sb.WriteString(str)
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeySpace) || inpututil.KeyPressDuration(ebiten.KeySpace) > 20:
+        err = sb.WriteByte(' ')
+    case inpututil.IsKeyJustPressed(ebiten.KeyEnter) || inpututil.KeyPressDuration(ebiten.KeyEnter) > 20:
+        err = sb.WriteByte('\n')
+    case inpututil.IsKeyJustPressed(ebiten.KeyBackquote) || inpututil.KeyPressDuration(ebiten.KeyBackquote) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('~')
+        } else {
+            err = sb.WriteByte('`')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyMinus) || inpututil.KeyPressDuration(ebiten.KeyMinus) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('_')
+        } else {
+            err = sb.WriteByte('-')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyEqual) || inpututil.KeyPressDuration(ebiten.KeyEqual) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('+')
+        } else {
+            err = sb.WriteByte('=')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyBracketLeft) || inpututil.KeyPressDuration(ebiten.KeyBracketLeft) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('{')
+        } else {
+            err = sb.WriteByte('[')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyBracketRight) || inpututil.KeyPressDuration(ebiten.KeyBracketRight) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('}')
+        } else {
+            err = sb.WriteByte(']')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyBackslash) || inpututil.KeyPressDuration(ebiten.KeyBackslash) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('|')
+        } else {
+            err = sb.WriteByte('\\')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeySemicolon) || inpututil.KeyPressDuration(ebiten.KeySemicolon) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte(':')
+        } else {
+            err = sb.WriteByte(';')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyQuote) || inpututil.KeyPressDuration(ebiten.KeyQuote) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('"')
+        } else {
+            err = sb.WriteByte('\'')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyComma) || inpututil.KeyPressDuration(ebiten.KeyComma) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('<')
+        } else {
+            err = sb.WriteByte(',')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeyPeriod) || inpututil.KeyPressDuration(ebiten.KeyPeriod) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('>')
+        } else {
+            err = sb.WriteByte('.')
+        }
+    case inpututil.IsKeyJustPressed(ebiten.KeySlash) || inpututil.KeyPressDuration(ebiten.KeySlash) > 20:
+        if inpututil.KeyPressDuration(ebiten.KeyShiftLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyShiftRight) > 0 {
+            err = sb.WriteByte('?')
+        } else {
+            err = sb.WriteByte('/')
+        }
+    }
+    return
 }
 
 func init() {

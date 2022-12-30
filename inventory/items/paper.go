@@ -57,7 +57,7 @@ func (p *Paper) GetQuantity() int {
     return p.Quantity
 }
 
-func (p *Paper) Write(msg string) {
+func (p *Paper) Write(name, msg string) {
     if p.GetQuantity() > 0 {
         log.Println(fmt.Sprintf("p.GetQuantity() == %d", p.GetQuantity()))
         var y int
@@ -78,9 +78,15 @@ func (p *Paper) Write(msg string) {
                 result += line
             }
         }
-        page := &Page{msg: result}
+        for _, page := range p.pages {
+            if page.name == name {
+                log.Println("A page with this name already exists")
+                return
+            }
+        }
+        newpage := &Page{name: name, msg: result}
         p.Quantity--
-        p.pages = append(p.pages, page)
+        p.pages = append(p.pages, newpage)
     } else {
         log.Println(fmt.Sprintf("p.GetQuantity() == %d", p.GetQuantity()))
     }
