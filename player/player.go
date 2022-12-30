@@ -572,7 +572,7 @@ func (p *Player) GetName() string {
     return p.Name
 }
 
-func (p *Player) Effects(action string, data []int, c chan string) {
+func (p *Player) Effects(action string, data []int, c chan int) {
     switch action {
     case "illuminate":
         if len(data) != 3 {
@@ -601,9 +601,8 @@ func (p *Player) Effects(action string, data []int, c chan string) {
         if len(reqs) == 0 {
             for {
                 msg := <-c
-                log.Println("msg == " + msg)
                 switch msg {
-                case "ready":
+                case 0:
                     if p.WriteMsg != "" {
                         p.Inv.GetItems()[data[0]].(*items.Paper).Write(fmt.Sprintf("%x", md5.Sum([]byte(p.WriteMsg))), p.WriteMsg)
                         p.WriteMsg = ""
@@ -611,7 +610,7 @@ func (p *Player) Effects(action string, data []int, c chan string) {
                     } else {
                         log.Println("p.WriteMsg was empty, waiting some more")
                     }
-                case "quit":
+                case 1:
                     return
                 default:
                     log.Println("Waiting on p.WriteMsg to be populated")
@@ -627,14 +626,7 @@ func (p *Player) Effects(action string, data []int, c chan string) {
         }
         return
     case "read":
-        for {
-            if len(p.PageMsgs) == len(p.Inv.GetItems()[data[0]].(*items.Paper).GetPages()) {
-                log.Println("p.PageMsgs populated")
-                break
-            } else {
-                log.Println("Waiting on p.PageMsgs to be populated")
-            }
-        }
+        log.Println("p.Effects called for read")
         return
     default:
         log.Println(action + " is not a recognized action")

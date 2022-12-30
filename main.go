@@ -224,6 +224,7 @@ var (
     npchporigval string
     npchpupdate bool = false
     op *ebiten.DrawImageOptions
+    paperind int = -1
 )
 
 var lines = make([]string, 0)
@@ -237,7 +238,7 @@ var languages = make([]string, 0)
 var proficiencies = make([]string, 0)
 var resistances = make([]string, 0)
 var spellsslice = make([]string, 0)
-var c = make(chan string)
+var c1 = make(chan int)
 
 type Game struct {}
 
@@ -5845,7 +5846,6 @@ func (g *Game) Update() error {
                     log.Println(fmt.Sprintf("%s cannot be equipped", item.PrettyPrint()))
                 }
             }
-            log.Println(fmt.Sprint(equipmap))
             if len(equipmap["Armor"]) == 1 {
                 p.Equip(equipmap["Armor"][0])
             }
@@ -8169,14 +8169,14 @@ func (g *Game) Update() error {
                 Input(&sb)
                 if inpututil.IsKeyJustPressed(ebiten.KeyF5) {
                     p.WriteMsg = sb.String()
-                    c <- "ready"
+                    c1 <- 0
                     sb.Reset()
                     effectmsg = false
                     effectact = ""
                 }
                 if inpututil.IsKeyJustPressed(ebiten.KeyC) {
                     if inpututil.KeyPressDuration(ebiten.KeyControlLeft) > 0 || inpututil.KeyPressDuration(ebiten.KeyControlRight) > 0 {
-                        c <- "quit"
+                        c1 <- 1
                         sb.Reset()
                         effectmsg = false
                         effectact = ""
@@ -8185,6 +8185,30 @@ func (g *Game) Update() error {
                 return nil
             }
             if effectact == "read" {
+                if paperind < 0 {
+                    log.Println("paperind < 0 (Update)")
+                    return nil
+                }
+                pages = p.Inv.GetItems()[paperind].(*items.Paper).GetPages()
+                for _, pa := range pages {
+                    pageexists = false
+                    for _, pm := range p.PageMsgs {
+                        if pa.GetName() == pm[3].(string) {
+                            pageexists = true
+                            break
+                        }
+                    }
+                    if pageexists {
+                        continue
+                    }
+                    lines = strings.Split(pa.Read(), "\n")
+                    numlines = len(lines)
+                    maxlines = (552 - 48) / 28
+                    if !pageexists {
+                        p.PageMsgs = append(p.PageMsgs, []interface{}{lines, numlines, maxlines, pa.GetName()})
+                    }
+                }
+                overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][2].(int)
                 if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
                     if overflowcur < overflownum {
                         overflowcur++
@@ -8761,6 +8785,7 @@ func (g *Game) Update() error {
                         if action == "write" || action == "read" {
                             for in, i := range p.Inv.GetItems() {
                                 if strings.HasPrefix(i.PrettyPrint(), "Paper") {
+                                    paperind = in
                                     data = append(data, in)
                                 }
                             }
@@ -8768,7 +8793,7 @@ func (g *Game) Update() error {
                         if action != "" {
                             effectact = action
                             effectmsg = true
-                            go p.Effects(action, data, c)
+                            go p.Effects(action, data, c1)
                         }
                         invselmenu = false
                         invmenu = false
@@ -13235,7 +13260,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 //Quisque dictum nisl vel ligula condimentum, sit amet ultricies massa dictum. Curabitur nec lacus ac odio dapibus fringilla.
 //Vivamus non aliquet quam. Nunc condimentum ipsum in nisl hendrerit mattis aliquam a orci. Etiam eleifend sagittis enim a mollis.
 //Nullam volutpat ac risus in fermentum.`
-            //log.Println("Need to implement write menu")
             readimg.Fill(color.White)
             readimg2.Fill(color.Black)
             screen.DrawImage(
@@ -13247,9 +13271,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
             var y int
             result := ""
             lines := strings.Split(sb.String(), "\n")
-            log.Println(fmt.Sprintf("lines == %v", lines))
             for ind, line := range lines {
-                log.Println(fmt.Sprintf("len(lines[%d]) == %d", ind, len(line)))
                 if len(line) > 55 {
                     for x := 54; x < len(line); x = y + 56 {
                         for y = x; line[y] != ' '; y-- {
@@ -13284,55 +13306,44 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 }
             }
         case "read":
-            readimg.Fill(color.Black)
-            readimg2.Fill(color.White)
-            for in, i := range p.Inv.GetItems() {
-                if strings.HasPrefix(i.PrettyPrint(), "Paper") {
-                    pages = p.Inv.GetItems()[in].(*items.Paper).GetPages()
-                    break
-                }
-            }
-            if len(pages) > 0 {
-                for _, pa := range pages {
-                    for _, pm := range p.PageMsgs {
-                        if pa.GetName() == pm[3].(string) {
-                            pageexists = true
-                            break
+            switch len(p.PageMsgs) == len(pages) {
+            case true:
+                readimg.Fill(color.Black)
+                readimg2.Fill(color.White)
+                if len(pages) > 0 {
+                    screen.DrawImage(
+                        readimg, &ebiten.DrawImageOptions{
+                            GeoM: readgm})
+                    screen.DrawImage(
+                        readimg2, &ebiten.DrawImageOptions{
+                            GeoM: readgm2})
+                    moreshown = false
+                    for y := ((overflowcur - 1) * p.PageMsgs[pageind][2].(int)) + p.PageMsgs[pageind][2].(int); y < p.PageMsgs[pageind][1].(int); y++ {
+                        if y < (overflowcur * p.PageMsgs[pageind][2].(int) - 1) + p.PageMsgs[pageind][2].(int) {
+                            text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (768 / 2) - (724 / 2) + 28, (576 / 2) - (552 / 2) + 48 + (28 * (y % p.PageMsgs[pageind][2].(int))), color.Black)
+                        } else {
+                            if !moreshown {
+                                text.Draw(screen, "V", fo, (768 / 2) + (724 / 2) - 48, (576 / 2) + (552 / 2) - 48, color.Black)
+                                moreshown = true
+                            }
                         }
                     }
-                    if pageexists {
-                        continue
-                    }
-                    lines = strings.Split(pa.Read(), "\n")
-                    numlines = len(lines)
-                    maxlines = (552 - 48) / 28
-                    if !pageexists {
-                        p.PageMsgs = append(p.PageMsgs, []interface{}{lines, numlines, maxlines, pa.GetName()})
-                    }
+                } else {
+                    screen.DrawImage(
+                        readimg3, &ebiten.DrawImageOptions{
+                            GeoM: readgm3})
+                    text.Draw(screen, "You do not have any written pages", fo, (w / 2) - (wid / 2), (h / 2), color.White)
                 }
-                overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][2].(int)
-                screen.DrawImage(
-                    readimg, &ebiten.DrawImageOptions{
-                        GeoM: readgm})
-                screen.DrawImage(
-                    readimg2, &ebiten.DrawImageOptions{
-                        GeoM: readgm2})
-                moreshown = false
-                for y := ((overflowcur - 1) * p.PageMsgs[pageind][2].(int)) + p.PageMsgs[pageind][2].(int); y < p.PageMsgs[pageind][1].(int); y++ {
-                    if y < (overflowcur * p.PageMsgs[pageind][2].(int) - 1) + p.PageMsgs[pageind][2].(int) {
-                        text.Draw(screen, p.PageMsgs[pageind][0].([]string)[y], fo, (768 / 2) - (724 / 2) + 28, (576 / 2) - (552 / 2) + 48 + (28 * (y % p.PageMsgs[pageind][2].(int))), color.Black)
-                    } else {
-                        if !moreshown {
-                            text.Draw(screen, "More...", fo, (768 / 2) + (724 / 2) - 24, (576 / 2) + (552 / 2) - 48, color.Black)
-                            moreshown = true
-                        }
-                    }
-                }
-            } else {
-                screen.DrawImage(
-                    readimg3, &ebiten.DrawImageOptions{
-                        GeoM: readgm3})
-                text.Draw(screen, "You do not have any written pages", fo, (w / 2) - (wid / 2), (h / 2), color.White)
+            case false:
+                log.Println(fmt.Sprintf("len(p.PageMsgs) == %d but len(pages) == %d", len(p.PageMsgs), len(pages)))
+                effectact = ""
+                effectmsg = false
+                overflowcur = 0
+                overflownum = 0
+                pageind = 0
+                return
+            default:
+                log.Println("I don't understand")
             }
         default:
             log.Fatal(effectact + " is not defined")
