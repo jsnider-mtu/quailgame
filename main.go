@@ -8208,7 +8208,9 @@ func (g *Game) Update() error {
                         p.PageMsgs = append(p.PageMsgs, []interface{}{lines, numlines, maxlines, pa.GetName()})
                     }
                 }
-                overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][2].(int)
+                if len(p.PageMsgs) > 0 {
+                    overflownum = p.PageMsgs[pageind][1].(int) / p.PageMsgs[pageind][2].(int)
+                }
                 if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
                     if overflowcur < overflownum {
                         overflowcur++
@@ -13306,8 +13308,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 }
             }
         case "read":
-            switch len(p.PageMsgs) == len(pages) {
-            case true:
+            if len(p.PageMsgs) == len(pages) {
                 readimg.Fill(color.Black)
                 readimg2.Fill(color.White)
                 if len(pages) > 0 {
@@ -13329,12 +13330,19 @@ func (g *Game) Draw(screen *ebiten.Image) {
                         }
                     }
                 } else {
+                    r = text.BoundString(fo, fmt.Sprint("You do not have any written pages"))
+                    wid = r.Max.X - r.Min.X
                     screen.DrawImage(
                         readimg3, &ebiten.DrawImageOptions{
                             GeoM: readgm3})
-                    text.Draw(screen, "You do not have any written pages", fo, (w / 2) - (wid / 2), (h / 2), color.White)
+                    text.Draw(screen, "You do not have any written pages", fo, (768 / 2) - (wid / 2), (576 / 2), color.White)
+                    if npcCount >= countend {
+                        countend = 0
+                        effectmsg = false
+                        effectact = ""
+                    }
                 }
-            case false:
+            } else {
                 log.Println(fmt.Sprintf("len(p.PageMsgs) == %d but len(pages) == %d", len(p.PageMsgs), len(pages)))
                 effectact = ""
                 effectmsg = false
@@ -13342,8 +13350,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 overflownum = 0
                 pageind = 0
                 return
-            default:
-                log.Println("I don't understand")
             }
         default:
             log.Fatal(effectact + " is not defined")
@@ -14017,24 +14023,16 @@ func Input(sb *strings.Builder) {
 }
 
 func init() {
-    //fon, err = truetype.Parse(gomonobold.TTF)
-    //if err != nil {
-    //    log.Fatal(err)
-    //}
-    //fo = truetype.NewFace(fon, &truetype.Options{Size: 20})
     fo = utils.Fo()
 
-    //readgm = ebiten.GeoM{}
     readgm.Translate(float64((768 / 2) - (724 / 2)), float64((576 / 2) - (552 / 2)))
     readimg = ebiten.NewImage(724, 552)
     readimg.Fill(color.Black)
 
-    //readgm2 = ebiten.GeoM{}
     readgm2.Translate(float64((768 / 2) - (724 / 2) + 20), float64((576 / 2) - (552 / 2) + 20))
     readimg2 = ebiten.NewImage(724 - 40, 552 - 40)
     readimg2.Fill(color.White)
 
-    //readgm3 = ebiten.GeoM{}
     readgm3r := text.BoundString(fo, "You do not have any written pages")
     readgm3h := readgm3r.Max.Y - readgm3r.Min.Y
     readgm3w := readgm3r.Max.X - readgm3r.Min.X

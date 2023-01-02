@@ -34,7 +34,11 @@ func (p *Paper) Use() (string, []int) {
 }
 
 func (p *Paper) Save() string {
-    return "Paper," + strconv.Itoa(p.Quantity)
+    pnames := ""
+    for _, page := range p.pages {
+        pnames += page.GetName() + ","
+    }
+    return "Paper," + pnames + strconv.Itoa(p.Quantity)
 }
 
 func (p *Paper) PrettyPrint() string {
