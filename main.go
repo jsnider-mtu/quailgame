@@ -8176,6 +8176,7 @@ func (g *Game) Update() error {
                         p.Stats.Illuminated[2]--
                         if p.Stats.Illuminated[2] == 0 {
                             p.Stats.Illuminated = []int{}
+                            p.Unequip("LeftHand")
                         }
                     }
                     nextturn = false
@@ -8872,6 +8873,24 @@ func (g *Game) Update() error {
                                 if strings.HasPrefix(i.PrettyPrint(), "Paper") {
                                     paperind = in
                                     data = append(data, in)
+                                }
+                            }
+                        } else if action == "illuminate" {
+                            if data == []int{5, 5, 600} {
+                                for _, i := range p.Inv.GetItems() {
+                                    if strings.HasPrefix(i.PrettyPrint(), "Candles") {
+                                        i.Quantity--
+                                        p.Equip(i)
+                                        break
+                                    }
+                                }
+                            } else if data == []int{15, 30, 3600} {
+                                for _, i := range p.Inv.GetItems() {
+                                    if strings.HasPrefix(i.PrettyPrint(), "Lamp") {
+                                        i.Quantity--
+                                        p.Equip(i)
+                                        break
+                                    }
                                 }
                             }
                         }

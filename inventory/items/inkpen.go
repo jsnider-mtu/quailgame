@@ -4,7 +4,7 @@ type InkPen struct {
 }
 
 func (i *InkPen) Slot() string {
-    return "RightHand"
+    return ""
 }
 
 func (i *InkPen) Use() (string, []int) {

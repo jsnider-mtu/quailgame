@@ -2,7 +2,6 @@ package items
 
 import (
     "fmt"
-    "log"
     "strconv"
 )
 
@@ -15,10 +14,7 @@ func (c *Candles) Slot() string {
 }
 
 func (c *Candles) Use() (string, []int) {
-    // illuminate surroundings
     if c.Quantity > 0 {
-        c.Quantity = c.Quantity - 1
-        log.Println(fmt.Sprintf("c.Quantity == %d", c.Quantity))
         return "illuminate", []int{5, 5, 600}
     }
     return "", []int{}

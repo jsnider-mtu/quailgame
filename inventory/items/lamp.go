@@ -1,6 +1,12 @@
 package items
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type Lamp struct {
+    Quantity int
 }
 
 func (l *Lamp) Slot() string {
@@ -8,15 +14,18 @@ func (l *Lamp) Slot() string {
 }
 
 func (l *Lamp) Use() (string, []int) {
-    return "illuminate", []int{15, 30, 3600}
+    if l.Quantity > 0 {
+        return "illuminate", []int{15, 30, 3600}
+    }
+    return "", []int{}
 }
 
 func (l *Lamp) Save() string {
-    return "Lamp"
+    return "Lamp," + strconv.Itoa(l.Quantity)
 }
 
 func (l *Lamp) PrettyPrint() string {
-    return "Lamp"
+    return fmt.Sprintf("Lamp (%d)", l.Quantity)
 }
 
 func (l *Lamp) Function() string {
@@ -32,5 +41,5 @@ func (l *Lamp) Action() string {
 }
 
 func (l *Lamp) GetQuantity() int {
-    return 1
+    return l.Quantity
 }

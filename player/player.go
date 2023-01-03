@@ -865,6 +865,11 @@ func (p *Player) Equip(item inventory.Item) {
                 p.Inv.Drop(item)
             case "LeftHand":
                 if p.Equipment.LeftHand != nil {
+                    if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") || strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
+                        if len(p.Stats.Illuminated) == 3 {
+                            p.Stats.Illuminated = []int{}
+                        }
+                    }
                     p.Inv.Add(p.Equipment.LeftHand)
                 }
                 if p.Equipment.BothHands != nil {
