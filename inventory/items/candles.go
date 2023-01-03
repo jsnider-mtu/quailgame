@@ -7,6 +7,7 @@ import (
 
 type Candles struct {
     Quantity int
+    Turns int
 }
 
 func (c *Candles) Slot() string {
@@ -15,13 +16,13 @@ func (c *Candles) Slot() string {
 
 func (c *Candles) Use() (string, []int) {
     if c.Quantity > 0 {
-        return "illuminate", []int{5, 5, 600}
+        return "illuminate", []int{5, 5, c.Turns}
     }
     return "", []int{}
 }
 
 func (c *Candles) Save() string {
-    return "Candles," + strconv.Itoa(c.Quantity)
+    return "Candles," + strconv.Itoa(c.Turns) + "," + strconv.Itoa(c.Quantity)
 }
 
 func (c *Candles) PrettyPrint() string {

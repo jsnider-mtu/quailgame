@@ -75,7 +75,11 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
     case "Javelin":
         return &Javelin{}
     case "Lamp":
-        return &Lamp{}
+        quaityint, err := strconv.Atoi(quaity.(string))
+        if err != nil {
+            log.Fatal("quaity is not an integer")
+        }
+        return &Lamp{Quantity: quaityint}
     case "Lance":
         return &Lance{}
     case "LeatherArmor":

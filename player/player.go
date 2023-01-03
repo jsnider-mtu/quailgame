@@ -744,6 +744,16 @@ func (p *Player) Unequip(slot string) {
         if p.Equipment.LeftHand == nil {
             log.Fatal("Nothing in my left hand")
         }
+        p.Stats.Illuminated = []int{}
+        if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
+            if p.Equipment.LeftHand.(*items.Candles).Turns == 0 {
+                p.Equipment.LeftHand.(*items.Candles).Turns = 600
+            }
+        } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
+            if p.Equipment.LeftHand.(*items.Lamp).Turns == 0 {
+                p.Equipment.LeftHand.(*items.Lamp).Turns = 3600
+            }
+        }
         p.Inv.Add(p.Equipment.LeftHand)
         p.Equipment.LeftHand = nil
     case "RightHand":
@@ -865,9 +875,14 @@ func (p *Player) Equip(item inventory.Item) {
                 p.Inv.Drop(item)
             case "LeftHand":
                 if p.Equipment.LeftHand != nil {
-                    if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") || strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
-                        if len(p.Stats.Illuminated) == 3 {
-                            p.Stats.Illuminated = []int{}
+                    p.Stats.Illuminated = []int{}
+                    if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
+                        if p.Equipment.LeftHand.(*items.Candles).Turns == 0 {
+                            p.Equipment.LeftHand.(*items.Candles).Turns = 600
+                        }
+                    } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
+                        if p.Equipment.LeftHand.(*items.Lamp).Turns == 0 {
+                            p.Equipment.LeftHand.(*items.Lamp).Turns = 3600
                         }
                     }
                     p.Inv.Add(p.Equipment.LeftHand)

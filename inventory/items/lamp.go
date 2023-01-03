@@ -7,6 +7,7 @@ import (
 
 type Lamp struct {
     Quantity int
+    Turns int
 }
 
 func (l *Lamp) Slot() string {
@@ -15,13 +16,13 @@ func (l *Lamp) Slot() string {
 
 func (l *Lamp) Use() (string, []int) {
     if l.Quantity > 0 {
-        return "illuminate", []int{15, 30, 3600}
+        return "illuminate", []int{15, 30, l.Turns}
     }
     return "", []int{}
 }
 
 func (l *Lamp) Save() string {
-    return "Lamp," + strconv.Itoa(l.Quantity)
+    return "Lamp," + strconv.Itoa(l.Turns) + "," + strconv.Itoa(l.Quantity)
 }
 
 func (l *Lamp) PrettyPrint() string {

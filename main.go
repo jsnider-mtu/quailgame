@@ -529,7 +529,7 @@ func (g *Game) Update() error {
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
             p.Inv.Clear()
             // temp line here
-            p.Inv.Add(&items.Candles{Quantity: 1})
+            p.Inv.Add(&items.Candles{Quantity: 1, Turns: 600})
             curCS = 0
             csDone = make([]int, 0)
             proficiencies = make([]string, 0)
@@ -2821,7 +2821,7 @@ func (g *Game) Update() error {
                     var clothes = &items.Clothes{Quality: "Fine"}
                     var inkbottle *items.InkBottle
                     var inkpen *items.InkPen
-                    var lamp *items.Lamp
+                    var lamp = &items.Lamp{Quantity: 1, Turns: 3600}
                     var oilflask = &items.OilFlask{Quantity: 2}
                     var paper = &items.Paper{Quantity: 5}
                     var perfume *items.Perfume
@@ -2865,7 +2865,7 @@ func (g *Game) Update() error {
                     }
                 case 1:
                     var clothes = &items.Clothes{Quality: "Costume"}
-                    var candles = &items.Candles{Quantity: 5}
+                    var candles = &items.Candles{Quantity: 5, Turns: 600}
                     var disguisekit *items.DisguiseKit
                     err = p.Inv.Add(clothes)
                     if err != nil {
@@ -3113,7 +3113,7 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var candles = &items.Candles{Quantity: 10}
+                    var candles = &items.Candles{Quantity: 10, Turns: 600}
                     var tinderbox *items.Tinderbox
                     err = p.Inv.Add(candles)
                     if err != nil {
@@ -4368,7 +4368,7 @@ func (g *Game) Update() error {
                 }
                 switch option5 {
                 case 0:
-                    var candles = &items.Candles{Quantity: 10}
+                    var candles = &items.Candles{Quantity: 10, Turns: 600}
                     var tinderbox *items.Tinderbox
                     err = p.Inv.Add(candles)
                     if err != nil {
@@ -4804,7 +4804,7 @@ func (g *Game) Update() error {
                 }
                 switch option6 {
                 case 0:
-                    var candles = &items.Candles{Quantity: 5}
+                    var candles = &items.Candles{Quantity: 5, Turns: 600}
                     var oilflasks = &items.OilFlask{Quantity: 2}
                     var tinderbox *items.Tinderbox
                     var rope = &items.Rope{Length: 50}
@@ -5221,7 +5221,7 @@ func (g *Game) Update() error {
                         return errors.New("Failed to add papers to inv")
                     }
                 case 1:
-                    var candles = &items.Candles{Quantity: 5}
+                    var candles = &items.Candles{Quantity: 5, Turns: 600}
                     var oilflasks = &items.OilFlask{Quantity: 2}
                     var tinderbox *items.Tinderbox
                     var rope = &items.Rope{Length: 50}
@@ -8174,8 +8174,18 @@ func (g *Game) Update() error {
                     log.Println("Next turn")
                     if len(p.Stats.Illuminated) == 3 {
                         p.Stats.Illuminated[2]--
+                        if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
+                            p.Equipment.LeftHand.(*items.Candles).Turns--
+                        } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
+                            p.Equipment.LeftHand.(*items.Lamp).Turns--
+                        }
                         if p.Stats.Illuminated[2] == 0 {
                             p.Stats.Illuminated = []int{}
+                            if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
+                                p.Equipment.LeftHand.(*items.Candles).Quantity--
+                            } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
+                                p.Equipment.LeftHand.(*items.Lamp).Quantity--
+                            }
                             p.Unequip("LeftHand")
                         }
                     }
@@ -8393,8 +8403,22 @@ func (g *Game) Update() error {
                     default:
                         if itemprops[0] == "Paper" {
                             p.Inv.Add(items.LoadItem(itemprops[0], itemprops[len(itemprops) - 1]))
+                        } else if itemprops[0] == "Candles" {
+                            p.Inv.Add(items.LoadItem(itemprops[0], itemprops[2]))
+                            turns, err := strconv.Atoi(itemprops[1])
+                            if err != nil {
+                                return err
+                            }
+                            p.Inv.GetItems()[len(p.Inv.GetItems()) - 1].(*items.Candles).Turns = turns
+                        } else if itemprops[0] == "Lamp" {
+                            p.Inv.Add(items.LoadItem(itemprops[0], itemprops[2]))
+                            turns, err := strconv.Atoi(itemprops[1])
+                            if err != nil {
+                                return err
+                            }
+                            p.Inv.GetItems()[len(p.Inv.GetItems()) - 1].(*items.Lamp).Turns = turns
                         } else {
-                            return errors.New("Too many itemprops")
+                            return errors.New("Too many itemprops (inventory)")
                         }
                     }
                 }
@@ -8746,13 +8770,13 @@ func (g *Game) Update() error {
                     case "Ancestry":
                         p.Stats.Ancestry = strings.Split(stat, ":")[1]
                     case "Illuminated":
-                        for nind, nums := range strings.Split(strings.Split(stat, ":")[1], ",") {
+                        for _, nums := range strings.Split(strings.Split(stat, ":")[1], ",") {
                             if nums != "" {
                                 num, err := strconv.Atoi(nums)
                                 if err != nil {
                                     return err
                                 }
-                                p.Stats.Illuminated[nind] = num
+                                p.Stats.Illuminated = append(p.Stats.Illuminated, num)
                             } else {
                                 p.Stats.Illuminated = []int{}
                             }
@@ -8764,15 +8788,38 @@ func (g *Game) Update() error {
                 p.Equipment = &player.Equipment{}
                 for _, equipped := range strings.Split(equipmentstr, "|") {
                     itemprops := strings.Split(equipped, ",")
+                    itemname := strings.Split(itemprops[0], "=")[1]
                     switch len(itemprops) {
                     case 1:
-                        p.Inv.Add(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
-                        p.Equip(items.LoadItem(strings.Split(strings.Split(itemprops[0], ";")[0], "=")[1], nil))
+                        newitem := items.LoadItem(strings.Split(itemname, ";")[0], nil)
+                        p.Inv.Add(newitem)
+                        p.Equip(newitem)
                     case 2:
-                        p.Inv.Add(items.LoadItem(strings.Split(itemprops[0], "=")[1], strings.Split(itemprops[1], ";")[0]))
-                        p.Equip(items.LoadItem(strings.Split(itemprops[0], "=")[1], strings.Split(itemprops[1], ";")[0]))
+                        newitem := items.LoadItem(itemname, strings.Split(itemprops[1], ";")[0])
+                        p.Inv.Add(newitem)
+                        p.Equip(newitem)
                     default:
-                        return errors.New("Too many itemprops")
+                        if itemname == "Candles" {
+                            newitem := items.LoadItem(itemname, strings.Split(itemprops[2], ";")[0])
+                            p.Inv.Add(newitem)
+                            p.Equip(newitem)
+                            turns, err := strconv.Atoi(itemprops[1])
+                            if err != nil {
+                                return err
+                            }
+                            p.Equipment.LeftHand.(*items.Candles).Turns = turns
+                        } else if itemname == "Lamp" {
+                            newitem := items.LoadItem(itemname, strings.Split(itemprops[2], ";")[0])
+                            p.Inv.Add(newitem)
+                            p.Equip(newitem)
+                            turns, err := strconv.Atoi(itemprops[1])
+                            if err != nil {
+                                return err
+                            }
+                            p.Equipment.LeftHand.(*items.Lamp).Turns = turns
+                        } else {
+                            return errors.New("Too many itemprops (equipment)")
+                        }
                     }
                 }
                 p.Spells.Add(strings.Split(spellsstr, ","))
@@ -8876,18 +8923,16 @@ func (g *Game) Update() error {
                                 }
                             }
                         } else if action == "illuminate" {
-                            if data == []int{5, 5, 600} {
+                            if data[0] == 5 && data[1] == 5 {
                                 for _, i := range p.Inv.GetItems() {
                                     if strings.HasPrefix(i.PrettyPrint(), "Candles") {
-                                        i.Quantity--
                                         p.Equip(i)
                                         break
                                     }
                                 }
-                            } else if data == []int{15, 30, 3600} {
+                            } else if data[0] == 15 && data[1] == 30 {
                                 for _, i := range p.Inv.GetItems() {
                                     if strings.HasPrefix(i.PrettyPrint(), "Lamp") {
-                                        i.Quantity--
                                         p.Equip(i)
                                         break
                                     }
