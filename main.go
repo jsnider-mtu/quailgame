@@ -11,16 +11,12 @@ import (
     "log"
     "math/rand"
     "os"
-    "reflect"
     "sort"
     "strconv"
     "strings"
     "time"
 
     "golang.org/x/image/font"
-//    "golang.org/x/image/font/gofont/gomonobold"
-
-//    "github.com/golang/freetype/truetype"
 
     "github.com/jsnider-mtu/quailgame/assets"
     "github.com/jsnider-mtu/quailgame/cutscenes"
@@ -109,6 +105,7 @@ var (
     csDone []int
     fadeScreen *ebiten.Image
     savesTableSchema []string
+    pagesTableSchema []string
     schemaRowsCount int = 0
     colsStr string
     animCount int = 0
@@ -304,6 +301,10 @@ func (g *Game) Update() error {
                     if err != nil {
                         log.Fatal(err)
                     }
+                    _, err = db.Exec("delete from pages where charname = ?", loads[loadsel][0])
+                    if err != nil {
+                        log.Fatal(err)
+                    }
                     loads = [][2]string{}
                     loadsfound = false
                     findloads = true
@@ -361,6 +362,7 @@ func (g *Game) Update() error {
                 if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
                     if len(sb.String()) > 0 {
                         name = sb.String()
+                        name = strings.Trim(name, "\n")
                         homeDir, err := os.UserHomeDir()
                         if err != nil {
                             log.Fatal(err)
@@ -405,6 +407,22 @@ func (g *Game) Update() error {
                         curCS = 0
                         cutscene = false
                         creationsel = 0
+                        classsel = 0
+                        racesel = 0
+                        option0 = 0
+                        option1 = 0
+                        option2 = 0
+                        option3 = 0
+                        option4 = 0
+                        option5 = 0
+                        option6 = 0
+                        option7 = 0
+                        option8 = 0
+                        raceopt0 = 0
+                        raceopt1 = 0
+                        raceopt2 = 0
+                        raceopt3 = 0
+                        raceopt4 = 0
                         creation = true
                     }
                 }
@@ -8284,6 +8302,26 @@ func (g *Game) Update() error {
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
+                if strings.Contains(invstr, "Paper") {
+                    afterpaper := strings.Split(strings.Split(invstr, "Paper,")[1], ";")[0]
+                    pagenames := strings.Split(afterpaper, ",")
+                    pagenames = pagenames[:len(pagenames) - 1]
+                    if len(pagenames) > 0 {
+                        pagesSaveStmt := "insert or replace into pages (name, msg, charname) values (?, ?, ?);"
+                        for itemind, item := range p.Inv.GetItems() {
+                            if strings.HasPrefix(item.PrettyPrint(), "Paper") {
+                                pages := p.Inv.GetItems()[itemind].(*items.Paper).GetPages()
+                                for _, page := range pages {
+                                    log.Println("Saving " + page.GetName())
+                                    _, err = db.Exec(pagesSaveStmt, page.GetName(), page.Read(), name)
+                                    if err != nil {
+                                        log.Fatal(fmt.Sprintf("%q: %s\n", err, pagesSaveStmt))
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 db.Close()
                 save = false
             }
@@ -8339,6 +8377,7 @@ func (g *Game) Update() error {
                     }
                     csDone = append(csDone, numint)
                 }
+                p.Inv = &inventory.Inv{}
                 invstrarr := strings.Split(invstr, ";")
                 for _, item := range invstrarr {
                     if item == "" {
@@ -8351,7 +8390,11 @@ func (g *Game) Update() error {
                     case 2:
                         p.Inv.Add(items.LoadItem(itemprops[0], itemprops[1]))
                     default:
-                        return errors.New("Too many itemprops")
+                        if itemprops[0] == "Paper" {
+                            p.Inv.Add(items.LoadItem(itemprops[0], itemprops[len(itemprops) - 1]))
+                        } else {
+                            return errors.New("Too many itemprops")
+                        }
                     }
                 }
                 statsstrarr := strings.Split(statsstr, ";")
@@ -8701,6 +8744,18 @@ func (g *Game) Update() error {
                         p.Stats.Brave = boolval
                     case "Ancestry":
                         p.Stats.Ancestry = strings.Split(stat, ":")[1]
+                    case "Illuminated":
+                        for nind, nums := range strings.Split(strings.Split(stat, ":")[1], ",") {
+                            if nums != "" {
+                                num, err := strconv.Atoi(nums)
+                                if err != nil {
+                                    return err
+                                }
+                                p.Stats.Illuminated[nind] = num
+                            } else {
+                                p.Stats.Illuminated = []int{}
+                            }
+                        }
                     default:
                         return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
@@ -8720,6 +8775,34 @@ func (g *Game) Update() error {
                     }
                 }
                 p.Spells.Add(strings.Split(spellsstr, ","))
+                pageRows, err := db.Query("select * from pages where charname = ?", name)
+                if err != nil {
+                    log.Fatal(err)
+                }
+                defer pageRows.Close()
+                var pagename string
+                var pagemsg string
+                var charname string
+                for pageRows.Next() {
+                    err = pageRows.Scan(&pagename, &pagemsg, &charname)
+                    if pagemsg != "" {
+                        for itemind, item := range p.Inv.GetItems() {
+                            if strings.HasPrefix(item.PrettyPrint(), "Paper") {
+                                pages := p.Inv.GetItems()[itemind].(*items.Paper).GetPages()
+                                newpage := true
+                                for _, p := range pages {
+                                    if p.GetName() == pagename {
+                                        newpage = false
+                                        break
+                                    }
+                                }
+                                if newpage {
+                                    p.Inv.GetItems()[itemind].(*items.Paper).LoadPage(pagename, pagemsg)
+                                }
+                            }
+                        }
+                    }
+                }
                 l = levels.LoadLvl(levelname, 0, x, y, npchp)
                 targeted = -1
                 p.Pos = [2]int{-l.Pos[0], -l.Pos[1]}
@@ -14131,6 +14214,7 @@ func init() {
     classmap[11] = "Wizard"
 
     savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "race,TEXT,0,null,0", "class,TEXT,0,null,0", "playerlevel,INT,0,null,0", "xp,INT,0,null,0", "equipment,TEXT,0,null,0", "spells,TEXT,0,null,0", "npchps,TEXT,0,null,0"}
+    pagesTableSchema = []string{"name,TEXT,1,null,0", "msg,TEXT,1,null,0", "charname,TEXT,1,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {
         log.Fatal(err)
@@ -14140,159 +14224,51 @@ func init() {
         log.Fatal(err)
     }
     defer db.Close()
-    var createStmt string = "create table if not exists saves ("
+    var savesCreateStmt string = "create table if not exists saves ("
     for cind, col := range savesTableSchema {
         colArr := strings.Split(col, ",")
-        createStmt += colArr[0] + " " + colArr[1]
+        savesCreateStmt += colArr[0] + " " + colArr[1]
         if colArr[2] == "1" {
-            createStmt += " not null"
+            savesCreateStmt += " not null"
         }
         if colArr[3] != "null" {
-            createStmt += " default " + colArr[3]
+            savesCreateStmt += " default " + colArr[3]
         }
         if colArr[4] == "1" {
-            createStmt += " primary key"
+            savesCreateStmt += " primary key"
         }
         if cind == len(savesTableSchema) - 1 {
-            createStmt += ");"
+            savesCreateStmt += ");"
         } else {
-            createStmt += ", "
+            savesCreateStmt += ", "
         }
     }
-    _, err = db.Exec(createStmt)
+    _, err = db.Exec(savesCreateStmt)
     if err != nil {
-        log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
+        log.Fatal(fmt.Sprintf("%q: %s\n", err, savesCreateStmt))
     }
-    schemaRows, err := db.Query("PRAGMA table_info(saves)")
+    var pagesCreateStmt string = "create table if not exists pages ("
+    for cind, col := range pagesTableSchema {
+        colArr := strings.Split(col, ",")
+        pagesCreateStmt += colArr[0] + " " + colArr[1]
+        if colArr[2] == "1" {
+            pagesCreateStmt += " not null"
+        }
+        if colArr[3] != "null" {
+            pagesCreateStmt += " default " + colArr[3]
+        }
+        if colArr[4] == "1" {
+            pagesCreateStmt += " primary key"
+        }
+        if cind == len(pagesTableSchema) - 1 {
+            pagesCreateStmt += ");"
+        } else {
+            pagesCreateStmt += ", "
+        }
+    }
+    _, err = db.Exec(pagesCreateStmt)
     if err != nil {
-        log.Fatal(err)
-    }
-    defer schemaRows.Close()
-    fixSchema := false
-    for schemaRows.Next() {
-        schemaRowsCount++
-        var schemaRowsIndex int
-        var schemaRowsName string
-        var schemaRowsType string
-        var schemaRowsNotNull int
-        var schemaRowsDefault interface{}
-        var schemaRowsPk int
-        err = schemaRows.Scan(&schemaRowsIndex, &schemaRowsName, &schemaRowsType, &schemaRowsNotNull, &schemaRowsDefault, &schemaRowsPk)
-        if schemaRowsDefault == nil {
-            schemaRowsDefault = "null"
-        }
-        if schemaRowsIndex >= len(savesTableSchema) {
-            fixSchema = true
-        } else if savesTableSchema[schemaRowsIndex] != schemaRowsName + "," + schemaRowsType + "," + strconv.Itoa(schemaRowsNotNull) + "," + fmt.Sprint(schemaRowsDefault) + "," + strconv.Itoa(schemaRowsPk) {
-            fixSchema = true
-        }
-    }
-    err = schemaRows.Err()
-    if err != nil {
-        log.Fatal(err)
-    }
-    if fixSchema {
-        copyStmt := `
-        create table copied as select * from saves;
-        `
-        _, err = db.Exec(copyStmt)
-        if err != nil {
-            log.Fatal(fmt.Sprintf("%q: %s\n", err, copyStmt))
-        }
-        dropStmt := `
-        drop table saves;
-        `
-        _, err = db.Exec(dropStmt)
-        if err != nil {
-            log.Fatal(fmt.Sprintf("%q: %s\n", err, dropStmt))
-        }
-        _, err = db.Exec(createStmt)
-        if err != nil {
-            log.Fatal(fmt.Sprintf("%q: %s\n", err, createStmt))
-        }
-        copyCols, err := db.Query("PRAGMA table_info(copied)")
-        if err != nil {
-            log.Fatal(err)
-        }
-        defer copyCols.Close()
-        var colNames []string
-        for copyCols.Next() {
-            var colName string
-            var trash1 string
-            var trash2 int
-            var trash3 int
-            var trash4 string
-            var trash5 string
-            err = copyCols.Scan(&trash1, &colName, &trash2, &trash3, &trash4, &trash5)
-            colNames = append(colNames, colName)
-        }
-        for _, colName := range colNames {
-            for _, colSchema := range savesTableSchema {
-                colSchemaArr := strings.Split(colSchema, ",")
-                if colSchemaArr[0] == colName {
-                    colsStr += colName + ", "
-                }
-            }
-        }
-        colsStr = colsStr[:len(colsStr) - 2]
-        copyRows, err := db.Query("select " + colsStr + " from copied")
-        if err != nil {
-            log.Fatal(err)
-        }
-        defer copyRows.Close()
-        var colsArr = strings.Split(colsStr, ",")
-        var numCols = len(colsArr)
-        var insertStmts = make([]string, 0)
-        var copyRowsPtrs = make([]interface{}, numCols)
-        var copyRowsArr = make([]interface{}, numCols)
-        for i, _ := range copyRowsPtrs {
-            copyRowsPtrs[i] = &copyRowsArr[i]
-        }
-        for copyRows.Next() {
-            err = copyRows.Scan(copyRowsPtrs...)
-            insertStmt := "insert into saves ("
-            for cind, col := range colsArr {
-                if cind == numCols - 1 {
-                    insertStmt += col + ") values ("
-                } else {
-                    insertStmt += col + ", "
-                }
-            }
-            for whatever, whateverPtr := range copyRowsArr {
-                switch reflect.TypeOf(whateverPtr).String() {
-                case "string":
-                    if whatever == len(copyRowsArr) - 1 {
-                        insertStmt += "\"" + fmt.Sprint(whateverPtr) + "\");"
-                    } else {
-                        insertStmt += "\"" + fmt.Sprint(whateverPtr) + "\", "
-                    }
-                case "int64":
-                    if whatever == len(copyRowsArr) - 1 {
-                        insertStmt += fmt.Sprint(whateverPtr) + ");"
-                    } else {
-                        insertStmt += fmt.Sprint(whateverPtr) + ", "
-                    }
-                }
-            }
-            insertStmts = append(insertStmts, insertStmt)
-        }
-        for _, insStmt := range insertStmts {
-            _, err = db.Exec(insStmt)
-            if err != nil {
-                log.Fatal(fmt.Sprintf("%q: %s\n", err, insStmt))
-            }
-        }
-        err = copyRows.Err()
-        if err != nil {
-            log.Fatal(err)
-        }
-        copyDropStmt := `
-        drop table copied;
-        `
-        _, err = db.Exec(copyDropStmt)
-        if err != nil {
-            log.Fatal(fmt.Sprintf("%q: %s\n", err, copyDropStmt))
-        }
+        log.Fatal(fmt.Sprintf("%q: %s\n", err, pagesCreateStmt))
     }
 }
 

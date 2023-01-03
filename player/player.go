@@ -424,6 +424,14 @@ func (s *Stats) Save() string {
             resistancesstr += resist + ","
         }
     }
+    var illuminatedstr string
+    for iind, illum := range s.Illuminated {
+        if iind == len(s.Illuminated) - 1 {
+            illuminatedstr += strconv.Itoa(illum)
+        } else {
+            illuminatedstr += strconv.Itoa(illum) + ","
+        }
+    }
     return "AC:" + strconv.Itoa(s.AC) + ";" +
            "Str:" + strconv.Itoa(s.Str) + ";" +
            "StrMod:" + strconv.Itoa(s.StrMod) + ";" +
@@ -457,7 +465,8 @@ func (s *Stats) Save() string {
            "Lucky:" + strconv.FormatBool(s.Lucky) + ";" +
            "Nimbleness:" + strconv.FormatBool(s.Nimbleness) + ";" +
            "Brave:" + strconv.FormatBool(s.Brave) + ";" +
-           "Ancestry:" + s.Ancestry + ";"
+           "Ancestry:" + s.Ancestry + ";" +
+           "Illuminated:" + illuminatedstr + ";"
 }
 
 func (e *Equipment) Save() string {

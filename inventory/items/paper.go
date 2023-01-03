@@ -96,6 +96,11 @@ func (p *Paper) Write(name, msg string) {
     }
 }
 
+func (p *Paper) LoadPage(name, msg string) {
+    p.pages = append(p.pages, &Page{name: name, msg: msg})
+    return
+}
+
 func (p *Paper) GetPages() []*Page {
     return p.pages
 }
