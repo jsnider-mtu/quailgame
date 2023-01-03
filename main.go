@@ -529,7 +529,6 @@ func (g *Game) Update() error {
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
             p.Inv.Clear()
             // temp line here
-            p.Inv.Add(&items.Candles{Quantity: 1, Turns: 600})
             curCS = 0
             csDone = make([]int, 0)
             proficiencies = make([]string, 0)
