@@ -8,8 +8,7 @@ func (j *Javelin) Slot() string {
 }
 
 func (j *Javelin) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return j.Action(), []int{144, 576}
 }
 
 func (j *Javelin) Save() string {
@@ -21,7 +20,7 @@ func (j *Javelin) PrettyPrint() string {
 }
 
 func (j *Javelin) Function() string {
-    return "melee"
+    return "melee-throw"
 }
 
 func (j *Javelin) Damage() (int, int, string) {
@@ -29,7 +28,7 @@ func (j *Javelin) Damage() (int, int, string) {
 }
 
 func (j *Javelin) Action() string {
-    return ""
+    return "throw"
 }
 
 func (j *Javelin) GetQuantity() int {

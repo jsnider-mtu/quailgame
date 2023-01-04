@@ -656,6 +656,8 @@ func (p *Player) Effects(action string, data []int, c chan int) {
             c <- 1
         case "Handaxe":
             c <- 2
+        case "LightHammer":
+            c <- 3
         default:
             log.Println("Not a valid throwable item")
         }
@@ -672,6 +674,8 @@ func (p *Player) Effects(action string, data []int, c chan int) {
             return
         case 2:
             p.Inv.GetItems()[len(p.Inv.GetItems()) - 1].(*items.Handaxe).Quantity--
+        case 3:
+            p.Inv.GetItems()[len(p.Inv.GetItems()) - 1].(*items.LightHammer).Quantity--
         default:
             return
         }

@@ -8,8 +8,7 @@ func (l *Lance) Slot() string {
 }
 
 func (l *Lance) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return l.Action(), []int{}
 }
 
 func (l *Lance) Save() string {
@@ -21,7 +20,7 @@ func (l *Lance) PrettyPrint() string {
 }
 
 func (l *Lance) Function() string {
-    return "melee"
+    return "melee-reach-special"
 }
 
 func (l *Lance) Damage() (int, int, string) {

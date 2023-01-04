@@ -8,7 +8,7 @@ func (h *Horn) Slot() string {
 }
 
 func (h *Horn) Use() (string, []int) {
-    return "", []int{}
+    return h.Action(), []int{}
 }
 
 func (h *Horn) Save() string {
@@ -28,7 +28,7 @@ func (h *Horn) Damage() (int, int, string) {
 }
 
 func (h *Horn) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (h *Horn) GetQuantity() int {

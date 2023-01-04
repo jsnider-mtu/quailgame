@@ -293,6 +293,10 @@ func (l *Level) GetGrasses() [][2]int {
     return l.grasses
 }
 
+func (l *Level) GetOils() [][3]int {
+    return l.oils
+}
+
 func (l *Level) GrassAnim(screen *ebiten.Image, w, h int) {
     for _, g := range l.grasses {
         if l.Pos[0] == -g[0] && l.Pos[1] == -g[1] {
@@ -585,5 +589,5 @@ func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, att
 }
 
 func (l *Level) Distance(p *player.Player, target [2]int) float64 {
-    return math.Sqrt(math.Pow(float64(target[0] - p.Pos[0]), 2.0) - math.Pow(float64(target[1] - p.Pos[1]), 2.0))
+    return math.Sqrt(math.Pow(float64(target[0] - p.Pos[0]), 2.0) + math.Pow(float64(target[1] - p.Pos[1]), 2.0))
 }

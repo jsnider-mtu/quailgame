@@ -8,8 +8,7 @@ func (h HandCrossbow) Slot() string {
 }
 
 func (h HandCrossbow) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return h.Action(), []int{}
 }
 
 func (h HandCrossbow) Save() string {
@@ -21,7 +20,7 @@ func (h HandCrossbow) PrettyPrint() string {
 }
 
 func (h HandCrossbow) Function() string {
-    return "range"
+    return "range-ammo-light-loading"
 }
 
 func (h HandCrossbow) Damage() (int, int, string) {

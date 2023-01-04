@@ -15,10 +15,7 @@ func (l *Lamp) Slot() string {
 }
 
 func (l *Lamp) Use() (string, []int) {
-    if l.Quantity > 0 {
-        return "illuminate", []int{15, 30, l.Turns}
-    }
-    return "", []int{}
+    return l.Action(), []int{15, 30, l.Turns}
 }
 
 func (l *Lamp) Save() string {
@@ -38,7 +35,10 @@ func (l *Lamp) Damage() (int, int, string) {
 }
 
 func (l *Lamp) Action() string {
-    return "illuminate"
+    if l.Quantity > 0 {
+        return "illuminate"
+    }
+    return ""
 }
 
 func (l *Lamp) GetQuantity() int {

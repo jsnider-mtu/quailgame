@@ -1,6 +1,12 @@
 package items
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type LightHammer struct {
+    Quantity int
 }
 
 func (l *LightHammer) Slot() string {
@@ -8,20 +14,19 @@ func (l *LightHammer) Slot() string {
 }
 
 func (l *LightHammer) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return l.Action(), []int{96, 288}
 }
 
 func (l *LightHammer) Save() string {
-    return "LightHammer"
+    return "LightHammer," + strconv.Itoa(l.Quantity)
 }
 
 func (l *LightHammer) PrettyPrint() string {
-    return "Light Hammer"
+    return fmt.Sprintf("Light Hammer (%d)", l.Quantity)
 }
 
 func (l *LightHammer) Function() string {
-    return "melee"
+    return "melee-light-throw"
 }
 
 func (l *LightHammer) Damage() (int, int, string) {
@@ -29,13 +34,13 @@ func (l *LightHammer) Damage() (int, int, string) {
 }
 
 func (l *LightHammer) Action() string {
-    return ""
+    return "throw"
 }
 
 func (l *LightHammer) GetQuantity() int {
-    return 1
+    return l.Quantity
 }
 
 func (l *LightHammer) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{96.0, 288.0}
 }
