@@ -8,7 +8,7 @@ func (d *Dulcimer) Slot() string {
 }
 
 func (d *Dulcimer) Use() (string, []int) {
-    return "", []int{}
+    return d.Action(), []int{}
 }
 
 func (d *Dulcimer) Save() string {
@@ -28,7 +28,7 @@ func (d *Dulcimer) Damage() (int, int, string) {
 }
 
 func (d *Dulcimer) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (d *Dulcimer) GetQuantity() int {

@@ -8,8 +8,7 @@ func (h *Halberd) Slot() string {
 }
 
 func (h *Halberd) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return h.Action(), []int{}
 }
 
 func (h *Halberd) Save() string {
@@ -21,7 +20,7 @@ func (h *Halberd) PrettyPrint() string {
 }
 
 func (h *Halberd) Function() string {
-    return "melee"
+    return "melee-heavy-reach"
 }
 
 func (h *Halberd) Damage() (int, int, string) {

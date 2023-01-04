@@ -8,8 +8,7 @@ func (g *Glaive) Slot() string {
 }
 
 func (g *Glaive) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return g.Action(), []int{}
 }
 
 func (g *Glaive) Save() string {
@@ -21,7 +20,7 @@ func (g *Glaive) PrettyPrint() string {
 }
 
 func (g *Glaive) Function() string {
-    return "melee"
+    return "melee-heavy-reach"
 }
 
 func (g *Glaive) Damage() (int, int, string) {

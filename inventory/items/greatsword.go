@@ -8,8 +8,7 @@ func (g *Greatsword) Slot() string {
 }
 
 func (g *Greatsword) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return g.Action(), []int{}
 }
 
 func (g *Greatsword) Save() string {
@@ -21,7 +20,7 @@ func (g *Greatsword) PrettyPrint() string {
 }
 
 func (g *Greatsword) Function() string {
-    return "melee"
+    return "melee-heavy"
 }
 
 func (g *Greatsword) Damage() (int, int, string) {

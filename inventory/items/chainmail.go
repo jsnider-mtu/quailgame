@@ -8,7 +8,7 @@ func (c *Chainmail) Slot() string {
 }
 
 func (c *Chainmail) Use() (string, []int) {
-    return "", []int{}
+    return c.Action(), []int{}
 }
 
 func (c *Chainmail) Save() string {

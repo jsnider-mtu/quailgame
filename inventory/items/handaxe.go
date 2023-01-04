@@ -1,6 +1,12 @@
 package items
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type Handaxe struct {
+    Quantity int
 }
 
 func (h *Handaxe) Slot() string {
@@ -8,20 +14,19 @@ func (h *Handaxe) Slot() string {
 }
 
 func (h *Handaxe) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return h.Action(), []int{96, 288}
 }
 
 func (h *Handaxe) Save() string {
-    return "Handaxe"
+    return "Handaxe," + strconv.Itoa(h.Quantity)
 }
 
 func (h *Handaxe) PrettyPrint() string {
-    return "Handaxe"
+    return fmt.Sprintf("Handaxe (%d)", h.Quantity)
 }
 
 func (h *Handaxe) Function() string {
-    return "melee"
+    return "melee-light-throw"
 }
 
 func (h *Handaxe) Damage() (int, int, string) {
@@ -29,11 +34,14 @@ func (h *Handaxe) Damage() (int, int, string) {
 }
 
 func (h *Handaxe) Action() string {
+    if h.Quantity > 0 {
+        return "throw"
+    }
     return ""
 }
 
 func (h *Handaxe) GetQuantity() int {
-    return 1
+    return h.Quantity
 }
 
 func (h *Handaxe) GetRange() []float64 {

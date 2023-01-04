@@ -8348,6 +8348,8 @@ func (g *Game) Update() error {
                         log.Println("Oil Flask thrown")
                     case 1: // Dagger
                         log.Println("Dagger thrown")
+                    case 2: // Handaxe
+                        log.Println("Handaxe thrown")
                     default:
                         log.Println(fmt.Sprintf("%d is invalid for throw", ready))
                     }

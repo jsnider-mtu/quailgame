@@ -1,6 +1,7 @@
 package items
 
 type Blowgun struct {
+    Ammo int
 }
 
 func (b *Blowgun) Slot() string {
@@ -8,8 +9,7 @@ func (b *Blowgun) Slot() string {
 }
 
 func (b *Blowgun) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return b.Action(), []int{}
 }
 
 func (b *Blowgun) Save() string {
@@ -21,7 +21,7 @@ func (b *Blowgun) PrettyPrint() string {
 }
 
 func (b *Blowgun) Function() string {
-    return "range"
+    return "range-ammo-loading"
 }
 
 func (b *Blowgun) Damage() (int, int, string) {

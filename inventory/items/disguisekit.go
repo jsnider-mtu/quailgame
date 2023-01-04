@@ -8,7 +8,7 @@ func (d *DisguiseKit) Slot() string {
 }
 
 func (d *DisguiseKit) Use() (string, []int) {
-    return "disguise", []int{}
+    return d.Action(), []int{}
 }
 
 func (d *DisguiseKit) Save() string {

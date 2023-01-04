@@ -8,8 +8,7 @@ func (f *Flail) Slot() string {
 }
 
 func (f *Flail) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return f.Action(), []int{}
 }
 
 func (f *Flail) Save() string {

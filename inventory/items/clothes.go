@@ -9,7 +9,7 @@ func (c *Clothes) Slot() string {
 }
 
 func (c *Clothes) Use() (string, []int) {
-    return "", []int{}
+    return c.Action(), []int{}
 }
 
 func (c *Clothes) Save() string {

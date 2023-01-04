@@ -8,8 +8,7 @@ func (c *Club) Slot() string {
 }
 
 func (c *Club) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return c.Action(), []int{}
 }
 
 func (c *Club) Save() string {
@@ -21,7 +20,7 @@ func (c *Club) PrettyPrint() string {
 }
 
 func (c *Club) Function() string {
-    return "melee"
+    return "melee-light"
 }
 
 func (c *Club) Damage() (int, int, string) {

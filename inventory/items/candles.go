@@ -15,10 +15,7 @@ func (c *Candles) Slot() string {
 }
 
 func (c *Candles) Use() (string, []int) {
-    if c.Quantity > 0 {
-        return "illuminate", []int{5, 5, c.Turns}
-    }
-    return "", []int{}
+    return c.Action(), []int{5, 5, c.Turns}
 }
 
 func (c *Candles) Save() string {

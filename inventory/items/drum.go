@@ -8,7 +8,7 @@ func (d *Drum) Slot() string {
 }
 
 func (d *Drum) Use() (string, []int) {
-    return "", []int{}
+    return d.Action(), []int{}
 }
 
 func (d *Drum) Save() string {
@@ -28,7 +28,7 @@ func (d *Drum) Damage() (int, int, string) {
 }
 
 func (d *Drum) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (d *Drum) GetQuantity() int {

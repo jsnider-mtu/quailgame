@@ -8,7 +8,7 @@ func (c *ComponentPouch) Slot() string {
 }
 
 func (c *ComponentPouch) Use() (string, []int) {
-    return "", []int{}
+    return c.Action(), []int{}
 }
 
 func (c *ComponentPouch) Save() string {

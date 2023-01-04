@@ -8,8 +8,7 @@ func (g *Greataxe) Slot() string {
 }
 
 func (g *Greataxe) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return g.Action(), []int{}
 }
 
 func (g *Greataxe) Save() string {
@@ -21,7 +20,7 @@ func (g *Greataxe) PrettyPrint() string {
 }
 
 func (g *Greataxe) Function() string {
-    return "melee"
+    return "melee-heavy"
 }
 
 func (g *Greataxe) Damage() (int, int, string) {

@@ -8,8 +8,7 @@ func (b *Battleaxe) Slot() string {
 }
 
 func (b *Battleaxe) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return b.Action(), []int{}
 }
 
 func (b *Battleaxe) Save() string {
@@ -21,7 +20,7 @@ func (b *Battleaxe) PrettyPrint() string {
 }
 
 func (b *Battleaxe) Function() string {
-    return "melee"
+    return "melee-versatile"
 }
 
 func (b *Battleaxe) Damage() (int, int, string) {
