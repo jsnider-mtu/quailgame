@@ -229,7 +229,6 @@ var (
     throwTargetBoxVert *ebiten.Image
     shortrange int = 0
     longrange int = 0
-    throwskip bool = true
 )
 
 var lines = make([]string, 0)
@@ -8367,6 +8366,13 @@ func (g *Game) Update() error {
                     longrange = 0
                 }
             }
+            if effectact == "playmusic" {
+                if inpututil.IsKeyJustPressed(ebiten.KeyW) || inpututil.IsKeyJustPressed(ebiten.KeyA) || inpututil.IsKeyJustPressed(ebiten.KeyS) || inpututil.IsKeyJustPressed(ebiten.KeyD) || inpututil.IsKeyJustPressed(ebiten.KeyQ) {
+                    c1 <- 0
+                    effectmsg = false
+                    effectact = ""
+                }
+            }
             if save {
                 homeDir, err := os.UserHomeDir()
                 if err != nil {
@@ -9039,7 +9045,7 @@ func (g *Game) Update() error {
                                     }
                                 }
                             }
-                        } else if action == "throw" {
+                        } else if action == "throw" || action == "playmusic" {
                             data = append(data, invsel)
                         }
                         if action != "" {
@@ -13615,6 +13621,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 ttbhgm.Translate(float64(0), float64(22))
                 screen.DrawImage(throwTargetBoxHoriz, &ebiten.DrawImageOptions{GeoM: ttbhgm})
             }
+        case "playmusic":
+            return
         default:
             log.Fatal(effectact + " is not defined")
         }

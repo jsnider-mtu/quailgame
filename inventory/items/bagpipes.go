@@ -8,7 +8,7 @@ func (b *Bagpipes) Slot() string {
 }
 
 func (b *Bagpipes) Use() (string, []int) {
-    return "", []int{}
+    return b.Action(), []int{}
 }
 
 func (b *Bagpipes) Save() string {
@@ -28,7 +28,7 @@ func (b *Bagpipes) Damage() (int, int, string) {
 }
 
 func (b *Bagpipes) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (b *Bagpipes) GetQuantity() int {

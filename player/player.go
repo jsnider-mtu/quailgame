@@ -672,6 +672,24 @@ func (p *Player) Effects(action string, data []int, c chan int) {
             return
         }
         return
+    case "playmusic":
+        var origitem inventory.Item
+        if p.Equipment.BothHands != nil {
+            origitem = p.Equipment.BothHands
+        } else if p.Equipment.RightHand != nil {
+            origitem = p.Equipment.RightHand
+        }
+        p.Equip(p.Inv.GetItems()[data[0]])
+        log.Println("Started playing music")
+        msg := <-c
+        if origitem != nil {
+            p.Equip(origitem)
+        }
+        if msg == 0 {
+            log.Println("Stopped playing music")
+            return
+        }
+        return
     default:
         log.Println(action + " is not a recognized action")
         return

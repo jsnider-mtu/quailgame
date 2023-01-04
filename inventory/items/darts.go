@@ -14,8 +14,7 @@ func (d *Darts) Slot() string {
 }
 
 func (d *Darts) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return d.Action(), []int{96, 288}
 }
 
 func (d *Darts) Save() string {
@@ -27,7 +26,7 @@ func (d *Darts) PrettyPrint() string {
 }
 
 func (d *Darts) Function() string {
-    return "range"
+    return "range-finesse-throw"
 }
 
 func (d *Darts) Damage() (int, int, string) {
@@ -35,7 +34,7 @@ func (d *Darts) Damage() (int, int, string) {
 }
 
 func (d *Darts) Action() string {
-    return ""
+    return "throw"
 }
 
 func (d *Darts) GetQuantity() int {
