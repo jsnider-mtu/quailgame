@@ -35,3 +35,7 @@ func (h *Halberd) Action() string {
 func (h *Halberd) GetQuantity() int {
     return 1
 }
+
+func (h *Halberd) GetRange() []float64 {
+    return []float64{0, 0}
+}

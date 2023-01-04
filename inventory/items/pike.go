@@ -35,3 +35,7 @@ func (p *Pike) Action() string {
 func (p *Pike) GetQuantity() int {
     return 1
 }
+
+func (p *Pike) GetRange() []float64 {
+    return []float64{0, 0}
+}

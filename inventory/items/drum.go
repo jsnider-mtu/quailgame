@@ -34,3 +34,7 @@ func (d *Drum) Action() string {
 func (d *Drum) GetQuantity() int {
     return 1
 }
+
+func (d *Drum) GetRange() []float64 {
+    return []float64{0, 0}
+}

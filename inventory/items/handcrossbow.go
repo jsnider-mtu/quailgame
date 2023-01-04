@@ -35,3 +35,7 @@ func (h HandCrossbow) Action() string {
 func (h HandCrossbow) GetQuantity() int {
     return 1
 }
+
+func (h HandCrossbow) GetRange() []float64 {
+    return []float64{0, 0}
+}

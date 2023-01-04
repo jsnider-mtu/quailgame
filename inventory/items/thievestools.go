@@ -34,3 +34,7 @@ func (t *ThievesTools) Action() string {
 func (t *ThievesTools) GetQuantity() int {
     return 1
 }
+
+func (t *ThievesTools) GetRange() []float64 {
+    return []float64{0, 0}
+}

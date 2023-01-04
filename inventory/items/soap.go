@@ -34,3 +34,7 @@ func (s *Soap) Action() string {
 func (s *Soap) GetQuantity() int {
     return 1
 }
+
+func (s *Soap) GetRange() []float64 {
+    return []float64{0, 0}
+}

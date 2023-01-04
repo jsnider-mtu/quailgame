@@ -41,3 +41,7 @@ func (d *Darts) Action() string {
 func (d *Darts) GetQuantity() int {
     return d.Quantity
 }
+
+func (d *Darts) GetRange() []float64 {
+    return []float64{0, 0}
+}

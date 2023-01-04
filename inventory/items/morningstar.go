@@ -35,3 +35,7 @@ func (m *Morningstar) Action() string {
 func (m *Morningstar) GetQuantity() int {
     return 1
 }
+
+func (m *Morningstar) GetRange() []float64 {
+    return []float64{0, 0}
+}

@@ -34,3 +34,7 @@ func (h *Horn) Action() string {
 func (h *Horn) GetQuantity() int {
     return 1
 }
+
+func (h *Horn) GetRange() []float64 {
+    return []float64{0, 0}
+}

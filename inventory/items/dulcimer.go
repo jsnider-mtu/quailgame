@@ -34,3 +34,7 @@ func (d *Dulcimer) Action() string {
 func (d *Dulcimer) GetQuantity() int {
     return 1
 }
+
+func (d *Dulcimer) GetRange() []float64 {
+    return []float64{0, 0}
+}

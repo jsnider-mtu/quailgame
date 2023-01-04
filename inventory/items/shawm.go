@@ -34,3 +34,7 @@ func (s *Shawm) Action() string {
 func (s *Shawm) GetQuantity() int {
     return 1
 }
+
+func (s *Shawm) GetRange() []float64 {
+    return []float64{0, 0}
+}

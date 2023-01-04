@@ -35,3 +35,7 @@ func (s *Scimitar) Action() string {
 func (s *Scimitar) GetQuantity() int {
     return 1
 }
+
+func (s *Scimitar) GetRange() []float64 {
+    return []float64{0, 0}
+}

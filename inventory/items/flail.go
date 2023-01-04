@@ -35,3 +35,7 @@ func (f *Flail) Action() string {
 func (f *Flail) GetQuantity() int {
     return 1
 }
+
+func (f *Flail) GetRange() []float64 {
+    return []float64{0, 0}
+}

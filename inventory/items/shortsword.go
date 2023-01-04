@@ -35,3 +35,7 @@ func (s *Shortsword) Action() string {
 func (s *Shortsword) GetQuantity() int {
     return 1
 }
+
+func (s *Shortsword) GetRange() []float64 {
+    return []float64{0, 0}
+}

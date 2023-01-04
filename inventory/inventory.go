@@ -14,6 +14,7 @@ type Item interface {
     Damage() (int, int, string)
     Action() string
     GetQuantity() int
+    GetRange() []float64
 }
 
 type Inv struct {

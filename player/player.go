@@ -53,6 +53,7 @@ type Stats struct {
     Brave bool
     Ancestry string
     Illuminated []int
+    Oiled int
 }
 
 type Equipment struct {
@@ -466,7 +467,8 @@ func (s *Stats) Save() string {
            "Nimbleness:" + strconv.FormatBool(s.Nimbleness) + ";" +
            "Brave:" + strconv.FormatBool(s.Brave) + ";" +
            "Ancestry:" + s.Ancestry + ";" +
-           "Illuminated:" + illuminatedstr + ";"
+           "Illuminated:" + illuminatedstr + ";" +
+           "Oiled:" + strconv.Itoa(s.Oiled) + ";"
 }
 
 func (e *Equipment) Save() string {
@@ -635,7 +637,40 @@ func (p *Player) Effects(action string, data []int, c chan int) {
         }
         return
     case "read":
-        log.Println("p.Effects called for read")
+        return
+    case "throw":
+        var origitem inventory.Item
+        if p.Equipment.BothHands != nil {
+            origitem = p.Equipment.BothHands
+        } else if p.Equipment.RightHand != nil {
+            origitem = p.Equipment.RightHand
+        }
+        c <- data[0]
+        c <- data[1]
+        savename := strings.Split(p.Inv.GetItems()[data[2]].Save(), ",")[0]
+        p.Equip(p.Inv.GetItems()[data[2]])
+        switch savename {
+        case "OilFlask":
+            c <- 0
+        case "Dagger":
+            c <- 1
+        default:
+            log.Println("Not a valid throwable item")
+        }
+        msg := <-c
+        if origitem != nil {
+            p.Equip(origitem)
+        }
+        //if msg == 0 || msg == 1 {
+        switch msg {
+        case 0:
+            p.Inv.GetItems()[len(p.Inv.GetItems()) - 1].(*items.OilFlask).Quantity--
+            return
+        case 1:
+            return
+        default:
+            return
+        }
         return
     default:
         log.Println(action + " is not a recognized action")

@@ -35,3 +35,7 @@ func (g *Glaive) Action() string {
 func (g *Glaive) GetQuantity() int {
     return 1
 }
+
+func (g *Glaive) GetRange() []float64 {
+    return []float64{0, 0}
+}

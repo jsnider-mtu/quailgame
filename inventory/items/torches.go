@@ -40,3 +40,7 @@ func (t *Torches) Action() string {
 func (t *Torches) GetQuantity() int {
     return t.Quantity
 }
+
+func (t *Torches) GetRange() []float64 {
+    return []float64{0, 0}
+}

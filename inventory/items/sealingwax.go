@@ -34,3 +34,7 @@ func (s *SealingWax) Action() string {
 func (s *SealingWax) GetQuantity() int {
     return 1
 }
+
+func (s *SealingWax) GetRange() []float64 {
+    return []float64{0, 0}
+}

@@ -35,3 +35,7 @@ func (b *Battleaxe) Action() string {
 func (b *Battleaxe) GetQuantity() int {
     return 1
 }
+
+func (b *Battleaxe) GetRange() []float64 {
+    return []float64{0, 0}
+}

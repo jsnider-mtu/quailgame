@@ -35,3 +35,7 @@ func (g *Greatsword) Action() string {
 func (g *Greatsword) GetQuantity() int {
     return 1
 }
+
+func (g *Greatsword) GetRange() []float64 {
+    return []float64{0, 0}
+}

@@ -35,3 +35,7 @@ func (c *Club) Action() string {
 func (c *Club) GetQuantity() int {
     return 1
 }
+
+func (c *Club) GetRange() []float64 {
+    return []float64{0, 0}
+}

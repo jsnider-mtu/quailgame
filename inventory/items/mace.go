@@ -35,3 +35,7 @@ func (m *Mace) Action() string {
 func (m *Mace) GetQuantity() int {
     return 1
 }
+
+func (m *Mace) GetRange() []float64 {
+    return []float64{0, 0}
+}

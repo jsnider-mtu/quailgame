@@ -109,3 +109,7 @@ func (p *Paper) AddPaper(amount int) {
     p.Quantity += amount
     return
 }
+
+func (p *Paper) GetRange() []float64 {
+    return []float64{0, 0}
+}

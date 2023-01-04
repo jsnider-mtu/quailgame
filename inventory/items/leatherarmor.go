@@ -34,3 +34,7 @@ func (l *LeatherArmor) Action() string {
 func (l *LeatherArmor) GetQuantity() int {
     return 1
 }
+
+func (l *LeatherArmor) GetRange() []float64 {
+    return []float64{0, 0}
+}

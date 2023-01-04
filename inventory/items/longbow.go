@@ -35,3 +35,7 @@ func (l *Longbow) Action() string {
 func (l *Longbow) GetQuantity() int {
     return 1
 }
+
+func (l *Longbow) GetRange() []float64 {
+    return []float64{0, 0}
+}

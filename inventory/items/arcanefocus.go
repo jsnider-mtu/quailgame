@@ -34,3 +34,7 @@ func (a *ArcaneFocus) Action() string {
 func (a *ArcaneFocus) GetQuantity() int {
     return 1
 }
+
+func (a *ArcaneFocus) GetRange() []float64 {
+    return []float64{0, 0}
+}

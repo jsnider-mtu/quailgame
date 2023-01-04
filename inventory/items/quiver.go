@@ -40,3 +40,7 @@ func (q *Quiver) Action() string {
 func (q *Quiver) GetQuantity() int {
     return 1
 }
+
+func (q *Quiver) GetRange() []float64 {
+    return []float64{0, 0}
+}

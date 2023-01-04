@@ -35,3 +35,7 @@ func (l *LightCrossbow) Action() string {
 func (l *LightCrossbow) GetQuantity() int {
     return 1
 }
+
+func (l *LightCrossbow) GetRange() []float64 {
+    return []float64{0, 0}
+}

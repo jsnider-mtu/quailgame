@@ -222,6 +222,14 @@ var (
     npchpupdate bool = false
     op *ebiten.DrawImageOptions
     paperind int = -1
+    throwtarget [2]int
+    targetedBoxVert *ebiten.Image
+    targetedBoxHoriz *ebiten.Image
+    throwTargetBoxHoriz *ebiten.Image
+    throwTargetBoxVert *ebiten.Image
+    shortrange int = 0
+    longrange int = 0
+    throwskip bool = true
 )
 
 var lines = make([]string, 0)
@@ -528,7 +536,6 @@ func (g *Game) Update() error {
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
             p.Inv.Clear()
-            // temp line here
             curCS = 0
             csDone = make([]int, 0)
             proficiencies = make([]string, 0)
@@ -5648,6 +5655,8 @@ func (g *Game) Update() error {
                 Nimbleness: nimbleness,
                 Brave: brave,
                 Ancestry: ancestry,
+                Illuminated: []int{},
+                Oiled: 0,
             }
             p.Race = racemap[racesel]
             p.Class = classmap[classsel]
@@ -8188,6 +8197,14 @@ func (g *Game) Update() error {
                             p.Unequip("LeftHand")
                         }
                     }
+                    if p.Stats.Oiled > 0 {
+                        p.Stats.Oiled--
+                    }
+                    for _, npc := range l.NPCs {
+                        if npc.PC.Stats.Oiled > 0 {
+                            npc.PC.Stats.Oiled--
+                        }
+                    }
                     nextturn = false
                 }
             } else {
@@ -8269,6 +8286,85 @@ func (g *Game) Update() error {
                     overflowcur = 0
                     overflownum = 0
                     pageind = 0
+                }
+            }
+            if effectact == "throw" {
+                if throwtarget == [2]int{} {
+                    throwtarget = p.Pos
+                }
+                if shortrange == 0 && longrange == 0 {
+                    shortrange = <-c1
+                    longrange = <-c1
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) || inpututil.KeyPressDuration(ebiten.KeyLeft) % 4 == 3 || inpututil.KeyPressDuration(ebiten.KeyA) % 4 == 3 {
+                    if throwtarget[0] - 24 > 0 && throwtarget[0] - 24 < l.GetMax()[0] {
+                        if ok, _, _ := l.LineOfSight(p, [2]int{throwtarget[0] - 24, throwtarget[1]}); ok {
+                            if l.Distance(p, [2]int{throwtarget[0] - 24, throwtarget[1]}) <= float64(longrange) {
+                                throwtarget[0] -= 24
+                            }
+                        }
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) || inpututil.KeyPressDuration(ebiten.KeyRight) % 4 == 3 || inpututil.KeyPressDuration(ebiten.KeyD) % 4 == 3 {
+                    if throwtarget[0] + 24 > 0 && throwtarget[0] + 24 < l.GetMax()[0] {
+                        if ok, _, _ := l.LineOfSight(p, [2]int{throwtarget[0] + 24, throwtarget[1]}); ok {
+                            if l.Distance(p, [2]int{throwtarget[0] + 24, throwtarget[1]}) <= float64(longrange) {
+                                throwtarget[0] += 24
+                            }
+                        }
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) || inpututil.KeyPressDuration(ebiten.KeyUp) % 4 == 3 || inpututil.KeyPressDuration(ebiten.KeyW) % 4 == 3 {
+                    if throwtarget[1] - 24 > 0 && throwtarget[1] - 24 < l.GetMax()[1] {
+                        if ok, _, _ := l.LineOfSight(p, [2]int{throwtarget[0], throwtarget[1] - 24}); ok {
+                            if l.Distance(p, [2]int{throwtarget[0], throwtarget[1] - 24}) <= float64(longrange) {
+                                throwtarget[1] -= 24
+                            }
+                        }
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) || inpututil.KeyPressDuration(ebiten.KeyDown) % 4 == 3 || inpututil.KeyPressDuration(ebiten.KeyS) % 4 == 3 {
+                    if throwtarget[1] + 24 > 0 && throwtarget[1] + 24 < l.GetMax()[1] {
+                        if ok, _, _ := l.LineOfSight(p, [2]int{throwtarget[0], throwtarget[1] + 24}); ok {
+                            if l.Distance(p, [2]int{throwtarget[0], throwtarget[1] + 24}) <= float64(longrange) {
+                                throwtarget[1] += 24
+                            }
+                        }
+                    }
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+                    ready := <-c1
+                    for _, npc := range l.NPCs {
+                        if throwtarget[0] == npc.PC.Pos[0] && throwtarget[1] == npc.PC.Pos[1] {
+                            l.Attack(p, npc.PC)
+                            //ready = -1
+                            break
+                        }
+                    }
+                    switch ready {
+                    case -1:
+                        log.Println("NPC was attacked")
+                    case 0: // Oil Flask
+                        l.OilSpot(throwtarget)
+                        log.Println("Oil Flask thrown")
+                    case 1: // Dagger
+                        log.Println("Dagger thrown")
+                    default:
+                        log.Println(fmt.Sprintf("%d is invalid for throw", ready))
+                    }
+                    c1 <- ready
+                    effectmsg = false
+                    effectact = ""
+                    shortrange = 0
+                    longrange = 0
+                }
+                if inpututil.IsKeyJustPressed(ebiten.KeyQ) {
+                    c1 <- 0
+                    throwtarget = [2]int{}
+                    effectmsg = false
+                    effectact = ""
+                    shortrange = 0
+                    longrange = 0
                 }
             }
             if save {
@@ -8780,6 +8876,12 @@ func (g *Game) Update() error {
                                 p.Stats.Illuminated = []int{}
                             }
                         }
+                    case "Oiled":
+                        oiled, err := strconv.Atoi(strings.Split(stat, ":")[1])
+                        if err != nil {
+                            return err
+                        }
+                        p.Stats.Oiled = oiled
                     default:
                         return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
@@ -8937,6 +9039,8 @@ func (g *Game) Update() error {
                                     }
                                 }
                             }
+                        } else if action == "throw" {
+                            data = append(data, invsel)
                         }
                         if action != "" {
                             effectact = action
@@ -9117,119 +9221,121 @@ func (g *Game) Update() error {
                         npc.Stopped = true
                     }
                 }
-                dirarr := [4]int{inpututil.KeyPressDuration(ebiten.KeyW), inpututil.KeyPressDuration(ebiten.KeyA),
-                                 inpututil.KeyPressDuration(ebiten.KeyD), inpututil.KeyPressDuration(ebiten.KeyS)}
-                var smallestnum int = 0
-                var smallestind int = 4
-                for smind, smnum := range dirarr {
-                    if smnum > 0 {
-                        smallestnum = smnum
-                        smallestind = smind
-                        break
-                    }
-                }
-                if smallestnum > 0 {
-                    for sind, snum := range dirarr {
-                        if snum > 0 {
-                            if snum < smallestnum {
-                                smallestind = sind
-                            }
+                if effectact != "throw" {
+                    dirarr := [4]int{inpututil.KeyPressDuration(ebiten.KeyW), inpututil.KeyPressDuration(ebiten.KeyA),
+                                     inpututil.KeyPressDuration(ebiten.KeyD), inpututil.KeyPressDuration(ebiten.KeyS)}
+                    var smallestnum int = 0
+                    var smallestind int = 4
+                    for smind, smnum := range dirarr {
+                        if smnum > 0 {
+                            smallestnum = smnum
+                            smallestind = smind
+                            break
                         }
                     }
-                }
-                switch smallestind {
-                case 0:
-                    stopped = false
-                    up = true
-                    down = false
-                    left = false
-                    right = false
-                    if smallestnum % 4 == 0 {
-                        ok, blocker := l.TryUpdatePos(true, p, true, -24, passattempts, p)
-                        if ok {
-                            for _, a := range l.Doors {
-                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
-                                    newlvl = a.NewLvl
-                                    lvlchange = true
+                    if smallestnum > 0 {
+                        for sind, snum := range dirarr {
+                            if snum > 0 {
+                                if snum < smallestnum {
+                                    smallestind = sind
                                 }
                             }
-                        } else {
-                            if blocker == "npc" {
-                                passattempts++
-                            }
                         }
                     }
-                    count++
-                case 1:
-                    stopped = false
-                    left = true
-                    up = false
-                    down = false
-                    right = false
-                    if smallestnum % 4 == 0 {
-                        ok, blocker := l.TryUpdatePos(true, p, false, -24, passattempts, p)
-                        if ok {
-                            for _, a := range l.Doors {
-                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
-                                    newlvl = a.NewLvl
-                                    lvlchange = true
+                    switch smallestind {
+                    case 0:
+                        stopped = false
+                        up = true
+                        down = false
+                        left = false
+                        right = false
+                        if smallestnum % 4 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, true, -24, passattempts, p)
+                            if ok {
+                                for _, a := range l.Doors {
+                                    if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
+                                        newlvl = a.NewLvl
+                                        lvlchange = true
+                                    }
+                                }
+                            } else {
+                                if blocker == "npc" {
+                                    passattempts++
                                 }
                             }
-                        } else {
-                            if blocker == "npc" {
-                                passattempts++
-                            }
                         }
-                    }
-                    count++
-                case 2:
-                    stopped = false
-                    right = true
-                    left = false
-                    up = false
-                    down = false
-                    if smallestnum % 4 == 0 {
-                        ok, blocker := l.TryUpdatePos(true, p, false, 24, passattempts, p)
-                        if ok {
-                            for _, a := range l.Doors {
-                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
-                                    newlvl = a.NewLvl
-                                    lvlchange = true
+                        count++
+                    case 1:
+                        stopped = false
+                        left = true
+                        up = false
+                        down = false
+                        right = false
+                        if smallestnum % 4 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, false, -24, passattempts, p)
+                            if ok {
+                                for _, a := range l.Doors {
+                                    if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
+                                        newlvl = a.NewLvl
+                                        lvlchange = true
+                                    }
+                                }
+                            } else {
+                                if blocker == "npc" {
+                                    passattempts++
                                 }
                             }
-                        } else {
-                            if blocker == "npc" {
-                                passattempts++
-                            }
                         }
-                    }
-                    count++
-                case 3:
-                    stopped = false
-                    down = true
-                    up = false
-                    left = false
-                    right = false
-                    if smallestnum % 4 == 0 {
-                        ok, blocker := l.TryUpdatePos(true, p, true, 24, passattempts, p)
-                        if ok {
-                            for _, a := range l.Doors {
-                                if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
-                                    newlvl = a.NewLvl
-                                    lvlchange = true
+                        count++
+                    case 2:
+                        stopped = false
+                        right = true
+                        left = false
+                        up = false
+                        down = false
+                        if smallestnum % 4 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, false, 24, passattempts, p)
+                            if ok {
+                                for _, a := range l.Doors {
+                                    if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
+                                        newlvl = a.NewLvl
+                                        lvlchange = true
+                                    }
+                                }
+                            } else {
+                                if blocker == "npc" {
+                                    passattempts++
                                 }
                             }
-                        } else {
-                            if blocker == "npc" {
-                                passattempts++
+                        }
+                        count++
+                    case 3:
+                        stopped = false
+                        down = true
+                        up = false
+                        left = false
+                        right = false
+                        if smallestnum % 4 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, true, 24, passattempts, p)
+                            if ok {
+                                for _, a := range l.Doors {
+                                    if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
+                                        newlvl = a.NewLvl
+                                        lvlchange = true
+                                    }
+                                }
+                            } else {
+                                if blocker == "npc" {
+                                    passattempts++
+                                }
                             }
                         }
+                        count++
+                    case 4:
+                        stopped = true
+                        count = 0
+                        passattempts = 0
                     }
-                    count++
-                case 4:
-                    stopped = true
-                    count = 0
-                    passattempts = 0
                 }
             }
         }
@@ -13100,10 +13206,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 }
             }
             if npcind == targeted {
-                targetedBoxVert := ebiten.NewImage(2, 48)
-                targetedBoxHoriz := ebiten.NewImage(48, 2)
-                targetedBoxVert.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
-                targetedBoxHoriz.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
                 tbvgm := ebiten.GeoM{}
                 tbvgm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
                 screen.DrawImage(targetedBoxVert, &ebiten.DrawImageOptions{GeoM: tbvgm})
@@ -13114,7 +13216,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
                 tbhgm.Translate(float64(0), float64(46))
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
-                lineofsight, losvert, slope := l.LineOfSight(p, npc.PC)
+                lineofsight, losvert, slope := l.LineOfSight(p, npc.PC.Pos)
                 if lineofsight {
                     if losvert {
                         dist := p.Pos[1] - npc.PC.Pos[1]
@@ -13497,10 +13599,26 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 pageind = 0
                 return
             }
+        case "throw":
+            // DRAW throwtarget box
+            if throwtarget == [2]int{} {
+                return
+            } else {
+                ttbvgm := ebiten.GeoM{}
+                ttbvgm.Translate(float64((w / 2) + l.Pos[0] + throwtarget[0] + 12), float64((h / 2) + l.Pos[1] + throwtarget[1] + 12))
+                screen.DrawImage(throwTargetBoxVert, &ebiten.DrawImageOptions{GeoM: ttbvgm})
+                ttbvgm.Translate(float64(22), float64(0))
+                screen.DrawImage(throwTargetBoxVert, &ebiten.DrawImageOptions{GeoM: ttbvgm})
+                ttbhgm := ebiten.GeoM{}
+                ttbhgm.Translate(float64((w / 2) + l.Pos[0] + throwtarget[0] + 12), float64((h / 2) + l.Pos[1] + throwtarget[1] + 12))
+                screen.DrawImage(throwTargetBoxHoriz, &ebiten.DrawImageOptions{GeoM: ttbhgm})
+                ttbhgm.Translate(float64(0), float64(22))
+                screen.DrawImage(throwTargetBoxHoriz, &ebiten.DrawImageOptions{GeoM: ttbhgm})
+            }
         default:
             log.Fatal(effectact + " is not defined")
         }
-        if effectact != "read" && effectact != "write" && npcCount >= countend {
+        if effectact == "illuminate" && npcCount >= countend {
             countend = 0
             effectmsg = false
             effectact = ""
@@ -14252,6 +14370,16 @@ func init() {
 
     blankImage = ebiten.NewImage(768, 576)
     blankImage.Fill(color.RGBA{0x00, 0x00, 0x00, 0xb0})
+
+    targetedBoxVert = ebiten.NewImage(2, 24)
+    targetedBoxHoriz = ebiten.NewImage(24, 2)
+    targetedBoxVert.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+    targetedBoxHoriz.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+
+    throwTargetBoxHoriz = ebiten.NewImage(24, 2)
+    throwTargetBoxVert = ebiten.NewImage(2, 24)
+    throwTargetBoxHoriz.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
+    throwTargetBoxVert.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
 
     racemap[0] = "Dwarf"
     racemap[1] = "Elf"

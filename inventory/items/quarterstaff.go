@@ -35,3 +35,7 @@ func (q *Quarterstaff) Action() string {
 func (q *Quarterstaff) GetQuantity() int {
     return 1
 }
+
+func (q *Quarterstaff) GetRange() []float64 {
+    return []float64{0, 0}
+}

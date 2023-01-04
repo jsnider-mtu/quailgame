@@ -34,3 +34,7 @@ func (s *Scalemail) Action() string {
 func (s *Scalemail) GetQuantity() int {
     return 1
 }
+
+func (s *Scalemail) GetRange() []float64 {
+    return []float64{0, 0}
+}

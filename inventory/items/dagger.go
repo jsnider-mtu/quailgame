@@ -8,8 +8,7 @@ func (d *Dagger) Slot() string {
 }
 
 func (d *Dagger) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return d.Action(), []int{96, 288}
 }
 
 func (d *Dagger) Save() string {
@@ -21,7 +20,7 @@ func (d *Dagger) PrettyPrint() string {
 }
 
 func (d *Dagger) Function() string {
-    return "melee"
+    return "melee-throw"
 }
 
 func (d *Dagger) Damage() (int, int, string) {
@@ -29,9 +28,13 @@ func (d *Dagger) Damage() (int, int, string) {
 }
 
 func (d *Dagger) Action() string {
-    return ""
+    return "throw"
 }
 
 func (d *Dagger) GetQuantity() int {
     return 1
+}
+
+func (d *Dagger) GetRange() []float64 {
+    return []float64{96.0, 288.0}
 }

@@ -44,3 +44,7 @@ func (l *Lamp) Action() string {
 func (l *Lamp) GetQuantity() int {
     return l.Quantity
 }
+
+func (l *Lamp) GetRange() []float64 {
+    return []float64{0, 0}
+}

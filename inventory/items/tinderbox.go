@@ -34,3 +34,7 @@ func (t *Tinderbox) Action() string {
 func (t *Tinderbox) GetQuantity() int {
     return 1
 }
+
+func (t *Tinderbox) GetRange() []float64 {
+    return []float64{0, 0}
+}

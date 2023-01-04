@@ -7,6 +7,7 @@ import (
     "image"
     _ "image/png"
     "log"
+    "math"
     "math/rand"
     "strconv"
     "strings"
@@ -51,6 +52,18 @@ type Level struct {
     grasses [][2]int
     Image *ebiten.Image
     Anim func(*ebiten.Image, *Level, int, int, int) // screen, l, count, w, h
+    oils [][3]int
+}
+
+func (l *Level) OilSpot(spot [2]int) {
+    for oi, oil := range l.oils {
+        if [2]int{oil[0], oil[1]} == spot {
+            l.oils[oi][2] = 10
+            return
+        }
+    }
+    l.oils = append(l.oils, [3]int{spot[0], spot[1], 10})
+    return
 }
 
 func (l *Level) GetName() string {
@@ -64,7 +77,7 @@ func (l *Level) GetMax() [2]int {
 func (l *Level) Attack(p, target *player.Player) (bool, error) {
     // Check equipped weapon, if melee check npc's position before attacking, if range check lineofsight
     if p.Equipment.BothHands != nil {
-        if p.Equipment.BothHands.Function() == "melee" {
+        if strings.HasPrefix(p.Equipment.BothHands.Function(), "melee") {
             if (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1] + 24) ||
                 (p.Pos[0] == target.Pos[0] && p.Pos[1] == target.Pos[1] + 24) ||
                 (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1] + 24) ||
@@ -79,7 +92,7 @@ func (l *Level) Attack(p, target *player.Player) (bool, error) {
                 fmt.Println(fmt.Sprintf("Melee attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.StrMod, hittotal))
                 if hit := hittotal >= target.Stats.AC; hit {
                     fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
-                    damnd, dam, _ := p.Equipment.BothHands.Damage()
+                    damnd, dam, damtype := p.Equipment.BothHands.Damage()
                     damage := 0
                     for x := 0; x < damnd; x++ {
                         newdam := rand.Intn(dam) + 1
@@ -87,6 +100,9 @@ func (l *Level) Attack(p, target *player.Player) (bool, error) {
                         fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
                     }
                     target.Stats.HP -= damage
+                    if target.Stats.Oiled > 0 && damtype == "fire" {
+                        target.Stats.HP -= 5
+                    }
                     fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
                     return true, nil
                 } else {
@@ -97,38 +113,51 @@ func (l *Level) Attack(p, target *player.Player) (bool, error) {
                 fmt.Println("Enemy is not within melee range")
                 return false, errors.New("Enemy is not within melee range")
             }
-        } else if p.Equipment.BothHands.Function() == "range" {
-            if ok, _, _ := l.LineOfSight(p, target); ok {
-                // Check distance, if ok roll to hit (modifiers), if meets or exceeds AC then roll for damage
-                hitroll := rand.Intn(20) + 1
-                hittotal := hitroll + p.Stats.DexMod
-                fmt.Println(fmt.Sprintf("Ranged attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.DexMod, hittotal))
-                if hit := hittotal >= target.Stats.AC; hit {
-                    fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
-                    damnd, dam, _ := p.Equipment.BothHands.Damage()
-                    damage := 0
-                    for x := 0; x < damnd; x++ {
-                        newdam := rand.Intn(dam) + 1
-                        damage += newdam
-                        fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+        } else if strings.HasPrefix(p.Equipment.BothHands.Function(), "range") {
+            if l.Distance(p, target.Pos) <= p.Equipment.BothHands.GetRange()[1] {
+                if ok, _, _ := l.LineOfSight(p, target.Pos); ok {
+                    // Check distance, if ok roll to hit (modifiers), if meets or exceeds AC then roll for damage
+                    hitroll := rand.Intn(20) + 1
+                    if l.Distance(p, target.Pos) >= p.Equipment.BothHands.GetRange()[0] {
+                        hitroll2 := rand.Intn(20) + 1
+                        if hitroll2 < hitroll {
+                            hitroll = hitroll2
+                        }
                     }
-                    target.Stats.HP -= damage
-                    fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
-                    return true, nil
+                    hittotal := hitroll + p.Stats.DexMod
+                    fmt.Println(fmt.Sprintf("Ranged attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.DexMod, hittotal))
+                    if hit := hittotal >= target.Stats.AC; hit {
+                        fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
+                        damnd, dam, damtype := p.Equipment.BothHands.Damage()
+                        damage := 0
+                        for x := 0; x < damnd; x++ {
+                            newdam := rand.Intn(dam) + 1
+                            damage += newdam
+                            fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                        }
+                        target.Stats.HP -= damage
+                        if target.Stats.Oiled > 0 && damtype == "fire" {
+                            target.Stats.HP -= 5
+                        }
+                        fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
+                        return true, nil
+                    } else {
+                        fmt.Println(fmt.Sprintf("Ranged attack missed. Roll: %d, AC: %d", hittotal, target.Stats.AC))
+                        return false, nil
+                    }
                 } else {
-                    fmt.Println(fmt.Sprintf("Ranged attack missed. Roll: %d, AC: %d", hittotal, target.Stats.AC))
-                    return false, nil
+                    fmt.Println("You do not have line of sight to the enemy")
+                    return false, errors.New("You do not have line of sight to the enemy")
                 }
             } else {
-                fmt.Println("You do not have line of sight to the enemy")
-                return false, errors.New("You do not have line of sight to the enemy")
+                return false, errors.New("Enemy is too far away")
             }
         } else {
             fmt.Println(fmt.Sprintf("Can't attack with %s, function %s", p.Equipment.BothHands.PrettyPrint(), p.Equipment.BothHands.Function()))
             return false, errors.New(fmt.Sprintf("Can't attack with %s, function %s", p.Equipment.BothHands.PrettyPrint(), p.Equipment.BothHands.Function()))
         }
     } else if p.Equipment.RightHand != nil {
-        if p.Equipment.RightHand.Function() == "melee" {
+        if strings.HasPrefix(p.Equipment.RightHand.Function(), "melee") {
             if (p.Pos[0] == target.Pos[0] + 24 && p.Pos[1] == target.Pos[1] + 24) ||
                 (p.Pos[0] == target.Pos[0] && p.Pos[1] == target.Pos[1] + 24) ||
                 (p.Pos[0] == target.Pos[0] - 24 && p.Pos[1] == target.Pos[1] + 24) ||
@@ -143,7 +172,7 @@ func (l *Level) Attack(p, target *player.Player) (bool, error) {
                 fmt.Println(fmt.Sprintf("Melee attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.StrMod, hittotal))
                 if hit := hittotal >= target.Stats.AC; hit {
                     fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
-                    damnd, dam, _ := p.Equipment.RightHand.Damage()
+                    damnd, dam, damtype := p.Equipment.RightHand.Damage()
                     damage := 0
                     for x := 0; x < damnd; x++ {
                         newdam := rand.Intn(dam) + 1
@@ -151,6 +180,9 @@ func (l *Level) Attack(p, target *player.Player) (bool, error) {
                         fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
                     }
                     target.Stats.HP -= damage
+                    if target.Stats.Oiled > 0 && damtype == "fire" {
+                        target.Stats.HP -= 5
+                    }
                     fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
                     return true, nil
                 } else {
@@ -158,34 +190,94 @@ func (l *Level) Attack(p, target *player.Player) (bool, error) {
                     return false, nil
                 }
             } else {
-                fmt.Println("Enemy is not within melee range")
-                return false, errors.New("Enemy is not within melee range")
-            }
-        } else if p.Equipment.RightHand.Function() == "range" {
-            if ok, _, _ := l.LineOfSight(p, target); ok {
-                // Check distance, if ok roll to hit (modifiers), if meets or exceeds AC then roll for damage
-                hitroll := rand.Intn(20) + 1
-                hittotal := hitroll + p.Stats.DexMod
-                fmt.Println(fmt.Sprintf("Ranged attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.DexMod, hittotal))
-                if hit := hittotal >= target.Stats.AC; hit {
-                    fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
-                    damnd, dam, _ := p.Equipment.RightHand.Damage()
-                    damage := 0
-                    for x := 0; x < damnd; x++ {
-                        newdam := rand.Intn(dam) + 1
-                        damage += newdam
-                        fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                if strings.Contains(p.Equipment.RightHand.Function(), "throw") {
+                    if l.Distance(p, target.Pos) <= p.Equipment.RightHand.GetRange()[1] {
+                        if ok, _, _ := l.LineOfSight(p, target.Pos); ok {
+                            // Check distance, if ok roll to hit (modifiers), if meets or exceeds AC then roll for damage
+                            hitroll := rand.Intn(20) + 1
+                            if l.Distance(p, target.Pos) >= p.Equipment.RightHand.GetRange()[0] {
+                                hitroll2 := rand.Intn(20) + 1
+                                if hitroll2 < hitroll {
+                                    hitroll = hitroll2
+                                }
+                            }
+                            hittotal := hitroll + p.Stats.DexMod
+                            fmt.Println(fmt.Sprintf("Ranged attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.DexMod, hittotal))
+                            if hit := hittotal >= target.Stats.AC; hit {
+                                fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
+                                damnd, dam, damtype := p.Equipment.RightHand.Damage()
+                                damage := 0
+                                for x := 0; x < damnd; x++ {
+                                    newdam := rand.Intn(dam) + 1
+                                    damage += newdam
+                                    fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                                }
+                                target.Stats.HP -= damage
+                                if strings.HasPrefix(p.Equipment.RightHand.PrettyPrint(), "Oil Flask") {
+                                    target.Stats.Oiled = 10
+                                }
+                                if target.Stats.Oiled > 0 && damtype == "fire" {
+                                    target.Stats.HP -= 5
+                                }
+                                fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
+                                return true, nil
+                            } else {
+                                fmt.Println(fmt.Sprintf("Ranged attack missed. Roll: %d, AC: %d", hittotal, target.Stats.AC))
+                                return false, nil
+                            }
+                        } else {
+                            fmt.Println("You do not have line of sight to the enemy")
+                            return false, errors.New("You do not have line of sight to the enemy")
+                        }
+                    } else {
+                        return false, errors.New("Enemy is too far away")
                     }
-                    target.Stats.HP -= damage
-                    fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
-                    return true, nil
                 } else {
-                    fmt.Println(fmt.Sprintf("Ranged attack missed. Roll: %d, AC: %d", hittotal, target.Stats.AC))
-                    return false, nil
+                    fmt.Println("Enemy is not within melee range")
+                    return false, errors.New("Enemy is not within melee range")
+                }
+            }
+        } else if strings.HasPrefix(p.Equipment.RightHand.Function(), "range") {
+            if l.Distance(p, target.Pos) <= p.Equipment.RightHand.GetRange()[1] {
+                if ok, _, _ := l.LineOfSight(p, target.Pos); ok {
+                    // Check distance, if ok roll to hit (modifiers), if meets or exceeds AC then roll for damage
+                    hitroll := rand.Intn(20) + 1
+                    if l.Distance(p, target.Pos) >= p.Equipment.RightHand.GetRange()[0] {
+                        hitroll2 := rand.Intn(20) + 1
+                        if hitroll2 < hitroll {
+                            hitroll = hitroll2
+                        }
+                    }
+                    hittotal := hitroll + p.Stats.DexMod
+                    fmt.Println(fmt.Sprintf("Ranged attack roll: %d, plus modifier: %d, equals: %d", hitroll, p.Stats.DexMod, hittotal))
+                    if hit := hittotal >= target.Stats.AC; hit {
+                        fmt.Println(fmt.Sprintf("%d hits against %d", hittotal, target.Stats.AC))
+                        damnd, dam, damtype := p.Equipment.RightHand.Damage()
+                        damage := 0
+                        for x := 0; x < damnd; x++ {
+                            newdam := rand.Intn(dam) + 1
+                            damage += newdam
+                            fmt.Println(fmt.Sprintf("#%d die rolled %d, total damage is now %d", x + 1, newdam, damage))
+                        }
+                        target.Stats.HP -= damage
+                        if strings.HasPrefix(p.Equipment.RightHand.PrettyPrint(), "Oil Flask") {
+                            target.Stats.Oiled = 10
+                        }
+                        if target.Stats.Oiled > 0 && damtype == "fire" {
+                            target.Stats.HP -= 5
+                        }
+                        fmt.Println(fmt.Sprintf("%s has lost %d hit points, now has %d hit points remaining", target.GetName(), damage, target.Stats.HP))
+                        return true, nil
+                    } else {
+                        fmt.Println(fmt.Sprintf("Ranged attack missed. Roll: %d, AC: %d", hittotal, target.Stats.AC))
+                        return false, nil
+                    }
+                } else {
+                    fmt.Println("You do not have line of sight to the enemy")
+                    return false, errors.New("You do not have line of sight to the enemy")
                 }
             } else {
-                fmt.Println("You do not have line of sight to the enemy")
-                return false, errors.New("You do not have line of sight to the enemy")
+                return false, errors.New("Enemy is too far away")
             }
         } else {
             fmt.Println(fmt.Sprintf("Can't attack with %s, function %s", p.Equipment.RightHand.PrettyPrint(), p.Equipment.RightHand.Function()))
@@ -309,35 +401,35 @@ func LoadLvl(newlvl ...interface{}) *Level {
     return lvlOne(newlvl[1].(int), "")
 }
 
-func (l *Level) LineOfSight(p, target *player.Player) (bool, bool, float64) {
+func (l *Level) LineOfSight(p *player.Player, target [2]int) (bool, bool, float64) {
     var slope float64
     var slopevert bool = false
-    if target.Pos[0] > p.Pos[0] {
-        slope = float64((target.Pos[1] + 24) - (p.Pos[1] + 24)) / float64((target.Pos[0] + 24) - (p.Pos[0] + 24))
-    } else if target.Pos[0] < p.Pos[0] {
-        slope = float64((p.Pos[1] + 24) - (target.Pos[1] + 24)) / float64((p.Pos[0] + 24) - (target.Pos[0] + 24))
+    if target[0] > p.Pos[0] {
+        slope = float64((target[1] + 24) - (p.Pos[1] + 24)) / float64((target[0] + 24) - (p.Pos[0] + 24))
+    } else if target[0] < p.Pos[0] {
+        slope = float64((p.Pos[1] + 24) - (target[1] + 24)) / float64((p.Pos[0] + 24) - (target[0] + 24))
     } else {
         slopevert = true
     }
     if slopevert {
-        if target.Pos[1] > p.Pos[1] {
+        if target[1] > p.Pos[1] {
             for _, box := range l.Boxes {
-                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[2] && p.Pos[1] + 24 < box[1] && target.Pos[1] + 24 > box[3] {
+                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[2] && p.Pos[1] + 24 < box[1] && target[1] + 24 > box[3] {
                     return false, true, slope
                 }
             }
             return true, true, slope
         } else {
             for _, box := range l.Boxes {
-                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[2] && p.Pos[1] + 24 > box[3] && target.Pos[1] + 24 < box[1] {
+                if p.Pos[0] + 24 > box[0] && p.Pos[0] + 24 < box[2] && p.Pos[1] + 24 > box[3] && target[1] + 24 < box[1] {
                     return false, true, slope
                 }
             }
             return true, true, slope
         }
     } else {
-        if target.Pos[0] > p.Pos[0] {
-            for x := p.Pos[0] + 24; x <= target.Pos[0] + 24; x++ {
+        if target[0] > p.Pos[0] {
+            for x := p.Pos[0] + 24; x <= target[0] + 24; x++ {
                 y := int((float64(x - (p.Pos[0] + 24)) * slope) + float64(p.Pos[1] + 24))
                 for _, box := range l.Boxes {
                     if x > box[0] && x < box[2] && y > box[1] && y < box[3] {
@@ -347,8 +439,8 @@ func (l *Level) LineOfSight(p, target *player.Player) (bool, bool, float64) {
             }
             return true, false, slope
         } else {
-            for x := target.Pos[0] + 24; x <= p.Pos[0] + 24; x++ {
-                y := int((float64(x - (target.Pos[0] + 24)) * slope) + float64(target.Pos[1] + 24))
+            for x := target[0] + 24; x <= p.Pos[0] + 24; x++ {
+                y := int((float64(x - (target[0] + 24)) * slope) + float64(target[1] + 24))
                 for _, box := range l.Boxes {
                     if x > box[0] && x < box[2] && y > box[1] && y < box[3] {
                         return false, false, slope
@@ -490,4 +582,8 @@ func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, att
         }
         return false, "mapedge"
     }
+}
+
+func (l *Level) Distance(p *player.Player, target [2]int) float64 {
+    return math.Sqrt(math.Pow(float64(target[0] - p.Pos[0]), 2.0) - math.Pow(float64(target[1] - p.Pos[1]), 2.0))
 }

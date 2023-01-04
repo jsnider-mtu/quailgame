@@ -35,3 +35,7 @@ func (r *Rapier) Action() string {
 func (r *Rapier) GetQuantity() int {
     return 1
 }
+
+func (r *Rapier) GetRange() []float64 {
+    return []float64{0, 0}
+}

@@ -35,3 +35,7 @@ func (s *Spear) Action() string {
 func (s *Spear) GetQuantity() int {
     return 1
 }
+
+func (s *Spear) GetRange() []float64 {
+    return []float64{0, 0}
+}

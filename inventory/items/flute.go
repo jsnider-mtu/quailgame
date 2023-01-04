@@ -34,3 +34,7 @@ func (f *Flute) Action() string {
 func (f *Flute) GetQuantity() int {
     return 1
 }
+
+func (f *Flute) GetRange() []float64 {
+    return []float64{0, 0}
+}

@@ -35,3 +35,7 @@ func (w WarPick) Action() string {
 func (w WarPick) GetQuantity() int {
     return 1
 }
+
+func (w WarPick) GetRange() []float64 {
+    return []float64{0, 0}
+}

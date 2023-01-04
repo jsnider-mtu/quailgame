@@ -34,3 +34,7 @@ func (l *Lyre) Action() string {
 func (l *Lyre) GetQuantity() int {
     return 1
 }
+
+func (l *Lyre) GetRange() []float64 {
+    return []float64{0, 0}
+}

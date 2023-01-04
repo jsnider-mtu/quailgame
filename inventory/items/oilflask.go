@@ -10,11 +10,11 @@ type OilFlask struct {
 }
 
 func (o *OilFlask) Slot() string {
-    return "LeftHand"
+    return "RightHand"
 }
 
 func (o *OilFlask) Use() (string, []int) {
-    return "", []int{}
+    return o.Action(), []int{96, 96}
 }
 
 func (o *OilFlask) Save() string {
@@ -26,17 +26,25 @@ func (o *OilFlask) PrettyPrint() string {
 }
 
 func (o *OilFlask) Function() string {
-    return "fire"
+    return "range"
 }
 
 func (o *OilFlask) Damage() (int, int, string) {
-    return 0, 0, ""
+    return 1, 4, "bludgeoning"
 }
 
 func (o *OilFlask) Action() string {
-    return ""
+    if o.Quantity > 0 {
+        return "throw"
+    } else {
+        return ""
+    }
 }
 
 func (o *OilFlask) GetQuantity() int {
     return o.Quantity
+}
+
+func (o *OilFlask) GetRange() []float64 {
+    return []float64{96.0, 96.0}
 }

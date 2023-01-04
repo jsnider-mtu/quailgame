@@ -35,3 +35,7 @@ func (w *Warhammer) Action() string {
 func (w *Warhammer) GetQuantity() int {
     return 1
 }
+
+func (w *Warhammer) GetRange() []float64 {
+    return []float64{0, 0}
+}

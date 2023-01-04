@@ -35,3 +35,7 @@ func (m *Maul) Action() string {
 func (m *Maul) GetQuantity() int {
     return 1
 }
+
+func (m *Maul) GetRange() []float64 {
+    return []float64{0, 0}
+}

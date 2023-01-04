@@ -39,3 +39,7 @@ func (c *Clothes) Action() string {
 func (c *Clothes) GetQuantity() int {
     return 1
 }
+
+func (c *Clothes) GetRange() []float64 {
+    return []float64{0, 0}
+}

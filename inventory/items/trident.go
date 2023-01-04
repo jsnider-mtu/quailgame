@@ -35,3 +35,7 @@ func (t *Trident) Action() string {
 func (t *Trident) GetQuantity() int {
     return 1
 }
+
+func (t *Trident) GetRange() []float64 {
+    return []float64{0, 0}
+}

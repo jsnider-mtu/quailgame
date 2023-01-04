@@ -35,3 +35,7 @@ func (b *Blowgun) Action() string {
 func (b *Blowgun) GetQuantity() int {
     return 1
 }
+
+func (b *Blowgun) GetRange() []float64 {
+    return []float64{0, 0}
+}

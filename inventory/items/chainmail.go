@@ -34,3 +34,7 @@ func (c *Chainmail) Action() string {
 func (c *Chainmail) GetQuantity() int {
     return 1
 }
+
+func (c *Chainmail) GetRange() []float64 {
+    return []float64{0, 0}
+}

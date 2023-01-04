@@ -47,3 +47,7 @@ func (c *Candles) Action() string {
 func (c *Candles) GetQuantity() int {
     return c.Quantity
 }
+
+func (c *Candles) GetRange() []float64 {
+    return []float64{0, 0}
+}

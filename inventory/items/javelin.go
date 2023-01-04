@@ -35,3 +35,7 @@ func (j *Javelin) Action() string {
 func (j *Javelin) GetQuantity() int {
     return 1
 }
+
+func (j *Javelin) GetRange() []float64 {
+    return []float64{0, 0}
+}

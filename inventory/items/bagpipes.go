@@ -34,3 +34,7 @@ func (b *Bagpipes) Action() string {
 func (b *Bagpipes) GetQuantity() int {
     return 1
 }
+
+func (b *Bagpipes) GetRange() []float64 {
+    return []float64{0, 0}
+}

@@ -35,3 +35,7 @@ func (g *Greataxe) Action() string {
 func (g *Greataxe) GetQuantity() int {
     return 1
 }
+
+func (g *Greataxe) GetRange() []float64 {
+    return []float64{0, 0}
+}

@@ -34,3 +34,7 @@ func (c *ComponentPouch) Action() string {
 func (c *ComponentPouch) GetQuantity() int {
     return 1
 }
+
+func (c *ComponentPouch) GetRange() []float64 {
+    return []float64{0, 0}
+}

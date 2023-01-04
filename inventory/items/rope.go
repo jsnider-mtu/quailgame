@@ -40,3 +40,7 @@ func (r *Rope) Action() string {
 func (r *Rope) GetQuantity() int {
     return 1
 }
+
+func (r *Rope) GetRange() []float64 {
+    return []float64{0, 0}
+}

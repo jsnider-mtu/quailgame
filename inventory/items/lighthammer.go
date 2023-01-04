@@ -35,3 +35,7 @@ func (l *LightHammer) Action() string {
 func (l *LightHammer) GetQuantity() int {
     return 1
 }
+
+func (l *LightHammer) GetRange() []float64 {
+    return []float64{0, 0}
+}

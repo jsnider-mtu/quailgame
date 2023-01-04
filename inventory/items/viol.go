@@ -34,3 +34,7 @@ func (v *Viol) Action() string {
 func (v *Viol) GetQuantity() int {
     return 1
 }
+
+func (v *Viol) GetRange() []float64 {
+    return []float64{0, 0}
+}

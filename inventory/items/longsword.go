@@ -35,3 +35,7 @@ func (l *Longsword) Action() string {
 func (l *Longsword) GetQuantity() int {
     return 1
 }
+
+func (l *Longsword) GetRange() []float64 {
+    return []float64{0, 0}
+}

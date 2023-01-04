@@ -34,3 +34,7 @@ func (s *Shield) Action() string {
 func (s *Shield) GetQuantity() int {
     return 1
 }
+
+func (s *Shield) GetRange() []float64 {
+    return []float64{0, 0}
+}

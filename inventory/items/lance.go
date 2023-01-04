@@ -35,3 +35,7 @@ func (l *Lance) Action() string {
 func (l *Lance) GetQuantity() int {
     return 1
 }
+
+func (l *Lance) GetRange() []float64 {
+    return []float64{0, 0}
+}

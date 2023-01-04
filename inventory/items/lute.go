@@ -34,3 +34,7 @@ func (l *Lute) Action() string {
 func (l *Lute) GetQuantity() int {
     return 1
 }
+
+func (l *Lute) GetRange() []float64 {
+    return []float64{0, 0}
+}

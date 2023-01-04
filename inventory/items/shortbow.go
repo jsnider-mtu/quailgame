@@ -35,3 +35,7 @@ func (s *Shortbow) Action() string {
 func (s *Shortbow) GetQuantity() int {
     return 1
 }
+
+func (s *Shortbow) GetRange() []float64 {
+    return []float64{0, 0}
+}

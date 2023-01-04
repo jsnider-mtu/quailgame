@@ -35,3 +35,7 @@ func (s *Sickle) Action() string {
 func (s *Sickle) GetQuantity() int {
     return 1
 }
+
+func (s *Sickle) GetRange() []float64 {
+    return []float64{0, 0}
+}

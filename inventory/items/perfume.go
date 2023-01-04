@@ -34,3 +34,7 @@ func (p *Perfume) Action() string {
 func (p *Perfume) GetQuantity() int {
     return 1
 }
+
+func (p *Perfume) GetRange() []float64 {
+    return []float64{0, 0}
+}

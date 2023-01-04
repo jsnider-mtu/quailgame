@@ -34,3 +34,7 @@ func (p *PanFlute) Action() string {
 func (p *PanFlute) GetQuantity() int {
     return 1
 }
+
+func (p *PanFlute) GetRange() []float64 {
+    return []float64{0, 0}
+}

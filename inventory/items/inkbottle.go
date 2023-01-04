@@ -34,3 +34,7 @@ func (i *InkBottle) Action() string {
 func (i *InkBottle) GetQuantity() int {
     return 1
 }
+
+func (i *InkBottle) GetRange() []float64 {
+    return []float64{0, 0}
+}

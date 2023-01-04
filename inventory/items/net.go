@@ -35,3 +35,7 @@ func (n *Net) Action() string {
 func (n *Net) GetQuantity() int {
     return 1
 }
+
+func (n *Net) GetRange() []float64 {
+    return []float64{0, 0}
+}

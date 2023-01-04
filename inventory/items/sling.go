@@ -35,3 +35,7 @@ func (s *Sling) Action() string {
 func (s *Sling) GetQuantity() int {
     return 1
 }
+
+func (s *Sling) GetRange() []float64 {
+    return []float64{0, 0}
+}

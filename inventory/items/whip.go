@@ -35,3 +35,7 @@ func (w *Whip) Action() string {
 func (w *Whip) GetQuantity() int {
     return 1
 }
+
+func (w *Whip) GetRange() []float64 {
+    return []float64{0, 0}
+}

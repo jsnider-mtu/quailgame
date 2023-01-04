@@ -35,3 +35,7 @@ func (h *Handaxe) Action() string {
 func (h *Handaxe) GetQuantity() int {
     return 1
 }
+
+func (h *Handaxe) GetRange() []float64 {
+    return []float64{0, 0}
+}

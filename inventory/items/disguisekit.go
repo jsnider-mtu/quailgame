@@ -34,3 +34,7 @@ func (d *DisguiseKit) Action() string {
 func (d *DisguiseKit) GetQuantity() int {
     return 1
 }
+
+func (d *DisguiseKit) GetRange() []float64 {
+    return []float64{0, 0}
+}
