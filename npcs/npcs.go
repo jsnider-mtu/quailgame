@@ -1,7 +1,7 @@
 package npcs
 
 import (
-    "strconv"
+    //"strconv"
 
     "github.com/jsnider-mtu/quailgame/player"
 )
@@ -40,6 +40,6 @@ func (npc *NPC) Dialog() []string {
     return npc.Msgs[npc.MsgCount - 1]
 }
 
-func (npc *NPC) SaveHP() string {
-    return npc.GetName() + "=" + strconv.Itoa(npc.PC.Stats.HP) + ";"
-}
+//func (npc *NPC) SaveHP() string {
+//    return npc.GetName() + "=" + strconv.Itoa(npc.PC.Stats.HP) + ";"
+//}
