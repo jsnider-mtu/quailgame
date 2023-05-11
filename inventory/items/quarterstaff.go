@@ -1,15 +1,28 @@
 package items
 
 type Quarterstaff struct {
+    Currslot string
+}
+
+func (q *Quarterstaff) GetCurrSlot() string {
+    return q.Currslot
+}
+
+func (q *Quarterstaff) SwitchSlots() {
+    if q.Currslot == "BothHands" {
+        q.Currslot = "RightHand"
+    } else if q.Currslot == "RightHand" {
+        q.Currslot = "BothHands"
+    }
+    return
 }
 
 func (q *Quarterstaff) Slot() string {
-    return "BothHands"
+    return "Versatile"
 }
 
 func (q *Quarterstaff) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return q.Action(), []int{1, 8}
 }
 
 func (q *Quarterstaff) Save() string {
@@ -29,7 +42,7 @@ func (q *Quarterstaff) Damage() (int, int, string) {
 }
 
 func (q *Quarterstaff) Action() string {
-    return ""
+    return "versatile"
 }
 
 func (q *Quarterstaff) GetQuantity() int {

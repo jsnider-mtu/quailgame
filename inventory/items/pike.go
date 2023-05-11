@@ -8,8 +8,7 @@ func (p *Pike) Slot() string {
 }
 
 func (p *Pike) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return p.Action(), []int{}
 }
 
 func (p *Pike) Save() string {
@@ -21,7 +20,7 @@ func (p *Pike) PrettyPrint() string {
 }
 
 func (p *Pike) Function() string {
-    return "melee"
+    return "melee-heavy-reach"
 }
 
 func (p *Pike) Damage() (int, int, string) {
@@ -37,5 +36,5 @@ func (p *Pike) GetQuantity() int {
 }
 
 func (p *Pike) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{24.0, 24.0}
 }

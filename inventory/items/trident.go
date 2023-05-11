@@ -1,15 +1,28 @@
 package items
 
 type Trident struct {
+    Currslot string
+}
+
+func (t *Trident) GetCurrSlot() string (
+    return t.Currslot
+}
+
+func (t *Trident) SwitchSlots() {
+    if t.Currslot == "BothHands" {
+        t.Currslot = "RightHand"
+    } else if t.Currslot == "RightHand" {
+        t.Currslot = "BothHands"
+    }
+    return
 }
 
 func (t *Trident) Slot() string {
-    return "BothHands"
+    return "Versatile"
 }
 
 func (t *Trident) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return t.Action(), []int{96, 288}
 }
 
 func (t *Trident) Save() string {
@@ -21,7 +34,7 @@ func (t *Trident) PrettyPrint() string {
 }
 
 func (t *Trident) Function() string {
-    return "melee"
+    return "melee-throw"
 }
 
 func (t *Trident) Damage() (int, int, string) {
@@ -29,7 +42,7 @@ func (t *Trident) Damage() (int, int, string) {
 }
 
 func (t *Trident) Action() string {
-    return ""
+    return "throw"
 }
 
 func (t *Trident) GetQuantity() int {
@@ -37,5 +50,5 @@ func (t *Trident) GetQuantity() int {
 }
 
 func (t *Trident) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{96.0, 288.0}
 }

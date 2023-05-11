@@ -1,15 +1,28 @@
 package items
 
 type Spear struct {
+    Currslot string
+}
+
+func (s *Spear) GetCurrSlot() string {
+    return s.Currslot
+}
+
+func (s *Spear) SwitchSlots() {
+    if s.Currslot == "BothHands" {
+        s.Currslot = "RightHand"
+    } else if s.Currslot == "RightHand" {
+        s.Currslot = "BothHands"
+    }
+    return
 }
 
 func (s *Spear) Slot() string {
-    return "BothHands"
+    return "Versatile"
 }
 
 func (s *Spear) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return s.Action(), []int{96, 288}
 }
 
 func (s *Spear) Save() string {
@@ -21,7 +34,7 @@ func (s *Spear) PrettyPrint() string {
 }
 
 func (s *Spear) Function() string {
-    return "melee"
+    return "melee-thrown"
 }
 
 func (s *Spear) Damage() (int, int, string) {
@@ -29,7 +42,7 @@ func (s *Spear) Damage() (int, int, string) {
 }
 
 func (s *Spear) Action() string {
-    return ""
+    return "throw"
 }
 
 func (s *Spear) GetQuantity() int {
@@ -37,5 +50,5 @@ func (s *Spear) GetQuantity() int {
 }
 
 func (s *Spear) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{96.0, 288.0}
 }

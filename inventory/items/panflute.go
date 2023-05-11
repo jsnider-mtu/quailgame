@@ -8,7 +8,7 @@ func (p *PanFlute) Slot() string {
 }
 
 func (p *PanFlute) Use() (string, []int) {
-    return "", []int{}
+    return p.Action(), []int{}
 }
 
 func (p *PanFlute) Save() string {
@@ -28,7 +28,7 @@ func (p *PanFlute) Damage() (int, int, string) {
 }
 
 func (p *PanFlute) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (p *PanFlute) GetQuantity() int {

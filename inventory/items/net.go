@@ -8,8 +8,7 @@ func (n *Net) Slot() string {
 }
 
 func (n *Net) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return n.Action(), []int{24, 72}
 }
 
 func (n *Net) Save() string {
@@ -21,7 +20,7 @@ func (n *Net) PrettyPrint() string {
 }
 
 func (n *Net) Function() string {
-    return "range"
+    return "range-throw"
 }
 
 func (n *Net) Damage() (int, int, string) {
@@ -29,7 +28,7 @@ func (n *Net) Damage() (int, int, string) {
 }
 
 func (n *Net) Action() string {
-    return ""
+    return "throw"
 }
 
 func (n *Net) GetQuantity() int {
@@ -37,5 +36,5 @@ func (n *Net) GetQuantity() int {
 }
 
 func (n *Net) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{24.0, 72.0}
 }

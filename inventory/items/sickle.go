@@ -8,8 +8,7 @@ func (s *Sickle) Slot() string {
 }
 
 func (s *Sickle) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return s.Action(), []int{}
 }
 
 func (s *Sickle) Save() string {
@@ -21,7 +20,7 @@ func (s *Sickle) PrettyPrint() string {
 }
 
 func (s *Sickle) Function() string {
-    return "melee"
+    return "melee-light"
 }
 
 func (s *Sickle) Damage() (int, int, string) {

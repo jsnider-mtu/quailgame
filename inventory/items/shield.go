@@ -8,7 +8,7 @@ func (s *Shield) Slot() string {
 }
 
 func (s *Shield) Use() (string, []int) {
-    return "", []int{}
+    return s.Action(), []int{48}
 }
 
 func (s *Shield) Save() string {
@@ -28,7 +28,7 @@ func (s *Shield) Damage() (int, int, string) {
 }
 
 func (s *Shield) Action() string {
-    return ""
+    return "bash"
 }
 
 func (s *Shield) GetQuantity() int {

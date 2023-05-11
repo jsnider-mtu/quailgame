@@ -45,5 +45,5 @@ func (h *Handaxe) GetQuantity() int {
 }
 
 func (h *Handaxe) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{96.0, 288.0}
 }

@@ -8,8 +8,7 @@ func (s *Scimitar) Slot() string {
 }
 
 func (s *Scimitar) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return s.Action(), []int{}
 }
 
 func (s *Scimitar) Save() string {
@@ -21,7 +20,7 @@ func (s *Scimitar) PrettyPrint() string {
 }
 
 func (s *Scimitar) Function() string {
-    return "melee"
+    return "melee-finesse-light"
 }
 
 func (s *Scimitar) Damage() (int, int, string) {

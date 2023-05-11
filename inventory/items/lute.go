@@ -8,7 +8,7 @@ func (l *Lute) Slot() string {
 }
 
 func (l *Lute) Use() (string, []int) {
-    return "", []int{}
+    return l.Action(), []int{}
 }
 
 func (l *Lute) Save() string {
@@ -28,7 +28,7 @@ func (l *Lute) Damage() (int, int, string) {
 }
 
 func (l *Lute) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (l *Lute) GetQuantity() int {

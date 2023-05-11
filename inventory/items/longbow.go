@@ -1,6 +1,12 @@
 package items
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type Longbow struct {
+    Ammo int
 }
 
 func (l *Longbow) Slot() string {
@@ -8,20 +14,19 @@ func (l *Longbow) Slot() string {
 }
 
 func (l *Longbow) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return l.Action(), []int{}
 }
 
 func (l *Longbow) Save() string {
-    return "Longbow"
+    return "Longbow," + strconv.Itoa(l.Ammo)
 }
 
 func (l *Longbow) PrettyPrint() string {
-    return "Longbow"
+    return fmt.Sprintf("Longbow (%d)", l.Ammo)
 }
 
 func (l *Longbow) Function() string {
-    return "range"
+    return "range-ammo-heavy"
 }
 
 func (l *Longbow) Damage() (int, int, string) {
@@ -33,9 +38,9 @@ func (l *Longbow) Action() string {
 }
 
 func (l *Longbow) GetQuantity() int {
-    return 1
+    return l.Ammo
 }
 
 func (l *Longbow) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{720.0, 2880.0}
 }

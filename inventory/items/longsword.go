@@ -1,15 +1,28 @@
 package items
 
 type Longsword struct {
+    Currslot string
+}
+
+func (l *Longsword) GetCurrSlot() string {
+    return l.Currslot
+}
+
+func (l *Longsword) SwitchSlots() {
+    if l.Currslot == "BothHands" {
+        l.Currslot = "RightHand"
+    } else if l.Currslot == "RightHand" {
+        l.Currslot = "BothHands"
+    }
+    return
 }
 
 func (l *Longsword) Slot() string {
-    return "RightHand"
+    return "Versatile"
 }
 
 func (l *Longsword) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return l.Action(), []int{1, 10}
 }
 
 func (l *Longsword) Save() string {
@@ -29,7 +42,7 @@ func (l *Longsword) Damage() (int, int, string) {
 }
 
 func (l *Longsword) Action() string {
-    return ""
+    return "versatile"
 }
 
 func (l *Longsword) GetQuantity() int {

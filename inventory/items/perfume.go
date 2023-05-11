@@ -1,6 +1,12 @@
 package items
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type Perfume struct {
+    Quantity int
 }
 
 func (p *Perfume) Slot() string {
@@ -8,19 +14,19 @@ func (p *Perfume) Slot() string {
 }
 
 func (p *Perfume) Use() (string, []int) {
-    return "", []int{}
+    return p.Action(), []int{2, 600}
 }
 
 func (p *Perfume) Save() string {
-    return "Perfume"
+    return "Perfume," + strconv.Itoa(p.Quantity)
 }
 
 func (p *Perfume) PrettyPrint() string {
-    return "Perfume"
+    return fmt.Sprintf("Perfume (%d)", p.Quantity)
 }
 
 func (p *Perfume) Function() string {
-    return "disguise"
+    return "charisma-buff"
 }
 
 func (p *Perfume) Damage() (int, int, string) {
@@ -28,11 +34,11 @@ func (p *Perfume) Damage() (int, int, string) {
 }
 
 func (p *Perfume) Action() string {
-    return ""
+    return "charisma"
 }
 
 func (p *Perfume) GetQuantity() int {
-    return 1
+    return p.Quantity
 }
 
 func (p *Perfume) GetRange() []float64 {

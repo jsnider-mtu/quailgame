@@ -8,8 +8,7 @@ func (m *Maul) Slot() string {
 }
 
 func (m *Maul) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return m.Action(), []int{}
 }
 
 func (m *Maul) Save() string {
@@ -21,7 +20,7 @@ func (m *Maul) PrettyPrint() string {
 }
 
 func (m *Maul) Function() string {
-    return "melee"
+    return "melee-heavy"
 }
 
 func (m *Maul) Damage() (int, int, string) {

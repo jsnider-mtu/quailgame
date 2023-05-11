@@ -1,15 +1,28 @@
 package items
 
 type Warhammer struct {
+    Currslot string
+}
+
+func (w *Warhammer) GetCurrSlot() {
+    return w.Currslot
+}
+
+func (w *Warhammer) SwitchSlots() {
+    if w.Currslot == "BothHands" {
+        w.Currslot = "RightHand"
+    } else if w.Currslot == "RightHand" {
+        w.Currslot = "BothHands"
+    }
+    return
 }
 
 func (w *Warhammer) Slot() string {
-    return "BothHands"
+    return "Versatile"
 }
 
 func (w *Warhammer) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return w.Action(), []int{1, 10}
 }
 
 func (w *Warhammer) Save() string {
@@ -29,7 +42,7 @@ func (w *Warhammer) Damage() (int, int, string) {
 }
 
 func (w *Warhammer) Action() string {
-    return ""
+    return "versatile"
 }
 
 func (w *Warhammer) GetQuantity() int {

@@ -8,8 +8,7 @@ func (w *Whip) Slot() string {
 }
 
 func (w *Whip) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return w.Action(), []int{}
 }
 
 func (w *Whip) Save() string {
@@ -21,7 +20,7 @@ func (w *Whip) PrettyPrint() string {
 }
 
 func (w *Whip) Function() string {
-    return "melee"
+    return "melee-finesse-reach"
 }
 
 func (w *Whip) Damage() (int, int, string) {

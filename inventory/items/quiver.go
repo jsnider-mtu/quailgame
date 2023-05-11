@@ -14,7 +14,7 @@ func (q *Quiver) Slot() string {
 }
 
 func (q *Quiver) Use() (string, []int) {
-    return "", []int{}
+    return q.Action(), []int{}
 }
 
 func (q *Quiver) Save() string {
@@ -38,7 +38,7 @@ func (q *Quiver) Action() string {
 }
 
 func (q *Quiver) GetQuantity() int {
-    return 1
+    return q.Arrows
 }
 
 func (q *Quiver) GetRange() []float64 {

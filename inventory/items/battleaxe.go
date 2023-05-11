@@ -1,14 +1,28 @@
 package items
 
 type Battleaxe struct {
+    Currslot string
+}
+
+func (b *Battleaxe) GetCurrSlot() string {
+    return b.Currslot
+}
+
+func (b *Battleaxe) SwitchSlots() {
+    if b.Currslot == "BothHands" {
+        b.Currslot = "RightHand"
+    } else if b.Currslot == "RightHand" {
+        b.Currslot = "BothHands"
+    }
+    return
 }
 
 func (b *Battleaxe) Slot() string {
-    return "BothHands"
+    return "Versatile"
 }
 
 func (b *Battleaxe) Use() (string, []int) {
-    return b.Action(), []int{}
+    return b.Action(), []int{1, 10}
 }
 
 func (b *Battleaxe) Save() string {
@@ -20,7 +34,7 @@ func (b *Battleaxe) PrettyPrint() string {
 }
 
 func (b *Battleaxe) Function() string {
-    return "melee-versatile"
+    return "melee"
 }
 
 func (b *Battleaxe) Damage() (int, int, string) {
@@ -28,7 +42,7 @@ func (b *Battleaxe) Damage() (int, int, string) {
 }
 
 func (b *Battleaxe) Action() string {
-    return ""
+    return "versatile"
 }
 
 func (b *Battleaxe) GetQuantity() int {

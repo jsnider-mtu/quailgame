@@ -8,7 +8,7 @@ func (l *Lyre) Slot() string {
 }
 
 func (l *Lyre) Use() (string, []int) {
-    return "", []int{}
+    return l.Action(), []int{}
 }
 
 func (l *Lyre) Save() string {
@@ -28,7 +28,7 @@ func (l *Lyre) Damage() (int, int, string) {
 }
 
 func (l *Lyre) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (l *Lyre) GetQuantity() int {

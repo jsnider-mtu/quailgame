@@ -8,8 +8,7 @@ func (r *Rapier) Slot() string {
 }
 
 func (r *Rapier) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return r.Action(), []int{}
 }
 
 func (r *Rapier) Save() string {
@@ -21,7 +20,7 @@ func (r *Rapier) PrettyPrint() string {
 }
 
 func (r *Rapier) Function() string {
-    return "melee"
+    return "melee-finesse"
 }
 
 func (r *Rapier) Damage() (int, int, string) {

@@ -8,7 +8,7 @@ func (s *Scalemail) Slot() string {
 }
 
 func (s *Scalemail) Use() (string, []int) {
-    return "", []int{}
+    return s.Action(), []int{}
 }
 
 func (s *Scalemail) Save() string {

@@ -8,7 +8,7 @@ func (s *Shawm) Slot() string {
 }
 
 func (s *Shawm) Use() (string, []int) {
-    return "", []int{}
+    return s.Action(), []int{}
 }
 
 func (s *Shawm) Save() string {
@@ -28,7 +28,7 @@ func (s *Shawm) Damage() (int, int, string) {
 }
 
 func (s *Shawm) Action() string {
-    return ""
+    return "playmusic"
 }
 
 func (s *Shawm) GetQuantity() int {

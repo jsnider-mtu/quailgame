@@ -1,6 +1,12 @@
 package items
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type Javelin struct {
+    Quantity int
 }
 
 func (j *Javelin) Slot() string {
@@ -12,11 +18,11 @@ func (j *Javelin) Use() (string, []int) {
 }
 
 func (j *Javelin) Save() string {
-    return "Javelin"
+    return "Javelin," + strconv.Itoa(j.Quantity)
 }
 
 func (j *Javelin) PrettyPrint() string {
-    return "Javelin"
+    return fmt.Sprintf("Javelin (%d)", j.Quantity)
 }
 
 func (j *Javelin) Function() string {
@@ -36,5 +42,5 @@ func (j *Javelin) GetQuantity() int {
 }
 
 func (j *Javelin) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{144.0, 576.0}
 }

@@ -14,7 +14,7 @@ func (r *Rope) Slot() string {
 }
 
 func (r *Rope) Use() (string, []int) {
-    return "", []int{}
+    return r.Action(), []int{}
 }
 
 func (r *Rope) Save() string {
@@ -26,7 +26,7 @@ func (r *Rope) PrettyPrint() string {
 }
 
 func (r *Rope) Function() string {
-    return "climbing"
+    return "rope"
 }
 
 func (r *Rope) Damage() (int, int, string) {
@@ -38,7 +38,7 @@ func (r *Rope) Action() string {
 }
 
 func (r *Rope) GetQuantity() int {
-    return 1
+    return r.Length
 }
 
 func (r *Rope) GetRange() []float64 {

@@ -1,6 +1,7 @@
 package items
 
 type HeavyCrossbow struct {
+    Ammo int
 }
 
 func (h HeavyCrossbow) Slot() string {
@@ -32,9 +33,9 @@ func (h HeavyCrossbow) Action() string {
 }
 
 func (h HeavyCrossbow) GetQuantity() int {
-    return 1
+    return h.Ammo
 }
 
 func (h HeavyCrossbow) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{480.0, 1920.0}
 }

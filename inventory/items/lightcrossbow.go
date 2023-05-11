@@ -1,6 +1,12 @@
 package items
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type LightCrossbow struct {
+    Ammo int
 }
 
 func (l *LightCrossbow) Slot() string {
@@ -12,15 +18,15 @@ func (l *LightCrossbow) Use() (string, []int) {
 }
 
 func (l *LightCrossbow) Save() string {
-    return "LightCrossbow"
+    return "LightCrossbow," + strconv.Itoa(l.Ammo)
 }
 
 func (l *LightCrossbow) PrettyPrint() string {
-    return "Light Crossbow"
+    return fmt.Sprintf("Light Crossbow (%d)", l.Ammo)
 }
 
 func (l *LightCrossbow) Function() string {
-    return "range"
+    return "range-ammo-loading"
 }
 
 func (l *LightCrossbow) Damage() (int, int, string) {
@@ -32,9 +38,9 @@ func (l *LightCrossbow) Action() string {
 }
 
 func (l *LightCrossbow) GetQuantity() int {
-    return 1
+    return l.Quantity
 }
 
 func (l *LightCrossbow) GetRange() []float64 {
-    return []float64{0, 0}
+    return []float64{384.0, 1536.0}
 }

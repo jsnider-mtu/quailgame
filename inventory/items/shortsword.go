@@ -8,8 +8,7 @@ func (s *Shortsword) Slot() string {
 }
 
 func (s *Shortsword) Use() (string, []int) {
-    return "", []int{}
-    // must be equipped to use
+    return s.Action(), []int{}
 }
 
 func (s *Shortsword) Save() string {
@@ -21,7 +20,7 @@ func (s *Shortsword) PrettyPrint() string {
 }
 
 func (s *Shortsword) Function() string {
-    return "melee"
+    return "melee-finesse-light"
 }
 
 func (s *Shortsword) Damage() (int, int, string) {
