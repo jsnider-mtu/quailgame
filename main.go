@@ -2069,18 +2069,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
         }
     } else if creation {
-        text.Draw(screen, fmt.Sprintf("Name:       %s", name), fo, 64, 64, color.White)
-        text.Draw(screen, "Class:", fo, 64, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Name:       %s", name), fo, 32, 64, color.White)
+        text.Draw(screen, "Class:", fo, 32, 128, color.White)
         if creationsel < 6 {
-            text.Draw(screen, ">", fo, 120, (64 * (creationsel + 1)) + 64, color.White)
+            text.Draw(screen, ">", fo, 112, (64 * (creationsel + 1)) + 64, color.White)
         } else {
-            text.Draw(screen, ">", fo, 248, (64 * ((creationsel % 6) + 1)) + 64, color.White)
+            text.Draw(screen, ">", fo, 256, (64 * ((creationsel % 6) + 1)) + 64, color.White)
         }
         for classind, classval := range classes {
             if classind < 6 {
                 text.Draw(screen, classval, fo, 128, (64 * (classind + 1)) + 64, color.White)
             } else {
-                text.Draw(screen, classval, fo, 256, (64 * ((classind % 6) + 1)) + 64, color.White)
+                text.Draw(screen, classval, fo, 272, (64 * ((classind % 6) + 1)) + 64, color.White)
             }
         }
     } else if l != nil {
