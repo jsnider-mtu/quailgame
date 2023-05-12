@@ -194,7 +194,6 @@ var (
     npchpslice []string
     npchporigval string
     npchpupdate bool = false
-    op *ebiten.DrawImageOptions
     paperind int = -1
     throwtarget [2]int
     targetedBoxVert *ebiten.Image
@@ -2788,28 +2787,30 @@ func (g *Game) Draw(screen *ebiten.Image) {
         if save {
             return
         }
-        fadeScreen = ebiten.NewImage(768, 576)
-        fadeScreen.Fill(color.Black)
+        fadegm := ebiten.GeoM{}
+        fadegm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
+        op := &ebiten.DrawImageOptions{GeoM: fadegm}
         if npcCount % 10 == 0 {
             f++
+            fmt.Println(strconv.Itoa(f))
         }
         if f == 0 {
             op.ColorM.Scale(1.0, 1.0, 1.0, 0.0)
             screen.DrawImage(fadeImage, op)
         } else if f == 1 {
             op.ColorM.Scale(1.0, 1.0, 1.0, 0.2)
-            screen.DrawImage(fadeScreen, op)
+            screen.DrawImage(fadeImage, op)
         } else if f == 2 {
             op.ColorM.Scale(1.0, 1.0, 1.0, 0.4)
-            screen.DrawImage(fadeScreen, op)
+            screen.DrawImage(fadeImage, op)
         } else if f == 3 {
             op.ColorM.Scale(1.0, 1.0, 1.0, 0.6)
-            screen.DrawImage(fadeScreen, op)
+            screen.DrawImage(fadeImage, op)
         } else if f == 4 {
             op.ColorM.Scale(1.0, 1.0, 1.0, 0.8)
-            screen.DrawImage(fadeScreen, op)
+            screen.DrawImage(fadeImage, op)
         } else if f == 5 {
-            screen.DrawImage(fadeScreen, nil)
+            screen.DrawImage(fadeImage, nil)
             f = 0
             lvlchange = false
             for _, lvl := range levelslice {
@@ -3220,8 +3221,6 @@ func Input(sb *strings.Builder) {
 func init() {
     fo = utils.Fo()
 
-    op = &ebiten.DrawImageOptions{}
-
     readgm.Translate(float64((768 / 2) - (724 / 2)), float64((576 / 2) - (552 / 2)))
     readimg = ebiten.NewImage(724, 552)
     readimg.Fill(color.Black)
@@ -3261,11 +3260,8 @@ func init() {
         pixels = append(pixels, 0x33)
     }
 
-    fadeImage = ebiten.NewImageFromImage(&image.Alpha{
-        Pix: pixels,
-        Stride: 768,
-        Rect: image.Rect(0, 0, 768, 576),
-    })
+    fadeImage = ebiten.NewImage(768, 576)
+    fadeImage.Fill(color.Black)
 
     lightningimage, _, err := image.Decode(bytes.NewReader(assets.Lightning_PNG))
     if err != nil {
