@@ -1032,7 +1032,7 @@ func (g *Game) Update() error {
                 }
                 var invstr string = p.Inv.Save()
                 var statsstr string = p.Stats.Save()
-                fmt.Println(statsstr)
+                //fmt.Println(statsstr)
                 var equipmentstr string = p.Equipment.Save()
                 _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Class, p.Level, p.XP, equipmentstr)
                 if err != nil {
@@ -1071,7 +1071,6 @@ func (g *Game) Update() error {
                     log.Fatal(err)
                 }
                 defer db.Close()
-                fmt.Println("Save name when loading:", name)
                 rows, err := db.Query("select * from saves where name = ?", name)
                 if err != nil {
                     log.Fatal(err)
@@ -1094,17 +1093,6 @@ func (g *Game) Update() error {
                 if err != nil {
                     log.Fatal(err)
                 }
-                fmt.Println("Save name from db is", savename)
-                fmt.Println("Level name from db is", levelname)
-                fmt.Println("X from db is", x)
-                fmt.Println("Y from db is", y)
-                fmt.Println("csdonestr from db is", csdonestr)
-                fmt.Println("invstr from db is", invstr)
-                fmt.Println("statsstr from db is", statsstr)
-                fmt.Println("classstr from db is", classstr)
-                fmt.Println("playerlvl from db is", playerlvl)
-                fmt.Println("playerxp from db is", playerxp)
-                fmt.Println("equipmentstr from db is", equipmentstr)
                 p.Name = savename
                 p.Stats = &player.Stats{}
                 p.Class = classstr
@@ -2828,7 +2816,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
         op := &ebiten.DrawImageOptions{GeoM: fadegm}
         if npcCount % 5 == 0 {
             f++
-            fmt.Println(strconv.Itoa(f))
         }
         if f == 0 {
             op.ColorM.Scale(1.0, 1.0, 1.0, 0.0)
