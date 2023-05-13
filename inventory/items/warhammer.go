@@ -4,7 +4,7 @@ type Warhammer struct {
     Currslot string
 }
 
-func (w *Warhammer) GetCurrSlot() {
+func (w *Warhammer) GetCurrSlot() string {
     return w.Currslot
 }
 

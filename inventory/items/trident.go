@@ -4,7 +4,7 @@ type Trident struct {
     Currslot string
 }
 
-func (t *Trident) GetCurrSlot() string (
+func (t *Trident) GetCurrSlot() string {
     return t.Currslot
 }
 

@@ -38,7 +38,7 @@ func (l *LightCrossbow) Action() string {
 }
 
 func (l *LightCrossbow) GetQuantity() int {
-    return l.Quantity
+    return l.Ammo
 }
 
 func (l *LightCrossbow) GetRange() []float64 {
