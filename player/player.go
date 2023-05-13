@@ -43,7 +43,7 @@ type Stats struct {
     //DeathSaveSucc int
     //DeathSaveFail int
     Languages []string
-    Size int
+    //Size int
     Inspiration bool
     Darkvision bool
     Proficiencies []string
@@ -459,7 +459,7 @@ func (s *Stats) Save() string {
            //"DeathSaveSucc:" + strconv.Itoa(s.DeathSaveSucc) + ";" +
            //"DeathSaveFail:" + strconv.Itoa(s.DeathSaveFail) + ";" +
            "Languages:" + languagestr + ";" +
-           "Size:" + strconv.Itoa(s.Size) + ";" +
+           //"Size:" + strconv.Itoa(s.Size) + ";" +
            "Inspiration:" + strconv.FormatBool(s.Inspiration) + ";" +
            "Darkvision:" + strconv.FormatBool(s.Darkvision) + ";" +
            "Proficiencies:" + proficienciesstr + ";" +

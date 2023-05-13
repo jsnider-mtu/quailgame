@@ -128,7 +128,7 @@ var (
     wismod int
     chamod int
     pb int
-    size int // 0: Small, 1: Medium, 2: Large
+    //size int // 0: Small, 1: Medium, 2: Large
     darkvision bool = false
     lucky bool = false
     nimbleness bool = false
@@ -655,6 +655,12 @@ func (g *Game) Update() error {
             } else {
                 chamod = (cha - 10) / 2
             }
+            savingthrows["str"] = strmod
+            savingthrows["dex"] = dexmod
+            savingthrows["con"] = conmod
+            savingthrows["intel"] = intelmod
+            savingthrows["wis"] = wismod
+            savingthrows["cha"] = chamod
             skills := make(map[string]int)
             skills["acrobatics"] = dexmod
             skills["animal handling"] = wismod
@@ -733,7 +739,7 @@ func (g *Game) Update() error {
                 SavingThrows: savingthrows,
                 Skills: skills,
                 Languages: languages,
-                Size: size,
+                //Size: size,
                 Inspiration: false,
                 Darkvision: darkvision,
                 Proficiencies: proficiencies,
@@ -1405,12 +1411,12 @@ func (g *Game) Update() error {
                         }
                     case "Languages":
                         p.Stats.Languages = strings.Split(strings.Split(stat, ":")[1], ",")
-                    case "Size":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Size value is not an int")
-                        }
-                        p.Stats.Size = val
+//                    case "Size":
+//                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
+//                        if err != nil {
+//                            return errors.New("Size value is not an int")
+//                        }
+//                        p.Stats.Size = val
                     case "Inspiration":
                         boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
                         if err != nil {
