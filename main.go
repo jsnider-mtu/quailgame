@@ -2790,7 +2790,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         fadegm := ebiten.GeoM{}
         fadegm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
         op := &ebiten.DrawImageOptions{GeoM: fadegm}
-        if npcCount % 10 == 0 {
+        if npcCount % 5 == 0 {
             f++
             fmt.Println(strconv.Itoa(f))
         }
@@ -2798,18 +2798,33 @@ func (g *Game) Draw(screen *ebiten.Image) {
             op.ColorM.Scale(1.0, 1.0, 1.0, 0.0)
             screen.DrawImage(fadeImage, op)
         } else if f == 1 {
-            op.ColorM.Scale(1.0, 1.0, 1.0, 0.2)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.1)
             screen.DrawImage(fadeImage, op)
         } else if f == 2 {
-            op.ColorM.Scale(1.0, 1.0, 1.0, 0.4)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.2)
             screen.DrawImage(fadeImage, op)
         } else if f == 3 {
-            op.ColorM.Scale(1.0, 1.0, 1.0, 0.6)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.3)
             screen.DrawImage(fadeImage, op)
         } else if f == 4 {
-            op.ColorM.Scale(1.0, 1.0, 1.0, 0.8)
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.4)
             screen.DrawImage(fadeImage, op)
         } else if f == 5 {
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.5)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 6 {
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.6)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 7 {
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.7)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 8 {
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.8)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 9 {
+            op.ColorM.Scale(1.0, 1.0, 1.0, 0.9)
+            screen.DrawImage(fadeImage, op)
+        } else if f == 10 {
             screen.DrawImage(fadeImage, nil)
             f = 0
             lvlchange = false
