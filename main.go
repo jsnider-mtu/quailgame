@@ -625,6 +625,36 @@ func (g *Game) Update() error {
             default:
                 return errors.New("Invalid value for creationsel")
             }
+            if str < 10 && str % 2 == 1 {
+                strmod = ((str - 10) / 2) - 1
+            } else {
+                strmod = (str - 10) / 2
+            }
+            if dex < 10 && dex % 2 == 1 {
+                dexmod = ((dex - 10) / 2) - 1
+            } else {
+                dexmod = (dex - 10) / 2
+            }
+            if con < 10 && con % 2 == 1 {
+                conmod = ((con - 10) / 2) - 1
+            } else {
+                conmod = (con - 10) / 2
+            }
+            if intel < 10 && intel % 2 == 1 {
+                intelmod = ((intel - 10) / 2) - 1
+            } else {
+                intelmod = (intel - 10) / 2
+            }
+            if wis < 10 && wis % 2 == 1 {
+                wismod = ((wis - 10) / 2) - 1
+            } else {
+                wismod = (wis - 10) / 2
+            }
+            if cha < 10 && cha % 2 == 1 {
+                chamod = ((cha - 10) / 2) - 1
+            } else {
+                chamod = (cha - 10) / 2
+            }
             skills := make(map[string]int)
             skills["acrobatics"] = dexmod
             skills["animal handling"] = wismod
