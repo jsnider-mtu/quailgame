@@ -3139,7 +3139,7 @@ func levelUp(p *player.Player) {
     case 3:
         gainProfSkill = true
     case 4:
-        //gainProfST = true
+        p.Class.IncrPB()
         incrAbilScore = true
     case 5:
         gainProfSkill = true
@@ -3148,7 +3148,8 @@ func levelUp(p *player.Player) {
     case 7:
         gainProfSkill = true
     case 8:
-        gainProfST = true
+        p.Class.IncrPB()
+        incrAbilScore = true
     case 9:
         gainProfSkill = true
     case 10:
@@ -3156,7 +3157,8 @@ func levelUp(p *player.Player) {
     case 11:
         gainProfSkill = true
     case 12:
-        gainProfST = true
+        p.Class.IncrPB()
+        incrAbilScore = true
     case 13:
         gainProfSkill = true
     case 14:
@@ -3164,13 +3166,14 @@ func levelUp(p *player.Player) {
     case 15:
         gainProfSkill = true
     case 16:
-        gainProfST = true
+        p.Class.IncrPB()
+        incrAbilScore = true
     case 17:
         gainProfSkill = true
     case 18:
         gainProfST = true
     case 19:
-        gainProfSkill = true
+        incrAbilScore = true
     default:
         log.Print("Already max level")
     }

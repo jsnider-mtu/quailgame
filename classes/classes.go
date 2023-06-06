@@ -26,6 +26,7 @@ type Class interface {
     AddProf(string) bool
     LevelUp()
     IncrAbilScore(string)
+    IncrPB()
 }
 
 type Stats struct {

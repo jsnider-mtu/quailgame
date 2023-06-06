@@ -395,3 +395,8 @@ func (q *Quail) IncrAbilScore(abil string) {
         log.Fatal(fmt.Sprintf("%s is an invalid value for abil", abil))
     }
 }
+
+func (q *Quail) IncrPB() {
+    q.stats.pb += 1
+    return
+}
