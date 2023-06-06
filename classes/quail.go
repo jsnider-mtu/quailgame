@@ -124,8 +124,6 @@ func (q *Quail) SavingThrow(ability string) int {
             wisval += q.stats.pb
         case "cha":
             chaval += q.stats.pb
-        default:
-            log.Fatal(fmt.Sprintf("%s is not a valid proficiency", v))
         }
     }
     switch ability {
@@ -204,8 +202,6 @@ func (q *Quail) SkillCheck(skill string) int {
             ste += q.stats.pb
         case "survival":
             sur += q.stats.pb
-        default:
-            log.Fatal(fmt.Sprintf("%s is not a valid proficiency", v))
         }
     }
     switch skill {

@@ -689,6 +689,11 @@ func (g *Game) Update() error {
             }
         }
     } else {
+        if inpututil.IsKeyJustPressed(ebiten.KeyY) {
+            if leveled := p.Class.EarnXP(300); leveled {
+                levelUp(p)
+            }
+        }
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause
         }
@@ -2455,37 +2460,37 @@ func (g *Game) Draw(screen *ebiten.Image) {
         default:
             log.Fatal(fmt.Sprintf("%d is not a valid gainprofstsel", gainprofstsel))
         }
-        _, strmod := p.Class.GetStr()
+        strmod := p.Class.GetStr()[1]
         if p.Class.SavingThrow("str") > strmod {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 40, 96, color.Gray16{0x8000})
         } else {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 40, 96, color.White)
         }
-        _, dexmod := p.Class.GetDex()
+        dexmod := p.Class.GetDex()[1]
         if p.Class.SavingThrow("dex") > dexmod {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("dex")), fo, 40, 128, color.Gray16{0x8000})
         } else {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("dex")), fo, 40, 128, color.White)
         }
-        _, conmod := p.Class.GetCon()
+        conmod := p.Class.GetCon()[1]
         if p.Class.SavingThrow("con") > conmod {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("con")), fo, 40, 160, color.Gray16{0x8000})
         } else {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("con")), fo, 40, 160, color.White)
         }
-        _, intelmod := p.Class.GetStr()
+        intelmod := p.Class.GetIntel()[1]
         if p.Class.SavingThrow("intel") > intelmod {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("intel")), fo, 40, 192, color.Gray16{0x8000})
         } else {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("intel")), fo, 40, 192, color.White)
         }
-        _, wismod := p.Class.GetWis()
+        wismod := p.Class.GetWis()[1]
         if p.Class.SavingThrow("wis") > wismod {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("wis")), fo, 40, 224, color.Gray16{0x8000})
         } else {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("wis")), fo, 40, 224, color.White)
         }
-        _, chamod := p.Class.GetCha()
+        chamod := p.Class.GetCha()[1]
         if p.Class.SavingThrow("cha") > chamod {
             text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("cha")), fo, 40, 256, color.Gray16{0x8000})
         } else {
@@ -2497,7 +2502,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     }
     if gainProfSkill {
         screen.DrawImage(blankImage, nil)
-        text.Draw(screen, fmt.Sprintf("You're now level %d!\nGain proficiency in a saving throw:", p.Class.GetLevel()), fo, 32, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("You're now level %d!\nGain proficiency in a skill:", p.Class.GetLevel()), fo, 32, 64, color.White)
         switch gainprofskillsel {
         case 0:
             text.Draw(screen, ">", fo, 32, 96, color.White)
@@ -2538,12 +2543,12 @@ func (g *Game) Draw(screen *ebiten.Image) {
         default:
             log.Fatal(fmt.Sprintf("%d is not a valid gainprofskillsel", gainprofstsel))
         }
-        _, strmod := p.Class.GetStr()
-        _, dexmod := p.Class.GetDex()
-        _, conmod := p.Class.GetCon()
-        _, intelmod := p.Class.GetIntel()
-        _, wismod := p.Class.GetWis()
-        _, chamod := p.Class.GetCha()
+        strmod := p.Class.GetStr()[1]
+        dexmod := p.Class.GetDex()[1]
+        //conmod := p.Class.GetCon()[1]
+        intelmod := p.Class.GetIntel()[1]
+        wismod := p.Class.GetWis()[1]
+        chamod := p.Class.GetCha()[1]
         if p.Class.SkillCheck("acrobatics") > dexmod {
             text.Draw(screen, fmt.Sprintf("Acrobatics: %+d", p.Class.SkillCheck("acrobatics")), fo, 40, 96, color.Gray16{0x8000})
         } else {
