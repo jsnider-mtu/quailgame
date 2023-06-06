@@ -689,10 +689,11 @@ func (g *Game) Update() error {
             }
         }
     } else {
+        if p.Class.GetXP() >= 300 + (((p.Class.GetLevel() - 1) * 300) * p.Class.GetLevel()) {
+            levelUp(p)
+        }
         if inpututil.IsKeyJustPressed(ebiten.KeyY) {
-            if leveled := p.Class.EarnXP(300); leveled {
-                levelUp(p)
-            }
+            p.Class.EarnXP(1300)
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
             pause = !pause

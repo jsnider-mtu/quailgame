@@ -22,7 +22,7 @@ type Class interface {
     Illuminate([3]int) bool
     Illuminated() (bool, [3]int)
     Save() string
-    EarnXP(int) bool
+    EarnXP(int)
     AddProf(string) bool
     LevelUp()
 }
