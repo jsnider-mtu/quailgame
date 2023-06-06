@@ -209,6 +209,8 @@ var (
     gainprofskillsel int = 0
     stprofexists string
     skillprofexists string
+    incrAbilScore bool = false
+    incrabilsel int = 0
 )
 
 var abilities = make([]int, 6)
@@ -687,6 +689,36 @@ func (g *Game) Update() error {
             default:
                 log.Fatal(fmt.Sprintf("%d is not a valid value for gainprofskillsel", gainprofskillsel))
             }
+        }
+    } else if incrAbilScore {
+        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+            if incrabilsel > 0 {
+                incrabilsel--
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            if incrabilsel < 5 {
+                incrabilsel++
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            switch incrabilsel {
+            case 0:
+                p.Class.IncrAbilScore("str")
+            case 1:
+                p.Class.IncrAbilScore("dex")
+            case 2:
+                p.Class.IncrAbilScore("con")
+            case 3:
+                p.Class.IncrAbilScore("intel")
+            case 4:
+                p.Class.IncrAbilScore("wis")
+            case 5:
+                p.Class.IncrAbilScore("cha")
+            default:
+                log.Fatal(fmt.Sprintf("%d is not a valid value for incrabilsel", incrabilsel))
+            }
+            incrAbilScore = false
         }
     } else {
         if p.Class.GetXP() >= 300 + (((p.Class.GetLevel() - 1) * 300) * p.Class.GetLevel()) {
@@ -2645,6 +2677,74 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, fmt.Sprintf("You are already proficient in the skill %s", skillprofexists), fo, 64, 16, color.RGBA{159, 11, 19, 255})
         }
     }
+    if incrAbilScore {
+        screen.DrawImage(blankImage, nil)
+        text.Draw(screen, fmt.Sprintf("You're now level %d!\nIncrease an ability score:", p.Class.GetLevel()), fo, 32, 64, color.White)
+        switch incrabilsel {
+        case 0:
+            text.Draw(screen, ">", fo, 32, 128, color.White)
+        case 1:
+            text.Draw(screen, ">", fo, 32, 160, color.White)
+        case 2:
+            text.Draw(screen, ">", fo, 32, 192, color.White)
+        case 3:
+            text.Draw(screen, ">", fo, 32, 224, color.White)
+        case 4:
+            text.Draw(screen, ">", fo, 32, 256, color.White)
+        case 5:
+            text.Draw(screen, ">", fo, 32, 288, color.White)
+        default:
+            log.Fatal(fmt.Sprintf("%d is not a valid incrabilsel", incrabilsel))
+        }
+        strstat := p.Class.GetStr()
+        dexstat := p.Class.GetDex()
+        constat := p.Class.GetCon()
+        intelstat := p.Class.GetIntel()
+        wisstat := p.Class.GetWis()
+        chastat := p.Class.GetCha()
+        var strmod2 int
+        var dexmod2 int
+        var conmod2 int
+        var intelmod2 int
+        var wismod2 int
+        var chamod2 int
+        if strstat[0] + 1 < 10 && (strstat[0] + 1) % 2 == 1 {
+            strmod2 = (((strstat[0] + 1) - 10) / 2) - 1
+        } else {
+            strmod2 = ((strstat[0] + 1) - 10) / 2
+        }
+        if dexstat[0] + 1 < 10 && (dexstat[0] + 1) % 2 == 1 {
+            dexmod2 = (((dexstat[0] + 1) - 10) / 2) - 1
+        } else {
+            dexmod2 = ((dexstat[0] + 1) - 10) / 2
+        }
+        if constat[0] + 1 < 10 && (constat[0] + 1) % 2 == 1 {
+            conmod2 = (((constat[0] + 1) - 10) / 2) - 1
+        } else {
+            conmod2 = ((constat[0] + 1) - 10) / 2
+        }
+        if intelstat[0] + 1 < 10 && (intelstat[0] + 1) % 2 == 1 {
+            intelmod2 = (((intelstat[0] + 1) - 10) / 2) - 1
+        } else {
+            intelmod2 = ((intelstat[0] + 1) - 10) / 2
+        }
+        if wisstat[0] + 1 < 10 && (wisstat[0] + 1) % 2 == 1 {
+            wismod2 = (((wisstat[0] + 1) - 10) / 2) - 1
+        } else {
+            wismod2 = ((wisstat[0] + 1) - 10) / 2
+        }
+        if chastat[0] + 1 < 10 && (chastat[0] + 1) % 2 == 1 {
+            chamod2 = (((chastat[0] + 1) - 10) / 2) - 1
+        } else {
+            chamod2 = ((chastat[0] + 1) - 10) / 2
+        }
+        text.Draw(screen, fmt.Sprintf("Strength: %d (%+d) -> %d (%+d)", strstat[0], strstat[1], strstat[0] + 1, strmod2), fo, 48, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Dexterity: %d (%+d) -> %d (%+d)", dexstat[0], dexstat[1], dexstat[0] + 1, dexmod2), fo, 48, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Constitution: %d (%+d) -> %d (%+d)", constat[0], constat[1], constat[0] + 1, conmod2), fo, 48, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Intelligence: %d (%+d) -> %d (%+d)", intelstat[0], intelstat[1], intelstat[0] + 1, intelmod2), fo, 48, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("Wisdom: %d (%+d) -> %d (%+d)", wisstat[0], wisstat[1], wisstat[0] + 1, wismod2), fo, 48, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("Charisma: %d (%+d) -> %d (%+d)", chastat[0], chastat[1], chastat[0] + 1, chamod2), fo, 48, 288, color.White)
+    }
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
@@ -3039,7 +3139,8 @@ func levelUp(p *player.Player) {
     case 3:
         gainProfSkill = true
     case 4:
-        gainProfST = true
+        //gainProfST = true
+        incrAbilScore = true
     case 5:
         gainProfSkill = true
     case 6:

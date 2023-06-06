@@ -25,6 +25,7 @@ type Class interface {
     EarnXP(int)
     AddProf(string) bool
     LevelUp()
+    IncrAbilScore(string)
 }
 
 type Stats struct {

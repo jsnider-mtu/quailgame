@@ -346,3 +346,52 @@ func (q *Quail) LevelUp() {
     }
     return
 }
+
+func (q *Quail) IncrAbilScore(abil string) {
+    switch abil {
+    case "str":
+        q.stats.str += 1
+        if q.stats.str < 10 && q.stats.str % 2 == 1 {
+            q.stats.strmod = ((q.stats.str - 10) / 2) - 1
+        } else {
+            q.stats.strmod = (q.stats.str - 10) / 2
+        }
+    case "dex":
+        q.stats.dex += 1
+        if q.stats.dex < 10 && q.stats.dex % 2 == 1 {
+            q.stats.dexmod = ((q.stats.dex - 10) / 2) - 1
+        } else {
+            q.stats.dexmod = (q.stats.dex - 10) / 2
+        }
+    case "con":
+        q.stats.con += 1
+        if q.stats.con < 10 && q.stats.con % 2 == 1 {
+            q.stats.conmod = ((q.stats.con - 10) / 2) - 1
+        } else {
+            q.stats.conmod = (q.stats.con - 10) / 2
+        }
+    case "intel":
+        q.stats.intel += 1
+        if q.stats.intel < 10 && q.stats.intel % 2 == 1 {
+            q.stats.intelmod = ((q.stats.intel - 10) / 2) - 1
+        } else {
+            q.stats.intelmod = (q.stats.intel - 10) / 2
+        }
+    case "wis":
+        q.stats.wis += 1
+        if q.stats.wis < 10 && q.stats.wis % 2 == 1 {
+            q.stats.wismod = ((q.stats.wis - 10) / 2) - 1
+        } else {
+            q.stats.wismod = (q.stats.wis - 10) / 2
+        }
+    case "cha":
+        q.stats.cha += 1
+        if q.stats.cha < 10 && q.stats.cha % 2 == 1 {
+            q.stats.chamod = ((q.stats.cha - 10) / 2) - 1
+        } else {
+            q.stats.chamod = (q.stats.cha - 10) / 2
+        }
+    default:
+        log.Fatal(fmt.Sprintf("%s is an invalid value for abil", abil))
+    }
+}
