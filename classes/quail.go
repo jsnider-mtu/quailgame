@@ -105,10 +105,66 @@ func (q *Quail) GetXP() int {
 }
 
 func (q *Quail) SavingThrow(ability string) int {
+    switch ability {
+    case "str":
+        return q.stats.strmod
+    case "dex":
+        return q.stats.dexmod
+    case "con":
+        return q.stats.conmod
+    case "intel":
+        return q.stats.intelmod
+    case "wis":
+        return q.stats.wismod
+    case "cha":
+        return q.stats.chamod
+    default:
+        log.Fatal(fmt.Sprintf("%s is not a valid ability (saving throw)", ability))
+    }
     return 0
 }
 
 func (q *Quail) SkillCheck(skill string) int {
+    switch skill {
+    case "acrobatics":
+        return q.stats.dexmod
+    case "animalhandling":
+        return q.stats.wismod
+    case "arcana":
+        return q.stats.intelmod
+    case "athletics":
+        return q.stats.strmod
+    case "deception":
+        return q.stats.chamod
+    case "history":
+        return q.stats.intelmod
+    case "insight":
+        return q.stats.wismod
+    case "intimidation":
+        return q.stats.chamod
+    case "investigation":
+        return q.stats.intelmod
+    case "medicine":
+        return q.stats.wismod
+    case "nature":
+        return q.stats.intelmod
+    case "perception":
+        return q.stats.wismod
+    case "performance":
+        return q.stats.chamod
+    case "persuasion":
+        return q.stats.chamod
+    case "religion":
+        return q.stats.intelmod
+    case "sleightofhand":
+        return q.stats.dexmod
+    case "stealth":
+        return q.stats.dexmod
+    case "survival":
+        return q.stats.wismod
+    default:
+        log.Fatal(fmt.Sprintf("%s is not a valid skill", skill))
+    }
     return 0
 }
 
