@@ -2097,80 +2097,25 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, "<", fo, 64, 512, color.White)
         text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
         text.Draw(screen, "Equipment:", fo, 32, 64, color.White)
-        if p.Equipment.Armor != nil {
-            text.Draw(screen, fmt.Sprintf("Armor: %s", p.Equipment.Armor.PrettyPrint()), fo, 64, 96, color.White)
-        } else {
-            text.Draw(screen, "Armor:", fo, 64, 96, color.Gray16{0x8000})
-        }
         if p.Equipment.Head != nil {
-            text.Draw(screen, fmt.Sprintf("Head: %s", p.Equipment.Head.PrettyPrint()), fo, 64, 128, color.White)
+            text.Draw(screen, fmt.Sprintf("Head: %s", p.Equipment.Head.PrettyPrint()), fo, 64, 96, color.White)
         } else {
-            text.Draw(screen, "Head:", fo, 64, 128, color.Gray16{0x8000})
+            text.Draw(screen, "Head:", fo, 64, 96, color.Gray16{0x8000})
         }
         if p.Equipment.Torso != nil {
-            text.Draw(screen, fmt.Sprintf("Torso: %s", p.Equipment.Torso.PrettyPrint()), fo, 64, 160, color.White)
+            text.Draw(screen, fmt.Sprintf("Torso: %s", p.Equipment.Torso.PrettyPrint()), fo, 64, 128, color.White)
         } else {
-            text.Draw(screen, "Torso:", fo, 64, 160, color.Gray16{0x8000})
+            text.Draw(screen, "Torso:", fo, 64, 128, color.Gray16{0x8000})
         }
         if p.Equipment.Legs != nil {
-            text.Draw(screen, fmt.Sprintf("Legs: %s", p.Equipment.Legs.PrettyPrint()), fo, 64, 192, color.White)
+            text.Draw(screen, fmt.Sprintf("Legs: %s", p.Equipment.Legs.PrettyPrint()), fo, 64, 160, color.White)
         } else {
-            text.Draw(screen, "Legs:", fo, 64, 192, color.Gray16{0x8000})
+            text.Draw(screen, "Legs:", fo, 64, 160, color.Gray16{0x8000})
         }
         if p.Equipment.Feet != nil {
-            text.Draw(screen, fmt.Sprintf("Feet: %s", p.Equipment.Feet.PrettyPrint()), fo, 64, 224, color.White)
+            text.Draw(screen, fmt.Sprintf("Feet: %s", p.Equipment.Feet.PrettyPrint()), fo, 64, 192, color.White)
         } else {
-            text.Draw(screen, "Feet:", fo, 64, 224, color.Gray16{0x8000})
-        }
-        if p.Equipment.LeftPinky != nil {
-            text.Draw(screen, fmt.Sprintf("Left Pinky: %s", p.Equipment.LeftPinky.PrettyPrint()), fo, 64, 256, color.White)
-        } else {
-            text.Draw(screen, "Left Pinky:", fo, 64, 256, color.Gray16{0x8000})
-        }
-        if p.Equipment.LeftRing != nil {
-            text.Draw(screen, fmt.Sprintf("Left Ring: %s", p.Equipment.LeftRing.PrettyPrint()), fo, 64, 288, color.White)
-        } else {
-            text.Draw(screen, "Left Ring:", fo, 64, 288, color.Gray16{0x8000})
-        }
-        if p.Equipment.LeftMid != nil {
-            text.Draw(screen, fmt.Sprintf("Left Middle: %s", p.Equipment.LeftMid.PrettyPrint()), fo, 64, 320, color.White)
-        } else {
-            text.Draw(screen, "Left Middle:", fo, 64, 320, color.Gray16{0x8000})
-        }
-        if p.Equipment.LeftInd != nil {
-            text.Draw(screen, fmt.Sprintf("Left Index: %s", p.Equipment.LeftInd.PrettyPrint()), fo, 64, 352, color.White)
-        } else {
-            text.Draw(screen, "Left Index:", fo, 64, 352, color.Gray16{0x8000})
-        }
-        if p.Equipment.LeftThumb != nil {
-            text.Draw(screen, fmt.Sprintf("Left Thumb: %s", p.Equipment.LeftThumb.PrettyPrint()), fo, 64, 384, color.White)
-        } else {
-            text.Draw(screen, "Left Thumb:", fo, 64, 384, color.Gray16{0x8000})
-        }
-        if p.Equipment.RightPinky != nil {
-            text.Draw(screen, fmt.Sprintf("Right Pinky: %s", p.Equipment.RightPinky.PrettyPrint()), fo, 64, 416, color.White)
-        } else {
-            text.Draw(screen, "Right Pinky:", fo, 64, 416, color.Gray16{0x8000})
-        }
-        if p.Equipment.RightRing != nil {
-            text.Draw(screen, fmt.Sprintf("Right Ring: %s", p.Equipment.RightRing.PrettyPrint()), fo, 64, 448, color.White)
-        } else {
-            text.Draw(screen, "Right Ring:", fo, 64, 448, color.Gray16{0x8000})
-        }
-        if p.Equipment.RightMid != nil {
-            text.Draw(screen, fmt.Sprintf("Right Middle: %s", p.Equipment.RightMid.PrettyPrint()), fo, 64, 480, color.White)
-        } else {
-            text.Draw(screen, "Right Middle:", fo, 64, 480, color.Gray16{0x8000})
-        }
-        if p.Equipment.RightInd != nil {
-            text.Draw(screen, fmt.Sprintf("Right Index: %s", p.Equipment.RightInd.PrettyPrint()), fo, 64, 512, color.White)
-        } else {
-            text.Draw(screen, "Right Index:", fo, 64, 512, color.Gray16{0x8000})
-        }
-        if p.Equipment.RightThumb != nil {
-            text.Draw(screen, fmt.Sprintf("Right Thumb: %s", p.Equipment.RightThumb.PrettyPrint()), fo, 64, 544, color.White)
-        } else {
-            text.Draw(screen, "Right Thumb:", fo, 64, 544, color.Gray16{0x8000})
+            text.Draw(screen, "Feet:", fo, 64, 192, color.Gray16{0x8000})
         }
         if p.Equipment.LeftHand != nil {
             text.Draw(screen, fmt.Sprintf("Left Hand: %s", p.Equipment.LeftHand.PrettyPrint()), fo, 384, 96, color.White)
@@ -2186,11 +2131,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
             text.Draw(screen, fmt.Sprintf("Both Hands: %s", p.Equipment.BothHands.PrettyPrint()), fo, 384, 160, color.White)
         } else {
             text.Draw(screen, "Both Hands:", fo, 384, 160, color.Gray16{0x8000})
-        }
-        if p.Equipment.Clothes != nil {
-            text.Draw(screen, fmt.Sprintf("Clothes: %s", p.Equipment.Clothes.PrettyPrint()), fo, 384, 192, color.White)
-        } else {
-            text.Draw(screen, "Clothes:", fo, 384, 192, color.Gray16{0x8000})
         }
     }
     if overworld {

@@ -4,7 +4,7 @@ type Scalemail struct {
 }
 
 func (s *Scalemail) Slot() string {
-    return "Armor"
+    return "Torso"
 }
 
 func (s *Scalemail) Use() (string, []int) {
@@ -20,7 +20,7 @@ func (s *Scalemail) PrettyPrint() string {
 }
 
 func (s *Scalemail) Function() string {
-    return "armor"
+    return "torso"
 }
 
 func (s *Scalemail) Damage() (int, int, string) {

@@ -26,8 +26,6 @@ func LoadItem(name string, quaity interface{}) inventory.Item {
         return &Candles{Quantity: quaityint}
     case "Chainmail":
         return &Chainmail{}
-    case "Clothes":
-        return &Clothes{Quality: quaity.(string)}
     case "Club":
         return &Club{}
     case "ComponentPouch":

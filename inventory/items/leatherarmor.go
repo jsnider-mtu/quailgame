@@ -4,7 +4,7 @@ type LeatherArmor struct {
 }
 
 func (l *LeatherArmor) Slot() string {
-    return "Armor"
+    return "Torso"
 }
 
 func (l *LeatherArmor) Use() (string, []int) {
@@ -20,7 +20,7 @@ func (l *LeatherArmor) PrettyPrint() string {
 }
 
 func (l *LeatherArmor) Function() string {
-    return "armor"
+    return "torso"
 }
 
 func (l *LeatherArmor) Damage() (int, int, string) {
