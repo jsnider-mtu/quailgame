@@ -203,6 +203,12 @@ var (
     throwTargetBoxVert *ebiten.Image
     shortrange int = 0
     longrange int = 0
+    gainProfST bool = false
+    gainprofstsel int = 0
+    gainProfSkill bool = false
+    gainprofskillsel int = 0
+    stprofexists string
+    skillprofexists string
 )
 
 var abilities = make([]int, 6)
@@ -501,6 +507,186 @@ func (g *Game) Update() error {
             p.Equipment = &player.Equipment{}
             creationsel = 0
             creation = false
+        }
+    } else if gainProfST {
+        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+            if gainprofstsel > 0 {
+                gainprofstsel--
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            if gainprofstsel < 5 {
+                gainprofstsel++
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            stprofexists = ""
+            switch gainprofstsel {
+            case 0:
+                if success := p.Class.AddProf("str"); !success {
+                    stprofexists = "strength"
+                } else {
+                    gainProfST = false
+                }
+            case 1:
+                if success := p.Class.AddProf("dex"); !success {
+                    stprofexists = "dexterity"
+                } else {
+                    gainProfST = false
+                }
+            case 2:
+                if success := p.Class.AddProf("con"); !success {
+                    stprofexists = "constitution"
+                } else {
+                    gainProfST = false
+                }
+            case 3:
+                if success := p.Class.AddProf("intel"); !success {
+                    stprofexists = "intelligence"
+                } else {
+                    gainProfST = false
+                }
+            case 4:
+                if success := p.Class.AddProf("wis"); !success {
+                    stprofexists = "wisdom"
+                } else {
+                    gainProfST = false
+                }
+            case 5:
+                if success := p.Class.AddProf("cha"); !success {
+                    stprofexists = "charisma"
+                } else {
+                    gainProfST = false
+                }
+            default:
+                log.Fatal(fmt.Sprintf("%d is not a valid value for gainprofstsel", gainprofstsel))
+            }
+        }
+    } else if gainProfSkill {
+        if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
+            if gainprofskillsel > 0 {
+                gainprofskillsel--
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
+            if gainprofskillsel < 17 {
+                gainprofskillsel++
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+            skillprofexists = ""
+            switch gainprofskillsel {
+            case 0:
+                if success := p.Class.AddProf("acrobatics"); !success {
+                    skillprofexists = "acrobatics"
+                } else {
+                    gainProfSkill = false
+                }
+            case 1:
+                if success := p.Class.AddProf("animalhandling"); !success {
+                    skillprofexists = "animalhandling"
+                } else {
+                    gainProfSkill = false
+                }
+            case 2:
+                if success := p.Class.AddProf("arcana"); !success {
+                    skillprofexists = "arcana"
+                } else {
+                    gainProfSkill = false
+                }
+            case 3:
+                if success := p.Class.AddProf("athletics"); !success {
+                    skillprofexists = "athletics"
+                } else {
+                    gainProfSkill = false
+                }
+            case 4:
+                if success := p.Class.AddProf("deception"); !success {
+                    skillprofexists = "deception"
+                } else {
+                    gainProfSkill = false
+                }
+            case 5:
+                if success := p.Class.AddProf("history"); !success {
+                    skillprofexists = "history"
+                } else {
+                    gainProfSkill = false
+                }
+            case 6:
+                if success := p.Class.AddProf("insight"); !success {
+                    skillprofexists = "insight"
+                } else {
+                    gainProfSkill = false
+                }
+            case 7:
+                if success := p.Class.AddProf("intimidation"); !success {
+                    skillprofexists = "intimidation"
+                } else {
+                    gainProfSkill = false
+                }
+            case 8:
+                if success := p.Class.AddProf("investigation"); !success {
+                    skillprofexists = "investigation"
+                } else {
+                    gainProfSkill = false
+                }
+            case 9:
+                if success := p.Class.AddProf("medicine"); !success {
+                    skillprofexists = "medicine"
+                } else {
+                    gainProfSkill = false
+                }
+            case 10:
+                if success := p.Class.AddProf("nature"); !success {
+                    skillprofexists = "nature"
+                } else {
+                    gainProfSkill = false
+                }
+            case 11:
+                if success := p.Class.AddProf("perception"); !success {
+                    skillprofexists = "perception"
+                } else {
+                    gainProfSkill = false
+                }
+            case 12:
+                if success := p.Class.AddProf("performance"); !success {
+                    skillprofexists = "performance"
+                } else {
+                    gainProfSkill = false
+                }
+            case 13:
+                if success := p.Class.AddProf("persuasion"); !success {
+                    skillprofexists = "persuasion"
+                } else {
+                    gainProfSkill = false
+                }
+            case 14:
+                if success := p.Class.AddProf("religion"); !success {
+                    skillprofexists = "religion"
+                } else {
+                    gainProfSkill = false
+                }
+            case 15:
+                if success := p.Class.AddProf("sleightofhand"); !success {
+                    skillprofexists = "sleight of hand"
+                } else {
+                    gainProfSkill = false
+                }
+            case 16:
+                if success := p.Class.AddProf("stealth"); !success {
+                    skillprofexists = "stealth"
+                } else {
+                    gainProfSkill = false
+                }
+            case 17:
+                if success := p.Class.AddProf("survival"); !success {
+                    skillprofexists = "survival"
+                } else {
+                    gainProfSkill = false
+                }
+            default:
+                log.Fatal(fmt.Sprintf("%d is not a valid value for gainprofskillsel", gainprofskillsel))
+            }
         }
     } else {
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
@@ -2250,6 +2436,208 @@ func (g *Game) Draw(screen *ebiten.Image) {
             lvlloaded = false
         }
     }
+    if gainProfST {
+        screen.DrawImage(blankImage, nil)
+        text.Draw(screen, fmt.Sprintf("You're now level %d!\nGain proficiency in a saving throw:", p.Class.GetLevel()), fo, 32, 64, color.White)
+        switch gainprofstsel {
+        case 0:
+            text.Draw(screen, ">", fo, 32, 96, color.White)
+        case 1:
+            text.Draw(screen, ">", fo, 32, 128, color.White)
+        case 2:
+            text.Draw(screen, ">", fo, 32, 160, color.White)
+        case 3:
+            text.Draw(screen, ">", fo, 32, 192, color.White)
+        case 4:
+            text.Draw(screen, ">", fo, 32, 224, color.White)
+        case 5:
+            text.Draw(screen, ">", fo, 32, 256, color.White)
+        default:
+            log.Fatal(fmt.Sprintf("%d is not a valid gainprofstsel", gainprofstsel))
+        }
+        _, strmod := p.Class.GetStr()
+        if p.Class.SavingThrow("str") > strmod {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 40, 96, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 40, 96, color.White)
+        }
+        _, dexmod := p.Class.GetDex()
+        if p.Class.SavingThrow("dex") > dexmod {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("dex")), fo, 40, 128, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("dex")), fo, 40, 128, color.White)
+        }
+        _, conmod := p.Class.GetCon()
+        if p.Class.SavingThrow("con") > conmod {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("con")), fo, 40, 160, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("con")), fo, 40, 160, color.White)
+        }
+        _, intelmod := p.Class.GetStr()
+        if p.Class.SavingThrow("intel") > intelmod {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("intel")), fo, 40, 192, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("intel")), fo, 40, 192, color.White)
+        }
+        _, wismod := p.Class.GetWis()
+        if p.Class.SavingThrow("wis") > wismod {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("wis")), fo, 40, 224, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("wis")), fo, 40, 224, color.White)
+        }
+        _, chamod := p.Class.GetCha()
+        if p.Class.SavingThrow("cha") > chamod {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("cha")), fo, 40, 256, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("cha")), fo, 40, 256, color.White)
+        }
+        if stprofexists != "" {
+            text.Draw(screen, fmt.Sprintf("You are already proficient in %s saving throws", stprofexists), fo, 64, 16, color.RGBA{159, 11, 19, 255})
+        }
+    }
+    if gainProfSkill {
+        screen.DrawImage(blankImage, nil)
+        text.Draw(screen, fmt.Sprintf("You're now level %d!\nGain proficiency in a saving throw:", p.Class.GetLevel()), fo, 32, 64, color.White)
+        switch gainprofskillsel {
+        case 0:
+            text.Draw(screen, ">", fo, 32, 96, color.White)
+        case 1:
+            text.Draw(screen, ">", fo, 32, 128, color.White)
+        case 2:
+            text.Draw(screen, ">", fo, 32, 160, color.White)
+        case 3:
+            text.Draw(screen, ">", fo, 32, 192, color.White)
+        case 4:
+            text.Draw(screen, ">", fo, 32, 224, color.White)
+        case 5:
+            text.Draw(screen, ">", fo, 32, 256, color.White)
+        case 6:
+            text.Draw(screen, ">", fo, 32, 288, color.White)
+        case 7:
+            text.Draw(screen, ">", fo, 32, 320, color.White)
+        case 8:
+            text.Draw(screen, ">", fo, 32, 352, color.White)
+        case 9:
+            text.Draw(screen, ">", fo, 256, 96, color.White)
+        case 10:
+            text.Draw(screen, ">", fo, 256, 128, color.White)
+        case 11:
+            text.Draw(screen, ">", fo, 256, 160, color.White)
+        case 12:
+            text.Draw(screen, ">", fo, 256, 192, color.White)
+        case 13:
+            text.Draw(screen, ">", fo, 256, 224, color.White)
+        case 14:
+            text.Draw(screen, ">", fo, 256, 256, color.White)
+        case 15:
+            text.Draw(screen, ">", fo, 256, 288, color.White)
+        case 16:
+            text.Draw(screen, ">", fo, 256, 320, color.White)
+        case 17:
+            text.Draw(screen, ">", fo, 256, 352, color.White)
+        default:
+            log.Fatal(fmt.Sprintf("%d is not a valid gainprofskillsel", gainprofstsel))
+        }
+        _, strmod := p.Class.GetStr()
+        _, dexmod := p.Class.GetDex()
+        _, conmod := p.Class.GetCon()
+        _, intelmod := p.Class.GetIntel()
+        _, wismod := p.Class.GetWis()
+        _, chamod := p.Class.GetCha()
+        if p.Class.SkillCheck("acrobatics") > dexmod {
+            text.Draw(screen, fmt.Sprintf("Acrobatics: %+d", p.Class.SkillCheck("acrobatics")), fo, 40, 96, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Acrobatics: %+d", p.Class.SkillCheck("acrobatics")), fo, 40, 96, color.White)
+        }
+        if p.Class.SkillCheck("animalhandling") > wismod {
+            text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Class.SkillCheck("animalhandling")), fo, 40, 128, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Class.SkillCheck("animalhandling")), fo, 40, 128, color.White)
+        }
+        if p.Class.SkillCheck("arcana") > intelmod {
+            text.Draw(screen, fmt.Sprintf("Arcana: %+d", p.Class.SkillCheck("arcana")), fo, 40, 160, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Arcana: %+d", p.Class.SkillCheck("arcana")), fo, 40, 160, color.White)
+        }
+        if p.Class.SkillCheck("athletics") > strmod {
+            text.Draw(screen, fmt.Sprintf("Athletics: %+d", p.Class.SkillCheck("athletics")), fo, 40, 192, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Athletics: %+d", p.Class.SkillCheck("athletics")), fo, 40, 192, color.White)
+        }
+        if p.Class.SkillCheck("deception") > chamod {
+            text.Draw(screen, fmt.Sprintf("Deception: %+d", p.Class.SkillCheck("deception")), fo, 40, 224, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Deception: %+d", p.Class.SkillCheck("deception")), fo, 40, 224, color.White)
+        }
+        if p.Class.SkillCheck("history") > intelmod {
+            text.Draw(screen, fmt.Sprintf("History: %+d", p.Class.SkillCheck("history")), fo, 40, 256, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("History: %+d", p.Class.SkillCheck("history")), fo, 40, 256, color.White)
+        }
+        if p.Class.SkillCheck("insight") > wismod {
+            text.Draw(screen, fmt.Sprintf("Insight: %+d", p.Class.SkillCheck("insight")), fo, 40, 288, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Insight: %+d", p.Class.SkillCheck("insight")), fo, 40, 288, color.White)
+        }
+        if p.Class.SkillCheck("intimidation") > chamod {
+            text.Draw(screen, fmt.Sprintf("Intimidation: %+d", p.Class.SkillCheck("intimidation")), fo, 40, 320, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Intimidation: %+d", p.Class.SkillCheck("intimidation")), fo, 40, 320, color.White)
+        }
+        if p.Class.SkillCheck("investigation") > intelmod {
+            text.Draw(screen, fmt.Sprintf("Investigation: %+d", p.Class.SkillCheck("investigation")), fo, 40, 352, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Investigation: %+d", p.Class.SkillCheck("investigation")), fo, 40, 352, color.White)
+        }
+        if p.Class.SkillCheck("medicine") > wismod {
+            text.Draw(screen, fmt.Sprintf("Medicine: %+d", p.Class.SkillCheck("medicine")), fo, 264, 96, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Medicine: %+d", p.Class.SkillCheck("medicine")), fo, 264, 96, color.White)
+        }
+        if p.Class.SkillCheck("nature") > intelmod {
+            text.Draw(screen, fmt.Sprintf("Nature: %+d", p.Class.SkillCheck("nature")), fo, 264, 128, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Nature: %+d", p.Class.SkillCheck("nature")), fo, 264, 128, color.White)
+        }
+        if p.Class.SkillCheck("perception") > wismod {
+            text.Draw(screen, fmt.Sprintf("Perception: %+d", p.Class.SkillCheck("perception")), fo, 264, 160, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Perception: %+d", p.Class.SkillCheck("perception")), fo, 264, 160, color.White)
+        }
+        if p.Class.SkillCheck("performance") > chamod {
+            text.Draw(screen, fmt.Sprintf("Performance: %+d", p.Class.SkillCheck("performance")), fo, 264, 192, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Performance: %+d", p.Class.SkillCheck("performance")), fo, 264, 192, color.White)
+        }
+        if p.Class.SkillCheck("persuasion") > chamod {
+            text.Draw(screen, fmt.Sprintf("Persuasion: %+d", p.Class.SkillCheck("persuasion")), fo, 264, 224, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Persuasion: %+d", p.Class.SkillCheck("persuasion")), fo, 264, 224, color.White)
+        }
+        if p.Class.SkillCheck("religion") > intelmod {
+            text.Draw(screen, fmt.Sprintf("Religion: %+d", p.Class.SkillCheck("religion")), fo, 264, 256, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Religion: %+d", p.Class.SkillCheck("religion")), fo, 264, 256, color.White)
+        }
+        if p.Class.SkillCheck("sleightofhand") > dexmod {
+            text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Class.SkillCheck("sleightofhand")), fo, 264, 288, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Class.SkillCheck("sleightofhand")), fo, 264, 288, color.White)
+        }
+        if p.Class.SkillCheck("stealth") > dexmod {
+            text.Draw(screen, fmt.Sprintf("Stealth: %+d", p.Class.SkillCheck("stealth")), fo, 264, 320, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Stealth: %+d", p.Class.SkillCheck("stealth")), fo, 264, 320, color.White)
+        }
+        if p.Class.SkillCheck("survival") > wismod {
+            text.Draw(screen, fmt.Sprintf("Survival: %+d", p.Class.SkillCheck("survival")), fo, 264, 352, color.Gray16{0x8000})
+        } else {
+            text.Draw(screen, fmt.Sprintf("Survival: %+d", p.Class.SkillCheck("survival")), fo, 264, 352, color.White)
+        }
+        if skillprofexists != "" {
+            text.Draw(screen, fmt.Sprintf("You are already proficient in the skill %s", skillprofexists), fo, 64, 16, color.RGBA{159, 11, 19, 255})
+        }
+    }
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int)  {
@@ -2631,6 +3019,55 @@ func Input(sb *strings.Builder) {
         } else {
             err = sb.WriteByte('/')
         }
+    }
+    return
+}
+
+func levelUp(p *player.Player) {
+    switch p.Class.GetLevel() {
+    case 1:
+        gainProfSkill = true
+    case 2:
+        gainProfST = true
+    case 3:
+        gainProfSkill = true
+    case 4:
+        gainProfST = true
+    case 5:
+        gainProfSkill = true
+    case 6:
+        gainProfST = true
+    case 7:
+        gainProfSkill = true
+    case 8:
+        gainProfST = true
+    case 9:
+        gainProfSkill = true
+    case 10:
+        gainProfST = true
+    case 11:
+        gainProfSkill = true
+    case 12:
+        gainProfST = true
+    case 13:
+        gainProfSkill = true
+    case 14:
+        gainProfST = true
+    case 15:
+        gainProfSkill = true
+    case 16:
+        gainProfST = true
+    case 17:
+        gainProfSkill = true
+    case 18:
+        gainProfST = true
+    case 19:
+        gainProfSkill = true
+    default:
+        log.Print("Already max level")
+    }
+    if p.Class.GetLevel() < 20 {
+        p.Class.LevelUp()
     }
     return
 }

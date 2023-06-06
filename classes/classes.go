@@ -23,7 +23,8 @@ type Class interface {
     Illuminated() (bool, [3]int)
     Save() string
     EarnXP(int) bool
-    LevelUp() bool
+    AddProf(string) bool
+    LevelUp()
 }
 
 type Stats struct {

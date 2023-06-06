@@ -8,6 +8,7 @@ import (
 
 type Quail struct {
     stats *Stats
+    proficiencies []string
     level int
     xp int
     illuminated [3]int
@@ -103,19 +104,43 @@ func (q *Quail) GetXP() int {
 }
 
 func (q *Quail) SavingThrow(ability string) int {
+    strval := q.stats.strmod
+    dexval := q.stats.dexmod
+    conval := q.stats.conmod
+    intelval := q.stats.intelmod
+    wisval := q.stats.wismod
+    chaval := q.stats.chamod
+    for _, v := range q.proficiencies {
+        switch v {
+        case "str":
+            strval += q.stats.pb
+        case "dex":
+            dexval += q.stats.pb
+        case "con":
+            conval += q.stats.pb
+        case "intel":
+            intelval += q.stats.pb
+        case "wis":
+            wisval += q.stats.pb
+        case "cha":
+            chaval += q.stats.pb
+        default:
+            log.Fatal(fmt.Sprintf("%s is not a valid proficiency", v))
+        }
+    }
     switch ability {
     case "str":
-        return q.stats.strmod
+        return strval
     case "dex":
-        return q.stats.dexmod
+        return dexval
     case "con":
-        return q.stats.conmod
+        return conval
     case "intel":
-        return q.stats.intelmod
+        return intelval
     case "wis":
-        return q.stats.wismod
+        return wisval
     case "cha":
-        return q.stats.chamod
+        return chaval
     default:
         log.Fatal(fmt.Sprintf("%s is not a valid ability (saving throw)", ability))
     }
@@ -123,43 +148,103 @@ func (q *Quail) SavingThrow(ability string) int {
 }
 
 func (q *Quail) SkillCheck(skill string) int {
+    acr := q.stats.dexmod
+    ani := q.stats.wismod
+    arc := q.stats.intelmod
+    ath := q.stats.strmod
+    dec := q.stats.chamod
+    his := q.stats.intelmod
+    ins := q.stats.wismod
+    inti := q.stats.chamod
+    inv := q.stats.intelmod
+    med := q.stats.wismod
+    nat := q.stats.intelmod
+    perc := q.stats.wismod
+    perf := q.stats.chamod
+    pers := q.stats.chamod
+    rel := q.stats.intelmod
+    sle := q.stats.dexmod
+    ste := q.stats.dexmod
+    sur := q.stats.wismod
+    for _, v := range q.proficiencies {
+        switch v {
+        case "acrobatics":
+            acr += q.stats.pb
+        case "animalhandling":
+            ani += q.stats.pb
+        case "arcana":
+            arc += q.stats.pb
+        case "athletics":
+            ath += q.stats.pb
+        case "deception":
+            dec += q.stats.pb
+        case "history":
+            his += q.stats.pb
+        case "insight":
+            ins += q.stats.pb
+        case "intimidation":
+            inti += q.stats.pb
+        case "investigation":
+            inv += q.stats.pb
+        case "medicine":
+            med += q.stats.pb
+        case "nature":
+            nat += q.stats.pb
+        case "perception":
+            perc += q.stats.pb
+        case "performance":
+            perf += q.stats.pb
+        case "persuasion":
+            pers += q.stats.pb
+        case "religion":
+            rel += q.stats.pb
+        case "sleightofhand":
+            sle += q.stats.pb
+        case "stealth":
+            ste += q.stats.pb
+        case "survival":
+            sur += q.stats.pb
+        default:
+            log.Fatal(fmt.Sprintf("%s is not a valid proficiency", v))
+        }
+    }
     switch skill {
     case "acrobatics":
-        return q.stats.dexmod
+        return acr
     case "animalhandling":
-        return q.stats.wismod
+        return ani
     case "arcana":
-        return q.stats.intelmod
+        return arc
     case "athletics":
-        return q.stats.strmod
+        return ath
     case "deception":
-        return q.stats.chamod
+        return dec
     case "history":
-        return q.stats.intelmod
+        return his
     case "insight":
-        return q.stats.wismod
+        return ins
     case "intimidation":
-        return q.stats.chamod
+        return inti
     case "investigation":
-        return q.stats.intelmod
+        return inv
     case "medicine":
-        return q.stats.wismod
+        return med
     case "nature":
-        return q.stats.intelmod
+        return nat
     case "perception":
-        return q.stats.wismod
+        return perc
     case "performance":
-        return q.stats.chamod
+        return perf
     case "persuasion":
-        return q.stats.chamod
+        return pers
     case "religion":
-        return q.stats.intelmod
+        return rel
     case "sleightofhand":
-        return q.stats.dexmod
+        return sle
     case "stealth":
-        return q.stats.dexmod
+        return ste
     case "survival":
-        return q.stats.wismod
+        return sur
     default:
         log.Fatal(fmt.Sprintf("%s is not a valid skill", skill))
     }
@@ -194,13 +279,77 @@ func (q *Quail) Save() string {
 func (q *Quail) EarnXP(earnedxp int) bool {
     q.xp += earnedxp
     if q.xp >= 300 + ((q.GetLevel() - 1) * 300) {
-        if success := q.LevelUp(); !success {
-            log.Fatal(fmt.Sprintf("Leveling up to %d failed", q.GetLevel() + 1))
+        return true
+    }
+    return false
+}
+
+func (q *Quail) AddProf(trait string) bool {
+    for _, val := range q.proficiencies {
+        if trait == val {
+            return false
         }
+    }
+    switch trait {
+    case "str":
+        q.proficiencies = append(q.proficiencies, "str")
+    case "dex":
+        q.proficiencies = append(q.proficiencies, "dex")
+    case "con":
+        q.proficiencies = append(q.proficiencies, "con")
+    case "intel":
+        q.proficiencies = append(q.proficiencies, "intel")
+    case "wis":
+        q.proficiencies = append(q.proficiencies, "wis")
+    case "cha":
+        q.proficiencies = append(q.proficiencies, "cha")
+    case "acrobatics":
+        q.proficiencies = append(q.proficiencies, "acrobatics")
+    case "animalhandling":
+        q.proficiencies = append(q.proficiencies, "animalhandling")
+    case "arcana":
+        q.proficiencies = append(q.proficiencies, "arcana")
+    case "athletics":
+        q.proficiencies = append(q.proficiencies, "athletics")
+    case "deception":
+        q.proficiencies = append(q.proficiencies, "deception")
+    case "history":
+        q.proficiencies = append(q.proficiencies, "history")
+    case "insight":
+        q.proficiencies = append(q.proficiencies, "insight")
+    case "intimidation":
+        q.proficiencies = append(q.proficiencies, "intimidation")
+    case "investigation":
+        q.proficiencies = append(q.proficiencies, "investigation")
+    case "medicine":
+        q.proficiencies = append(q.proficiencies, "medicine")
+    case "nature":
+        q.proficiencies = append(q.proficiencies, "nature")
+    case "perception":
+        q.proficiencies = append(q.proficiencies, "perception")
+    case "performance":
+        q.proficiencies = append(q.proficiencies, "performance")
+    case "persuasion":
+        q.proficiencies = append(q.proficiencies, "persuasion")
+    case "religion":
+        q.proficiencies = append(q.proficiencies, "religion")
+    case "sleightofhand":
+        q.proficiencies = append(q.proficiencies, "sleightofhand")
+    case "stealth":
+        q.proficiencies = append(q.proficiencies, "stealth")
+    case "survival":
+        q.proficiencies = append(q.proficiencies, "survival")
+    default:
+        log.Fatal(fmt.Sprintf("%s is not a skill or saving throw", trait))
     }
     return true
 }
 
-func (q *Quail) LevelUp() bool {
-    return true
+func (q *Quail) LevelUp() {
+    if q.level < 20 {
+        q.level += 1
+    } else {
+        log.Print(fmt.Sprintf("Level is %d, cannot level more", q.level))
+    }
+    return
 }
