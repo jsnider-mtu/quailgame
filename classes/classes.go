@@ -1,10 +1,7 @@
 package classes
 
 import (
-//    "errors"
-//    "fmt"
     "sort"
-//    "strconv"
 )
 
 type Class interface {
@@ -41,19 +38,6 @@ type Stats struct {
     cha int
     chamod int
     pb int
-    //SavingThrows map[string]int
-    //Skills map[string]int
-    //Languages []string
-    //Inspiration bool
-    //Darkvision bool
-    //Proficiencies []string
-    //Resistances []string
-    //Lucky bool
-    //Nimbleness bool
-    //Brave bool
-    //Ancestry string
-    //Illuminated []int
-    //Oiled int
 }
 
 func (s *Stats) Save() []int {

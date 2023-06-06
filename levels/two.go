@@ -4,7 +4,6 @@ import (
     "bytes"
     "fmt"
     "image"
-//    _ "image/jpeg"
     _ "image/png"
     "log"
     "math/rand"

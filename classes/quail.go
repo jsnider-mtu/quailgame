@@ -4,8 +4,6 @@ import (
     "fmt"
     "log"
     "strconv"
-
-//    "github.com/jsnider-mtu/quailgame/player"
 )
 
 type Quail struct {

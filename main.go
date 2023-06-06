@@ -216,7 +216,7 @@ var spellsslice = make([]string, 0)
 var c1 = make(chan int)
 
 var classessli = []string{
-    "Barbarian", "Bard", "Cleric",
+    "Quail", "Bard", "Cleric",
     "Druid", "Fighter", "Monk",
     "Paladin", "Ranger", "Rogue",
     "Sorceror", "Warlock", "Wizard"}
@@ -473,12 +473,6 @@ func (g *Game) Update() error {
             p.Inv.Clear()
             curCS = 0
             csDone = make([]int, 0)
-//            proficiencies = make([]string, 0)
-//            resistances = make([]string, 0)
-//            languages = make([]string, 0)
-//            darkvision = false
-//            lucky = false
-//            nimbleness = false
             onescore := make([]int, 4)
             for x := 0; x < 6; x++ {
                 for a := 0; a < 4; a++ {
@@ -493,142 +487,9 @@ func (g *Game) Update() error {
             sort.Slice(abilities, func(i, j int) bool {
                 return abilities[i] > abilities[j]
             })
-//            p.Class, err = classes.Create(creationsel, abilities)
-//            if err != nil {
-//                panic(err)
-//            }
             switch creationsel {
             case 0:
                 p.Class = &classes.Quail{}
-//                p.Class.Create(abilities)
-//                str = abilities[0]
-//                con = abilities[1]
-//                dex = abilities[2]
-//                intel = abilities[3]
-//                wis = abilities[4]
-//                cha = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "light armor", "medium armor", "shields",
-//                    "simple weapons", "martial weapons")
-//            case 1:
-//                cha = abilities[0]
-//                dex = abilities[1]
-//                con = abilities[2]
-//                intel = abilities[3]
-//                wis = abilities[4]
-//                str = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "light armor", "simple weapons", "hand crossbows",
-//                    "longswords", "rapiers", "shortswords") // 3 instruments
-//            case 2:
-//                wis = abilities[0]
-//                con = abilities[1]
-//                str = abilities[2]
-//                dex = abilities[3]
-//                intel = abilities[4]
-//                cha = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "light armor", "medium armor", "shields",
-//                    "simple weapons")
-//            case 3:
-//                wis = abilities[0]
-//                con = abilities[1]
-//                dex = abilities[2]
-//                intel = abilities[3]
-//                str = abilities[4]
-//                cha = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "light armor", "medium armor", "shields",
-//                    "clubs", "daggers", "darts", "javelins", "maces",
-//                    "quarterstaffs", "scimitars", "sickles", "slings",
-//                    "spears", "herbalism kit")
-//            case 4:
-//                str = abilities[0]
-//                con = abilities[1]
-//                dex = abilities[2]
-//                intel = abilities[3]
-//                wis = abilities[4]
-//                cha = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "all armor", "shields", "simple weapons", "martial weapons")
-//            case 5:
-//                dex = abilities[0]
-//                wis = abilities[1]
-//                str= abilities[2]
-//                con = abilities[3]
-//                intel = abilities[4]
-//                cha = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "simple weapons", "shortswords") // one artisan tools or one instrument
-//            case 6:
-//                str = abilities[0]
-//                cha = abilities[1]
-//                con = abilities[2]
-//                wis = abilities[3]
-//                dex = abilities[4]
-//                intel = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "all armor", "shields", "simple weapons", "martial weapons")
-//            case 7:
-//                dex = abilities[0]
-//                wis = abilities[1]
-//                con = abilities[2]
-//                intel = abilities[3]
-//                str = abilities[4]
-//                cha = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "light armor", "medium armor", "shields", "simple weapons",
-//                    "martial weapons")
-//            case 8:
-//                dex = abilities[0]
-//                cha = abilities[1]
-//                con = abilities[2]
-//                intel = abilities[3]
-//                wis = abilities[4]
-//                str = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "light armor", "simple weapons", "hand crossbows", "longswords",
-//                    "rapiers", "shortswords", "thieves tools")
-//            case 9:
-//                cha = abilities[0]
-//                con = abilities[1]
-//                intel = abilities[2]
-//                dex = abilities[3]
-//                wis = abilities[4]
-//                str = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "daggers", "darts", "slings", "quarterstaffs",
-//                    "light crossbows")
-//            case 10:
-//                cha = abilities[0]
-//                con = abilities[1]
-//                dex = abilities[2]
-//                intel = abilities[3]
-//                wis = abilities[4]
-//                str = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "light armor", "simple weapons")
-//            case 11:
-//                intel = abilities[0]
-//                con = abilities[1]
-//                dex = abilities[2]
-//                cha = abilities[3]
-//                wis = abilities[4]
-//                str = abilities[5]
-//                pb = 2
-//                proficiencies = append(proficiencies,
-//                    "daggers", "darts", "slings", "quarterstaffs", "light crossbows")
             default:
                 return errors.New("Invalid value for creationsel")
             }
@@ -637,136 +498,6 @@ func (g *Game) Update() error {
             if cc := p.Class.Create(abilarr); !cc {
                 panic("Character creation failed")
             }
-//            p.Class = classes.Create(creationsel, abilities)
-//            if str < 10 && str % 2 == 1 {
-//                strmod = ((str - 10) / 2) - 1
-//            } else {
-//                strmod = (str - 10) / 2
-//            }
-//            if dex < 10 && dex % 2 == 1 {
-//                dexmod = ((dex - 10) / 2) - 1
-//            } else {
-//                dexmod = (dex - 10) / 2
-//            }
-//            if con < 10 && con % 2 == 1 {
-//                conmod = ((con - 10) / 2) - 1
-//            } else {
-//                conmod = (con - 10) / 2
-//            }
-//            if intel < 10 && intel % 2 == 1 {
-//                intelmod = ((intel - 10) / 2) - 1
-//            } else {
-//                intelmod = (intel - 10) / 2
-//            }
-//            if wis < 10 && wis % 2 == 1 {
-//                wismod = ((wis - 10) / 2) - 1
-//            } else {
-//                wismod = (wis - 10) / 2
-//            }
-//            if cha < 10 && cha % 2 == 1 {
-//                chamod = ((cha - 10) / 2) - 1
-//            } else {
-//                chamod = (cha - 10) / 2
-//            }
-//            savingthrows["str"] = strmod
-//            savingthrows["dex"] = dexmod
-//            savingthrows["con"] = conmod
-//            savingthrows["intel"] = intelmod
-//            savingthrows["wis"] = wismod
-//            savingthrows["cha"] = chamod
-//            skills := make(map[string]int)
-//            skills["acrobatics"] = dexmod
-//            skills["animal handling"] = wismod
-//            skills["arcana"] = intelmod
-//            skills["athletics"] = strmod
-//            skills["deception"] = chamod
-//            skills["history"] = intelmod
-//            skills["insight"] = wismod
-//            skills["intimidation"] = chamod
-//            skills["investigation"] = intelmod
-//            skills["medicine"] = wismod
-//            skills["nature"] = intelmod
-//            skills["perception"] = wismod
-//            skills["performance"] = chamod
-//            skills["persuasion"] = chamod
-//            skills["religion"] = intelmod
-//            skills["sleight of hand"] = dexmod
-//            skills["stealth"] = dexmod
-//            skills["survival"] = wismod
-//            for _, skill := range proficiencies {
-//                switch skill {
-//                    case "acrobatics":
-//                        skills["acrobatics"] += pb
-//                    case "animal handling":
-//                        skills["animal handling"] += pb
-//                    case "arcana":
-//                        skills["arcana"] += pb
-//                    case "athletics":
-//                        skills["athletics"] += pb
-//                    case "deception":
-//                        skills["deception"] += pb
-//                    case "history":
-//                        skills["history"] += pb
-//                    case "insight":
-//                        skills["insight"] += pb
-//                    case "intimidation":
-//                        skills["intimidation"] += pb
-//                    case "investigation":
-//                        skills["investigation"] += pb
-//                    case "medicine":
-//                        skills["medicine"] += pb
-//                    case "nature":
-//                        skills["nature"] += pb
-//                    case "perception":
-//                        skills["perception"] += pb
-//                    case "performance":
-//                        skills["performance"] += pb
-//                    case "persuasion":
-//                        skills["persuasion"] += pb
-//                    case "religion":
-//                        skills["religion"] += pb
-//                    case "sleight of hand":
-//                        skills["sleight of hand"] += pb
-//                    case "stealth":
-//                        skills["stealth"] += pb
-//                    case "survival":
-//                        skills["survival"] += pb
-//                    default:
-//                        continue
-//                }
-//            }
-//            p.Stats = &player.Stats{
-//                Str: str,
-//                StrMod: strmod,
-//                Dex: dex,
-//                DexMod: dexmod,
-//                Con: con,
-//                ConMod: conmod,
-//                Intel: intel,
-//                IntelMod: intelmod,
-//                Wis: wis,
-//                WisMod: wismod,
-//                Cha: cha,
-//                ChaMod: chamod,
-//                ProfBonus: pb,
-//                SavingThrows: savingthrows,
-//                Skills: skills,
-//                Languages: languages,
-//                //Size: size,
-//                Inspiration: false,
-//                Darkvision: darkvision,
-//                Proficiencies: proficiencies,
-//                Resistances: resistances,
-//                Lucky: lucky,
-//                Nimbleness: nimbleness,
-//                Brave: brave,
-//                Ancestry: ancestry,
-//                Illuminated: []int{},
-//                Oiled: 0,
-//            }
-//            p.Class = classes[creationsel]
-//            p.Level = 1
-//            p.XP = 0
             p.Equipment = &player.Equipment{}
             creationsel = 0
             creation = false
@@ -824,31 +555,6 @@ func (g *Game) Update() error {
             if (dur / 1000000000) % 6 == 0 {
                 if nextturn {
                     log.Println("Next turn")
-//                    if len(p.Stats.Illuminated) == 3 {
-//                        p.Stats.Illuminated[2]--
-//                        if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
-//                            p.Equipment.LeftHand.(*items.Candles).Turns--
-//                        } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
-//                            p.Equipment.LeftHand.(*items.Lamp).Turns--
-//                        }
-//                        if p.Stats.Illuminated[2] == 0 {
-//                            p.Stats.Illuminated = []int{}
-//                            if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
-//                                p.Equipment.LeftHand.(*items.Candles).Quantity--
-//                            } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
-//                                p.Equipment.LeftHand.(*items.Lamp).Quantity--
-//                            }
-//                            p.Unequip("LeftHand")
-//                        }
-//                    }
-//                    if p.Stats.Oiled > 0 {
-//                        p.Stats.Oiled--
-//                    }
-//                    for _, npc := range l.NPCs {
-//                        if npc.PC.Stats.Oiled > 0 {
-//                            npc.PC.Stats.Oiled--
-//                        }
-//                    }
                     nextturn = false
                 }
             } else {

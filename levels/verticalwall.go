@@ -4,16 +4,12 @@ import (
     "bytes"
     "fmt"
     "image"
-//    _ "image/jpeg"
     _ "image/png"
     "log"
-//    "math/rand"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/quailgame/levels/lvlimages"
     "github.com/jsnider-mtu/quailgame/npcs"
-//    "github.com/jsnider-mtu/quailgame/npcs/npcimages"
-//    "github.com/jsnider-mtu/quailgame/player"
 )
 
 func verticalWallLvl(entrance int) *Level {

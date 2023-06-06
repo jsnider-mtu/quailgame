@@ -2,59 +2,15 @@ package player
 
 import (
     "crypto/md5"
-//    "errors"
     "fmt"
     "log"
-//    "strconv"
     "strings"
 
     "github.com/hajimehoshi/ebiten/v2"
     "github.com/jsnider-mtu/quailgame/classes"
     "github.com/jsnider-mtu/quailgame/inventory"
     "github.com/jsnider-mtu/quailgame/inventory/items"
-//    "github.com/jsnider-mtu/quailgame/utils"
-
-//    "github.com/hajimehoshi/ebiten/v2/text"
 )
-
-//type Stats struct {
-//    //AC int
-//    Str int
-//    StrMod int
-//    Dex int
-//    DexMod int
-//    Con int
-//    ConMod int
-//    Intel int
-//    IntelMod int
-//    Wis int
-//    WisMod int
-//    Cha int
-//    ChaMod int
-//    ProfBonus int
-//    //Initiative int
-//    SavingThrows map[string]int
-//    Skills map[string]int
-//    //Speed int
-//    //MaxHP int
-//    //HP int
-//    //TempHP int
-//    //HitDice string
-//    //DeathSaveSucc int
-//    //DeathSaveFail int
-//    Languages []string
-//    //Size int
-//    Inspiration bool
-//    Darkvision bool
-//    Proficiencies []string
-//    Resistances []string
-//    Lucky bool
-//    Nimbleness bool
-//    Brave bool
-//    Ancestry string
-//    Illuminated []int
-//    Oiled int
-//}
 
 type Equipment struct {
     Armor inventory.Item
@@ -83,100 +39,11 @@ type Player struct {
     Pos [2]int
     Inv *inventory.Inv
     Image *ebiten.Image
-    //Stats *Stats
-    //Class string
     Class classes.Class
-    //Level int
-    //XP int
     Equipment *Equipment
-    //CurLevel string
     WriteMsg string
     PageMsgs [][]interface{}
 }
-
-//func (s *Stats) Check() error {
-//    return nil
-//}
-
-//func (s *Stats) Save() string {
-//    var savingthrowsstr string
-//    for stkey, stval := range s.SavingThrows {
-//        savingthrowsstr += stkey + "=" + strconv.Itoa(stval) + ","
-//    }
-//    var skillsstr string
-//    for skkey, skval := range s.Skills {
-//        skillsstr += skkey + "=" + strconv.Itoa(skval) + ","
-//    }
-//    var languagestr string
-//    for lind, language := range s.Languages {
-//        if lind == len(s.Languages) - 1 {
-//            languagestr += language
-//        } else {
-//            languagestr += language + ","
-//        }
-//    }
-//    var proficienciesstr string
-//    for pind, prof := range s.Proficiencies {
-//        if pind == len(s.Proficiencies) - 1 {
-//            proficienciesstr += prof
-//        } else {
-//            proficienciesstr += prof + ","
-//        }
-//    }
-//    var resistancesstr string
-//    for rind, resist := range s.Resistances {
-//        if rind == len(s.Resistances) - 1 {
-//            resistancesstr += resist
-//        } else {
-//            resistancesstr += resist + ","
-//        }
-//    }
-//    var illuminatedstr string
-//    for iind, illum := range s.Illuminated {
-//        if iind == len(s.Illuminated) - 1 {
-//            illuminatedstr += strconv.Itoa(illum)
-//        } else {
-//            illuminatedstr += strconv.Itoa(illum) + ","
-//        }
-//    }
-//    //return "AC:" + strconv.Itoa(s.AC) + ";" +
-//    //       "Str:" + strconv.Itoa(s.Str) + ";" +
-//    return "Str:" + strconv.Itoa(s.Str) + ";" +
-//           "StrMod:" + strconv.Itoa(s.StrMod) + ";" +
-//           "Dex:" + strconv.Itoa(s.Dex) + ";" +
-//           "DexMod:" + strconv.Itoa(s.DexMod) + ";" +
-//           "Con:" + strconv.Itoa(s.Con) + ";" +
-//           "ConMod:" + strconv.Itoa(s.ConMod) + ";" +
-//           "Intel:" + strconv.Itoa(s.Intel) + ";" +
-//           "IntelMod:" + strconv.Itoa(s.IntelMod) + ";" +
-//           "Wis:" + strconv.Itoa(s.Wis) + ";" +
-//           "WisMod:" + strconv.Itoa(s.WisMod) + ";" +
-//           "Cha:" + strconv.Itoa(s.Cha) + ";" +
-//           "ChaMod:" + strconv.Itoa(s.ChaMod) + ";" +
-//           "ProfBonus:" + strconv.Itoa(s.ProfBonus) + ";" +
-//           //"Initiative:" + strconv.Itoa(s.Initiative) + ";" +
-//           "SavingThrows:" + savingthrowsstr + ";" +
-//           "Skills:" + skillsstr + ";" +
-//           //"Speed:" + strconv.Itoa(s.Speed) + ";" +
-//           //"MaxHP:" + strconv.Itoa(s.MaxHP) + ";" +
-//           //"HP:" + strconv.Itoa(s.HP) + ";" +
-//           //"TempHP:" + strconv.Itoa(s.TempHP) + ";" +
-//           //"HitDice:" + s.HitDice + ";" +
-//           //"DeathSaveSucc:" + strconv.Itoa(s.DeathSaveSucc) + ";" +
-//           //"DeathSaveFail:" + strconv.Itoa(s.DeathSaveFail) + ";" +
-//           "Languages:" + languagestr + ";" +
-//           //"Size:" + strconv.Itoa(s.Size) + ";" +
-//           "Inspiration:" + strconv.FormatBool(s.Inspiration) + ";" +
-//           "Darkvision:" + strconv.FormatBool(s.Darkvision) + ";" +
-//           "Proficiencies:" + proficienciesstr + ";" +
-//           "Resistances:" + resistancesstr + ";" +
-//           "Lucky:" + strconv.FormatBool(s.Lucky) + ";" +
-//           "Nimbleness:" + strconv.FormatBool(s.Nimbleness) + ";" +
-//           "Brave:" + strconv.FormatBool(s.Brave) + ";" +
-//           "Ancestry:" + s.Ancestry + ";" +
-//           "Illuminated:" + illuminatedstr + ";" +
-//           "Oiled:" + strconv.Itoa(s.Oiled) + ";"
-//}
 
 func (e *Equipment) Save() string {
     var result string
@@ -235,11 +102,6 @@ func (e *Equipment) Save() string {
     } else {
         result += fmt.Sprintf("BothHands=%s|", e.BothHands.Save())
     }
-    //if e.BothHands == nil {
-    //    log.Println("e.BothHands == nil")
-    //} else {
-    //    result += fmt.Sprintf("BothHands=%s|", e.BothHands.Save())
-    //}
     if e.Clothes == nil {
         log.Println("e.Clothes == nil")
     } else {
@@ -474,16 +336,6 @@ func (p *Player) Unequip(slot string) {
         if p.Equipment.LeftHand == nil {
             log.Fatal("Nothing in my left hand")
         }
-//        p.Class.Illuminate()
-//        if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
-//            if p.Equipment.LeftHand.(*items.Candles).Turns == 0 {
-//                p.Equipment.LeftHand.(*items.Candles).Turns = 600
-//            }
-//        } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
-//            if p.Equipment.LeftHand.(*items.Lamp).Turns == 0 {
-//                p.Equipment.LeftHand.(*items.Lamp).Turns = 3600
-//            }
-//        }
         p.Inv.Add(p.Equipment.LeftHand)
         p.Equipment.LeftHand = nil
     case "RightHand":
@@ -605,16 +457,6 @@ func (p *Player) Equip(item inventory.Item) {
                 p.Inv.Drop(item)
             case "LeftHand":
                 if p.Equipment.LeftHand != nil {
-//                    p.Class.Illuminate()
-//                    if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
-//                        if p.Equipment.LeftHand.(*items.Candles).Turns == 0 {
-//                            p.Equipment.LeftHand.(*items.Candles).Turns = 600
-//                        }
-//                    } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
-//                        if p.Equipment.LeftHand.(*items.Lamp).Turns == 0 {
-//                            p.Equipment.LeftHand.(*items.Lamp).Turns = 3600
-//                        }
-//                    }
                     p.Inv.Add(p.Equipment.LeftHand)
                 }
                 if p.Equipment.BothHands != nil {

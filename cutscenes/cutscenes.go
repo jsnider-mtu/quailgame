@@ -2,7 +2,6 @@ package cutscenes
 
 import (
     "bytes"
-//    "fmt"
     "log"
     "image"
     "image/color"
