@@ -19,6 +19,7 @@ import (
     "golang.org/x/image/font"
 
     "github.com/jsnider-mtu/quailgame/assets"
+    "github.com/jsnider-mtu/quailgame/classes"
     "github.com/jsnider-mtu/quailgame/cutscenes"
     "github.com/jsnider-mtu/quailgame/inventory"
     "github.com/jsnider-mtu/quailgame/inventory/items"
@@ -204,9 +205,9 @@ var (
     longrange int = 0
 )
 
+var abilities = make([]int, 6)
 var lines = make([]string, 0)
 var pages = make([]*items.Page, 0)
-var abilities = make([]int, 6)
 var savingthrows = make(map[string]int)
 var languages = make([]string, 0)
 var proficiencies = make([]string, 0)
@@ -214,7 +215,7 @@ var resistances = make([]string, 0)
 var spellsslice = make([]string, 0)
 var c1 = make(chan int)
 
-var classes = []string{
+var classessli = []string{
     "Barbarian", "Bard", "Cleric",
     "Druid", "Fighter", "Monk",
     "Paladin", "Ranger", "Rogue",
@@ -472,12 +473,12 @@ func (g *Game) Update() error {
             p.Inv.Clear()
             curCS = 0
             csDone = make([]int, 0)
-            proficiencies = make([]string, 0)
-            resistances = make([]string, 0)
-            languages = make([]string, 0)
-            darkvision = false
-            lucky = false
-            nimbleness = false
+//            proficiencies = make([]string, 0)
+//            resistances = make([]string, 0)
+//            languages = make([]string, 0)
+//            darkvision = false
+//            lucky = false
+//            nimbleness = false
             onescore := make([]int, 4)
             for x := 0; x < 6; x++ {
                 for a := 0; a < 4; a++ {
@@ -492,268 +493,280 @@ func (g *Game) Update() error {
             sort.Slice(abilities, func(i, j int) bool {
                 return abilities[i] > abilities[j]
             })
+//            p.Class, err = classes.Create(creationsel, abilities)
+//            if err != nil {
+//                panic(err)
+//            }
             switch creationsel {
             case 0:
-                str = abilities[0]
-                con = abilities[1]
-                dex = abilities[2]
-                intel = abilities[3]
-                wis = abilities[4]
-                cha = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "light armor", "medium armor", "shields",
-                    "simple weapons", "martial weapons")
-            case 1:
-                cha = abilities[0]
-                dex = abilities[1]
-                con = abilities[2]
-                intel = abilities[3]
-                wis = abilities[4]
-                str = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "light armor", "simple weapons", "hand crossbows",
-                    "longswords", "rapiers", "shortswords") // 3 instruments
-            case 2:
-                wis = abilities[0]
-                con = abilities[1]
-                str = abilities[2]
-                dex = abilities[3]
-                intel = abilities[4]
-                cha = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "light armor", "medium armor", "shields",
-                    "simple weapons")
-            case 3:
-                wis = abilities[0]
-                con = abilities[1]
-                dex = abilities[2]
-                intel = abilities[3]
-                str = abilities[4]
-                cha = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "light armor", "medium armor", "shields",
-                    "clubs", "daggers", "darts", "javelins", "maces",
-                    "quarterstaffs", "scimitars", "sickles", "slings",
-                    "spears", "herbalism kit")
-            case 4:
-                str = abilities[0]
-                con = abilities[1]
-                dex = abilities[2]
-                intel = abilities[3]
-                wis = abilities[4]
-                cha = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "all armor", "shields", "simple weapons", "martial weapons")
-            case 5:
-                dex = abilities[0]
-                wis = abilities[1]
-                str= abilities[2]
-                con = abilities[3]
-                intel = abilities[4]
-                cha = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "simple weapons", "shortswords") // one artisan tools or one instrument
-            case 6:
-                str = abilities[0]
-                cha = abilities[1]
-                con = abilities[2]
-                wis = abilities[3]
-                dex = abilities[4]
-                intel = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "all armor", "shields", "simple weapons", "martial weapons")
-            case 7:
-                dex = abilities[0]
-                wis = abilities[1]
-                con = abilities[2]
-                intel = abilities[3]
-                str = abilities[4]
-                cha = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "light armor", "medium armor", "shields", "simple weapons",
-                    "martial weapons")
-            case 8:
-                dex = abilities[0]
-                cha = abilities[1]
-                con = abilities[2]
-                intel = abilities[3]
-                wis = abilities[4]
-                str = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "light armor", "simple weapons", "hand crossbows", "longswords",
-                    "rapiers", "shortswords", "thieves tools")
-            case 9:
-                cha = abilities[0]
-                con = abilities[1]
-                intel = abilities[2]
-                dex = abilities[3]
-                wis = abilities[4]
-                str = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "daggers", "darts", "slings", "quarterstaffs",
-                    "light crossbows")
-            case 10:
-                cha = abilities[0]
-                con = abilities[1]
-                dex = abilities[2]
-                intel = abilities[3]
-                wis = abilities[4]
-                str = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "light armor", "simple weapons")
-            case 11:
-                intel = abilities[0]
-                con = abilities[1]
-                dex = abilities[2]
-                cha = abilities[3]
-                wis = abilities[4]
-                str = abilities[5]
-                pb = 2
-                proficiencies = append(proficiencies,
-                    "daggers", "darts", "slings", "quarterstaffs", "light crossbows")
+                p.Class = &classes.Quail{}
+//                p.Class.Create(abilities)
+//                str = abilities[0]
+//                con = abilities[1]
+//                dex = abilities[2]
+//                intel = abilities[3]
+//                wis = abilities[4]
+//                cha = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "light armor", "medium armor", "shields",
+//                    "simple weapons", "martial weapons")
+//            case 1:
+//                cha = abilities[0]
+//                dex = abilities[1]
+//                con = abilities[2]
+//                intel = abilities[3]
+//                wis = abilities[4]
+//                str = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "light armor", "simple weapons", "hand crossbows",
+//                    "longswords", "rapiers", "shortswords") // 3 instruments
+//            case 2:
+//                wis = abilities[0]
+//                con = abilities[1]
+//                str = abilities[2]
+//                dex = abilities[3]
+//                intel = abilities[4]
+//                cha = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "light armor", "medium armor", "shields",
+//                    "simple weapons")
+//            case 3:
+//                wis = abilities[0]
+//                con = abilities[1]
+//                dex = abilities[2]
+//                intel = abilities[3]
+//                str = abilities[4]
+//                cha = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "light armor", "medium armor", "shields",
+//                    "clubs", "daggers", "darts", "javelins", "maces",
+//                    "quarterstaffs", "scimitars", "sickles", "slings",
+//                    "spears", "herbalism kit")
+//            case 4:
+//                str = abilities[0]
+//                con = abilities[1]
+//                dex = abilities[2]
+//                intel = abilities[3]
+//                wis = abilities[4]
+//                cha = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "all armor", "shields", "simple weapons", "martial weapons")
+//            case 5:
+//                dex = abilities[0]
+//                wis = abilities[1]
+//                str= abilities[2]
+//                con = abilities[3]
+//                intel = abilities[4]
+//                cha = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "simple weapons", "shortswords") // one artisan tools or one instrument
+//            case 6:
+//                str = abilities[0]
+//                cha = abilities[1]
+//                con = abilities[2]
+//                wis = abilities[3]
+//                dex = abilities[4]
+//                intel = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "all armor", "shields", "simple weapons", "martial weapons")
+//            case 7:
+//                dex = abilities[0]
+//                wis = abilities[1]
+//                con = abilities[2]
+//                intel = abilities[3]
+//                str = abilities[4]
+//                cha = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "light armor", "medium armor", "shields", "simple weapons",
+//                    "martial weapons")
+//            case 8:
+//                dex = abilities[0]
+//                cha = abilities[1]
+//                con = abilities[2]
+//                intel = abilities[3]
+//                wis = abilities[4]
+//                str = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "light armor", "simple weapons", "hand crossbows", "longswords",
+//                    "rapiers", "shortswords", "thieves tools")
+//            case 9:
+//                cha = abilities[0]
+//                con = abilities[1]
+//                intel = abilities[2]
+//                dex = abilities[3]
+//                wis = abilities[4]
+//                str = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "daggers", "darts", "slings", "quarterstaffs",
+//                    "light crossbows")
+//            case 10:
+//                cha = abilities[0]
+//                con = abilities[1]
+//                dex = abilities[2]
+//                intel = abilities[3]
+//                wis = abilities[4]
+//                str = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "light armor", "simple weapons")
+//            case 11:
+//                intel = abilities[0]
+//                con = abilities[1]
+//                dex = abilities[2]
+//                cha = abilities[3]
+//                wis = abilities[4]
+//                str = abilities[5]
+//                pb = 2
+//                proficiencies = append(proficiencies,
+//                    "daggers", "darts", "slings", "quarterstaffs", "light crossbows")
             default:
                 return errors.New("Invalid value for creationsel")
             }
-            if str < 10 && str % 2 == 1 {
-                strmod = ((str - 10) / 2) - 1
-            } else {
-                strmod = (str - 10) / 2
+            var abilarr [6]int
+            copy(abilarr[:], abilities)
+            if cc := p.Class.Create(abilarr); !cc {
+                panic("Character creation failed")
             }
-            if dex < 10 && dex % 2 == 1 {
-                dexmod = ((dex - 10) / 2) - 1
-            } else {
-                dexmod = (dex - 10) / 2
-            }
-            if con < 10 && con % 2 == 1 {
-                conmod = ((con - 10) / 2) - 1
-            } else {
-                conmod = (con - 10) / 2
-            }
-            if intel < 10 && intel % 2 == 1 {
-                intelmod = ((intel - 10) / 2) - 1
-            } else {
-                intelmod = (intel - 10) / 2
-            }
-            if wis < 10 && wis % 2 == 1 {
-                wismod = ((wis - 10) / 2) - 1
-            } else {
-                wismod = (wis - 10) / 2
-            }
-            if cha < 10 && cha % 2 == 1 {
-                chamod = ((cha - 10) / 2) - 1
-            } else {
-                chamod = (cha - 10) / 2
-            }
-            savingthrows["str"] = strmod
-            savingthrows["dex"] = dexmod
-            savingthrows["con"] = conmod
-            savingthrows["intel"] = intelmod
-            savingthrows["wis"] = wismod
-            savingthrows["cha"] = chamod
-            skills := make(map[string]int)
-            skills["acrobatics"] = dexmod
-            skills["animal handling"] = wismod
-            skills["arcana"] = intelmod
-            skills["athletics"] = strmod
-            skills["deception"] = chamod
-            skills["history"] = intelmod
-            skills["insight"] = wismod
-            skills["intimidation"] = chamod
-            skills["investigation"] = intelmod
-            skills["medicine"] = wismod
-            skills["nature"] = intelmod
-            skills["perception"] = wismod
-            skills["performance"] = chamod
-            skills["persuasion"] = chamod
-            skills["religion"] = intelmod
-            skills["sleight of hand"] = dexmod
-            skills["stealth"] = dexmod
-            skills["survival"] = wismod
-            for _, skill := range proficiencies {
-                switch skill {
-                    case "acrobatics":
-                        skills["acrobatics"] += pb
-                    case "animal handling":
-                        skills["animal handling"] += pb
-                    case "arcana":
-                        skills["arcana"] += pb
-                    case "athletics":
-                        skills["athletics"] += pb
-                    case "deception":
-                        skills["deception"] += pb
-                    case "history":
-                        skills["history"] += pb
-                    case "insight":
-                        skills["insight"] += pb
-                    case "intimidation":
-                        skills["intimidation"] += pb
-                    case "investigation":
-                        skills["investigation"] += pb
-                    case "medicine":
-                        skills["medicine"] += pb
-                    case "nature":
-                        skills["nature"] += pb
-                    case "perception":
-                        skills["perception"] += pb
-                    case "performance":
-                        skills["performance"] += pb
-                    case "persuasion":
-                        skills["persuasion"] += pb
-                    case "religion":
-                        skills["religion"] += pb
-                    case "sleight of hand":
-                        skills["sleight of hand"] += pb
-                    case "stealth":
-                        skills["stealth"] += pb
-                    case "survival":
-                        skills["survival"] += pb
-                    default:
-                        continue
-                }
-            }
-            p.Stats = &player.Stats{
-                Str: str,
-                StrMod: strmod,
-                Dex: dex,
-                DexMod: dexmod,
-                Con: con,
-                ConMod: conmod,
-                Intel: intel,
-                IntelMod: intelmod,
-                Wis: wis,
-                WisMod: wismod,
-                Cha: cha,
-                ChaMod: chamod,
-                ProfBonus: pb,
-                SavingThrows: savingthrows,
-                Skills: skills,
-                Languages: languages,
-                //Size: size,
-                Inspiration: false,
-                Darkvision: darkvision,
-                Proficiencies: proficiencies,
-                Resistances: resistances,
-                Lucky: lucky,
-                Nimbleness: nimbleness,
-                Brave: brave,
-                Ancestry: ancestry,
-                Illuminated: []int{},
-                Oiled: 0,
-            }
-            p.Class = classes[creationsel]
-            p.Level = 1
-            p.XP = 0
+//            p.Class = classes.Create(creationsel, abilities)
+//            if str < 10 && str % 2 == 1 {
+//                strmod = ((str - 10) / 2) - 1
+//            } else {
+//                strmod = (str - 10) / 2
+//            }
+//            if dex < 10 && dex % 2 == 1 {
+//                dexmod = ((dex - 10) / 2) - 1
+//            } else {
+//                dexmod = (dex - 10) / 2
+//            }
+//            if con < 10 && con % 2 == 1 {
+//                conmod = ((con - 10) / 2) - 1
+//            } else {
+//                conmod = (con - 10) / 2
+//            }
+//            if intel < 10 && intel % 2 == 1 {
+//                intelmod = ((intel - 10) / 2) - 1
+//            } else {
+//                intelmod = (intel - 10) / 2
+//            }
+//            if wis < 10 && wis % 2 == 1 {
+//                wismod = ((wis - 10) / 2) - 1
+//            } else {
+//                wismod = (wis - 10) / 2
+//            }
+//            if cha < 10 && cha % 2 == 1 {
+//                chamod = ((cha - 10) / 2) - 1
+//            } else {
+//                chamod = (cha - 10) / 2
+//            }
+//            savingthrows["str"] = strmod
+//            savingthrows["dex"] = dexmod
+//            savingthrows["con"] = conmod
+//            savingthrows["intel"] = intelmod
+//            savingthrows["wis"] = wismod
+//            savingthrows["cha"] = chamod
+//            skills := make(map[string]int)
+//            skills["acrobatics"] = dexmod
+//            skills["animal handling"] = wismod
+//            skills["arcana"] = intelmod
+//            skills["athletics"] = strmod
+//            skills["deception"] = chamod
+//            skills["history"] = intelmod
+//            skills["insight"] = wismod
+//            skills["intimidation"] = chamod
+//            skills["investigation"] = intelmod
+//            skills["medicine"] = wismod
+//            skills["nature"] = intelmod
+//            skills["perception"] = wismod
+//            skills["performance"] = chamod
+//            skills["persuasion"] = chamod
+//            skills["religion"] = intelmod
+//            skills["sleight of hand"] = dexmod
+//            skills["stealth"] = dexmod
+//            skills["survival"] = wismod
+//            for _, skill := range proficiencies {
+//                switch skill {
+//                    case "acrobatics":
+//                        skills["acrobatics"] += pb
+//                    case "animal handling":
+//                        skills["animal handling"] += pb
+//                    case "arcana":
+//                        skills["arcana"] += pb
+//                    case "athletics":
+//                        skills["athletics"] += pb
+//                    case "deception":
+//                        skills["deception"] += pb
+//                    case "history":
+//                        skills["history"] += pb
+//                    case "insight":
+//                        skills["insight"] += pb
+//                    case "intimidation":
+//                        skills["intimidation"] += pb
+//                    case "investigation":
+//                        skills["investigation"] += pb
+//                    case "medicine":
+//                        skills["medicine"] += pb
+//                    case "nature":
+//                        skills["nature"] += pb
+//                    case "perception":
+//                        skills["perception"] += pb
+//                    case "performance":
+//                        skills["performance"] += pb
+//                    case "persuasion":
+//                        skills["persuasion"] += pb
+//                    case "religion":
+//                        skills["religion"] += pb
+//                    case "sleight of hand":
+//                        skills["sleight of hand"] += pb
+//                    case "stealth":
+//                        skills["stealth"] += pb
+//                    case "survival":
+//                        skills["survival"] += pb
+//                    default:
+//                        continue
+//                }
+//            }
+//            p.Stats = &player.Stats{
+//                Str: str,
+//                StrMod: strmod,
+//                Dex: dex,
+//                DexMod: dexmod,
+//                Con: con,
+//                ConMod: conmod,
+//                Intel: intel,
+//                IntelMod: intelmod,
+//                Wis: wis,
+//                WisMod: wismod,
+//                Cha: cha,
+//                ChaMod: chamod,
+//                ProfBonus: pb,
+//                SavingThrows: savingthrows,
+//                Skills: skills,
+//                Languages: languages,
+//                //Size: size,
+//                Inspiration: false,
+//                Darkvision: darkvision,
+//                Proficiencies: proficiencies,
+//                Resistances: resistances,
+//                Lucky: lucky,
+//                Nimbleness: nimbleness,
+//                Brave: brave,
+//                Ancestry: ancestry,
+//                Illuminated: []int{},
+//                Oiled: 0,
+//            }
+//            p.Class = classes[creationsel]
+//            p.Level = 1
+//            p.XP = 0
             p.Equipment = &player.Equipment{}
             creationsel = 0
             creation = false
@@ -811,31 +824,31 @@ func (g *Game) Update() error {
             if (dur / 1000000000) % 6 == 0 {
                 if nextturn {
                     log.Println("Next turn")
-                    if len(p.Stats.Illuminated) == 3 {
-                        p.Stats.Illuminated[2]--
-                        if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
-                            p.Equipment.LeftHand.(*items.Candles).Turns--
-                        } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
-                            p.Equipment.LeftHand.(*items.Lamp).Turns--
-                        }
-                        if p.Stats.Illuminated[2] == 0 {
-                            p.Stats.Illuminated = []int{}
-                            if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
-                                p.Equipment.LeftHand.(*items.Candles).Quantity--
-                            } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
-                                p.Equipment.LeftHand.(*items.Lamp).Quantity--
-                            }
-                            p.Unequip("LeftHand")
-                        }
-                    }
-                    if p.Stats.Oiled > 0 {
-                        p.Stats.Oiled--
-                    }
-                    for _, npc := range l.NPCs {
-                        if npc.PC.Stats.Oiled > 0 {
-                            npc.PC.Stats.Oiled--
-                        }
-                    }
+//                    if len(p.Stats.Illuminated) == 3 {
+//                        p.Stats.Illuminated[2]--
+//                        if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
+//                            p.Equipment.LeftHand.(*items.Candles).Turns--
+//                        } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
+//                            p.Equipment.LeftHand.(*items.Lamp).Turns--
+//                        }
+//                        if p.Stats.Illuminated[2] == 0 {
+//                            p.Stats.Illuminated = []int{}
+//                            if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Candles") {
+//                                p.Equipment.LeftHand.(*items.Candles).Quantity--
+//                            } else if strings.HasPrefix(p.Equipment.LeftHand.PrettyPrint(), "Lamp") {
+//                                p.Equipment.LeftHand.(*items.Lamp).Quantity--
+//                            }
+//                            p.Unequip("LeftHand")
+//                        }
+//                    }
+//                    if p.Stats.Oiled > 0 {
+//                        p.Stats.Oiled--
+//                    }
+//                    for _, npc := range l.NPCs {
+//                        if npc.PC.Stats.Oiled > 0 {
+//                            npc.PC.Stats.Oiled--
+//                        }
+//                    }
                     nextturn = false
                 }
             } else {
@@ -1031,10 +1044,10 @@ func (g *Game) Update() error {
                     }
                 }
                 var invstr string = p.Inv.Save()
-                var statsstr string = p.Stats.Save()
+                var statsstr string = p.Class.Save()
                 //fmt.Println(statsstr)
                 var equipmentstr string = p.Equipment.Save()
-                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, p.Class, p.Level, p.XP, equipmentstr)
+                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, equipmentstr)
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -1082,22 +1095,42 @@ func (g *Game) Update() error {
                 var csdonestr string
                 var invstr string
                 var statsstr string
-                var classstr string
-                var playerlvl int
-                var playerxp int
                 var equipmentstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &classstr, &playerlvl, &playerxp, &equipmentstr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &equipmentstr)
                 }
                 err = rows.Err()
                 if err != nil {
                     log.Fatal(err)
                 }
                 p.Name = savename
-                p.Stats = &player.Stats{}
-                p.Class = classstr
-                p.Level = playerlvl
-                p.XP = playerxp
+                p.Class = &classes.Quail{}
+                var loadstatsarr [6]int
+                var loadstatslvl int
+                var loadstatsxp int
+                log.Printf("Need to use loadstatsxp: %d", loadstatsxp)
+                loadstatssli := strings.Split(statsstr, ";")
+                for statind, statval := range loadstatssli {
+                    if statval == "" {
+                        break
+                    }
+                    statint, err := strconv.Atoi(statval)
+                    if err != nil {
+                        panic(err)
+                    }
+                    switch statind {
+                    case 6:
+                        loadstatslvl = statint
+                    case 7:
+                        loadstatsxp = statint
+                    default:
+                        loadstatsarr[statind] = statint
+                    }
+                }
+                p.Class.Create(loadstatsarr)
+                if loadstatslvl > 1 {
+                    // Level up incrementally
+                }
                 csdonestrarr := strings.Split(csdonestr, ",")
                 csDone = []int{}
                 for _, numstr := range csdonestrarr {
@@ -1142,325 +1175,6 @@ func (g *Game) Update() error {
                         } else {
                             return errors.New("Too many itemprops (inventory)")
                         }
-                    }
-                }
-                statsstrarr := strings.Split(statsstr, ";")
-                for _, stat := range statsstrarr {
-                    if stat == "" {
-                        break
-                    }
-                    statname := strings.Split(stat, ":")[0]
-                    switch statname {
-                    case "Str":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Str value is not an int")
-                        }
-                        p.Stats.Str = val
-                    case "StrMod":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("StrMod value is not an int")
-                        }
-                        p.Stats.StrMod = val
-                    case "Dex":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Dex value is not an int")
-                        }
-                        p.Stats.Dex = val
-                    case "DexMod":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("DexMod value is not an int")
-                        }
-                        p.Stats.DexMod = val
-                    case "Con":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Con value is not an int")
-                        }
-                        p.Stats.Con = val
-                    case "ConMod":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("ConMod value is not an int")
-                        }
-                        p.Stats.ConMod = val
-                    case "Intel":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Intel value is not an int")
-                        }
-                        p.Stats.Intel = val
-                    case "IntelMod":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("IntelMod value is not an int")
-                        }
-                        p.Stats.IntelMod = val
-                    case "Wis":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Wis value is not an int")
-                        }
-                        p.Stats.Wis = val
-                    case "WisMod":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("WisMod value is not an int")
-                        }
-                        p.Stats.WisMod = val
-                    case "Cha":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Cha value is not an int")
-                        }
-                        p.Stats.Cha = val
-                    case "ChaMod":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("ChaMod value is not an int")
-                        }
-                        p.Stats.ChaMod = val
-                    case "ProfBonus":
-                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("ProfBonus value is not an int")
-                        }
-                        p.Stats.ProfBonus = val
-                    case "SavingThrows":
-                        starr := strings.Split(strings.Split(stat, ":")[1], ",")
-                        p.Stats.SavingThrows = make(map[string]int)
-                        for _, st := range starr {
-                            if st == "" {
-                                break
-                            }
-                            switch strings.Split(st, "=")[0] {
-                            case "str":
-                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
-                                if err != nil {
-                                    return errors.New("Saving throw str is not an int")
-                                }
-                                p.Stats.SavingThrows["str"] = val
-                            case "dex":
-                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
-                                if err != nil {
-                                    return errors.New("Saving throw dex is not an int")
-                                }
-                                p.Stats.SavingThrows["dex"] = val
-                            case "con":
-                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
-                                if err != nil {
-                                    return errors.New("Saving throw con is not an int")
-                                }
-                                p.Stats.SavingThrows["con"] = val
-                            case "intel":
-                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
-                                if err != nil {
-                                    return errors.New("Saving throw intel is not an int")
-                                }
-                                p.Stats.SavingThrows["intel"] = val
-                            case "wis":
-                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
-                                if err != nil {
-                                    return errors.New("Saving throw wis is not an int")
-                                }
-                                p.Stats.SavingThrows["wis"] = val
-                            case "cha":
-                                val, err := strconv.Atoi(strings.Split(st, "=")[1])
-                                if err != nil {
-                                    return errors.New("Saving throw cha is not an int")
-                                }
-                                p.Stats.SavingThrows["cha"] = val
-                            default:
-                                return errors.New(fmt.Sprintf("Invalid saving throw: %s", strings.Split(st, "=")[0]))
-                            }
-                        }
-                    case "Skills":
-                        skarr := strings.Split(strings.Split(stat, ":")[1], ",")
-                        p.Stats.Skills = make(map[string]int)
-                        for _, sk := range skarr {
-                            if sk == "" {
-                                break
-                            }
-                            switch strings.Split(sk, "=")[0] {
-                            case "acrobatics":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill acrobatics is not an int")
-                                }
-                                p.Stats.Skills["acrobatics"] = val
-                            case "animal handling":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill animal handling is not an int")
-                                }
-                                p.Stats.Skills["animal handling"] = val
-                            case "arcana":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill arcana is not an int")
-                                }
-                                p.Stats.Skills["arcana"] = val
-                            case "athletics":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill athletics is not an int")
-                                }
-                                p.Stats.Skills["athletics"] = val
-                            case "deception":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill deception is not an int")
-                                }
-                                p.Stats.Skills["deception"] = val
-                            case "history":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill history is not an int")
-                                }
-                                p.Stats.Skills["history"] = val
-                            case "insight":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill insight is not an int")
-                                }
-                                p.Stats.Skills["insight"] = val
-                            case "intimidation":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill intimidation is not an int")
-                                }
-                                p.Stats.Skills["intimidation"] = val
-                            case "investigation":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill investigation is not an int")
-                                }
-                                p.Stats.Skills["investigation"] = val
-                            case "medicine":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill medicine is not an int")
-                                }
-                                p.Stats.Skills["medicine"] = val
-                            case "nature":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill nature is not an int")
-                                }
-                                p.Stats.Skills["nature"] = val
-                            case "perception":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill perception is not an int")
-                                }
-                                p.Stats.Skills["perception"] = val
-                            case "performance":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill performance is not an int")
-                                }
-                                p.Stats.Skills["performance"] = val
-                            case "persuasion":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill persuasion is not an int")
-                                }
-                                p.Stats.Skills["persuasion"] = val
-                            case "religion":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill religion is not an int")
-                                }
-                                p.Stats.Skills["religion"] = val
-                            case "sleight of hand":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill sleight of hand is not an int")
-                                }
-                                p.Stats.Skills["sleight of hand"] = val
-                            case "stealth":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill stealth is not an int")
-                                }
-                                p.Stats.Skills["stealth"] = val
-                            case "survival":
-                                val, err := strconv.Atoi(strings.Split(sk, "=")[1])
-                                if err != nil {
-                                    return errors.New("Skill survival is not an int")
-                                }
-                                p.Stats.Skills["survival"] = val
-                            default:
-                                return errors.New(fmt.Sprintf("Invalid skill: %s", strings.Split(sk, "=")[0]))
-                            }
-                        }
-                    case "Languages":
-                        p.Stats.Languages = strings.Split(strings.Split(stat, ":")[1], ",")
-//                    case "Size":
-//                        val, err := strconv.Atoi(strings.Split(stat, ":")[1])
-//                        if err != nil {
-//                            return errors.New("Size value is not an int")
-//                        }
-//                        p.Stats.Size = val
-                    case "Inspiration":
-                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Inspiration val is not bool")
-                        }
-                        p.Stats.Inspiration = boolval
-                    case "Darkvision":
-                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Darkvision val is not bool")
-                        }
-                        p.Stats.Darkvision = boolval
-                    case "Proficiencies":
-                        p.Stats.Proficiencies = strings.Split(strings.Split(stat, ":")[1], ",")
-                    case "Resistances":
-                        p.Stats.Resistances = strings.Split(strings.Split(stat, ":")[1], ",")
-                    case "Lucky":
-                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Lucky val is not bool")
-                        }
-                        p.Stats.Lucky = boolval
-                    case "Nimbleness":
-                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Nimbleness val is not bool")
-                        }
-                        p.Stats.Nimbleness = boolval
-                    case "Brave":
-                        boolval, err := strconv.ParseBool(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return errors.New("Brave val is not bool")
-                        }
-                        p.Stats.Brave = boolval
-                    case "Ancestry":
-                        p.Stats.Ancestry = strings.Split(stat, ":")[1]
-                    case "Illuminated":
-                        for _, nums := range strings.Split(strings.Split(stat, ":")[1], ",") {
-                            if nums != "" {
-                                num, err := strconv.Atoi(nums)
-                                if err != nil {
-                                    return err
-                                }
-                                p.Stats.Illuminated = append(p.Stats.Illuminated, num)
-                            } else {
-                                p.Stats.Illuminated = []int{}
-                            }
-                        }
-                    case "Oiled":
-                        oiled, err := strconv.Atoi(strings.Split(stat, ":")[1])
-                        if err != nil {
-                            return err
-                        }
-                        p.Stats.Oiled = oiled
-                    default:
-                        return errors.New(fmt.Sprintf("Invalid stat name: %s", statname))
                     }
                 }
                 p.Equipment = &player.Equipment{}
@@ -2099,7 +1813,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
         } else {
             text.Draw(screen, ">", fo, 256, (64 * ((creationsel % 6) + 1)) + 64, color.White)
         }
-        for classind, classval := range classes {
+        for classind, classval := range classessli {
             if classind < 6 {
                 text.Draw(screen, classval, fo, 128, (64 * (classind + 1)) + 64, color.White)
             } else {
@@ -2439,33 +2153,36 @@ func (g *Game) Draw(screen *ebiten.Image) {
             r = text.BoundString(fo, "Your path is illuminated:")
             hei = r.Max.Y - r.Min.Y
             wid = r.Max.X - r.Min.X
-            dur, err = time.ParseDuration(strconv.Itoa(p.Stats.Illuminated[2] * 6) + "s")
-            if err != nil {
-                log.Fatal(err)
+            illumed, illumstats := p.Class.Illuminated()
+            if illumed {
+                dur, err = time.ParseDuration(strconv.Itoa(illumstats[2] * 6) + "s")
+                if err != nil {
+                    log.Fatal(err)
+                }
+                r2 = text.BoundString(fo, fmt.Sprintf("%d feet bright light, then %d feet dim light", illumstats[0], illumstats[1]))
+                hei2 = r2.Max.Y - r.Min.Y
+                wid2 = r2.Max.X - r.Min.X
+                r3 = text.BoundString(fo, fmt.Sprintf("The effect will last for the next %d turns (%v)", illumstats[2], dur))
+                hei3 = r3.Max.Y - r.Min.Y
+                wid3 = r3.Max.X - r.Min.X
+                effgm = ebiten.GeoM{}
+                effgm.Translate(float64((w / 2) - (wid3 / 2) - 8), float64((h / 2) - (3 * hei3) - 20))
+                effimg = ebiten.NewImage(wid3 + 28, (hei3 * 3) + 48)
+                effimg.Fill(color.Black)
+                screen.DrawImage(
+                    effimg, &ebiten.DrawImageOptions{
+                        GeoM: effgm})
+                effgm2 = ebiten.GeoM{}
+                effgm2.Translate(float64((w / 2) - (wid3 / 2) - 4), float64((h / 2) - (3 * hei3) - 16))
+                effimg2 = ebiten.NewImage(wid3 + 20, (hei3 * 3) + 40)
+                effimg2.Fill(color.White)
+                screen.DrawImage(
+                    effimg2, &ebiten.DrawImageOptions{
+                        GeoM: effgm2})
+                text.Draw(screen, "Your path is illuminated:", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) - 16, color.RGBA{159, 11, 19, 255})
+                text.Draw(screen, fmt.Sprintf("%d feet bright light, then %d feet dim light", illumstats[0], illumstats[1]), fo, (w / 2) - (wid2 / 2), (h / 2) - (hei2 / 2) - 8, color.RGBA{159, 11, 19, 255})
+                text.Draw(screen, fmt.Sprintf("The effect will last for the next %d turns (%v)", illumstats[2], dur), fo, (w / 2) - (wid3 / 2), (h / 2) + (hei3 / 2), color.RGBA{159, 11, 19, 255})
             }
-            r2 = text.BoundString(fo, fmt.Sprintf("%d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]))
-            hei2 = r2.Max.Y - r.Min.Y
-            wid2 = r2.Max.X - r.Min.X
-            r3 = text.BoundString(fo, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur))
-            hei3 = r3.Max.Y - r.Min.Y
-            wid3 = r3.Max.X - r.Min.X
-            effgm = ebiten.GeoM{}
-            effgm.Translate(float64((w / 2) - (wid3 / 2) - 8), float64((h / 2) - (3 * hei3) - 20))
-            effimg = ebiten.NewImage(wid3 + 28, (hei3 * 3) + 48)
-            effimg.Fill(color.Black)
-            screen.DrawImage(
-                effimg, &ebiten.DrawImageOptions{
-                    GeoM: effgm})
-            effgm2 = ebiten.GeoM{}
-            effgm2.Translate(float64((w / 2) - (wid3 / 2) - 4), float64((h / 2) - (3 * hei3) - 16))
-            effimg2 = ebiten.NewImage(wid3 + 20, (hei3 * 3) + 40)
-            effimg2.Fill(color.White)
-            screen.DrawImage(
-                effimg2, &ebiten.DrawImageOptions{
-                    GeoM: effgm2})
-            text.Draw(screen, "Your path is illuminated:", fo, (w / 2) - (wid / 2), (h / 2) - (3 * hei / 2) - 16, color.RGBA{159, 11, 19, 255})
-            text.Draw(screen, fmt.Sprintf("%d feet bright light, then %d feet dim light", p.Stats.Illuminated[0], p.Stats.Illuminated[1]), fo, (w / 2) - (wid2 / 2), (h / 2) - (hei2 / 2) - 8, color.RGBA{159, 11, 19, 255})
-            text.Draw(screen, fmt.Sprintf("The effect will last for the next %d turns (%v)", p.Stats.Illuminated[2], dur), fo, (w / 2) - (wid3 / 2), (h / 2) + (hei3 / 2), color.RGBA{159, 11, 19, 255})
         case "disguise":
             log.Println("Need to implement disguise menu")
         case "write":
@@ -2609,49 +2326,65 @@ func (g *Game) Draw(screen *ebiten.Image) {
             effectact = ""
         }
     }
+    var strstats [2]int
+    var dexstats [2]int
+    var constats [2]int
+    var intelstats [2]int
+    var wisstats [2]int
+    var chastats [2]int
+    if p != nil {
+        if p.Class != nil {
+            strstats = p.Class.GetStr()
+            dexstats = p.Class.GetDex()
+            constats = p.Class.GetCon()
+            intelstats = p.Class.GetIntel()
+            wisstats = p.Class.GetWis()
+            chastats = p.Class.GetCha()
+        }
+    }
     if charsheet0 {
         screen.DrawImage(blankImage, nil)
         text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
-        text.Draw(screen, fmt.Sprintf("Class: %s", p.Class), fo, 32, 64, color.White)
-        text.Draw(screen, fmt.Sprintf("Level: %d", p.Level), fo, 256, 64, color.White)
-        text.Draw(screen, fmt.Sprintf("Str: %d (%+d)", p.Stats.Str, p.Stats.StrMod), fo, 32, 96, color.White)
-        text.Draw(screen, fmt.Sprintf("Dex: %d (%+d)", p.Stats.Dex, p.Stats.DexMod), fo, 32, 128, color.White)
-        text.Draw(screen, fmt.Sprintf("Con: %d (%+d)", p.Stats.Con, p.Stats.ConMod), fo, 32, 160, color.White)
-        text.Draw(screen, fmt.Sprintf("Int: %d (%+d)", p.Stats.Intel, p.Stats.IntelMod), fo, 32, 192, color.White)
-        text.Draw(screen, fmt.Sprintf("Wis: %d (%+d)", p.Stats.Wis, p.Stats.WisMod), fo, 32, 224, color.White)
-        text.Draw(screen, fmt.Sprintf("Cha: %d (%+d)", p.Stats.Cha, p.Stats.ChaMod), fo, 32, 256, color.White)
-        text.Draw(screen, fmt.Sprintf("Proficiency Bonus: %+d", p.Stats.ProfBonus), fo, 32, 288, color.White)
+        text.Draw(screen, fmt.Sprintf("Class: %s", p.Class.GetName()), fo, 32, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Level: %d", p.Class.GetLevel()), fo, 256, 64, color.White)
+        text.Draw(screen, fmt.Sprintf("Str: %d (%+d)", strstats[0], strstats[1]), fo, 32, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Dex: %d (%+d)", dexstats[0], dexstats[1]), fo, 32, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Con: %d (%+d)", constats[0], constats[1]), fo, 32, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Int: %d (%+d)", intelstats[0], intelstats[1]), fo, 32, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Wis: %d (%+d)", wisstats[0], wisstats[1]), fo, 32, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("Cha: %d (%+d)", chastats[0], chastats[1]), fo, 32, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("Proficiency Bonus: %+d", p.Class.GetPB()), fo, 32, 288, color.White)
         text.Draw(screen, ">", fo, 704, 512, color.White)
     } else if charsheet1 {
         screen.DrawImage(blankImage, nil)
         text.Draw(screen, "<", fo, 64, 512, color.White)
         text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
         text.Draw(screen, "Saving Throws:", fo, 32, 64, color.White)
-        text.Draw(screen, fmt.Sprintf("Str: %+d", p.Stats.SavingThrows["str"]), fo, 32, 96, color.White)
-        text.Draw(screen, fmt.Sprintf("Dex: %+d", p.Stats.SavingThrows["dex"]), fo, 32, 128, color.White)
-        text.Draw(screen, fmt.Sprintf("Con: %+d", p.Stats.SavingThrows["con"]), fo, 32, 160, color.White)
-        text.Draw(screen, fmt.Sprintf("Int: %+d", p.Stats.SavingThrows["intel"]), fo, 32, 192, color.White)
-        text.Draw(screen, fmt.Sprintf("Wis: %+d", p.Stats.SavingThrows["wis"]), fo, 32, 224, color.White)
-        text.Draw(screen, fmt.Sprintf("Cha: %+d", p.Stats.SavingThrows["cha"]), fo, 32, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("Str: %+d", p.Class.SavingThrow("str")), fo, 32, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Dex: %+d", p.Class.SavingThrow("dex")), fo, 32, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Con: %+d", p.Class.SavingThrow("con")), fo, 32, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Int: %+d", p.Class.SavingThrow("intel")), fo, 32, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Wis: %+d", p.Class.SavingThrow("wis")), fo, 32, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("Cha: %+d", p.Class.SavingThrow("cha")), fo, 32, 256, color.White)
         text.Draw(screen, "Skills:", fo, 256, 64, color.White)
-        text.Draw(screen, fmt.Sprintf("Acrobatics:      %+d", p.Stats.Skills["acrobatics"]), fo, 256, 96, color.White)
-        text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Stats.Skills["animal handling"]), fo, 256, 128, color.White)
-        text.Draw(screen, fmt.Sprintf("Arcana:          %+d", p.Stats.Skills["arcana"]), fo, 256, 160, color.White)
-        text.Draw(screen, fmt.Sprintf("Athletics:       %+d", p.Stats.Skills["athletics"]), fo, 256, 192, color.White)
-        text.Draw(screen, fmt.Sprintf("Deception:       %+d", p.Stats.Skills["deception"]), fo, 256, 224, color.White)
-        text.Draw(screen, fmt.Sprintf("History:         %+d", p.Stats.Skills["history"]), fo, 256, 256, color.White)
-        text.Draw(screen, fmt.Sprintf("Insight:         %+d", p.Stats.Skills["insight"]), fo, 256, 288, color.White)
-        text.Draw(screen, fmt.Sprintf("Intimidation:    %+d", p.Stats.Skills["intimidation"]), fo, 256, 320, color.White)
-        text.Draw(screen, fmt.Sprintf("Investigation:   %+d", p.Stats.Skills["investigation"]), fo, 256, 352, color.White)
-        text.Draw(screen, fmt.Sprintf("Medicine:        %+d", p.Stats.Skills["medicine"]), fo, 512, 96, color.White)
-        text.Draw(screen, fmt.Sprintf("Nature:          %+d", p.Stats.Skills["nature"]), fo, 512, 128, color.White)
-        text.Draw(screen, fmt.Sprintf("Perception:      %+d", p.Stats.Skills["perception"]), fo, 512, 160, color.White)
-        text.Draw(screen, fmt.Sprintf("Performance:     %+d", p.Stats.Skills["performance"]), fo, 512, 192, color.White)
-        text.Draw(screen, fmt.Sprintf("Persuasion:      %+d", p.Stats.Skills["persuasion"]), fo, 512, 224, color.White)
-        text.Draw(screen, fmt.Sprintf("Religion:        %+d", p.Stats.Skills["religion"]), fo, 512, 256, color.White)
-        text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Stats.Skills["sleight of hand"]), fo, 512, 288, color.White)
-        text.Draw(screen, fmt.Sprintf("Stealth:         %+d", p.Stats.Skills["stealth"]), fo, 512, 320, color.White)
-        text.Draw(screen, fmt.Sprintf("Survival:        %+d", p.Stats.Skills["survival"]), fo, 512, 352, color.White)
+        text.Draw(screen, fmt.Sprintf("Acrobatics:      %+d", p.Class.SkillCheck("acrobatics")), fo, 256, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Class.SkillCheck("animalhandling")), fo, 256, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Arcana:          %+d", p.Class.SkillCheck("arcana")), fo, 256, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Athletics:       %+d", p.Class.SkillCheck("athletics")), fo, 256, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Deception:       %+d", p.Class.SkillCheck("deception")), fo, 256, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("History:         %+d", p.Class.SkillCheck("history")), fo, 256, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("Insight:         %+d", p.Class.SkillCheck("insight")), fo, 256, 288, color.White)
+        text.Draw(screen, fmt.Sprintf("Intimidation:    %+d", p.Class.SkillCheck("intimidation")), fo, 256, 320, color.White)
+        text.Draw(screen, fmt.Sprintf("Investigation:   %+d", p.Class.SkillCheck("investigation")), fo, 256, 352, color.White)
+        text.Draw(screen, fmt.Sprintf("Medicine:        %+d", p.Class.SkillCheck("medicine")), fo, 512, 96, color.White)
+        text.Draw(screen, fmt.Sprintf("Nature:          %+d", p.Class.SkillCheck("nature")), fo, 512, 128, color.White)
+        text.Draw(screen, fmt.Sprintf("Perception:      %+d", p.Class.SkillCheck("perception")), fo, 512, 160, color.White)
+        text.Draw(screen, fmt.Sprintf("Performance:     %+d", p.Class.SkillCheck("performance")), fo, 512, 192, color.White)
+        text.Draw(screen, fmt.Sprintf("Persuasion:      %+d", p.Class.SkillCheck("persuasion")), fo, 512, 224, color.White)
+        text.Draw(screen, fmt.Sprintf("Religion:        %+d", p.Class.SkillCheck("religion")), fo, 512, 256, color.White)
+        text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Class.SkillCheck("sleightofhand")), fo, 512, 288, color.White)
+        text.Draw(screen, fmt.Sprintf("Stealth:         %+d", p.Class.SkillCheck("stealth")), fo, 512, 320, color.White)
+        text.Draw(screen, fmt.Sprintf("Survival:        %+d", p.Class.SkillCheck("survival")), fo, 512, 352, color.White)
         text.Draw(screen, ">", fo, 704, 512, color.White)
     } else if charsheet2 {
         screen.DrawImage(blankImage, nil)
@@ -3348,7 +3081,7 @@ func init() {
     throwTargetBoxHoriz.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
     throwTargetBoxVert.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "class,TEXT,0,null,0", "playerlevel,INT,0,null,0", "xp,INT,0,null,0", "equipment,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "equipment,TEXT,0,null,0"}
     pagesTableSchema = []string{"name,TEXT,1,null,0", "msg,TEXT,1,null,0", "charname,TEXT,1,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {

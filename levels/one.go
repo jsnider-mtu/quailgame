@@ -10,6 +10,8 @@ import (
     "math/rand"
 
     "github.com/hajimehoshi/ebiten/v2"
+
+    "github.com/jsnider-mtu/quailgame/classes"
     "github.com/jsnider-mtu/quailgame/levels/lvlimages"
     "github.com/jsnider-mtu/quailgame/npcs"
     "github.com/jsnider-mtu/quailgame/npcs/npcimages"
@@ -37,23 +39,25 @@ func lvlOne(entrance int) *Level {
         &Door{coords: [2]int{0, 0}, NewLvl: []interface{}{"Two", 1}},
         &Door{coords: [2]int{336, 504}, NewLvl: []interface{}{"Two", 2}}}
 
-    NPCs := []*npcs.NPC{npcs.NewNPC(
-        "down", [][]string{
-            {"Hello there,", "ObiWan Kenobi."},
-            {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
-        240, rand.Intn(60) + 60, &player.Player{
-            Name: "Jane Doe", Pos: [2]int{192, 192}, Image: npcGirlImage, Stats: &player.Stats{
-                Str: 10, StrMod: 0, Dex: 10, DexMod: 0, Con: 10, ConMod: 0, Intel: 10, IntelMod: 0, Wis: 10, WisMod: 0,
-                Cha: 10, ChaMod: 0}}),
-        npcs.NewNPC("down", [][]string{
-            {"I'm a wizard, Harry!"},
-            {"The great and terrible Lord Adrian", "has invaded the peaceful Quail Kingdom,",
-             "stoking a rebellion from within.", "", "Your quest is simple,",
-             "quell the rebellion and defeat", "Lord Adrian!"}},
-        0, rand.Intn(60) + 60, &player.Player{
-            Name: "Wizard", Pos: [2]int{288, 288}, Image: wizardImage, Stats: &player.Stats{
-                Str: 10, StrMod: 0, Dex: 10, DexMod: 0, Con: 10, ConMod: 0, Intel: 10, IntelMod: 0, Wis: 10, WisMod: 0,
-                Cha: 10, ChaMod: 0}})}
+    NPCs := []*npcs.NPC{
+        npcs.NewNPC(
+            "down", [][]string{
+                {"Hello there,", "ObiWan Kenobi."},
+                {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
+            240, rand.Intn(60) + 60, &player.Player{
+                Name: "Jane Doe", Pos: [2]int{192, 192}, Image: npcGirlImage, Class: &classes.Quail{}}),
+        npcs.NewNPC(
+            "down", [][]string{
+                {"I'm a wizard, Harry!"},
+                {"The great and terrible Lord Adrian", "has invaded the peaceful Quail Kingdom,",
+                 "stoking a rebellion from within.", "", "Your quest is simple,",
+                 "quell the rebellion and defeat", "Lord Adrian!"}},
+            0, rand.Intn(60) + 60, &player.Player{
+                Name: "Wizard", Pos: [2]int{288, 288}, Image: wizardImage, Class: &classes.Quail{}})}
+
+    for _, n := range NPCs {
+        n.PC.Class.Create([6]int{10, 10, 10, 10, 10, 10})
+    }
 
     var pos [2]int
 
