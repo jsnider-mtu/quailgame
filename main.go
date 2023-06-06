@@ -2098,24 +2098,24 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
         text.Draw(screen, "Equipment:", fo, 32, 64, color.White)
         if p.Equipment.Head != nil {
-            text.Draw(screen, fmt.Sprintf("Head: %s", p.Equipment.Head.PrettyPrint()), fo, 64, 128, color.White)
+            text.Draw(screen, fmt.Sprintf("Head: %s", p.Equipment.Head.PrettyPrint()), fo, 64, 96, color.White)
         } else {
-            text.Draw(screen, "Head:", fo, 64, 128, color.Gray16{0x8000})
+            text.Draw(screen, "Head:", fo, 64, 96, color.Gray16{0x8000})
         }
         if p.Equipment.Torso != nil {
-            text.Draw(screen, fmt.Sprintf("Torso: %s", p.Equipment.Torso.PrettyPrint()), fo, 64, 160, color.White)
+            text.Draw(screen, fmt.Sprintf("Torso: %s", p.Equipment.Torso.PrettyPrint()), fo, 64, 128, color.White)
         } else {
-            text.Draw(screen, "Torso:", fo, 64, 160, color.Gray16{0x8000})
+            text.Draw(screen, "Torso:", fo, 64, 128, color.Gray16{0x8000})
         }
         if p.Equipment.Legs != nil {
-            text.Draw(screen, fmt.Sprintf("Legs: %s", p.Equipment.Legs.PrettyPrint()), fo, 64, 192, color.White)
+            text.Draw(screen, fmt.Sprintf("Legs: %s", p.Equipment.Legs.PrettyPrint()), fo, 64, 160, color.White)
         } else {
-            text.Draw(screen, "Legs:", fo, 64, 192, color.Gray16{0x8000})
+            text.Draw(screen, "Legs:", fo, 64, 160, color.Gray16{0x8000})
         }
         if p.Equipment.Feet != nil {
-            text.Draw(screen, fmt.Sprintf("Feet: %s", p.Equipment.Feet.PrettyPrint()), fo, 64, 224, color.White)
+            text.Draw(screen, fmt.Sprintf("Feet: %s", p.Equipment.Feet.PrettyPrint()), fo, 64, 192, color.White)
         } else {
-            text.Draw(screen, "Feet:", fo, 64, 224, color.Gray16{0x8000})
+            text.Draw(screen, "Feet:", fo, 64, 192, color.Gray16{0x8000})
         }
         if p.Equipment.LeftHand != nil {
             text.Draw(screen, fmt.Sprintf("Left Hand: %s", p.Equipment.LeftHand.PrettyPrint()), fo, 384, 96, color.White)
