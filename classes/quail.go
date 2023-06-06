@@ -190,3 +190,17 @@ func (q *Quail) Save() string {
     }
     return finalstr + strconv.Itoa(q.level) + ";" + strconv.Itoa(q.xp) + ";"
 }
+
+func (q *Quail) EarnXP(earnedxp int) bool {
+    q.xp += earnedxp
+    if q.xp >= 300 + ((q.GetLevel() - 1) * 300) {
+        if success := q.LevelUp(); !success {
+            log.Fatal(fmt.Sprintf("Leveling up to %d failed", q.GetLevel() + 1))
+        }
+    }
+    return true
+}
+
+func (q *Quail) LevelUp() bool {
+    return true
+}
