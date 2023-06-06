@@ -2446,55 +2446,55 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, fmt.Sprintf("You're now level %d!\nGain proficiency in a saving throw:", p.Class.GetLevel()), fo, 32, 64, color.White)
         switch gainprofstsel {
         case 0:
-            text.Draw(screen, ">", fo, 32, 96, color.White)
-        case 1:
             text.Draw(screen, ">", fo, 32, 128, color.White)
-        case 2:
+        case 1:
             text.Draw(screen, ">", fo, 32, 160, color.White)
-        case 3:
+        case 2:
             text.Draw(screen, ">", fo, 32, 192, color.White)
-        case 4:
+        case 3:
             text.Draw(screen, ">", fo, 32, 224, color.White)
-        case 5:
+        case 4:
             text.Draw(screen, ">", fo, 32, 256, color.White)
+        case 5:
+            text.Draw(screen, ">", fo, 32, 288, color.White)
         default:
             log.Fatal(fmt.Sprintf("%d is not a valid gainprofstsel", gainprofstsel))
         }
         strmod := p.Class.GetStr()[1]
         if p.Class.SavingThrow("str") > strmod {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 40, 96, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 48, 128, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 40, 96, color.White)
+            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("str")), fo, 48, 128, color.White)
         }
         dexmod := p.Class.GetDex()[1]
         if p.Class.SavingThrow("dex") > dexmod {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("dex")), fo, 40, 128, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Dexterity: %+d", p.Class.SavingThrow("dex")), fo, 48, 160, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("dex")), fo, 40, 128, color.White)
+            text.Draw(screen, fmt.Sprintf("Dexterity: %+d", p.Class.SavingThrow("dex")), fo, 48, 160, color.White)
         }
         conmod := p.Class.GetCon()[1]
         if p.Class.SavingThrow("con") > conmod {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("con")), fo, 40, 160, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Constitution: %+d", p.Class.SavingThrow("con")), fo, 48, 192, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("con")), fo, 40, 160, color.White)
+            text.Draw(screen, fmt.Sprintf("Constitution: %+d", p.Class.SavingThrow("con")), fo, 48, 192, color.White)
         }
         intelmod := p.Class.GetIntel()[1]
         if p.Class.SavingThrow("intel") > intelmod {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("intel")), fo, 40, 192, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Intelligence: %+d", p.Class.SavingThrow("intel")), fo, 48, 224, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("intel")), fo, 40, 192, color.White)
+            text.Draw(screen, fmt.Sprintf("Intelligence: %+d", p.Class.SavingThrow("intel")), fo, 48, 224, color.White)
         }
         wismod := p.Class.GetWis()[1]
         if p.Class.SavingThrow("wis") > wismod {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("wis")), fo, 40, 224, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Wisdom: %+d", p.Class.SavingThrow("wis")), fo, 48, 256, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("wis")), fo, 40, 224, color.White)
+            text.Draw(screen, fmt.Sprintf("Wisdom: %+d", p.Class.SavingThrow("wis")), fo, 48, 256, color.White)
         }
         chamod := p.Class.GetCha()[1]
         if p.Class.SavingThrow("cha") > chamod {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("cha")), fo, 40, 256, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Charisma: %+d", p.Class.SavingThrow("cha")), fo, 48, 288, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Strength: %+d", p.Class.SavingThrow("cha")), fo, 40, 256, color.White)
+            text.Draw(screen, fmt.Sprintf("Charisma: %+d", p.Class.SavingThrow("cha")), fo, 48, 288, color.White)
         }
         if stprofexists != "" {
             text.Draw(screen, fmt.Sprintf("You are already proficient in %s saving throws", stprofexists), fo, 64, 16, color.RGBA{159, 11, 19, 255})
@@ -2505,41 +2505,41 @@ func (g *Game) Draw(screen *ebiten.Image) {
         text.Draw(screen, fmt.Sprintf("You're now level %d!\nGain proficiency in a skill:", p.Class.GetLevel()), fo, 32, 64, color.White)
         switch gainprofskillsel {
         case 0:
-            text.Draw(screen, ">", fo, 32, 96, color.White)
-        case 1:
             text.Draw(screen, ">", fo, 32, 128, color.White)
-        case 2:
+        case 1:
             text.Draw(screen, ">", fo, 32, 160, color.White)
-        case 3:
+        case 2:
             text.Draw(screen, ">", fo, 32, 192, color.White)
-        case 4:
+        case 3:
             text.Draw(screen, ">", fo, 32, 224, color.White)
-        case 5:
+        case 4:
             text.Draw(screen, ">", fo, 32, 256, color.White)
-        case 6:
+        case 5:
             text.Draw(screen, ">", fo, 32, 288, color.White)
-        case 7:
+        case 6:
             text.Draw(screen, ">", fo, 32, 320, color.White)
-        case 8:
+        case 7:
             text.Draw(screen, ">", fo, 32, 352, color.White)
+        case 8:
+            text.Draw(screen, ">", fo, 32, 384, color.White)
         case 9:
-            text.Draw(screen, ">", fo, 256, 96, color.White)
+            text.Draw(screen, ">", fo, 288, 128, color.White)
         case 10:
-            text.Draw(screen, ">", fo, 256, 128, color.White)
+            text.Draw(screen, ">", fo, 288, 160, color.White)
         case 11:
-            text.Draw(screen, ">", fo, 256, 160, color.White)
+            text.Draw(screen, ">", fo, 288, 192, color.White)
         case 12:
-            text.Draw(screen, ">", fo, 256, 192, color.White)
+            text.Draw(screen, ">", fo, 288, 224, color.White)
         case 13:
-            text.Draw(screen, ">", fo, 256, 224, color.White)
+            text.Draw(screen, ">", fo, 288, 256, color.White)
         case 14:
-            text.Draw(screen, ">", fo, 256, 256, color.White)
+            text.Draw(screen, ">", fo, 288, 288, color.White)
         case 15:
-            text.Draw(screen, ">", fo, 256, 288, color.White)
+            text.Draw(screen, ">", fo, 288, 320, color.White)
         case 16:
-            text.Draw(screen, ">", fo, 256, 320, color.White)
+            text.Draw(screen, ">", fo, 288, 352, color.White)
         case 17:
-            text.Draw(screen, ">", fo, 256, 352, color.White)
+            text.Draw(screen, ">", fo, 288, 384, color.White)
         default:
             log.Fatal(fmt.Sprintf("%d is not a valid gainprofskillsel", gainprofstsel))
         }
@@ -2550,94 +2550,94 @@ func (g *Game) Draw(screen *ebiten.Image) {
         wismod := p.Class.GetWis()[1]
         chamod := p.Class.GetCha()[1]
         if p.Class.SkillCheck("acrobatics") > dexmod {
-            text.Draw(screen, fmt.Sprintf("Acrobatics: %+d", p.Class.SkillCheck("acrobatics")), fo, 40, 96, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Acrobatics: %+d", p.Class.SkillCheck("acrobatics")), fo, 48, 128, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Acrobatics: %+d", p.Class.SkillCheck("acrobatics")), fo, 40, 96, color.White)
+            text.Draw(screen, fmt.Sprintf("Acrobatics: %+d", p.Class.SkillCheck("acrobatics")), fo, 48, 128, color.White)
         }
         if p.Class.SkillCheck("animalhandling") > wismod {
-            text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Class.SkillCheck("animalhandling")), fo, 40, 128, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Class.SkillCheck("animalhandling")), fo, 48, 160, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Class.SkillCheck("animalhandling")), fo, 40, 128, color.White)
+            text.Draw(screen, fmt.Sprintf("Animal Handling: %+d", p.Class.SkillCheck("animalhandling")), fo, 48, 160, color.White)
         }
         if p.Class.SkillCheck("arcana") > intelmod {
-            text.Draw(screen, fmt.Sprintf("Arcana: %+d", p.Class.SkillCheck("arcana")), fo, 40, 160, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Arcana: %+d", p.Class.SkillCheck("arcana")), fo, 48, 192, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Arcana: %+d", p.Class.SkillCheck("arcana")), fo, 40, 160, color.White)
+            text.Draw(screen, fmt.Sprintf("Arcana: %+d", p.Class.SkillCheck("arcana")), fo, 48, 192, color.White)
         }
         if p.Class.SkillCheck("athletics") > strmod {
-            text.Draw(screen, fmt.Sprintf("Athletics: %+d", p.Class.SkillCheck("athletics")), fo, 40, 192, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Athletics: %+d", p.Class.SkillCheck("athletics")), fo, 48, 224, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Athletics: %+d", p.Class.SkillCheck("athletics")), fo, 40, 192, color.White)
+            text.Draw(screen, fmt.Sprintf("Athletics: %+d", p.Class.SkillCheck("athletics")), fo, 48, 224, color.White)
         }
         if p.Class.SkillCheck("deception") > chamod {
-            text.Draw(screen, fmt.Sprintf("Deception: %+d", p.Class.SkillCheck("deception")), fo, 40, 224, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Deception: %+d", p.Class.SkillCheck("deception")), fo, 48, 256, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Deception: %+d", p.Class.SkillCheck("deception")), fo, 40, 224, color.White)
+            text.Draw(screen, fmt.Sprintf("Deception: %+d", p.Class.SkillCheck("deception")), fo, 48, 256, color.White)
         }
         if p.Class.SkillCheck("history") > intelmod {
-            text.Draw(screen, fmt.Sprintf("History: %+d", p.Class.SkillCheck("history")), fo, 40, 256, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("History: %+d", p.Class.SkillCheck("history")), fo, 48, 288, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("History: %+d", p.Class.SkillCheck("history")), fo, 40, 256, color.White)
+            text.Draw(screen, fmt.Sprintf("History: %+d", p.Class.SkillCheck("history")), fo, 48, 288, color.White)
         }
         if p.Class.SkillCheck("insight") > wismod {
-            text.Draw(screen, fmt.Sprintf("Insight: %+d", p.Class.SkillCheck("insight")), fo, 40, 288, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Insight: %+d", p.Class.SkillCheck("insight")), fo, 48, 320, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Insight: %+d", p.Class.SkillCheck("insight")), fo, 40, 288, color.White)
+            text.Draw(screen, fmt.Sprintf("Insight: %+d", p.Class.SkillCheck("insight")), fo, 48, 320, color.White)
         }
         if p.Class.SkillCheck("intimidation") > chamod {
-            text.Draw(screen, fmt.Sprintf("Intimidation: %+d", p.Class.SkillCheck("intimidation")), fo, 40, 320, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Intimidation: %+d", p.Class.SkillCheck("intimidation")), fo, 48, 352, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Intimidation: %+d", p.Class.SkillCheck("intimidation")), fo, 40, 320, color.White)
+            text.Draw(screen, fmt.Sprintf("Intimidation: %+d", p.Class.SkillCheck("intimidation")), fo, 48, 352, color.White)
         }
         if p.Class.SkillCheck("investigation") > intelmod {
-            text.Draw(screen, fmt.Sprintf("Investigation: %+d", p.Class.SkillCheck("investigation")), fo, 40, 352, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Investigation: %+d", p.Class.SkillCheck("investigation")), fo, 48, 384, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Investigation: %+d", p.Class.SkillCheck("investigation")), fo, 40, 352, color.White)
+            text.Draw(screen, fmt.Sprintf("Investigation: %+d", p.Class.SkillCheck("investigation")), fo, 48, 384, color.White)
         }
         if p.Class.SkillCheck("medicine") > wismod {
-            text.Draw(screen, fmt.Sprintf("Medicine: %+d", p.Class.SkillCheck("medicine")), fo, 264, 96, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Medicine: %+d", p.Class.SkillCheck("medicine")), fo, 304, 128, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Medicine: %+d", p.Class.SkillCheck("medicine")), fo, 264, 96, color.White)
+            text.Draw(screen, fmt.Sprintf("Medicine: %+d", p.Class.SkillCheck("medicine")), fo, 304, 128, color.White)
         }
         if p.Class.SkillCheck("nature") > intelmod {
-            text.Draw(screen, fmt.Sprintf("Nature: %+d", p.Class.SkillCheck("nature")), fo, 264, 128, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Nature: %+d", p.Class.SkillCheck("nature")), fo, 304, 160, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Nature: %+d", p.Class.SkillCheck("nature")), fo, 264, 128, color.White)
+            text.Draw(screen, fmt.Sprintf("Nature: %+d", p.Class.SkillCheck("nature")), fo, 304, 160, color.White)
         }
         if p.Class.SkillCheck("perception") > wismod {
-            text.Draw(screen, fmt.Sprintf("Perception: %+d", p.Class.SkillCheck("perception")), fo, 264, 160, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Perception: %+d", p.Class.SkillCheck("perception")), fo, 304, 192, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Perception: %+d", p.Class.SkillCheck("perception")), fo, 264, 160, color.White)
+            text.Draw(screen, fmt.Sprintf("Perception: %+d", p.Class.SkillCheck("perception")), fo, 304, 192, color.White)
         }
         if p.Class.SkillCheck("performance") > chamod {
-            text.Draw(screen, fmt.Sprintf("Performance: %+d", p.Class.SkillCheck("performance")), fo, 264, 192, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Performance: %+d", p.Class.SkillCheck("performance")), fo, 304, 224, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Performance: %+d", p.Class.SkillCheck("performance")), fo, 264, 192, color.White)
+            text.Draw(screen, fmt.Sprintf("Performance: %+d", p.Class.SkillCheck("performance")), fo, 304, 224, color.White)
         }
         if p.Class.SkillCheck("persuasion") > chamod {
-            text.Draw(screen, fmt.Sprintf("Persuasion: %+d", p.Class.SkillCheck("persuasion")), fo, 264, 224, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Persuasion: %+d", p.Class.SkillCheck("persuasion")), fo, 304, 256, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Persuasion: %+d", p.Class.SkillCheck("persuasion")), fo, 264, 224, color.White)
+            text.Draw(screen, fmt.Sprintf("Persuasion: %+d", p.Class.SkillCheck("persuasion")), fo, 304, 256, color.White)
         }
         if p.Class.SkillCheck("religion") > intelmod {
-            text.Draw(screen, fmt.Sprintf("Religion: %+d", p.Class.SkillCheck("religion")), fo, 264, 256, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Religion: %+d", p.Class.SkillCheck("religion")), fo, 304, 288, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Religion: %+d", p.Class.SkillCheck("religion")), fo, 264, 256, color.White)
+            text.Draw(screen, fmt.Sprintf("Religion: %+d", p.Class.SkillCheck("religion")), fo, 304, 288, color.White)
         }
         if p.Class.SkillCheck("sleightofhand") > dexmod {
-            text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Class.SkillCheck("sleightofhand")), fo, 264, 288, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Class.SkillCheck("sleightofhand")), fo, 304, 320, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Class.SkillCheck("sleightofhand")), fo, 264, 288, color.White)
+            text.Draw(screen, fmt.Sprintf("Sleight of Hand: %+d", p.Class.SkillCheck("sleightofhand")), fo, 304, 320, color.White)
         }
         if p.Class.SkillCheck("stealth") > dexmod {
-            text.Draw(screen, fmt.Sprintf("Stealth: %+d", p.Class.SkillCheck("stealth")), fo, 264, 320, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Stealth: %+d", p.Class.SkillCheck("stealth")), fo, 304, 352, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Stealth: %+d", p.Class.SkillCheck("stealth")), fo, 264, 320, color.White)
+            text.Draw(screen, fmt.Sprintf("Stealth: %+d", p.Class.SkillCheck("stealth")), fo, 304, 352, color.White)
         }
         if p.Class.SkillCheck("survival") > wismod {
-            text.Draw(screen, fmt.Sprintf("Survival: %+d", p.Class.SkillCheck("survival")), fo, 264, 352, color.Gray16{0x8000})
+            text.Draw(screen, fmt.Sprintf("Survival: %+d", p.Class.SkillCheck("survival")), fo, 304, 384, color.Gray16{0x8000})
         } else {
-            text.Draw(screen, fmt.Sprintf("Survival: %+d", p.Class.SkillCheck("survival")), fo, 264, 352, color.White)
+            text.Draw(screen, fmt.Sprintf("Survival: %+d", p.Class.SkillCheck("survival")), fo, 304, 384, color.White)
         }
         if skillprofexists != "" {
             text.Draw(screen, fmt.Sprintf("You are already proficient in the skill %s", skillprofexists), fo, 64, 16, color.RGBA{159, 11, 19, 255})
