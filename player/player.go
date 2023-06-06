@@ -13,7 +13,6 @@ import (
 )
 
 type Equipment struct {
-    Armor inventory.Item
     Head inventory.Item
     Torso inventory.Item
     Legs inventory.Item
@@ -21,17 +20,6 @@ type Equipment struct {
     LeftHand inventory.Item
     RightHand inventory.Item
     BothHands inventory.Item
-    LeftPinky inventory.Item
-    LeftRing inventory.Item
-    LeftMid inventory.Item
-    LeftInd inventory.Item
-    LeftThumb inventory.Item
-    RightPinky inventory.Item
-    RightRing inventory.Item
-    RightMid inventory.Item
-    RightInd inventory.Item
-    RightThumb inventory.Item
-    Clothes inventory.Item
 }
 
 type Player struct {
@@ -47,9 +35,6 @@ type Player struct {
 
 func (e *Equipment) Save() string {
     var result string
-    if e.Armor != nil {
-        result += fmt.Sprintf("Armor=%s|", e.Armor.Save())
-    }
     if e.Head != nil {
         result += fmt.Sprintf("Head=%s|", e.Head.Save())
     }
@@ -62,36 +47,6 @@ func (e *Equipment) Save() string {
     if e.Feet != nil {
         result += fmt.Sprintf("Feet=%s|", e.Feet.Save())
     }
-    if e.LeftPinky != nil {
-        result += fmt.Sprintf("LeftPinky=%s|", e.LeftPinky.Save())
-    }
-    if e.LeftRing != nil {
-        result += fmt.Sprintf("LeftRing=%s|", e.LeftRing.Save())
-    }
-    if e.LeftMid != nil {
-        result += fmt.Sprintf("LeftMid=%s|", e.LeftMid.Save())
-    }
-    if e.LeftInd != nil {
-        result += fmt.Sprintf("LeftInd=%s|", e.LeftInd.Save())
-    }
-    if e.LeftThumb != nil {
-        result += fmt.Sprintf("LeftThumb=%s|", e.LeftThumb.Save())
-    }
-    if e.RightPinky != nil {
-        result += fmt.Sprintf("RightPinky=%s|", e.RightPinky.Save())
-    }
-    if e.RightRing != nil {
-        result += fmt.Sprintf("RightRing=%s|", e.RightRing.Save())
-    }
-    if e.RightMid != nil {
-        result += fmt.Sprintf("RightMid=%s|", e.RightMid.Save())
-    }
-    if e.RightInd != nil {
-        result += fmt.Sprintf("RightInd=%s|", e.RightInd.Save())
-    }
-    if e.RightThumb != nil {
-        result += fmt.Sprintf("RightThumb=%s|", e.RightThumb.Save())
-    }
     if e.BothHands == nil {
         if e.LeftHand != nil {
             result += fmt.Sprintf("LeftHand=%s|", e.LeftHand.Save())
@@ -101,11 +56,6 @@ func (e *Equipment) Save() string {
         }
     } else {
         result += fmt.Sprintf("BothHands=%s|", e.BothHands.Save())
-    }
-    if e.Clothes == nil {
-        log.Println("e.Clothes == nil")
-    } else {
-        result += fmt.Sprintf("Clothes=%s|", e.Clothes.Save())
     }
     result += ";"
     result = strings.Replace(result, "|;", ";", 1)
@@ -242,12 +192,6 @@ func (p *Player) Effects(action string, data []int, c chan int) {
 
 func (p *Player) Unequip(slot string) {
     switch slot {
-    case "Armor":
-        if p.Equipment.Armor == nil {
-            log.Fatal("No armor equipped")
-        }
-        p.Inv.Add(p.Equipment.Armor)
-        p.Equipment.Armor = nil
     case "Head":
         if p.Equipment.Head == nil {
             log.Fatal("Nothing on my head")
@@ -272,66 +216,6 @@ func (p *Player) Unequip(slot string) {
         }
         p.Inv.Add(p.Equipment.Feet)
         p.Equipment.Feet = nil
-    case "LeftPinky":
-        if p.Equipment.LeftPinky == nil {
-            log.Fatal("Nothing on my left pinky")
-        }
-        p.Inv.Add(p.Equipment.LeftPinky)
-        p.Equipment.LeftPinky = nil
-    case "LeftRing":
-        if p.Equipment.LeftRing == nil {
-            log.Fatal("Nothing on my left ring finger")
-        }
-        p.Inv.Add(p.Equipment.LeftRing)
-        p.Equipment.LeftRing = nil
-    case "LeftMid":
-        if p.Equipment.LeftMid == nil {
-            log.Fatal("Nothing on my left middle finger")
-        }
-        p.Inv.Add(p.Equipment.LeftMid)
-        p.Equipment.LeftMid = nil
-    case "LeftInd":
-        if p.Equipment.LeftInd == nil {
-            log.Fatal("Nothing on my left index finger")
-        }
-        p.Inv.Add(p.Equipment.LeftInd)
-        p.Equipment.LeftInd = nil
-    case "LeftThumb":
-        if p.Equipment.LeftThumb == nil {
-            log.Fatal("Nothing on my left thumb")
-        }
-        p.Inv.Add(p.Equipment.LeftThumb)
-        p.Equipment.LeftThumb = nil
-    case "RightPinky":
-        if p.Equipment.RightPinky == nil {
-            log.Fatal("Nothing on my right pinky")
-        }
-        p.Inv.Add(p.Equipment.RightPinky)
-        p.Equipment.RightPinky = nil
-    case "RightRing":
-        if p.Equipment.RightRing == nil {
-            log.Fatal("Nothing on my right ring finger")
-        }
-        p.Inv.Add(p.Equipment.RightRing)
-        p.Equipment.RightRing = nil
-    case "RightMid":
-        if p.Equipment.RightMid == nil {
-            log.Fatal("Nothing on my right middle finger")
-        }
-        p.Inv.Add(p.Equipment.RightMid)
-        p.Equipment.RightMid = nil
-    case "RightInd":
-        if p.Equipment.RightInd == nil {
-            log.Fatal("Nothing on my right index finger")
-        }
-        p.Inv.Add(p.Equipment.RightInd)
-        p.Equipment.RightInd = nil
-    case "RightThumb":
-        if p.Equipment.RightThumb == nil {
-            log.Fatal("Nothing on my right thumb")
-        }
-        p.Inv.Add(p.Equipment.RightThumb)
-        p.Equipment.RightThumb = nil
     case "LeftHand":
         if p.Equipment.LeftHand == nil {
             log.Fatal("Nothing in my left hand")
@@ -350,12 +234,6 @@ func (p *Player) Unequip(slot string) {
         }
         p.Inv.Add(p.Equipment.BothHands)
         p.Equipment.BothHands = nil
-    case "Clothes":
-        if p.Equipment.Clothes == nil {
-            log.Fatal("No clothes equipped")
-        }
-        p.Inv.Add(p.Equipment.Clothes)
-        p.Equipment.Clothes = nil
     default:
         log.Fatal(fmt.Sprintf("%s is not a valid slot", slot))
     }
@@ -365,12 +243,6 @@ func (p *Player) Equip(item inventory.Item) {
     for _, b := range p.Inv.GetItems() {
         if b.PrettyPrint() == item.PrettyPrint() {
             switch item.Slot() {
-            case "Armor":
-                if p.Equipment.Armor != nil {
-                    p.Inv.Add(p.Equipment.Armor)
-                }
-                p.Equipment.Armor = item
-                p.Inv.Drop(item)
             case "Head":
                 if p.Equipment.Head != nil {
                     p.Inv.Add(p.Equipment.Head)
@@ -394,66 +266,6 @@ func (p *Player) Equip(item inventory.Item) {
                     p.Inv.Add(p.Equipment.Feet)
                 }
                 p.Equipment.Feet = item
-                p.Inv.Drop(item)
-            case "LeftPinky":
-                if p.Equipment.LeftPinky != nil {
-                    p.Inv.Add(p.Equipment.LeftPinky)
-                }
-                p.Equipment.LeftPinky = item
-                p.Inv.Drop(item)
-            case "LeftRing":
-                if p.Equipment.LeftRing != nil {
-                    p.Inv.Add(p.Equipment.LeftRing)
-                }
-                p.Equipment.LeftRing = item
-                p.Inv.Drop(item)
-            case "LeftMid":
-                if p.Equipment.LeftMid != nil {
-                    p.Inv.Add(p.Equipment.LeftMid)
-                }
-                p.Equipment.LeftMid = item
-                p.Inv.Drop(item)
-            case "LeftInd":
-                if p.Equipment.LeftInd != nil {
-                    p.Inv.Add(p.Equipment.LeftInd)
-                }
-                p.Equipment.LeftInd = item
-                p.Inv.Drop(item)
-            case "LeftThumb":
-                if p.Equipment.LeftThumb != nil {
-                    p.Inv.Add(p.Equipment.LeftThumb)
-                }
-                p.Equipment.LeftThumb = item
-                p.Inv.Drop(item)
-            case "RightPinky":
-                if p.Equipment.RightPinky != nil {
-                    p.Inv.Add(p.Equipment.RightPinky)
-                }
-                p.Equipment.RightPinky = item
-                p.Inv.Drop(item)
-            case "RightRing":
-                if p.Equipment.RightRing != nil {
-                    p.Inv.Add(p.Equipment.RightRing)
-                }
-                p.Equipment.RightRing = item
-                p.Inv.Drop(item)
-            case "RightMid":
-                if p.Equipment.RightMid != nil {
-                    p.Inv.Add(p.Equipment.RightMid)
-                }
-                p.Equipment.RightMid = item
-                p.Inv.Drop(item)
-            case "RightInd":
-                if p.Equipment.RightInd != nil {
-                    p.Inv.Add(p.Equipment.RightInd)
-                }
-                p.Equipment.RightInd = item
-                p.Inv.Drop(item)
-            case "RightThumb":
-                if p.Equipment.RightThumb != nil {
-                    p.Inv.Add(p.Equipment.RightThumb)
-                }
-                p.Equipment.RightThumb = item
                 p.Inv.Drop(item)
             case "LeftHand":
                 if p.Equipment.LeftHand != nil {
@@ -484,12 +296,6 @@ func (p *Player) Equip(item inventory.Item) {
                     p.Unequip("LeftHand")
                 }
                 p.Equipment.BothHands = item
-                p.Inv.Drop(item)
-            case "Clothes":
-                if p.Equipment.Clothes != nil {
-                    p.Inv.Add(p.Equipment.Clothes)
-                }
-                p.Equipment.Clothes = item
                 p.Inv.Drop(item)
             default:
                 log.Fatal(fmt.Sprintf("%s is not a valid slot", item.Slot()))

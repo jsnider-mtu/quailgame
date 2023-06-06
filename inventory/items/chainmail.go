@@ -4,7 +4,7 @@ type Chainmail struct {
 }
 
 func (c *Chainmail) Slot() string {
-    return "Armor"
+    return "Torso"
 }
 
 func (c *Chainmail) Use() (string, []int) {
@@ -20,7 +20,7 @@ func (c *Chainmail) PrettyPrint() string {
 }
 
 func (c *Chainmail) Function() string {
-    return "armor"
+    return "torso"
 }
 
 func (c *Chainmail) Damage() (int, int, string) {
