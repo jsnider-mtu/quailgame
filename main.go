@@ -2243,6 +2243,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
     if charsheet0 {
         screen.DrawImage(blankImage, nil)
         text.Draw(screen, fmt.Sprintf("Name: %s", p.Name), fo, 32, 32, color.White)
+        text.Draw(screen, fmt.Sprintf("XP: %d", p.Class.GetXP()), fo, 256, 32, color.White)
         text.Draw(screen, fmt.Sprintf("Class: %s", p.Class.GetName()), fo, 32, 64, color.White)
         text.Draw(screen, fmt.Sprintf("Level: %d", p.Class.GetLevel()), fo, 256, 64, color.White)
         text.Draw(screen, fmt.Sprintf("Str: %d (%+d)", strstats[0], strstats[1]), fo, 32, 96, color.White)
