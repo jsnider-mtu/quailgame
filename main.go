@@ -1501,7 +1501,7 @@ func (g *Game) Update() error {
                         down = false
                         left = false
                         right = false
-                        if smallestnum % 4 == 0 {
+                        if smallestnum % 6 == 0 {
                             ok, blocker := l.TryUpdatePos(true, p, true, -24, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
@@ -1523,7 +1523,7 @@ func (g *Game) Update() error {
                         up = false
                         down = false
                         right = false
-                        if smallestnum % 4 == 0 {
+                        if smallestnum % 6 == 0 {
                             ok, blocker := l.TryUpdatePos(true, p, false, -24, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
@@ -1545,7 +1545,7 @@ func (g *Game) Update() error {
                         left = false
                         up = false
                         down = false
-                        if smallestnum % 4 == 0 {
+                        if smallestnum % 6 == 0 {
                             ok, blocker := l.TryUpdatePos(true, p, false, 24, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
@@ -1567,7 +1567,7 @@ func (g *Game) Update() error {
                         up = false
                         left = false
                         right = false
-                        if smallestnum % 4 == 0 {
+                        if smallestnum % 6 == 0 {
                             ok, blocker := l.TryUpdatePos(true, p, true, 24, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
