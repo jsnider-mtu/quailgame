@@ -8,5 +8,6 @@ import (
 )
 
 func main() {
-    utils.Byteslice2file(assets.KingQuail_PNG, "kingquail.png")
+    //utils.Byteslice2file(assets.KingQuail_PNG, "kingquail.png")
+    utils.Byteslice2file(assets.Overworld_PNG, "overworld.png")
 }
