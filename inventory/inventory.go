@@ -3,6 +3,7 @@ package inventory
 import (
     "errors"
     "fmt"
+    "strconv"
 )
 
 type Item interface {
@@ -68,5 +69,6 @@ func (i *Inv) Save() string {
     for _, val := range i.items {
         result += val.Save() + ";"
     }
+    result += strconv.Itoa(i.seeds) + ";"
     return result
 }

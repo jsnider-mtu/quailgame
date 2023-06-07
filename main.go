@@ -1104,6 +1104,11 @@ func (g *Game) Update() error {
                     if item == "" {
                         break
                     }
+                    seeds, err := strconv.Atoi(item)
+                    if err == nil {
+                        p.Inv.AddSeeds(seeds)
+                        continue
+                    }
                     itemprops := strings.Split(item, ",")
                     switch len(itemprops) {
                     case 1:
