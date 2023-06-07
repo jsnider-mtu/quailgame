@@ -566,13 +566,25 @@ func (g *Game) Update() error {
         }
     } else if gainProfSkill {
         if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
-            if gainprofskillsel > 0 {
-                gainprofskillsel--
+            gainprofskillsel--
+            if gainprofskillsel < 0 {
+                gainprofskillsel = 17
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyLeft) || inpututil.IsKeyJustPressed(ebiten.KeyA) {
+            if gainprofskillsel > 8 {
+                gainprofskillsel -= 9
+            }
+        }
+        if inpututil.IsKeyJustPressed(ebiten.KeyRight) || inpututil.IsKeyJustPressed(ebiten.KeyD) {
+            if gainprofskillsel < 9 {
+                gainprofskillsel += 9
             }
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyDown) || inpututil.IsKeyJustPressed(ebiten.KeyS) {
-            if gainprofskillsel < 17 {
-                gainprofskillsel++
+            gainprofskillsel++
+            if gainprofskillsel > 17 {
+                gainprofskillsel = 0
             }
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
