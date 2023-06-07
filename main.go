@@ -1501,8 +1501,8 @@ func (g *Game) Update() error {
                         down = false
                         left = false
                         right = false
-                        if smallestnum % 6 == 0 {
-                            ok, blocker := l.TryUpdatePos(true, p, true, -24, passattempts, p)
+                        if smallestnum % 3 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, true, -12, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
                                     if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
@@ -1523,8 +1523,8 @@ func (g *Game) Update() error {
                         up = false
                         down = false
                         right = false
-                        if smallestnum % 6 == 0 {
-                            ok, blocker := l.TryUpdatePos(true, p, false, -24, passattempts, p)
+                        if smallestnum % 3 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, false, -12, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
                                     if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
@@ -1545,8 +1545,8 @@ func (g *Game) Update() error {
                         left = false
                         up = false
                         down = false
-                        if smallestnum % 6 == 0 {
-                            ok, blocker := l.TryUpdatePos(true, p, false, 24, passattempts, p)
+                        if smallestnum % 3 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, false, 12, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
                                     if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
@@ -1567,8 +1567,8 @@ func (g *Game) Update() error {
                         up = false
                         left = false
                         right = false
-                        if smallestnum % 6 == 0 {
-                            ok, blocker := l.TryUpdatePos(true, p, true, 24, passattempts, p)
+                        if smallestnum % 3 == 0 {
+                            ok, blocker := l.TryUpdatePos(true, p, true, 12, passattempts, p)
                             if ok {
                                 for _, a := range l.Doors {
                                     if p.Pos[0] == a.GetCoords()[0] && p.Pos[1] == a.GetCoords()[1] {
