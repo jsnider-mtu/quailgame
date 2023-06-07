@@ -59,7 +59,6 @@ func (e *Equipment) Save() string {
     }
     result += ";"
     result = strings.Replace(result, "|;", ";", 1)
-    log.Println("result = " + result)
     return result
 }
 

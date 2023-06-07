@@ -5,7 +5,7 @@ import (
 )
 
 type Class interface {
-    Create([6]int) bool
+    Create([6]int, int) bool
     GetName() string
     GetLevel() int
     GetXP() int

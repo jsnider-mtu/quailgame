@@ -43,7 +43,7 @@ func lvlTwo(entrance int) *Level {
                 Name: "Jane Donner", Pos: [2]int{144, 48}, Image: npcGirlImage, Class: &classes.Quail{}})}
 
     for _, n := range NPCs {
-        n.PC.Class.Create([6]int{10, 10, 10, 10, 10, 10})
+        n.PC.Class.Create([6]int{10, 10, 10, 10, 10, 10}, 0)
     }
 
     var pos [2]int

@@ -503,7 +503,7 @@ func (g *Game) Update() error {
             }
             var abilarr [6]int
             copy(abilarr[:], abilities)
-            if cc := p.Class.Create(abilarr); !cc {
+            if cc := p.Class.Create(abilarr, 0); !cc {
                 panic("Character creation failed")
             }
             p.Equipment = &player.Equipment{}
@@ -721,8 +721,12 @@ func (g *Game) Update() error {
             incrAbilScore = false
         }
     } else {
-        if p.Class.GetXP() >= 300 + (((p.Class.GetLevel() - 1) * 300) * p.Class.GetLevel()) {
-            levelUp(p)
+        if p != nil {
+            if p.Class != nil {
+                if p.Class.GetXP() >= 300 + (((p.Class.GetLevel() - 1) * 300) * p.Class.GetLevel()) {
+                    levelUp(p)
+                }
+            }
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyY) {
             p.Class.EarnXP(1300)
@@ -977,7 +981,7 @@ func (g *Game) Update() error {
                 var statsstr string = p.Class.Save()
                 //fmt.Println(statsstr)
                 var equipmentstr string = p.Equipment.Save()
-                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, equipmentstr)
+                _, err = db.Exec(saveStmt, name, l.GetName(), l.Pos[0], l.Pos[1], csdonestr, invstr, statsstr, equipmentstr, p.Class.GetName())
                 if err != nil {
                     log.Fatal(fmt.Sprintf("%q: %s\n", err, saveStmt))
                 }
@@ -1026,19 +1030,27 @@ func (g *Game) Update() error {
                 var invstr string
                 var statsstr string
                 var equipmentstr string
+                var classstr string
                 for rows.Next() {
-                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &equipmentstr)
+                    err = rows.Scan(&savename, &levelname, &x, &y, &csdonestr, &invstr, &statsstr, &equipmentstr, &classstr)
                 }
                 err = rows.Err()
                 if err != nil {
                     log.Fatal(err)
                 }
                 p.Name = savename
-                p.Class = &classes.Quail{}
+                switch classstr {
+                case "Quail":
+                    p.Class = &classes.Quail{}
+                default:
+                    log.Fatal(fmt.Sprintf("%s is not a valid class name", classstr))
+                }
                 var loadstatsarr [6]int
                 var loadstatslvl int
                 var loadstatsxp int
-                log.Printf("Need to use loadstatsxp: %d", loadstatsxp)
+                var illum [3]int
+                var proficiencies = make([]string, 0)
+                //log.Printf("Need to use loadstatsxp: %d", loadstatsxp)
                 loadstatssli := strings.Split(statsstr, ";")
                 for statind, statval := range loadstatssli {
                     if statval == "" {
@@ -1046,20 +1058,33 @@ func (g *Game) Update() error {
                     }
                     statint, err := strconv.Atoi(statval)
                     if err != nil {
-                        panic(err)
+                        proficiencies = append(proficiencies, statval)
+                        continue
                     }
                     switch statind {
-                    case 6:
+                    case 0:
                         loadstatslvl = statint
-                    case 7:
+                    case 1:
                         loadstatsxp = statint
+                    case 2, 3, 4, 5, 6, 7:
+                        loadstatsarr[statind - 2] = statint
+                    case 8, 9, 10:
+                        illum[statind - 8] = statint
                     default:
-                        loadstatsarr[statind] = statint
+                        proficiencies = append(proficiencies, statval)
                     }
                 }
-                p.Class.Create(loadstatsarr)
-                if loadstatslvl > 1 {
-                    // Level up incrementally
+                p.Class.Create(loadstatsarr, loadstatsxp)
+                for _, pr := range proficiencies {
+                    if !p.Class.AddProf(pr) {
+                        log.Fatal(fmt.Sprintf("Unable to add proficiency in %s", pr))
+                    }
+                }
+                if !p.Class.Illuminate(illum) {
+                    log.Fatal(fmt.Sprintf("Failed to set illuminated with this data: %v", illum))
+                }
+                for lsl := 1; lsl < loadstatslvl; lsl++ {
+                    p.Class.LevelUp()
                 }
                 csdonestrarr := strings.Split(csdonestr, ",")
                 csDone = []int{}
@@ -3275,7 +3300,7 @@ func init() {
     throwTargetBoxHoriz.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
     throwTargetBoxVert.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
 
-    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "equipment,TEXT,0,null,0"}
+    savesTableSchema = []string{"name,TEXT,1,null,1", "level,TEXT,1,\"One\",0", "x,INT,1,null,0", "y,INT,1,null,0", "csdone,TEXT,0,null,0", "inventory,TEXT,0,null,0", "stats,TEXT,0,null,0", "equipment,TEXT,0,null,0", "class,TEXT,0,null,0"}
     pagesTableSchema = []string{"name,TEXT,1,null,0", "msg,TEXT,1,null,0", "charname,TEXT,1,null,0"}
     homeDir, err := os.UserHomeDir()
     if err != nil {

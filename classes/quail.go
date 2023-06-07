@@ -14,7 +14,7 @@ type Quail struct {
     illuminated [3]int
 }
 
-func (q *Quail) Create(abilities [6]int) bool {
+func (q *Quail) Create(abilities [6]int, xp int) bool {
     q.stats = &Stats{}
     for i, x := range abilities {
         if x > 18 || x < 3 {
@@ -59,7 +59,7 @@ func (q *Quail) Create(abilities [6]int) bool {
     }
     q.stats.pb = 2
     q.level = 1
-    q.xp = 0
+    q.xp = xp
     return true
 }
 
@@ -269,7 +269,15 @@ func (q *Quail) Save() string {
         finalstr += strconv.Itoa(num)
         finalstr += ";"
     }
-    return finalstr + strconv.Itoa(q.level) + ";" + strconv.Itoa(q.xp) + ";"
+    for _, inum := range q.illuminated {
+        finalstr += strconv.Itoa(inum)
+        finalstr += ";"
+    }
+    for _, p := range q.proficiencies {
+        finalstr += p
+        finalstr += ";"
+    }
+    return strconv.Itoa(q.level) + ";" + strconv.Itoa(q.xp) + ";" + finalstr
 }
 
 func (q *Quail) EarnXP(earnedxp int) {
