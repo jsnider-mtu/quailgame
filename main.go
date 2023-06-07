@@ -392,11 +392,11 @@ func (g *Game) Update() error {
                         right = false
                         firstsave = false
                         start = false
-                        save = true
+                        save = false
                         curCS = 0
-                        cutscene = false
+                        cutscene = true
                         creationsel = 0
-                        creation = true
+                        creation = false
                     }
                 }
             } else {
@@ -509,6 +509,7 @@ func (g *Game) Update() error {
             p.Equipment = &player.Equipment{}
             creationsel = 0
             creation = false
+            save = true
         }
     } else if gainProfST {
         if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
@@ -744,7 +745,13 @@ func (g *Game) Update() error {
             p.Class.EarnXP(1300)
         }
         if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
-            pause = !pause
+            if cutscene && curCS == 0 {
+                csCount = 0
+                cutscene = false
+                start = true
+            } else {
+                pause = !pause
+            }
         }
         if pause {
             if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsKeyJustPressed(ebiten.KeyW) {
@@ -1772,9 +1779,13 @@ func (g *Game) Draw(screen *ebiten.Image) {
                 csCount = 0
             }
             if done {
+                if curCS == 0 {
+                    creation = true
+                } else {
+                    save = true
+                }
                 csDone = append(csDone, curCS)
                 cutscene = false
-                save = true
             }
         }
     } else if creation {

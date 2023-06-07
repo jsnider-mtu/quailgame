@@ -28,6 +28,9 @@ var textstrs = make([]string, 0)
 var picsarr = make([]*ebiten.Image, 0)
 
 func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
+    if count == 0 {
+        cscount = 0
+    }
     if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
         cscount = 0
         if len(textstrs) > 1 {
@@ -44,7 +47,7 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
     }
     switch cs {
     case 0:
-        if len(textstrs) == 0 {
+        if len(textstrs) < 3 && count == 0 {
             textstr := "The Quail Kingdom...\n\n"+
                        "A safe respite for many. A place of deep history,\n"+
                        "a place of ancient warfare, but now a place of calm\n"+
@@ -66,9 +69,9 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
                         "brother against brother, the sundering of a kingdom,\n"+
                         "and the rising from the ashes\n\n"+
                         "-- a new sovereign -- King Quail."
-            textstrs = append(textstrs, textstr, textstr2, textstr3)
+            textstrs = []string{textstr, textstr2, textstr3}
         }
-        if len(picsarr) == 0 {
+        if len(picsarr) < 3 && count == 0 {
             pic0image, _, err := image.Decode(bytes.NewReader(assets.OldMan_PNG))
             if err != nil {
                 log.Fatal(err)
@@ -84,9 +87,9 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
                 log.Fatal(err)
             }
             pic2Image = ebiten.NewImageFromImage(pic2image)
-            picsarr = append(picsarr, pic0Image, pic1Image, pic2Image)
+            picsarr = []*ebiten.Image{pic0Image, pic1Image, pic2Image}
         }
-        if count % 3 == 0 {
+        if count % 5 == 0 {
             cscount++
         }
         cx, cy := ebiten.CursorPosition()
@@ -134,7 +137,6 @@ func CutScene(screen *ebiten.Image, cs, count int, fo *font.Face) (bool, bool) {
             pcm.Scale(1.0, 1.0, 1.0, i)
             screen.DrawImage(picsarr[0], &ebiten.DrawImageOptions{GeoM: pgm, ColorM: pcm})
             screen.DrawRectShader(300, 300, s, sop)
-            cscount = 0
             if len(picsarr) > 1 {
                 picsarr = picsarr[1:]
             }
