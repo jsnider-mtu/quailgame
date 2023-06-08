@@ -175,57 +175,26 @@ func (l *Level) LineOfSight(p *player.Player, target [2]int) (bool, bool, float6
 func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, attempt int, mc *player.Player) (bool, string) {
     if vert {
         if p.Pos[1] + dist > 0 && p.Pos[1] + dist < l.GetMax()[1] {
-            if dist < 0 {
-                if !pc {
-                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
-                        return false, "player"
-                    }
+            if !pc {
+                if p.Pos[0] > mc.Pos[0] - 24 && p.Pos[0] < mc.Pos[0] + 24 && p.Pos[1] + dist < mc.Pos[1] + 24 && p.Pos[1] + dist > mc.Pos[1] - 24 {
+                    return false, "player"
                 }
-                for _, a := range l.Boxes {
-                    if p.Pos[0] > a[0] - 48 && p.Pos[0] < a[2] && p.Pos[1] + dist >= a[1] && p.Pos[1] + dist < a[3] - 24 {
-                        return false, "box"
-                    }
+            }
+            for _, a := range l.Boxes {
+                if p.Pos[0] > a[0] - 36 && p.Pos[0] < a[2] - 12 && p.Pos[1] + dist < a[3] - 12 && p.Pos[1] + dist > a[1] - 36 {
+                    return false, "box"
                 }
-                for _, b := range l.NPCs {
+            }
+            for _, b := range l.NPCs {
+                if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                    continue
+                }
+                if p.Pos[0] > b.PC.Pos[0] - 24 && p.Pos[0] < b.PC.Pos[0] + 24 && p.Pos[1] + dist < b.PC.Pos[1] + 24 && p.Pos[1] + dist > b.PC.Pos[1] - 24 {
                     if !pc {
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
-                            continue
-                        }
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist < b.PC.Pos[1] + 48 {
-                            return false, "npc"
-                        }
+                        return false, "npc"
                     } else {
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist == b.PC.Pos[1] {
-                            if attempt < 10 {
-                                return false, "npc"
-                            }
-                        }
-                    }
-                }
-            } else {
-                if !pc {
-                    if p.Pos[0] == mc.Pos[0] && p.Pos[1] + dist == mc.Pos[1] {
-                        return false, "player"
-                    }
-                }
-                for _, a := range l.Boxes {
-                    if p.Pos[0] > a[0] - 24 && p.Pos[0] < a[2] - 24 && p.Pos[1] + dist >= a[1] - 24 && p.Pos[1] + dist < a[3] {
-                        return false, "box"
-                    }
-                }
-                for _, b := range l.NPCs {
-                    if !pc {
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
-                            continue
-                        }
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist > b.PC.Pos[1] - 48 {
+                        if attempt < 10 {
                             return false, "npc"
-                        }
-                    } else {
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] + dist == b.PC.Pos[1] {
-                            if attempt < 10 {
-                                return false, "npc"
-                            }
                         }
                     }
                 }
@@ -239,57 +208,26 @@ func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, att
         return false, "mapedge"
     } else {
         if p.Pos[0] + dist > 0 && p.Pos[0] + dist < l.GetMax()[0] {
-            if dist < 0 {
-                if !pc {
-                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
-                        return false, "player"
-                    }
+            if !pc {
+                if p.Pos[0] + dist < mc.Pos[0] + 24 && p.Pos[0] + dist > mc.Pos[0] - 24 && p.Pos[1] > mc.Pos[1] - 24 && p.Pos[1] < mc.Pos[1] + 24 {
+                    return false, "player"
                 }
-                for _, a := range l.Boxes {
-                    if p.Pos[0] + dist >= a[0] && p.Pos[0] + dist < a[2] && p.Pos[1] >= a[1] - 24 && p.Pos[1] < a[3] - 24 {
-                        return false, "box"
-                    }
+            }
+            for _, a := range l.Boxes {
+                if p.Pos[0] + dist > a[0] - 36 && p.Pos[0] + dist < a[2] - 12 && p.Pos[1] > a[1] - 36 && p.Pos[1] < a[3] - 12 {
+                    return false, "box"
                 }
-                for _, b := range l.NPCs {
+            }
+            for _, b := range l.NPCs {
+                if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                    continue
+                }
+                if p.Pos[0] + dist > b.PC.Pos[0] - 24 && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] < b.PC.Pos[1] + 24 && p.Pos[1] > b.PC.Pos[1] - 24 {
                     if !pc {
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
-                            continue
-                        }
-                        if p.Pos[0] + dist == b.PC.Pos[0] && p.Pos[1] >= b.PC.Pos[1] - 24 && p.Pos[1] <= b.PC.Pos[1] + 24 {
-                            return false, "npc"
-                        }
+                        return false, "npc"
                     } else {
-                        if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] == b.PC.Pos[1] {
-                            if attempt < 10 {
-                                return false, "npc"
-                            }
-                        }
-                    }
-                }
-            } else {
-                if !pc {
-                    if p.Pos[0] + dist == mc.Pos[0] && p.Pos[1] == mc.Pos[1] {
-                        return false, "player"
-                    }
-                }
-                for _, a := range l.Boxes {
-                    if p.Pos[0] + dist >= a[0] - 24 && p.Pos[0] + dist < a[2] && p.Pos[1] >= a[1] - 24 && p.Pos[1] < a[3] - 24 {
-                        return false, "box"
-                    }
-                }
-                for _, b := range l.NPCs {
-                    if !pc {
-                        if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
-                            continue
-                        }
-                        if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[1] >= b.PC.Pos[1] - 24 && p.Pos[1] <= b.PC.Pos[1] + 24 {
+                        if attempt < 10 {
                             return false, "npc"
-                        }
-                    } else {
-                        if p.Pos[0] + dist >= b.PC.Pos[0] && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] == b.PC.Pos[1] {
-                            if attempt < 10 {
-                                return false, "npc"
-                            }
                         }
                     }
                 }

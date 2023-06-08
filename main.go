@@ -1465,16 +1465,16 @@ func (g *Game) Update() error {
                         switch rand.Intn(4) {
                         case 0:
                             npc.Direction = "down"
-                            l.TryUpdatePos(false, npc.PC, true, 24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, true, 12, 0, p)
                         case 1:
                             npc.Direction = "up"
-                            l.TryUpdatePos(false, npc.PC, true, -24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, true, -12, 0, p)
                         case 2:
                             npc.Direction = "right"
-                            l.TryUpdatePos(false, npc.PC, false, 24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, false, 12, 0, p)
                         case 3:
                             npc.Direction = "left"
-                            l.TryUpdatePos(false, npc.PC, false, -24, 0, p)
+                            l.TryUpdatePos(false, npc.PC, false, -12, 0, p)
                         }
                     } else if !npc.Stopped && (npcCount + npc.GetOffset() - 4) % npc.GetSpeed() == 0 {
                         npc.Stopped = true
