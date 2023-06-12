@@ -3183,11 +3183,11 @@ func Input(sb *strings.Builder) {
     return
 }
 
-func skillCheck(p *player.Player, skill string) int {   
+func skillCheck(p *player.Player, skill string) int {
     return rand.Intn(20) + 1 + p.Class.SkillCheck(skill)
 }
 
-func savingThrow(p *player.Player, st string) int {   
+func savingThrow(p *player.Player, st string) int {
     return rand.Intn(20) + 1 + p.Class.SavingThrow(st)
 }
 
