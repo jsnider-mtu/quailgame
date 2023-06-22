@@ -41,17 +41,21 @@ func lvlOne(entrance int) *Level {
 
     NPCs := []npcs.NPC{
         npcs.NewNPC(
-            "janedoe", "down", 240, rand.Intn(60) + 60, true, [][]string{
-                {"Hello there,", "ObiWan Kenobi."},
-                {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
+            "janedoe", "down", 240, rand.Intn(60) + 60, true, []string{
+                "Hello", "What's wrong?"},
+            [][][]string{{
+                {"Hello there,", "ObiWan Kenobi."}},
+                {{"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}},
             &player.Player{
                 Name: "Jane Doe", Pos: [2]int{192, 192}, Image: npcGirlImage, Class: &classes.Quail{}}),
         npcs.NewNPC(
-            "wizard", "down", 0, rand.Intn(60) + 60, true, [][]string{
+            "wizard", "down", 0, rand.Intn(60) + 60, true, []string{
+                "Who are you?"},
+            [][][]string{{
                 {"I'm a wizard, Harry!"},
                 {"The great and terrible Lord Adrian", "has invaded the peaceful Quail Kingdom,",
                  "stoking a rebellion from within.", "", "Your quest is simple,",
-                 "quell the rebellion and defeat", "Lord Adrian!"}},
+                 "quell the rebellion and defeat", "Lord Adrian!"}}},
             &player.Player{
                 Name: "Wizard", Pos: [2]int{288, 288}, Image: wizardImage, Class: &classes.Quail{}})}
 

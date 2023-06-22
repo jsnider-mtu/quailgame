@@ -3,8 +3,7 @@ package quests
 type Quest interface {
     Status() string
     TurnIn() bool
-    GetRewards() []items.Item
-    GetSeeds() int
+    GetRewards() (int, []items.Item)
     GetLevelReq() int
     GetXP() int
     GetID() (int, string)

@@ -10,8 +10,10 @@ type JaneDoe struct {
     offset int
     direction string
     stopped bool
-    msgs [][]string
-    msgcount int
+    diagopts []string
+    diagsel int
+    msgs [][][]string
+//    msgcount int
     PC *player.Player
 }
 
@@ -39,12 +41,17 @@ func (j *JaneDoe) GetStopped() bool {
     return j.stopped
 }
 
-func (j *JaneDoe) Dialog() []string {
-    if j.msgcount == len(j.msgs) {
-        j.msgcount = 0
-    }
-    j.msgcount++
-    return j.msgs[j.msgcount - 1]
+func (j *JaneDoe) GetDiagOpts() []string {
+    return j.diagopts
+}
+
+func (j *JaneDoe) GetMsgs() []string {
+    return j.msgs[j.diagsel][0]
+//    if j.msgcount == len(j.msgs) {
+//        j.msgcount = 0
+//    }
+//    j.msgcount++
+//    return j.msgs[j.msgcount - 1]
 }
 
 func (j *JaneDoe) Direction(d string) {
@@ -54,5 +61,10 @@ func (j *JaneDoe) Direction(d string) {
 
 func (j *JaneDoe) Stopped(s bool) {
     j.stopped = s
+    return
+}
+
+func (j *JaneDoe) DiagSel(ds int) {
+    j.diagsel = ds
     return
 }

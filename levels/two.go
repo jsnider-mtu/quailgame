@@ -36,9 +36,11 @@ func lvlTwo(entrance int) *Level {
 
     NPCs := []npcs.NPC{
         npcs.NewNPC(
-            "janedoe", "down", 240, rand.Intn(60) + 60, true, [][]string{
-                {"Hello there,", "ObiWan Kenobi."},
-                {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
+            "janedoe", "down", 240, rand.Intn(60) + 60, true, []string{
+                "Hello", "What's Wrong?"},
+            [][][]string{{
+                {"Hello there,", "ObiWan Kenobi."}},
+                {{"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}},
             &player.Player{
                 Name: "Jane Donner", Pos: [2]int{144, 48}, Image: npcGirlImage, Class: &classes.Quail{}})}
 

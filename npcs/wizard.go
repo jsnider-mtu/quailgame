@@ -10,8 +10,10 @@ type Wizard struct {
     offset int
     direction string
     stopped bool
-    msgs [][]string
-    msgcount int
+    diagopts []string
+    diagsel int
+    msgs [][][]string
+//    msgcount int
     PC *player.Player
 }
 
@@ -39,12 +41,17 @@ func (w *Wizard) GetStopped() bool {
     return w.stopped
 }
 
-func (w *Wizard) Dialog() []string {
-    if w.msgcount == len(w.msgs) {
-        w.msgcount = 0
-    }
-    w.msgcount++
-    return w.msgs[w.msgcount - 1]
+func (w *Wizard) GetDiagOpts() []string {
+    return w.diagopts
+}
+
+func (w *Wizard) GetMsgs() []string {
+    return w.msgs[w.diagsel][0]
+//    if w.msgcount == len(w.msgs) {
+//        w.msgcount = 0
+//    }
+//    w.msgcount++
+//    return w.msgs[w.msgcount - 1]
 }
 
 func (w *Wizard) Direction(d string) {
@@ -54,5 +61,10 @@ func (w *Wizard) Direction(d string) {
 
 func (w *Wizard) Stopped(s bool) {
     w.stopped = s
+    return
+}
+
+func (w *Wizard) DiagSel(ds int) {
+    w.diagsel = ds
     return
 }

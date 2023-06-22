@@ -19,17 +19,20 @@ type NPC interface {
     GetOffset() int
     GetDirection() string
     GetStopped() bool
+    GetDiagOpts() []string
+    GetMsgs() []string
     Dialog() []string
     Direction(string)
     Stopped(bool)
+    DiagSel(int)
 }
 
-func NewNPC(name, direction string, speed, offset int, stopped bool, msgs [][]string, pc *player.Player) NPC {
+func NewNPC(name, direction string, speed, offset int, stopped bool, diagopts []string, msgs [][][]string, pc *player.Player) NPC {
     switch name {
     case "janedoe":
-        return &JaneDoe{name: name, speed: speed, offset: offset, direction: direction, stopped: stopped, msgs: msgs, msgcount: 0, PC: pc}
+        return &JaneDoe{name: name, speed: speed, offset: offset, direction: direction, stopped: stopped, diagopts: diagopts, diagsel: 0, msgs: msgs, PC: pc}
     case "wizard":
-        return &Wizard{name: name, speed: speed, offset: offset, direction: direction, stopped: stopped, msgs: msgs, msgcount: 0, PC: pc}
+        return &Wizard{name: name, speed: speed, offset: offset, direction: direction, stopped: stopped, diagopts: diagopts, diagsel: 0, msgs: msgs, PC: pc}
     default:
         log.Fatal(fmt.Sprintf("%d is not a valid NPC", name))
     }
