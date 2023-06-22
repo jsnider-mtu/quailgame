@@ -1407,9 +1407,9 @@ func (g *Game) Update() error {
                 switch {
                 case up:
                     for _, npc := range l.NPCs {
-                        if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] + 24 == p.Pos[1] {
+                        if npc.GetPC().Pos[0] >= p.Pos[0] - 24 && npc.GetPC().Pos[0] <= p.Pos[0] + 24 && npc.GetPC().Pos[1] + 24 == p.Pos[1] {
                             if !dialogopen {
-                                npc.Direction = "down"
+                                npc.Direction("down")
                                 npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
@@ -1418,9 +1418,9 @@ func (g *Game) Update() error {
                     }
                 case down:
                     for _, npc := range l.NPCs {
-                        if npc.PC.Pos[0] >= p.Pos[0] - 24 && npc.PC.Pos[0] <= p.Pos[0] + 24 && npc.PC.Pos[1] - 24 == p.Pos[1] {
+                        if npc.GetPC().Pos[0] >= p.Pos[0] - 24 && npc.GetPC().Pos[0] <= p.Pos[0] + 24 && npc.GetPC().Pos[1] - 24 == p.Pos[1] {
                             if !dialogopen {
-                                npc.Direction = "up"
+                                npc.Direction("up")
                                 npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
@@ -1429,9 +1429,9 @@ func (g *Game) Update() error {
                     }
                 case left:
                     for _, npc := range l.NPCs {
-                        if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] + 24 == p.Pos[0] {
+                        if npc.GetPC().Pos[1] >= p.Pos[1] - 24 && npc.GetPC().Pos[1] <= p.Pos[1] + 24 && npc.GetPC().Pos[0] + 24 == p.Pos[0] {
                             if !dialogopen {
-                                npc.Direction = "right"
+                                npc.Direction("right")
                                 npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
@@ -1440,9 +1440,9 @@ func (g *Game) Update() error {
                     }
                 case right:
                     for _, npc := range l.NPCs {
-                        if npc.PC.Pos[1] >= p.Pos[1] - 24 && npc.PC.Pos[1] <= p.Pos[1] + 24 && npc.PC.Pos[0] - 24 == p.Pos[0] {
+                        if npc.GetPC().Pos[1] >= p.Pos[1] - 24 && npc.GetPC().Pos[1] <= p.Pos[1] + 24 && npc.GetPC().Pos[0] - 24 == p.Pos[0] {
                             if !dialogopen {
-                                npc.Direction = "left"
+                                npc.Direction("left")
                                 npcname = npc.GetName()
                                 dialogstrs = npc.Dialog()
                                 dialogopen = true
@@ -1461,23 +1461,23 @@ func (g *Game) Update() error {
             if !dialogopen && !lvlchange && !start {
                 for _, npc := range l.NPCs {
                     if npc.GetSpeed() > 0 && (npcCount + npc.GetOffset()) % npc.GetSpeed() == 0 {
-                        npc.Stopped = false
+                        npc.Stopped(false)
                         switch rand.Intn(4) {
                         case 0:
-                            npc.Direction = "down"
-                            l.TryUpdatePos(false, npc.PC, true, 12, 0, p)
+                            npc.Direction("down")
+                            l.TryUpdatePos(false, npc.GetPC(), true, 12, 0, p)
                         case 1:
-                            npc.Direction = "up"
-                            l.TryUpdatePos(false, npc.PC, true, -12, 0, p)
+                            npc.Direction("up")
+                            l.TryUpdatePos(false, npc.GetPC(), true, -12, 0, p)
                         case 2:
-                            npc.Direction = "right"
-                            l.TryUpdatePos(false, npc.PC, false, 12, 0, p)
+                            npc.Direction("right")
+                            l.TryUpdatePos(false, npc.GetPC(), false, 12, 0, p)
                         case 3:
-                            npc.Direction = "left"
-                            l.TryUpdatePos(false, npc.PC, false, -12, 0, p)
+                            npc.Direction("left")
+                            l.TryUpdatePos(false, npc.GetPC(), false, -12, 0, p)
                         }
-                    } else if !npc.Stopped && (npcCount + npc.GetOffset() - 4) % npc.GetSpeed() == 0 {
-                        npc.Stopped = true
+                    } else if !npc.GetStopped() && (npcCount + npc.GetOffset() - 4) % npc.GetSpeed() == 0 {
+                        npc.Stopped(true)
                     }
                 }
                 if effectact != "throw" {
@@ -1808,77 +1808,77 @@ func (g *Game) Draw(screen *ebiten.Image) {
         lgm.Translate(float64((w / 2) + l.Pos[0]), float64((h / 2) + l.Pos[1]))
         screen.DrawImage(l.Image, &ebiten.DrawImageOptions{GeoM: lgm})
         for npcind, npc := range l.NPCs {
-            if npc.PC.Pos[0] == p.Pos[0] && npc.PC.Pos[1] == p.Pos[1] + 24 {
+            if npc.GetPC().Pos[0] == p.Pos[0] && npc.GetPC().Pos[1] == p.Pos[1] + 24 {
                 drawmc(screen, w, h)
                 mcdrawn = true
             }
             ngm := ebiten.GeoM{}
             ngm.Scale(0.75, 0.75) // 48x48
-            ngm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
-            switch npc.Direction {
+            ngm.Translate(float64((w / 2) + l.Pos[0] + npc.GetPC().Pos[0]), float64((h / 2) + l.Pos[1] + npc.GetPC().Pos[1]))
+            switch npc.GetDirection() {
             case "down":
-                if !npc.Stopped {
+                if !npc.GetStopped() {
                     sx, sy := pcDownOffsetX + 64, pcDownOffsetY
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 } else {
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 pcDownOffsetX, pcDownOffsetY, pcDownOffsetX + 64, pcDownOffsetY + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 }
             case "up":
-                if !npc.Stopped {
+                if !npc.GetStopped() {
                     sx, sy := pcUpOffsetX + 64, pcUpOffsetY
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 } else {
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 pcUpOffsetX, pcUpOffsetY, pcUpOffsetX + 64, pcUpOffsetY + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 }
             case "right":
-                if !npc.Stopped {
+                if !npc.GetStopped() {
                     sx, sy := pcRightOffsetX + 64, pcRightOffsetY
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 } else {
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 pcRightOffsetX, pcRightOffsetY, pcRightOffsetX + 64, pcRightOffsetY + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 }
             case "left":
-                if !npc.Stopped {
+                if !npc.GetStopped() {
                     sx, sy := pcLeftOffsetX + 64, pcLeftOffsetY
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 sx, sy, sx + 64, sy + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
                                     GeoM: ngm})
                 } else {
                     screen.DrawImage(
-                        npc.PC.Image.SubImage(
+                        npc.GetPC().Image.SubImage(
                             image.Rect(
                                 pcLeftOffsetX, pcLeftOffsetY, pcLeftOffsetX + 64, pcLeftOffsetY + 64)).(*ebiten.Image),
                                 &ebiten.DrawImageOptions{
@@ -1887,35 +1887,35 @@ func (g *Game) Draw(screen *ebiten.Image) {
             }
             if npcind == targeted {
                 tbvgm := ebiten.GeoM{}
-                tbvgm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
+                tbvgm.Translate(float64((w / 2) + l.Pos[0] + npc.GetPC().Pos[0]), float64((h / 2) + l.Pos[1] + npc.GetPC().Pos[1]))
                 screen.DrawImage(targetedBoxVert, &ebiten.DrawImageOptions{GeoM: tbvgm})
                 tbvgm.Translate(float64(46), float64(0))
                 screen.DrawImage(targetedBoxVert, &ebiten.DrawImageOptions{GeoM: tbvgm})
                 tbhgm := ebiten.GeoM{}
-                tbhgm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0]), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1]))
+                tbhgm.Translate(float64((w / 2) + l.Pos[0] + npc.GetPC().Pos[0]), float64((h / 2) + l.Pos[1] + npc.GetPC().Pos[1]))
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
                 tbhgm.Translate(float64(0), float64(46))
                 screen.DrawImage(targetedBoxHoriz, &ebiten.DrawImageOptions{GeoM: tbhgm})
-                lineofsight, losvert, slope := l.LineOfSight(p, npc.PC.Pos)
+                lineofsight, losvert, slope := l.LineOfSight(p, npc.GetPC().Pos)
                 if lineofsight {
                     if losvert {
-                        dist := p.Pos[1] - npc.PC.Pos[1]
+                        dist := p.Pos[1] - npc.GetPC().Pos[1]
                         if dist < 0 {
                             dist = -dist
                         }
                         losline := ebiten.NewImage(2, dist)
                         losline.Fill(color.RGBA{0x0, 0xff, 0x0, 0xff})
                         loslinegm := ebiten.GeoM{}
-                        if p.Pos[1] > npc.PC.Pos[1] {
-                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                        if p.Pos[1] > npc.GetPC().Pos[1] {
+                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24), float64((h / 2) + l.Pos[1] + npc.GetPC().Pos[1] + 24))
                         } else {
                             loslinegm.Translate(float64((w / 2) + l.Pos[0] + p.Pos[0] + 24), float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
                         }
                         screen.DrawImage(losline, &ebiten.DrawImageOptions{GeoM: loslinegm})
                     } else {
-                        if p.Pos[0] > npc.PC.Pos[0] {
-                            for linex := (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex++ {
-                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                        if p.Pos[0] > npc.GetPC().Pos[0] {
+                            for linex := (w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex++ {
+                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + npc.GetPC().Pos[1] + 24))
                                 screen.Set(linex, liney, color.RGBA{0x0, 0xff, 0x0, 0xff})
                                 if slope > 2.0 {
                                     for step := int(slope); step > 0; step-- {
@@ -1933,7 +1933,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                                 }
                             }
                         } else {
-                            for linex := (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex++ {
+                            for linex := (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24; linex++ {
                                 liney := int((float64(linex - ((w / 2) + l.Pos[0] + p.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
                                 screen.Set(linex, liney, color.RGBA{0x0, 0xff, 0x0, 0xff})
                                 if slope > 2.0 {
@@ -1955,23 +1955,23 @@ func (g *Game) Draw(screen *ebiten.Image) {
                     }
                 } else {
                     if losvert {
-                        dist := p.Pos[1] - npc.PC.Pos[1]
+                        dist := p.Pos[1] - npc.GetPC().Pos[1]
                         if dist < 0 {
                             dist = -dist
                         }
                         losline := ebiten.NewImage(2, dist)
                         losline.Fill(color.RGBA{0xff, 0x0, 0x0, 0xff})
                         loslinegm := ebiten.GeoM{}
-                        if p.Pos[1] > npc.PC.Pos[1] {
-                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24), float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                        if p.Pos[1] > npc.GetPC().Pos[1] {
+                            loslinegm.Translate(float64((w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24), float64((h / 2) + l.Pos[1] + npc.GetPC().Pos[1] + 24))
                         } else {
                             loslinegm.Translate(float64((w / 2) + l.Pos[0] + p.Pos[0] + 24), float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
                         }
                         screen.DrawImage(losline, &ebiten.DrawImageOptions{GeoM: loslinegm})
                     } else {
-                        if p.Pos[0] > npc.PC.Pos[0] {
-                            for linex := (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex++ {
-                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + npc.PC.Pos[1] + 24))
+                        if p.Pos[0] > npc.GetPC().Pos[0] {
+                            for linex := (w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex++ {
+                                liney := int((float64(linex - ((w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + npc.GetPC().Pos[1] + 24))
                                 screen.Set(linex, liney, color.RGBA{0xff, 0x0, 0x0, 0xff})
                                 if slope > 2.0 {
                                     for step := int(slope); step > 0; step-- {
@@ -1989,7 +1989,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
                                 }
                             }
                         } else {
-                            for linex := (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + npc.PC.Pos[0] + 24; linex++ {
+                            for linex := (w / 2) + l.Pos[0] + p.Pos[0] + 24; linex <= (w / 2) + l.Pos[0] + npc.GetPC().Pos[0] + 24; linex++ {
                                 liney := int((float64(linex - ((w / 2) + l.Pos[0] + p.Pos[0] + 24)) * slope) + float64((h / 2) + l.Pos[1] + p.Pos[1] + 24))
                                 screen.Set(linex, liney, color.RGBA{0xff, 0x0, 0x0, 0xff})
                                 if slope > 2.0 {

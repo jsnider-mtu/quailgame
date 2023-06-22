@@ -48,7 +48,7 @@ func verticalWallLvl(entrance int) *Level {
     return &Level{
         name: "VerticalWall", Cutscene: -1, max:[2]int{816, 5856}, Pos: pos, Boxes: [][4]int{
             {0, 0, 432, 6144},
-            {816, 0, 1248, 6144}}, Doors: lvldoors, NPCs: []*npcs.NPC{}, Image: lvlImg,
+            {816, 0, 1248, 6144}}, Doors: lvldoors, NPCs: []npcs.NPC{}, Image: lvlImg,
         Anim: func(screen *ebiten.Image, l *Level, count, w, h int) {
             iw, _ := l.Image.Size()
             gm := ebiten.GeoM{}

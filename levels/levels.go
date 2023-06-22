@@ -43,7 +43,7 @@ type Level struct {
     Pos [2]int
     Boxes [][4]int
     Doors []*Door
-    NPCs []*npcs.NPC
+    NPCs []npcs.NPC
     grasses [][2]int
     Image *ebiten.Image
     Anim func(*ebiten.Image, *Level, int, int, int) // screen, l, count, w, h
@@ -186,10 +186,10 @@ func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, att
                 }
             }
             for _, b := range l.NPCs {
-                if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                if p.Pos[0] == b.GetPC().Pos[0] && p.Pos[1] == b.GetPC().Pos[1] {
                     continue
                 }
-                if p.Pos[0] > b.PC.Pos[0] - 24 && p.Pos[0] < b.PC.Pos[0] + 24 && p.Pos[1] + dist < b.PC.Pos[1] + 24 && p.Pos[1] + dist > b.PC.Pos[1] - 24 {
+                if p.Pos[0] > b.GetPC().Pos[0] - 24 && p.Pos[0] < b.GetPC().Pos[0] + 24 && p.Pos[1] + dist < b.GetPC().Pos[1] + 24 && p.Pos[1] + dist > b.GetPC().Pos[1] - 24 {
                     if !pc {
                         return false, "npc"
                     } else {
@@ -219,10 +219,10 @@ func (l *Level) TryUpdatePos(pc bool, p *player.Player, vert bool, dist int, att
                 }
             }
             for _, b := range l.NPCs {
-                if p.Pos[0] == b.PC.Pos[0] && p.Pos[1] == b.PC.Pos[1] {
+                if p.Pos[0] == b.GetPC().Pos[0] && p.Pos[1] == b.GetPC().Pos[1] {
                     continue
                 }
-                if p.Pos[0] + dist > b.PC.Pos[0] - 24 && p.Pos[0] + dist < b.PC.Pos[0] + 24 && p.Pos[1] < b.PC.Pos[1] + 24 && p.Pos[1] > b.PC.Pos[1] - 24 {
+                if p.Pos[0] + dist > b.GetPC().Pos[0] - 24 && p.Pos[0] + dist < b.GetPC().Pos[0] + 24 && p.Pos[1] < b.GetPC().Pos[1] + 24 && p.Pos[1] > b.GetPC().Pos[1] - 24 {
                     if !pc {
                         return false, "npc"
                     } else {
