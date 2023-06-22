@@ -1,38 +1,39 @@
 package npcs
 
 import (
+    "fmt"
     "log"
 
-    "github.com/hajimehoshi/ebiten/v2"
+//    "github.com/hajimehoshi/ebiten/v2"
 
-    "github.com/jsnider-mtu/quailgame/classes"
-    "github.com/jsnider-mtu/quailgame/npcs/npcimages"
+//    "github.com/jsnider-mtu/quailgame/classes"
+//    "github.com/jsnider-mtu/quailgame/npcs/npcimages"
     "github.com/jsnider-mtu/quailgame/player"
 //    "github.com/jsnider-mtu/quailgame/quests"
 )
 
 type NPC interface {
+    GetPC() *player.Player
     GetName() string
     GetSpeed() int
     GetOffset() int
+    GetDirection() string
+    GetStopped() bool
     Dialog() []string
+    Direction(string)
+    Stopped(bool)
 }
 
-func NewNPC(name string) NPC {
+func NewNPC(name, direction string, speed, offset int, stopped bool, msgs [][]string, pc *player.Player) NPC {
     switch name {
     case "janedoe":
-        npcgirlimage, _, err := image.Decode(bytes.NewReader(npcimages.NPCGirl_PNG))
-        if err != nil {
-            log.Fatal(err)
-        }
-        npcGirlImage := ebiten.NewImageFromImage(npcgirlimage)
-        return &JaneDoe{name: name, speed: 240, offset: rand.Intn(60) + 60, direction: "down", stopped: true, msgs: [][]string{
-            {"Hello there,", "ObiWan Kenobi."},
-            {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}}, msgcount: 0, PC: &player.Player{
-                Name: "Jane Doe", Pos: [2]int{192, 192}, Image: npcGirlImage, Class: &classes.Quail{}}}
+        return &JaneDoe{name: name, speed: speed, offset: offset, direction: direction, stopped: stopped, msgs: msgs, msgcount: 0, PC: pc}
+    case "wizard":
+        return &Wizard{name: name, speed: speed, offset: offset, direction: direction, stopped: stopped, msgs: msgs, msgcount: 0, PC: pc}
     default:
         log.Fatal(fmt.Sprintf("%d is not a valid NPC", name))
     }
+    return nil
 }
 
 //type NPC struct {

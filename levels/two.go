@@ -34,16 +34,16 @@ func lvlTwo(entrance int) *Level {
         &Door{coords: [2]int{144, 0}, NewLvl: []interface{}{"VerticalWall", 1}},
         &Door{coords: [2]int{240, 96}, NewLvl: []interface{}{"One", 1}}}
 
-    NPCs := []*npcs.NPC{
+    NPCs := []npcs.NPC{
         npcs.NewNPC(
-            "down", [][]string{
+            "janedoe", "down", 240, rand.Intn(60) + 60, true, [][]string{
                 {"Hello there,", "ObiWan Kenobi."},
                 {"Seen my dog?", "I swear he was just here...", "Please help me look for him."}},
-            240, rand.Intn(60) + 60, &player.Player{
+            &player.Player{
                 Name: "Jane Donner", Pos: [2]int{144, 48}, Image: npcGirlImage, Class: &classes.Quail{}})}
 
     for _, n := range NPCs {
-        n.PC.Class.Create([6]int{10, 10, 10, 10, 10, 10}, 0)
+        n.GetPC().Class.Create([6]int{10, 10, 10, 10, 10, 10}, 0)
     }
 
     var pos [2]int
