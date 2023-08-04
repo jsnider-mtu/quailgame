@@ -13,7 +13,6 @@ Makefile
 *.txt
 *.md
 *.yml
-*.yaml
 *.scss
 *.kage
 quail_game_demo*
